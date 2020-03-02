@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import cx from 'classnames/bind';
 import cs from './css-style';
 
+// 카드박스 오브젝트
 const StyledObject = styled.div`{
   &.card-box {
     cursor: ${(props) => props.cursor}; ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}

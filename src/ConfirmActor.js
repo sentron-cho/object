@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { openConfirm, closeConfirm } from '../actor/Reducer';
+import { openConfirm, closeConfirm } from './actor/Reducer';
 import { ST } from './Config';
 
 class ConfirmActor extends React.PureComponent {

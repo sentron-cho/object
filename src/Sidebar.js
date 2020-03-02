@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Svg, Loading, Util, cs } from './index';
 import { EID, SCREEN, ST, CODE} from './Config';
 import { URL } from 'svc/Enum';
-import * as actions from 'actor/Action';
+import * as actions from './actor/Action';
 import { ICON } from "./Icons";
 
 const StyledObject = styled.div`{

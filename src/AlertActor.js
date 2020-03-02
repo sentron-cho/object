@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showAlert } from '../actor/Reducer';
+import { showAlert } from './actor/Reducer';
 import { ST, CODE } from './Config';
 
 class AlertActor extends React.PureComponent {

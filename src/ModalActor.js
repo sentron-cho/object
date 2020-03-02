@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { openModal } from '../actor/Reducer';
+import { openModal } from './actor/Reducer';
 import { ST, STAT } from './Config';
 
 class ModalActor extends React.PureComponent {

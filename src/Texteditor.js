@@ -4,7 +4,7 @@ import { STAT, EID, SCREEN, ST } from './Config';
 import { Util, Editbox, Button, Loading, cs } from './index';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import * as actions from 'actor/Action';
+import * as actions from './actor/Action';
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 

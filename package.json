@@ -1,0 +1,36 @@
+{
+  "name": "stroybook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "start-storybook -p 33000",
+    "build": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentron-cho/stroybook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sentron-cho/stroybook/issues"
+  },
+  "homepage": "https://github.com/sentron-cho/stroybook#readme",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@storybook/addon-actions": "^5.3.14",
+    "@storybook/addon-docs": "^5.3.14",
+    "@storybook/addon-knobs": "^5.3.14",
+    "@storybook/addon-links": "^5.3.14",
+    "@storybook/addons": "^5.3.14",
+    "@storybook/react": "^5.3.14",
+    "babel-loader": "^8.0.6"
+  }
+}

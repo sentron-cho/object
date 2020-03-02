@@ -1,0 +1,11 @@
+node_modules
+dist
+database/db
+log
+public/advert
+public/content
+public/uploads
+src/server/setting
+build/
+debug.log
+debug.log

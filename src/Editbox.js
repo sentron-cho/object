@@ -6,15 +6,16 @@ import { ST } from './Config';
 import { Svg, cs } from './index';
 
 const StyledObject = styled.div` {
-  &.edit-box { ${cs.font.white} margin-top: ${(props) => props.mTop}; margin: ${(props) => props.margin};
-
-    .box { ${cs.bg.trans} ${cs.w.full} ${cs.disp.get("inline-flex")} ${cs.pos.relative} ${cs.font.line(20)}
+  &.edit-box {
+    .box {
+      ${cs.bg.trans} ${cs.w.full} ${cs.disp.get("inline-flex")} ${cs.pos.relative} ${cs.font.line(20)}
+      
       .input {
-        ${cs.bg.sky} ${cs.disp.inblock} ${cs.w.full} ${cs.h.get(34)} ${cs.p.get("6px 12px")}
-        ${cs.min.height(34)} ${cs.max.height(200)} ${cs.border.get(0)}
-        ${(props) => cs.font.size(props.fontsize)} //${cs.font.md}
+        ${cs.bg.sky} ${cs.disp.inblock} ${cs.w.full} ${cs.p.get("6px 12px")}
+        ${cs.min.height(14)} ${cs.max.height(200)} ${cs.border.get(0)}
+        ${(props) => cs.font.size(props.fontsize)}
 
-        &:focus { ${cs.bg.get("#fffbcf")} outline: none; box-shadow: none; }
+        &:focus { ${cs.bg.get("#fffbcf")} ${cs.border.outline("none")} ${cs.border.shadow("none")} }
         &.noti { ${cs.border.red} }
         &::placeholder { ${cs.font.gray} ${cs.font.sm} }
 
@@ -24,7 +25,7 @@ const StyledObject = styled.div` {
           &:focus { ${cs.border.gray} }
         }
 
-        &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get("width 180ms ease-out, opacity 120ms ease-in") } }
+        &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get("width 180ms ease-out, opacity 120ms ease-in")} }
 
         &.readonly { ${cs.mouse.default} ${cs.border.none} ${cs.bg.get("rgb(190, 190, 190, 0.9)")}
           &:hover { ${cs.bg.get("rgb(190, 190, 190, 0.9)")} }
@@ -37,7 +38,7 @@ const StyledObject = styled.div` {
         &.right { text-align: right; }
       }
 
-      input.input { resize: none; }
+      input.input { ${cs.resize.none} }
 
       textarea.input { height: 100px; white-space: pre-wrap; resize: vertical;
         height: ${(props) => props.height};
@@ -60,6 +61,9 @@ const StyledObject = styled.div` {
       .btn-clear { ${cs.pos.absolute} right: 5px; bottom: 5px; cursor: pointer; }
     }
 
+    .ed-label { ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.bold} ${cs.font.darkgray} }
+    .guide { margin: 0; font-size: 12px; color: #aaa; text-align: right; display: ${cs.disp.get((props) => props.helper && `block`)} }
+    
     // &.right { .input { text-align: right; } box span.noti { }
     &.right { .input { text-align: right; } }
     &.border { .input {border: 1px solid #c0c0c0;} }
@@ -69,39 +73,36 @@ const StyledObject = styled.div` {
         .input { ${cs.bg.trans} } 
       }
     }
-  }
 
-  &.sm {
-    .box {
-      .input { height: 20px; min-height: 20px; padding: 0 5px; line-height: 18px; font-size: 12px; }
+    &.sm {
+      .box {
+        .input { height: 20px; min-height: 20px; padding: 0 5px; line-height: 18px; font-size: 12px; }
+      }
     }
-  }
-
-  &.sizefix {
-    .box { .input { resize: none; } }
-  }
-
-  .ed-label { ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.bold} }
-  .guide { margin: 0; font-size: 12px; color: #aaa; text-align: right; display: ${cs.disp.get((props) => props.helper && `block`)}
-
-  &.inline { ${cs.m.get("5px 0")}
-    .ed-label { 
-      ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} ${cs.font.color("rgba(0, 87, 200, 0.95)")}
+  
+    &.sizefix {
+      .box { .input { ${cs.resize.none} } }
     }
 
-    .box {
-      &:focus-within { 
-        .ed-label { ${cs.font.xs} ${cs.anim.get("scale(0.7) 150ms ease-in")} 
-        .ed-label.noti { ${cs.opac.hide} ${cs.anim.show} }
+    
+    &.inline { ${cs.m.get("5px 0")}
+      .ed-label { 
+        ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} ${cs.font.color("rgba(0, 87, 200, 0.95)")}
       }
 
-      .input { text-align: right; padding-top: 16px; }      
+      .box {
+        &:focus-within {
+          .ed-label { ${cs.font.xs} ${cs.anim.get("scale(0.7) 150ms ease-in")} }
+          .ed-label.noti { ${cs.opac.hide} ${cs.anim.show} }
+        }
+
+        .input { text-align: right; padding-top: 16px; }
+      }
     }
-  }
-
-  @media screen and (max-width : 1024px) {}
-
-  @media screen and (max-width : 600px) {}
+  
+    @media screen and (max-width : 1024px) {}
+  
+    @media screen and (max-width : 600px) {}
 }`;
 
 class Editbox extends React.PureComponent {
@@ -138,7 +139,7 @@ class Editbox extends React.PureComponent {
 
     // " 는 무조건 입력 못하도록 하자.. DB 입력시 오류 발생으로...
     if (value.indexOf('"') >= 0) { return this.showNoti(ST.NOTI.NOT_DOUBLE_QUARTER); }
-    
+
     // validation 체크이면...
     if (validate) {
       // 입력이 없으면
@@ -221,7 +222,9 @@ class Editbox extends React.PureComponent {
 
   onClear = (eid, e) => {
     this.setState({ value: "" }); this.focus();
+
     this.props.onChange && this.props.onChange("", e);
+    this.props.onClear && this.props.onClear("", e);
   }
 
   onChange = (e) => {
@@ -254,7 +257,8 @@ class Editbox extends React.PureComponent {
   elemInput() {
     const { props, state } = this;
     const { noti } = state;
-    const { disable, border, readonly, type, guide } = props;
+    const { disabled = false } = props;
+    const { disable = disabled, border, readonly, type, guide } = props;
 
     let addedClass = "";
     let attr = { spellCheck: false };
@@ -313,7 +317,8 @@ class Editbox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { noti } = state;
-    const { disable, readonly, inline, fontsize="14px", height, minheight, maxheight } = props;
+    const { disabled = false } = props;
+    const { disable = disabled, readonly, inline, fontsize = "14px", height, minheight, maxheight } = props;
 
     return (
       <StyledObject className={cx('edit-box', props.className, { inline })} height={height} fontsize={fontsize}

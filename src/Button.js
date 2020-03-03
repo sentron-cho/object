@@ -8,6 +8,7 @@ import cs from './css-style';
 // 버튼 오브젝트
 const StyledObject = styled.span`{
   &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} ${cs.disp.inblock} ${cs.mouse.pointer}
+    ${cs.float.left} ${cs.top(0)}
 
     &:hover { ${cs.anim.show} ${cs.opac.get(0.8)} }
 
@@ -17,7 +18,7 @@ const StyledObject = styled.span`{
     &.sm { ${cs.h.sm} ${cs.font.sm} ${cs.p.get("0px 8px")} }
     &.xs { ${cs.h.xs} ${cs.font.xs} ${cs.p.get("0px 4px")} }
 
-    &.icon { ${cs.disp.get("inline-flex")}
+    &.icon { ${cs.disp.get("inline-flex")} 
       .btn-icon { ${cs.align.ycenter} ${cs.opac.show} }
       .btn-label { ${cs.align.center} ${cs.pos.relative} }
 
@@ -26,6 +27,8 @@ const StyledObject = styled.span`{
       &.lg { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(22)} } }
       &.sm { .btn-icon { ${cs.icon.xs} ${cs.m.left(-1)} } .btn-label { ${cs.p.get("0px 14px")} ${cs.p.b2} ${cs.p.left(18)} } }
       &.xs { .btn-icon { ${cs.icon.get(10)} ${cs.m.left(0)} } .btn-label { ${cs.p.get("0px 12px")} ${cs.p.b2} ${cs.p.left(16)} } }
+
+      .running { ${cs.z.front} }
     }
 
     &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
@@ -44,15 +47,16 @@ const StyledObject = styled.span`{
     &.gd-gray { background-image: linear-gradient(-180deg, ${cs.color.lightgray}, ${cs.color.lightwhite} 90%); ${cs.font.dark} ${cs.box.line} ${cs.border.lightgray} }
 
     &.disabled { ${cs.mouse.default} ${cs.font.darkgray} ${cs.opac.alpha}
-      // ${cs.bg.lightgray} ${cs.border.darkgray} 
       .btn-label { ${cs.mouse.default} }
       &.trans:hover { &:hover { ${cs.font.noneline} } }
-      // &:hover { ${cs.bg.trans} }
     }
 
-    &.left { ${cs.float.left} }
+    &.left { }
     &.right { ${cs.float.right} }
-    &.center { ${cs.align.xcenter} ${cs.float.left} }
+    &.center { ${cs.align.xcenter} ${cs.pos.relative} }
+    &.top { ${cs.top(0)} ${cs.pos.relative} }
+    &.middle { ${cs.align.ycenter} ${cs.pos.relative} }
+    &.bottom { ${cs.top("100%")} ${cs.align.y("-100%")} ${cs.pos.relative} }
 
     &.rtype { ${cs.border.radius("0 2px 2px 0")} ${cs.box.line} ${cs.border.gray} }
     &.ltype { ${cs.border.radius("2px 0 0 2px")} ${cs.box.line} ${cs.border.gray} border-right: 0px; }
@@ -78,12 +82,13 @@ const Button = (props) => {
   const isrun = props.isrun ? props.isrun : false;
   if (isrun) disabled = true;
   const { icon, type, iconcolor = cs.color.white, color } = props;
+  const isicon = icon || isrun ? 'icon' : '';
 
   return (
-    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, {icon})}
+    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon)}
       onClick={disabled ? () => null : onClicked} to={props.to} >
-      {isrun && <img className={cx("btn-icon")} src={IMG.LoadingRing} alt='r' />}
-      {icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}
+      {isrun && <img className={cx("btn-icon running")} src={IMG.LoadingRing} alt='r' />}
+      {!isrun && icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}
       <label className="btn-label">{props.title}</label>
     </StyledObject>
   )

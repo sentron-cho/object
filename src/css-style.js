@@ -117,6 +117,14 @@ const cs = {
     get: (v) => Number.isInteger(v) ? `width: ${v}px; height: ${v}px;` : `width: ${v}; height: ${v};`,
   },
 
+  resize: {
+    none: `resize: none;`,
+    vertical: `resize: vertical;`,
+    horizontal: `resize: horizontal;`,
+
+    get: (v) => `resize: ${v};`,
+  },
+
   h: {
     xl: 'height: 48px;',
     lg: 'height: 38px;',
@@ -258,7 +266,11 @@ const cs = {
     lbottom: `position: absolute; left: 5px; bottom: 5px;`,
     rbottom: `position: absolute; right: 5px; bottom: 5px;`,
     left: `position: absolute; left: 0;`,
-    right: `position: absolute; right: 0;`
+    right: `position: absolute; right: 0;`,
+
+    x: (v) => Number.isInteger(v) ? `transform: translateX(${v}px);` : `transform: translateX(${v});`,
+    y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,
+    get: (v) => `transform: ${v};`,
   },
 
   bg: {
@@ -339,6 +351,7 @@ const cs = {
     color: (v) => `border-color: ${v};`,
     get: (v) => `border: ${v};`,
     radius: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
+    outline: (v) => `outline: ${v};`,
   },
 
   m: {

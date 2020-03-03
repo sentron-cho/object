@@ -4,7 +4,7 @@ import cx from 'classnames/bind';
 import { cs } from '../src';
 
 const StyledBox = styled.div`{
-  &.lb-box { ${cs.m.a5} ${cs.m.t20}
+  &.lb-box { ${cs.m.a5} ${cs.m.t20} ${props => cs.w.get(props.width)} ${cs.disp.inblock}
 
     .lb-tl { ${cs.disp.inblock} ${cs.font.md} ${cs.font.upper} }
     .lb-desc { ${cs.disp.inblock} ${cs.font.sm} ${cs.p.l10} ${cs.font.darkgray} }
@@ -12,15 +12,27 @@ const StyledBox = styled.div`{
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
       ${cs.w.calc("100% - 20px")}
 
-      & > * { ${cs.m.r10} }
+      & > * { ${cs.m.r10} ${cs.m.t5} }
+    }
+
+    &.inline {
+      .lb-li { 
+        & > * { ${cs.disp.inblock} ${props => props.cwidth && cs.w.get(`calc(${props.cwidth} - 10px)`)} }
+      } 
     }
   }
 }`;
 
 export const Linebox = (props) => {
+  const { width = "100%", inline = false } = props;
+
+  let cwidth = "";
+  if (inline) {
+    cwidth = `${(100 / props.children.length)}%`;
+  }
 
   const tag = props.title.split(" ").join("-");
-  return <StyledBox className={cx("lb-box", tag)}>
+  return <StyledBox className={cx("lb-box", tag, {inline})} width={width} cwidth={cwidth}>
     <label className={"lb-tl"}>{props.title}</label>
     {props.desc && <p className={"lb-desc"}>{props.desc}</p>}
     <div className={cx("lb-li", props.className)}>

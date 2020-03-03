@@ -18,7 +18,7 @@ const StyledBox = styled.div`{
 
     .lb-show { ${cs.m.t5} ${cs.m.r30} &.ok{ ${cs.font.red} } }
     .lb-ex { ${cs.font.white} ${cs.bg.dark} ${cs.box.radius} ${cs.anim.show} ${cs.min.height(20)} ${cs.over.yauto}
-      ${cs.w.get("calc(100% - 70px)")} ${cs.m.h20} ${cs.m.t5} ${cs.font.preline} ${cs.p.a10} ${cs.max.height(130)} ${cs.font.md}
+      ${cs.w.get("calc(100% - 50px)")} ${cs.m.r20} ${cs.m.t5} ${cs.font.preline} ${cs.p.a10} ${cs.max.height(130)} ${cs.font.md}
     }
 
     &.inline {
@@ -69,7 +69,7 @@ export const Linebox = (props) => {
     setCopy("code copy");
   }, []);
 
-  const { width = "100%", inline = false, sample = 'There is no sample code.' } = props;
+  const { width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.' } = props;
 
   let cwidth = "";
   if (inline) {

@@ -22,25 +22,41 @@ export default {
 };
 
 export const object = () => {
-  const samplecode = (value) => `<Editbox className={''} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} ${value} />`;
+  const samplecode = (value, classname='') => `<Editbox type={"text"} className={"${classname}"} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} ${value} />`;
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"normal"} inline={true} sample={samplecode()}>
-        <Editbox className={cx('')} label={"guide"} guide={"guide"} />
-        <Editbox className={cx('')} label={"focus"} guide={"focus"} value={"focus"} focus={true} />
-        <Editbox className={cx('')} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} />
-        <Editbox className={cx('')} label={"disabled"} guide={"disabled"} value={"disabled"} disabled={true} />
+        <Editbox className={cx('')} type={"text"} label={"guide"} guide={"guide"} />
+        <Editbox className={cx('')} type={"text"} label={"focus"} guide={"focus"} value={"focus"} focus={true} />
+        <Editbox className={cx('')} type={"text"} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} />
+        <Editbox className={cx('')} type={"text"} label={"disabled"} guide={"disabled"} value={"disabled"} disabled={true} />
       </Linebox>
 
       <Linebox title={"clear && event"} inline={true} sample={samplecode(`onClear={} onEnter={} onChange={}`)}>
-        <Editbox className={cx('')} label={"onClear"} guide={"onClear"} value={"onClear"} onClear={action('onClear')} />
-        <Editbox className={cx('')} label={"onEnter"} guide={"onEnter"} value={"onClear"} onEnter={action('onEnter')} />
-        <Editbox className={cx('')} label={"onChange"} guide={"onChange"} value={"onChange"} onChange={action('onClear')} />
+        <Editbox className={cx('')} type={"text"} label={"onClear"} guide={"onClear"} value={"onClear"} onClear={action('onClear')} />
+        <Editbox className={cx('')} type={"text"} label={"onEnter"} guide={"onEnter"} value={"onClear"} onEnter={action('onEnter')} />
+        <Editbox className={cx('')} type={"text"} label={"onChange"} guide={"onChange"} value={"onChange"} onChange={action('onClear')} />
       </Linebox>
 
-      <Linebox title={"inline"} sample={samplecode('inline={true}')}>>
-        <Editbox className={cx('')} label={"inline"} guide={"inline"} value={"inline"} inline={true} />
+      <Linebox title={"inline"} sample={samplecode('inline={true}')}>
+        <Editbox className={cx('')} type={"text"} label={"inline"} guide={"inline"} value={"inline"} inline={true} />
+      </Linebox>
+    
+      <Linebox title={"align"} sample={samplecode('type={"left"}', 'left')} inline={true}>
+        <Editbox className={cx('left')} type={"text"} label={"left"} guide={"left"} value={"left"} />
+        <Editbox className={cx('center')} type={"text"} label={"center"} guide={"center"} value={"center"} />
+        <Editbox className={cx('right')} type={"text"} label={"right"} guide={"right"} value={"right"} />
+      </Linebox>
+
+      <Linebox title={"type"} sample={samplecode('type={"left"}', 'left')} inline={true}>
+        <Editbox className={cx('')} type={"text"} label={"text"} guide={"text"} value={"text"} />
+        <Editbox className={cx('')} type={"number"} label={"number"} guide={"number"} value={"number"} />
+        <Editbox className={cx('')} type={"date"} label={"date"} guide={"date"} value={"2019-10-10"} />
+      </Linebox>
+
+      <Linebox title={"textarea"} sample={samplecode('type={"left"}', 'left')} inline={true}>
+        <Editbox className={cx('')} type={"text"} label={"text"} guide={"text"} value={"text"} multi={true}/>
       </Linebox>
     </StyledObject>
   );

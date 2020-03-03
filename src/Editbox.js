@@ -27,28 +27,28 @@ const StyledObject = styled.div` {
 
         &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get("width 180ms ease-out, opacity 120ms ease-in")} }
 
-        &.readonly { ${cs.mouse.default} ${cs.border.none} ${cs.bg.get("rgb(190, 190, 190, 0.9)")}
-          &:hover { ${cs.bg.get("rgb(190, 190, 190, 0.9)")} }
-          &:active { ${cs.bg.get("rgb(190, 190, 190, 0.9)")} }
-          &:focus { ${cs.bg.get("rgb(190, 190, 190, 0.9)")} }
-
-          &:focus + .underline { border-bottom: 0px; }
+        &.readonly { ${cs.mouse.default} ${cs.border.none} ${cs.bg.alphagray}
+          &:hover, &:active, &:focus { ${cs.bg.alphagray} }
+          &:focus + .underline { ${cs.box.bottom(0)} }
         }
 
-        &.right { text-align: right; }
+        // &.right { ${cs.font.right} }
       }
 
       input.input { ${cs.resize.none} }
 
-      textarea.input { height: 100px; white-space: pre-wrap; resize: vertical;
-        height: ${(props) => props.height};
-        ${({ height }) => height && `min-height: calc(${height} * 0.5); max-height: calc(${height} * 2);`};
-        ${(props) => props.minheight && `min-height: ${props.minheight};`};
-        ${(props) => props.maxheight && `max-height: ${props.maxheight};`};
+      textarea.input { ${cs.h.get(100)} ${cs.font.prewrap} ${cs.resize.vertical} 
+        // height: 100px; white-space: pre-wrap; resize: vertical;
+        ${(props) => props.height && cs.h.get(props.height)};
+        ${({ height }) => height && `${cs.min.height(`calc(${height} * 0.5)`)}; ${cs.max.height(`calc(${height} * 2)`)}
+          // ` `min-height: calc(${height} * 0.5); max-height: calc(${height} * 2);`};
+        ${(props) => props.minheight && cs.min.height(props.minheight)};
+        ${(props) => props.maxheight && cs.max.height(props.maxheight)};
       }
 
-      .underline { border-bottom: 2px solid rgb(26, 115, 232); bottom: 0; box-sizing: border-box; left: 0; margin: auto;
-        ${cs.opac.invisible} ${cs.pos.absolute} right: 0; transition: opacity 120ms ease-out, width 0ms linear 180ms; width: 0;
+      .underline { ${cs.box.bottom(2)} ${cs.border.color(cs.color.primary)} ${cs.bottom(0)} ${cs.left(0)} ${cs.w.get(0)}
+        ${cs.opac.invisible} ${cs.pos.absolute} 
+        transition: opacity 120ms ease-out, width 0ms linear 180ms;
       }
 
       span.noti {

@@ -73,7 +73,11 @@ export const Linebox = (props) => {
 
   let cwidth = "";
   if (inline) {
-    cwidth = `${(100 / props.children.length)}%`;
+    if (!props.children.length) {
+      cwidth = "100%";
+    } else {
+      cwidth = `${(100 / props.children.length)}%`;
+    }
   }
   const tag = props.title.split(" ").join("-");
 

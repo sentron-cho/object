@@ -14,6 +14,8 @@ const StyledObject = styled.div` {
         ${cs.bg.sky} ${cs.disp.inblock} ${cs.w.full} ${cs.p.get("6px 12px")}
         ${cs.min.height(14)} ${cs.max.height(200)} ${cs.border.get(0)}
         ${(props) => cs.font.size(props.fontsize)}
+        ${(props) => props.bgcolor && cs.bg.color(props.bgcolor)};
+        ${(props) => props.fontcolor && cs.font.color(props.fontcolor)};
 
         &:focus { ${cs.bg.get("#fffbcf")} ${cs.border.outline("none")} ${cs.border.shadow("none")} }
         &.noti { ${cs.border.red} }
@@ -31,19 +33,18 @@ const StyledObject = styled.div` {
           &:hover, &:active, &:focus { ${cs.bg.alphagray} }
           &:focus + .underline { ${cs.box.bottom(0)} }
         }
-
-        // &.right { ${cs.font.right} }
       }
 
-      input.input { ${cs.resize.none} }
+      input.input { ${cs.resize.none} 
+        &::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-clear-button { -webkit-appearance: none; }
+      }
 
       textarea.input { ${cs.h.get(100)} ${cs.font.prewrap} ${cs.resize.vertical} 
-        // height: 100px; white-space: pre-wrap; resize: vertical;
         ${(props) => props.height && cs.h.get(props.height)};
-        ${({ height }) => height && `${cs.min.height(`calc(${height} * 0.5)`)}; ${cs.max.height(`calc(${height} * 2)`)}
-          // ` `min-height: calc(${height} * 0.5); max-height: calc(${height} * 2);`};
+        ${(props) => props.height && `${cs.min.height(`calc(${props.height} * 0.5)`)}; ${cs.max.height(`calc(${props.height} * 2)`)}`};
         ${(props) => props.minheight && cs.min.height(props.minheight)};
         ${(props) => props.maxheight && cs.max.height(props.maxheight)};
+        ${cs.scrollbar.t4}
       }
 
       .underline { ${cs.box.bottom(2)} ${cs.border.color(cs.color.primary)} ${cs.bottom(0)} ${cs.left(0)} ${cs.w.get(0)}
@@ -52,21 +53,33 @@ const StyledObject = styled.div` {
       }
 
       span.noti {
-        color: red; ${cs.pos.absolute} ${cs.opac.show} bottom: 2px; font-size: 10px; z-index: 10;
+        ${cs.pos.absolute} ${cs.opac.show} ${cs.bottom(2)} ${cs.font.xs} ${cs.z.get(10)} ${cs.font.red}
         &.left { ${cs.left("5px")} }
         &.right { ${cs.right("5px")} }
       }
 
 
-      .btn-clear { ${cs.pos.absolute} right: 5px; bottom: 5px; cursor: pointer; }
+      .btn-clear { ${cs.pos.absolute} ${cs.right(5)} ${cs.bottom(5)} ${cs.mouse.pointer} 
+        &.multi { ${cs.bottom("auto")} ${cs.top(5)} }
+      }
     }
 
-    .ed-label { ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.bold} ${cs.font.darkgray} }
-    .guide { margin: 0; font-size: 12px; color: #aaa; text-align: right; display: ${cs.disp.get((props) => props.helper && `block`)} }
+    .ed-label { 
+      ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} 
+      ${cs.border.none} ${cs.font.bold} ${cs.font.darkgray} 
+    }
+
+    .guide { 
+      ${cs.font.sm} ${cs.font.gray} ${cs.font.right} 
+      display: ${cs.disp.get((props) => props.helper && `block`)} 
+      ${(props) => props.helpcolor && cs.font.color(props.helpcolor)};
+    }
     
-    // &.right { .input { text-align: right; } box span.noti { }
-    &.right { .input { text-align: right; } }
-    &.border { .input {border: 1px solid #c0c0c0;} }
+    &.center { .input { ${cs.font.center} } }
+    &.right { .input { ${cs.font.right} } }
+    &.left { .input { ${cs.font.left} } }
+
+    &.border .input { ${cs.box.line} ${(props) => props.bordercolor && cs.border.color(props.bordercolor)}; }
 
     &.transparent { 
       .box { ${cs.bg.trans}
@@ -74,12 +87,6 @@ const StyledObject = styled.div` {
       }
     }
 
-    &.sm {
-      .box {
-        .input { height: 20px; min-height: 20px; padding: 0 5px; line-height: 18px; font-size: 12px; }
-      }
-    }
-  
     &.sizefix {
       .box { .input { ${cs.resize.none} } }
     }
@@ -87,7 +94,8 @@ const StyledObject = styled.div` {
     
     &.inline { ${cs.m.get("5px 0")}
       .ed-label { 
-        ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} ${cs.font.color("rgba(0, 87, 200, 0.95)")}
+        ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} 
+        ${cs.font.primary} ${cs.m.top(-2)}
       }
 
       .box {
@@ -96,9 +104,17 @@ const StyledObject = styled.div` {
           .ed-label.noti { ${cs.opac.hide} ${cs.anim.show} }
         }
 
-        .input { text-align: right; padding-top: 16px; }
+        .input { ${cs.font.right} ${cs.p.top(12)} }
       }
     }
+
+    &.sm .box .input { ${cs.h.get(20)} ${cs.min.height(20)} ${cs.p.get("0 5px")} ${cs.font.line(18)} ${cs.font.sm} }
+    &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get("0 10px")} ${cs.font.line(32)} ${cs.font.lg} }
+
+    &.scroll-t1 { .box > textarea.input { ${cs.scrollbar.t1} } }
+    &.scroll-t2 { .box > textarea.input { ${cs.scrollbar.t2} } }
+    &.scroll-t3 { .box > textarea.input { ${cs.scrollbar.t3} } }
+    &.scroll-t4 { .box > textarea.input { ${cs.scrollbar.t4} } }
   
     @media screen and (max-width : 1024px) {}
   
@@ -277,7 +293,7 @@ class Editbox extends React.PureComponent {
       return <textarea
         ref={(ref) => { this.input = ref }}
         name={props.name}
-        className={cx("input scrollbar-4", { noti }, addedClass, { disable }, { readonly }, { border }, { right })}
+        className={cx("input", { noti }, addedClass, { disable }, { readonly }, { border }, { right })}
         type={type ? type : 'text'}
         value={state.value}
         onChange={this.onChange}
@@ -318,18 +334,23 @@ class Editbox extends React.PureComponent {
     const { props, state } = this;
     const { noti } = state;
     const { disabled = false } = props;
-    const { disable = disabled, readonly, inline, fontsize = "14px", height, minheight, maxheight } = props;
+    const {
+      disable = disabled, readonly, inline, multi,
+      fontsize = "14px", height = "80px", minheight, maxheight,
+      bordercolor, helpcolor, bgcolor, fontcolor 
+    } = props;
 
     return (
-      <StyledObject className={cx('edit-box', props.className, { inline })} height={height} fontsize={fontsize}
-        maxheight={maxheight} minheight={minheight} style={props.style}>
+      <StyledObject className={cx('edit-box', props.className, { inline })} 
+        height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight} 
+        helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}</label>}
         <div className={cx("box", { disable }, { readonly })} >
           {props.label && inline && <label className={cx("ed-label", { noti })}>{props.label}</label>}
           {this.elemInput()}
           {!readonly && <div className="underline"></div>}
           {this.elemNoti()}
-          {(props.onClear || props.clear) && <Svg className="btn-clear sm" onClick={this.onClear} name={"clear"} color={'black'} />
+          {(props.onClear || props.clear) && <Svg className={cx("btn-clear sm", {multi})} onClick={this.onClear} name={"clear"} color={'black'} />
           }
         </div>
         {props.helper && <div className="guide">{props.helper}</div>}

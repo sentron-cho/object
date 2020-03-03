@@ -13,7 +13,7 @@ const StyledBox = styled.div`{
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
       ${cs.w.calc("100% - 20px")}
 
-      & > * { ${cs.m.r10} ${cs.m.t5} }
+      & > * { ${cs.m.r10} }
     }
 
     .lb-show { ${cs.m.t5} ${cs.m.r30} &.ok{ ${cs.font.red} } }
@@ -29,39 +29,6 @@ const StyledBox = styled.div`{
   }
 }`;
 
-// const JsxString = (component, counter = 0) => {
-//   let type = component.type.name;
-//   let props = component.props;
-//   let propsString = "";
-//   for (let key in props) {
-//     if (key !== "children") {
-//       let propValue = props[key];
-//       let value = "";
-//       if (Util.isJson(propValue)) {
-//         value = `{${JSON.stringify(propValue).replace(/['"]+/g, '')}}`;
-//       } else if (propValue instanceof Object) { 
-//         if (String(propValue).indexOf(`function ${key}`) === 0) {
-//           value = `${propValue}`;
-//         } else { 
-//           value = `${"{}"}`;
-//         }
-        
-//       } else {
-//         value = `"${propValue}"`;
-//       }
-//       propsString += ` ${key}=${value}`;
-//     }
-//   }
-//   if (props.children) {
-//     counter += 2;
-//     var children = JsxString(props.children, counter);
-//     return `<${type}${propsString}>
-// ${Array(counter).join(" ")}  ${children}
-// ${Array(counter).join(" ")}</${type}>`;
-//   }
-//   return `<${type}${propsString} />`;
-// }
-
 export const Linebox = (props) => {
   const [copy, setCopy] = useState("code copy");
 
@@ -69,7 +36,7 @@ export const Linebox = (props) => {
     setCopy("code copy");
   }, []);
 
-  const { width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.' } = props;
+  const { className='', width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.' } = props;
 
   let cwidth = "";
   if (inline) {
@@ -79,18 +46,15 @@ export const Linebox = (props) => {
       cwidth = `${(100 / props.children.length)}%`;
     }
   }
-  const tag = props.title.split(" ").join("-");
+  // const tag = props.title.split(" ").join("-");
 
   const onClick = (e, eid) => {
     setCopy(copy === "copy ok" ? "code copy" : "copy ok");
   }
 
-  const primary = copy === 'copy ok';
-  // const code = sample || props.children[0] ? JsxString(props.children[0]) : '';
-  // const code = sample || '';
   const iscopy = copy === 'copy ok';
 
-  return <StyledBox className={cx("lb-box", tag, { inline })} width={width} cwidth={cwidth}>
+  return <StyledBox className={cx("lb-box", className, { inline })} width={width} cwidth={cwidth}>
     <label className={"lb-tl"}>{props.title}</label>
     {props.desc && <p className={"lb-desc"}>{props.desc}</p>}
     <div className={cx("lb-li", props.className)}>

@@ -555,6 +555,29 @@ const cs = {
     bottom: (v) => Number.isInteger(v) ? `padding-bottom: ${v}px;` : `padding-bottom: ${v};`,
     get: (v) => Number.isInteger(v) ? `padding: ${v}px;` : `padding: ${v};`,
   },
+
+  scrollbar: {
+    t1: `
+    ::-webkit-scrollbar { width: 10px; background-color: #F5F5F5; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: rgb(128, 128, 128); }
+    ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: rgba(68, 68, 68, 1); }
+    `,
+    t2: `
+    ::-webkit-scrollbar { width: 6px; background-color: #F5F5F5; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: #F5F5F5; }
+    ::-webkit-scrollbar-thumb { background-color: #000000; }
+    `,
+    t3: `
+    ::-webkit-scrollbar { width: 4px }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+    ::-webkit-scrollbar-thumb { background-color: rgb(29, 29, 29); outline: 1px solid rgba(0, 0, 0, 0.658); }
+    `,
+    t4: `
+    ::-webkit-scrollbar { width: 12px }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); }
+    ::-webkit-scrollbar-thumb { background-color: darkgrey; outline: 1px solid #a0a0a087; }
+    `,
+  }
 };
 
 export default cs;

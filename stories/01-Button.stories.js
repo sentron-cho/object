@@ -20,9 +20,9 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-export const object = () => {
-  const samplecode = (value) => `<Button className={""} ${value} title={"button"} onClick={} />`;
+const samplecode = (value) => `<Button className={""} ${value} title={"button"} onClick={} />`;
 
+export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"normal"} sample={samplecode()}>
@@ -67,7 +67,7 @@ export const object = () => {
         <Button className={"primary center"} title={"primary center"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"type"} sample={samplecode()}>
+      <Linebox title={"type"} className={"type"} sample={samplecode()}>
         <Button className={"primary ltype"} title={"primary ltype"} onClick={action('onClick')} />
         <Button className={"primary ctype"} title={"primary ctype"} onClick={action('onClick')} />
         <Button className={"primary rtype"} title={"primary rtype"} onClick={action('onClick')} />
@@ -77,7 +77,7 @@ export const object = () => {
         <Button className={"primary full"} title={"primary full"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"size"} sample={samplecode()}>
+      <Linebox title={"size"} className={"size"} sample={samplecode()}>
         <Button className={"primary xs"} title={"primary xs"} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"primary sm"} onClick={action('onClick')} />
         <Button className={"primary md"} title={"primary md"} onClick={action('onClick')} />
@@ -131,7 +131,7 @@ export const sample = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+      <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
         <Button className={cx('b-s', value, classname)} title={title} onClick={action('onClick')} />
       </Linebox>
     </StyledObject>

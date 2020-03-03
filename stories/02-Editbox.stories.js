@@ -97,14 +97,27 @@ object.story = {
 
 export const sample = () => {
   const classname = text('classname', 'primary');
-  const title = text('title', 'Button');
-  const options = { xl: 'xl', lg: 'lg', md: 'md', sm: 'sm', xs: 'xs' };
-  const value = radios('size', options, 'md', 'Other');
+  const label = text('label', 'Editbox');
+  const guide = text('guide', 'Editbox');
+  const value = text('value', '');
+  const helper = text('helper', 'help text');
+  const multi = boolean('multi', false);
+  const inline = boolean('inline', false);
+  const readonly = boolean('readonly', false);
+  const disabled = boolean('disabled', false);
+  const select = radios('size', { lg: 'lg', sm: 'sm' }, '', 'Other');
+  const type = radios('type', { text: 'text', date: 'date', number: 'number' }, 'text', 'Other');
+  const bordercolor = text('bordercolor', '');
+  const border = bordercolor ? true : false;
+  const fontcolor = text('fontcolor', '');
+  const bgcolor = text('bgcolor', '');
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Editbox className={''} type={"text"} label={"inline"} guide={"inline"} value={"inline"} inline={false} />
+        <Editbox className={cx('b-s', select, classname, {border})} type={type} label={label} helper={helper}
+          guide={guide} value={value} inline={inline} multi={multi} readonly={readonly} disabled={disabled}
+          bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} />
       </Linebox>
     </StyledObject>
   );

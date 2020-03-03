@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CODE } from 'svc/Enum';
-import { Storage } from 'object/src/Utils';
+import { CODE } from '../Config';
+import { Storage } from '../Utils';
 
 // 태스크의 데이터를 가져오는 방식은 일반적인 통신 방식으로 수행
 // 이벤트 및 데이터 그리고 성능 문제로 인해 데이터를 가져오는건 일반적인 통신으로 하자.

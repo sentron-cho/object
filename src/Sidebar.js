@@ -5,7 +5,6 @@ import cx from 'classnames/bind';
 import axios from 'axios';
 import { Svg, Loading, Util, cs } from './index';
 import { EID, SCREEN, ST, CODE} from './Config';
-import { URL } from 'svc/Enum';
 import * as actions from './actor/Action';
 import { ICON } from "./Icons";
 
@@ -79,6 +78,7 @@ class Sidebar extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
+    this.api = props.api || '';
     const menus = type !== SCREEN.ST.MOBILE ? EID.SHOW : EID.HIDE;
     this.state = { type: type, menus: menus, anim: '', alarms: null, appinfo: null, update: false, updatestate: 'update...' }
     this.interval = 0.2;
@@ -87,11 +87,11 @@ class Sidebar extends React.PureComponent {
   }
 
   doReload = () => {
-    actions.doSelect(URL.API.ADMIN.WEBINFO, null).then(({ result }) => {
+    this.api && actions.doSelect(this.api.ADMIN.WEBINFO, null).then(({ result }) => {
       this.setState({ appinfo: result });
     })
 
-    actions.doSelect(URL.API.ADMIN.ALARMS, null).then(({ result }) => {
+    this.api && actions.doSelect(this.api.ADMIN.ALARMS, null).then(({ result }) => {
       result && result.map(item => {
         if (item.level === "appup") {
           item.type = "system";
@@ -108,7 +108,7 @@ class Sidebar extends React.PureComponent {
 
   // 일반 알림을 클릭하면...
   onClickAlarm = (item) => {
-    actions.doUpdate(URL.API.ADMIN.ALARMS, { rowid: item.alarmid, ok: "Y" }, null).then(({ code }) => {
+    this.api && actions.doUpdate(this.api.ADMIN.ALARMS, { rowid: item.alarmid, ok: "Y" }, null).then(({ code }) => {
       this.props.openConfirm({
         title: item.title,  msg: item.text, type: 'info', cancel: false,
         onClicked: (isOk) => this.doReload()
@@ -125,7 +125,7 @@ class Sidebar extends React.PureComponent {
       onClicked: (isOk) => {
         if (isOk) {
           this.setState({ update: true });
-          actions.doUpdate(URL.API.ADMIN.APPUP, { 'type': item.tag, 'tag': item.vers }, null).then(({ code, result }) => {
+          this.api && actions.doUpdate(this.api.ADMIN.APPUP, { 'type': item.tag, 'tag': item.vers }, null).then(({ code, result }) => {
             const cmdid = result;
             if (cmdid > 0) {
               this.runCheckState(cmdid);
@@ -150,8 +150,10 @@ class Sidebar extends React.PureComponent {
       });
     }
 
+    if (!this.api) return;
+    
     this.timer = setInterval(() => {
-      axios.get(URL.API.ADMIN.APPUP_CHECK, { params: { cmdid: cmdid } }).then((res) => {
+      axios.get(this.api.ADMIN.APPUP_CHECK, { params: { cmdid: cmdid } }).then((res) => {
         const { data } = res;
         const { code, value } = data;
         const { state } = value;

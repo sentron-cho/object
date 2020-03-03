@@ -23,6 +23,25 @@ export default {
 const samplecode = (value) => `<Button className={""} ${value} title={"button"} onClick={} />`;
 
 export const object = () => {
+  const classname = text('classname', 'primary');
+  const title = text('title', 'Button');
+  const options = { xl: 'xl', lg: 'lg', md: 'md', sm: 'sm', xs: 'xs' };
+  const value = radios('size', options, 'md', 'Other');
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
+        <Button className={cx('b-s', value, classname)} title={title} onClick={action('onClick')} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+object.story = {
+  name: 'Base'
+};
+
+export const normal = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"normal"} sample={samplecode()}>
@@ -42,7 +61,13 @@ export const object = () => {
         <Button className={"gray-line"} title={"gray-line"} onClick={action('onClick')} />
         <Button className={"gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const disabled = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"disabled"} sample={samplecode()}>
         <Button className={"disabled"} title={"disabled"} onClick={action('onClick')} />
         <Button className={"disabled trans"} title={"trans"} onClick={action('onClick')} />
@@ -60,23 +85,47 @@ export const object = () => {
         <Button className={"disabled gray-line"} title={"gray-line"} onClick={action('onClick')} />
         <Button className={"disabled gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const align = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"align"} sample={samplecode()}>
         <Button className={"primary left"} title={"primary left"} onClick={action('onClick')} />
         <Button className={"primary right"} title={"primary right"} onClick={action('onClick')} />
         <Button className={"primary center"} title={"primary center"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const type = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"type"} className={"type"} sample={samplecode()}>
         <Button className={"primary ltype"} title={"primary ltype"} onClick={action('onClick')} />
         <Button className={"primary ctype"} title={"primary ctype"} onClick={action('onClick')} />
         <Button className={"primary rtype"} title={"primary rtype"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const full = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"full"} sample={samplecode()}>
         <Button className={"primary full"} title={"primary full"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const size = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"size"} className={"size"} sample={samplecode()}>
         <Button className={"primary xs"} title={"primary xs"} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"primary sm"} onClick={action('onClick')} />
@@ -88,7 +137,13 @@ export const object = () => {
         <Button className={"primary xs middle"} title={"primary middle"} onClick={action('onClick')} />
         <Button className={"primary xs bottom"} title={"primary bottom"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const icontype = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"icon type"} sample={samplecode('icon={"menu"}')}>
         <Button className={"primary xs"} icon={"menu"} title={"icon xs"} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"icon sm"} onClick={action('onClick')} />
@@ -96,7 +151,13 @@ export const object = () => {
         <Button className={"primary lg"} icon={"menu"} title={"icon lg"} onClick={action('onClick')} />
         <Button className={"primary xl"} icon={"menu"} title={"icon xl"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const iconcolor = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"icon color"} sample={samplecode('icon={"menu"} iconcolor={"white"}')}>
         <Button className={"dark sm"} icon={"menu"} title={cs.color.primary} iconcolor={cs.color.primary} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"white"} iconcolor={"white"} onClick={action('onClick')} />
@@ -107,32 +168,18 @@ export const object = () => {
         <Button className={"primary sm"} icon={"menu"} title={"dark"} iconcolor={"dark"} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"gray"} iconcolor={"gray"} onClick={action('onClick')} />
       </Linebox>
+    </StyledObject>
+  );
+};
 
+export const running = () => {
+  return (
+    <StyledObject className={"t-main"}>
       <Linebox title={"running"} sample={samplecode('icon={"menu"} isrun={true}')}>
         <Button className={"dark sm"} icon={"menu"} title={"running false"} isrun={false} onClick={action('onClick')} />
         <Button className={"dark sm"} icon={"menu"} title={"running true"} isrun={true} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"running false"} isrun={false} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"running true"} isrun={true} onClick={action('onClick')} />
-      </Linebox>
-
-    </StyledObject>
-  );
-};
-
-object.story = {
-  name: 'Base'
-};
-
-export const sample = () => {
-  const classname = text('classname', 'primary');
-  const title = text('title', 'Button');
-  const options = { xl: 'xl', lg: 'lg', md: 'md', sm: 'sm', xs: 'xs' };
-  const value = radios('size', options, 'md', 'Other');
-
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Button className={cx('b-s', value, classname)} title={title} onClick={action('onClick')} />
       </Linebox>
     </StyledObject>
   );

@@ -21,19 +21,11 @@ export default {
 };
 
 export const object = () => {
-  // knobs 만들기
-  // const classname = text('classname', 'primary');
-  // const title = text('title', 'Button');
-  // const options = { xl: 'xl', lg: 'lg', md: 'md', sm: 'sm', xs: 'xs' };
-  // const value = radios('size', options, 'md', 'Other');
+  const samplecode = (value) => `<Button className={""} ${value} title={"button"} onClick={} />`;
 
   return (
     <StyledObject className={"t-main"}>
-      {/* <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
-        <Button className={cx('b-s', value, classname)} title={title} onClick={action('onClick')} />
-      </Linebox> */}
-
-      <Linebox title={"normal"}>
+      <Linebox title={"normal"} sample={samplecode()}>
         <Button className={""} title={"button"} onClick={action('onClick')} />
         <Button className={"trans"} title={"trans"} onClick={action('onClick')} />
         <Button className={"primary"} title={"primary"} onClick={action('onClick')} />
@@ -51,7 +43,7 @@ export const object = () => {
         <Button className={"gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"disabled"}>
+      <Linebox title={"disabled"} sample={samplecode()}>
         <Button className={"disabled"} title={"disabled"} onClick={action('onClick')} />
         <Button className={"disabled trans"} title={"trans"} onClick={action('onClick')} />
         <Button className={"disabled primary"} title={"primary"} onClick={action('onClick')} />
@@ -69,23 +61,23 @@ export const object = () => {
         <Button className={"disabled gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"align"}>
+      <Linebox title={"align"} sample={samplecode()}>
         <Button className={"primary left"} title={"primary left"} onClick={action('onClick')} />
         <Button className={"primary right"} title={"primary right"} onClick={action('onClick')} />
         <Button className={"primary center"} title={"primary center"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"type"}>
+      <Linebox title={"type"} sample={samplecode()}>
         <Button className={"primary ltype"} title={"primary ltype"} onClick={action('onClick')} />
         <Button className={"primary ctype"} title={"primary ctype"} onClick={action('onClick')} />
         <Button className={"primary rtype"} title={"primary rtype"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"full"}>
+      <Linebox title={"full"} sample={samplecode()}>
         <Button className={"primary full"} title={"primary full"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"size"}>
+      <Linebox title={"size"} sample={samplecode()}>
         <Button className={"primary xs"} title={"primary xs"} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"primary sm"} onClick={action('onClick')} />
         <Button className={"primary md"} title={"primary md"} onClick={action('onClick')} />
@@ -97,7 +89,7 @@ export const object = () => {
         <Button className={"primary xs bottom"} title={"primary bottom"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"icon type"}>
+      <Linebox title={"icon type"} sample={samplecode('icon={"menu"}')}>
         <Button className={"primary xs"} icon={"menu"} title={"icon xs"} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"icon sm"} onClick={action('onClick')} />
         <Button className={"primary md"} icon={"menu"} title={"icon md"} onClick={action('onClick')} />
@@ -105,7 +97,7 @@ export const object = () => {
         <Button className={"primary xl"} icon={"menu"} title={"icon xl"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"icon color"}>
+      <Linebox title={"icon color"} sample={samplecode('icon={"menu"} iconcolor={"white"}')}>
         <Button className={"dark sm"} icon={"menu"} title={cs.color.primary} iconcolor={cs.color.primary} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"white"} iconcolor={"white"} onClick={action('onClick')} />
         <Button className={"primary sm"} icon={"menu"} title={"black"} iconcolor={"black"} onClick={action('onClick')} />
@@ -116,7 +108,7 @@ export const object = () => {
         <Button className={"primary sm"} icon={"menu"} title={"gray"} iconcolor={"gray"} onClick={action('onClick')} />
       </Linebox>
 
-      <Linebox title={"running"}>
+      <Linebox title={"running"} sample={samplecode('icon={"menu"} isrun={true}')}>
         <Button className={"dark sm"} icon={"menu"} title={"running false"} isrun={false} onClick={action('onClick')} />
         <Button className={"dark sm"} icon={"menu"} title={"running true"} isrun={true} onClick={action('onClick')} />
         <Button className={"primary sm"} title={"running false"} isrun={false} onClick={action('onClick')} />

@@ -22,28 +22,24 @@ export default {
 };
 
 export const object = () => {
-  // knobs 만들기
-  // const classname = text('classname', 'primary');
-  // const title = text('title', 'Button');
-  // const options = { xl: 'xl', lg: 'lg', md: 'md', sm: 'sm', xs: 'xs' };
-  // const value = radios('size', options, 'md', 'Other');
+  const samplecode = (value) => `<Editbox className={''} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} ${value} />`;
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"normal"} inline={true}>
+      <Linebox title={"normal"} inline={true} sample={samplecode()}>
         <Editbox className={cx('')} label={"guide"} guide={"guide"} />
         <Editbox className={cx('')} label={"focus"} guide={"focus"} value={"focus"} focus={true} />
         <Editbox className={cx('')} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} />
         <Editbox className={cx('')} label={"disabled"} guide={"disabled"} value={"disabled"} disabled={true} />
       </Linebox>
 
-      <Linebox title={"clear && event"} inline={true}>
+      <Linebox title={"clear && event"} inline={true} sample={samplecode(`onClear={} onEnter={} onChange={}`)}>
         <Editbox className={cx('')} label={"onClear"} guide={"onClear"} value={"onClear"} onClear={action('onClear')} />
         <Editbox className={cx('')} label={"onEnter"} guide={"onEnter"} value={"onClear"} onEnter={action('onEnter')} />
         <Editbox className={cx('')} label={"onChange"} guide={"onChange"} value={"onChange"} onChange={action('onClear')} />
       </Linebox>
 
-      <Linebox title={"inline"}>
+      <Linebox title={"inline"} sample={samplecode('inline={true}')}>>
         <Editbox className={cx('')} label={"inline"} guide={"inline"} value={"inline"} inline={true} />
       </Linebox>
     </StyledObject>

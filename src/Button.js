@@ -7,12 +7,7 @@ import cs from './css-style';
 
 // 버튼 오브젝트
 const StyledObject = styled.span`{
-  &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} ${cs.disp.inblock}
-
-    .btn-label {
-      ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.block} 
-      ${cs.mouse.pointer} ${cs.font.center} ${cs.h.fit}
-    }
+  &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} ${cs.disp.inblock} ${cs.mouse.pointer}
 
     &:hover { ${cs.anim.show} ${cs.opac.get(0.8)} }
 
@@ -33,7 +28,7 @@ const StyledObject = styled.span`{
       &.xs { .btn-icon { ${cs.icon.get(10)} ${cs.m.left(0)} } .btn-label { ${cs.p.get("0px 12px")} ${cs.p.b2} ${cs.p.left(16)} } }
     }
 
-    &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.bg.alphablack} } }
+    &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
     &.primary { ${cs.bg.primary} ${cs.font.white} ${cs.border.trans} }
     &.yellow { ${cs.bg.yellow} ${cs.font.white} ${cs.border.trans} }
     &.orange { ${cs.bg.orange} ${cs.font.white} ${cs.border.trans} }
@@ -51,7 +46,8 @@ const StyledObject = styled.span`{
     &.disabled { ${cs.mouse.default} ${cs.font.darkgray} ${cs.opac.alpha}
       // ${cs.bg.lightgray} ${cs.border.darkgray} 
       .btn-label { ${cs.mouse.default} }
-      &:hover { ${cs.bg.trans} }
+      &.trans:hover { &:hover { ${cs.font.noneline} } }
+      // &:hover { ${cs.bg.trans} }
     }
 
     &.left { ${cs.float.left} }
@@ -63,6 +59,11 @@ const StyledObject = styled.span`{
     &.ctype { ${cs.border.radius("0")} ${cs.box.line} ${cs.border.gray} border-right: 0px; border-left: 0px; }
 
     &.full { ${cs.w.full} }
+
+    .btn-label {
+      ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.block} 
+      ${cs.font.center} ${cs.h.fit} ${cs.mouse.pointer}
+    }
   }
 }`;
 

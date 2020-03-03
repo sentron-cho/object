@@ -135,6 +135,7 @@ const cs = {
     min: 'height: min-content;',
     max: 'height: max-content;',
 
+    calc: (v) => Number.isInteger(v) ? `height: calc(${v}px);` : `height: calc(${v});`,
     get: (v) => Number.isInteger(v) ? `height: ${v}px;` : `height: ${v};`,
   },
 
@@ -156,6 +157,7 @@ const cs = {
     min: 'width: min-content;',
     max: 'width: max-content;',
 
+    calc: (v) => Number.isInteger(v) ? `width: calc(${v}px);` : `width: calc(${v});`,
     get: (v) => Number.isInteger(v) ? `width: ${v}px;` : `width: ${v};`,
   },
 
@@ -210,7 +212,13 @@ const cs = {
     plus: `color: ${color.plus};`,
     preline: `white-space: pre-line;`,
     prewrap: `white-space: pre-wrap;`,
+    underline: `text-decoration: underline;`,
+    cancelline: `text-decoration: line-through;`,
+    noneline: `text-decoration: none;`,
+    upper: `text-transform: uppercase;`,
+    lower: `text-transform: lowercase;`,
 
+    deco: (v) => `text-decoration: ${v};`,
     line: (v) => Number.isInteger(v) ? `line-height: ${v}px;` : `line-height: ${v};`,
     color: (v) => `color: ${v};`,
     size: (v) => Number.isInteger(v) ? `font-size: ${v}px;` : `font-size: ${v};`,

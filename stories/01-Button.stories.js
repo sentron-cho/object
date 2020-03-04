@@ -12,8 +12,8 @@ const StyledObject = styled.span`{
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
     .lb-box .lb-li > * { ${cs.m.r10} }
-    .lb-box.type .lb-li > * { margin: 0; }
-    .lb-box.size .lb-li { height: 48px; }
+    .lb-box.type .lb-li > * { ${cs.m.a0} }
+    .lb-box.size .lb-li { ${cs.h.get(48)} }
   }
 }`;
 

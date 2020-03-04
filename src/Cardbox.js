@@ -14,8 +14,8 @@ const StyledObject = styled.div`{
     padding: ${(props) => props.margin};
 
     &.border { ${cs.box.line} }
-    &.radius { ${cs.box.radius } }
-    &.round { ${cs.box.round } }
+    &.radius { ${cs.box.radius} }
+    &.round { ${cs.box.round} }
     &.shodow { ${cs.border.shadow()} }
     
     &.sky { ${cs.bg.sky} }
@@ -40,19 +40,21 @@ const StyledObject = styled.div`{
     &.w25 { ${cs.w.r25} }
     &.w20 { ${cs.w.r20} }
     &.w10 { ${cs.w.r10} }
+    &.full { ${cs.w.full} }
+    &.half { ${cs.w.r50} }
 
     &.invisible {
-      visibility: visible;
-      div {visibility: hidden;}
+      ${cs.disp.visible}
+      div { ${cs.disp.hidden} }
     }
 
-    &.anim { animation: ${({ anim }) => anim && anim.type ? anim.type : "fadein"} ${({ anim }) => anim && anim.time ? anim.time : "0.3s"}; }
-
-    @media screen and (max-width : 1280px) {
+    &.anim { 
+      ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
     }
 
-    @media screen and (max-width : 600px) {
-    }
+    @media screen and (max-width : 1280px) { }
+
+    @media screen and (max-width : 600px) { }
   }
 }`;
 
@@ -81,15 +83,14 @@ export default class Cardbox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { anim } = state;
-    const width = props.width != null ? props.width : "100%";
-    const height = props.height != null ? props.height : "100%";
-    const margin = props.margin != null ? props.margin : "20px";
-    const cursor = props.onClick == null ? 'default' : "pointer";
-    const style = { width, height, margin, cursor };
+    const { width = "100%", height = "100%", margin = "20px", mouse = "default" } = props;
+    const cursor = props.onClick ? "pointer" : mouse;
+    const params = { width, height, margin, cursor };
 
     return (
       <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"))}
-        {...style} style={props.style} eid={props.eid} onClick={this.onClicked} anim={state.anim} onAnimationEnd={this.onAnimEnd}>
+        {...params} style={props.style} eid={props.eid} onClick={this.onClicked} anim={state.anim}
+        onAnimationEnd={this.onAnimEnd}>
         {props.children}
       </StyledObject>
     )

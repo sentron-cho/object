@@ -11,16 +11,16 @@ const StyledBox = styled.div`{
     .lb-desc { ${cs.disp.inblock} ${cs.font.sm} ${cs.p.l10} ${cs.font.darkgray} }
 
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
-      ${cs.w.calc("100% - 20px")}
+      ${cs.w.calc("100% - 20px")} ${props => cs.m.top(props.top)}
 
-      & > * { ${props => cs.m.top(props.top)} }
+      & > * { }
     }
 
     &.box {
       .lb-li { ${cs.box.dashed} }
     }
 
-    .lb-show { ${cs.m.t5} ${cs.m.r20} &.ok{ ${cs.font.red} } }
+    .lb-show { ${cs.m.t5} ${cs.m.r20} ${cs.float.none} &.ok{ ${cs.font.red} } }
     .lb-ex { ${cs.font.white} ${cs.bg.dark} ${cs.box.radius} ${cs.anim.show} ${cs.min.height(20)} ${cs.over.yauto}
       ${cs.w.get("calc(100% - 50px)")} ${cs.m.r20} ${cs.m.t5} ${cs.font.preline} ${cs.p.a10} ${cs.max.height(130)} ${cs.font.md}
     }
@@ -40,7 +40,7 @@ export const Linebox = (props) => {
     setCopy("code copy");
   }, []);
 
-  const { className = '', width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.', top = "", box = false } = props;
+  const { className = '', width = "calc(100% - 20px)", inline = false, sample = null, top = "", box = false } = props;
 
   let cwidth = "";
   if (inline) {
@@ -64,9 +64,9 @@ export const Linebox = (props) => {
     <div className={cx("lb-li", props.className)}>
       {props.children}
     </div>
-    <CopyToClipboard text={sample} onCopy={onClick} >
+    {sample && <CopyToClipboard text={sample} onCopy={onClick} >
       <Button className={cx("lb-show gd-gray xs right", iscopy && 'ok')} title={copy} />
-    </CopyToClipboard>
+    </CopyToClipboard>}
 
     {iscopy && <p className={"lb-ex"}>{sample}</p>}
   </StyledBox>

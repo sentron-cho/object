@@ -38,6 +38,9 @@ const cs = {
     l: 'float: left;',
     right: 'float: right;',
     left: 'float: left;',
+    none: 'float: none;',
+
+    get: (v) => `float: ${v};`,
   },
 
   min: {
@@ -81,6 +84,10 @@ const cs = {
     block: 'display: block;',
     inblock: 'display: inline-block;',
     inline: 'display: inline;',
+    
+    visible: 'visibility: visible;',
+    invisible: 'visibility: invisible;',
+    hidden: 'visibility: hidden;',
 
     get: (v) => `display: ${v};`,
   },
@@ -249,12 +256,19 @@ const cs = {
   anim: {
     hide: `transition: all 200ms ease-out;`,
     show: `transition: all 200ms ease-in;`,
-    // get: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-in;;` : `transition: ${v};`,
+        
     in: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
     out: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
     get: (v) => `transition: ${v};`,
-    showin: (v) => `animation: show-in linear 1 forwards ${v ? v : "150ms"}; @keyframes show-in { from { opacity: 0.1;  } to { opacity: 1; } } `,
-    showout: (v) => `animation: show-out linear 1 forwards ${v ? v : "150ms"}; @keyframes show-out { from { opacity: 1;  } to { opacity: 0; } } `,
+
+    name: (v) => `animation-name: ${v};`,
+    time: (v) => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
+    showin: (v) => `animation: show-in linear 1 forwards ${v ? v : "150ms"}; @keyframes show-in { from { opacity: 0.1;  } to { opacity: 1; } };`,
+    showout: (v) => `animation: show-out linear 1 forwards ${v ? v : "150ms"}; @keyframes show-out { from { opacity: 1;  } to { opacity: 0; } };`,
+    fadein: (v) => `animation: fadein linear 1 forwards ${v ? v : "150ms"}; @keyframes fadein { from { opacity: 0; } to { opacity: 1; } };`,
+    fadeout: (v) => `animation: fadeout linear 1 forwards ${v ? v : "150ms"}; @keyframes fadeout { from { opacity: 1; } to { opacity: 0; } };`,
+    slidein: (v) => `animation: slidein linear 1 forwards ${v ? v : "150ms"}; @keyframes slidein { from  { transform: translateX(-100%); opacity: 0.3; } to { transform: translateX(0%); opacity: 1; } };`,
+    slideout: (v) => `animation: slideout linear 1 forwards ${v ? v : "150ms"}; @keyframes slideout { from  { transform: translateX(0%);  opacity: 0.3; } to { transform: translateX(-100%);  opacity: 1; } };`,    
   },
 
   align: {
@@ -585,7 +599,7 @@ const cs = {
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); }
     ::-webkit-scrollbar-thumb { background-color: darkgrey; outline: 1px solid #a0a0a087; }
     `,
-  }
+  },
 };
 
 export default cs;

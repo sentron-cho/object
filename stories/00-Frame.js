@@ -13,21 +13,21 @@ const StyledBox = styled.div`{
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
       ${cs.w.calc("100% - 20px")}
 
-      & > * { ${cs.m.r10} ${props => cs.m.top(props.top)}}
+      & > * { ${props => cs.m.top(props.top)} }
     }
 
     &.box {
       .lb-li { ${cs.box.dashed} }
     }
 
-    .lb-show { ${cs.m.t5} ${cs.m.r30} &.ok{ ${cs.font.red} } }
+    .lb-show { ${cs.m.t5} ${cs.m.r20} &.ok{ ${cs.font.red} } }
     .lb-ex { ${cs.font.white} ${cs.bg.dark} ${cs.box.radius} ${cs.anim.show} ${cs.min.height(20)} ${cs.over.yauto}
       ${cs.w.get("calc(100% - 50px)")} ${cs.m.r20} ${cs.m.t5} ${cs.font.preline} ${cs.p.a10} ${cs.max.height(130)} ${cs.font.md}
     }
 
     &.inline {
       .lb-li { 
-        & > * { ${cs.disp.inblock} ${props => props.cwidth && cs.w.get(`calc(${props.cwidth} - 10px)`)} }
+        & > * { ${cs.m.r10} ${cs.disp.inblock} ${props => props.cwidth && cs.w.get(`calc(${props.cwidth} - 10px)`)} }
       } 
     }
   }

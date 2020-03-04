@@ -269,9 +269,10 @@ const cs = {
     rbottom: `position: absolute; right: 5px; bottom: 5px;`,
     left: `position: absolute; left: 0;`,
     right: `position: absolute; right: 0;`,
-
+    
     x: (v) => Number.isInteger(v) ? `transform: translateX(${v}px);` : `transform: translateX(${v});`,
     y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,
+    vertical: (v) => `vertical-align : ${v};`,
     get: (v) => `transform: ${v};`,
   },
 
@@ -332,6 +333,7 @@ const cs = {
     top: (v) => Number.isInteger(v) ? `border-top: solid ${v}px ${color.lightgray};` : `border-top: ${v};`,
     bottom: (v) => Number.isInteger(v) ? `border-bottom: solid ${v}px ${color.lightgray};` : `border-bottom: ${v};`,
     get: (v) => `border: ${v};`,
+    sizing: (v) => `box-sizing: ${v};`,
   },
 
   border: {

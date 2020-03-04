@@ -7,7 +7,7 @@ import cs from './css-style';
 const StyledObject = styled.div`{
   &.card-box {
     cursor: ${(props) => props.cursor}; ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}
-    ${cs.disp.inblock} ${cs.bg.trans} vertical-align: top;
+    ${cs.disp.inblock} ${cs.bg.trans} ${cs.align.vertical("top")} ${cs.box.sizing("border-box")}
 
     width: ${(props) => props.width};
     height: ${(props) => props.height};
@@ -18,11 +18,19 @@ const StyledObject = styled.div`{
     &.round { ${cs.box.round } }
     &.shodow { ${cs.border.shadow()} }
     
+    &.sky { ${cs.bg.sky} }
+    &.yellow { ${cs.bg.yellow} }
+    &.green { ${cs.bg.green} }
+    &.orange { ${cs.bg.orange} }
+    &.red { ${cs.bg.red} }
+    &.primary { ${cs.bg.primary} }
+    &.blue { ${cs.bg.blue} }
+    &.alphagray { ${cs.bg.alphagray} }
+    &.gray { ${cs.bg.gray} }
+    &.alphablack { ${cs.bg.alphablack} }
     &.dark { ${cs.bg.dark} ${cs.font.white} }
     &.black { ${cs.bg.black} ${cs.font.white} }
-    &.gray { ${cs.bg.gray} }
-    &.alphagray { ${cs.bg.alphagray} }
-
+    
     &.center { ${cs.align.xcenter} }
     &.ycenter { ${cs.align.ycenter} }
     &.middle { ${cs.align.center} }
@@ -44,7 +52,6 @@ const StyledObject = styled.div`{
     }
 
     @media screen and (max-width : 600px) {
-      // width: 100%; padding: 5px;
     }
   }
 }`;

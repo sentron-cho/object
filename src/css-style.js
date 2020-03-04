@@ -36,7 +36,7 @@ const cs = {
   float: {
     r: 'float: right;',
     l: 'float: left;',
-    right:  'float: right;',
+    right: 'float: right;',
     left: 'float: left;',
   },
 
@@ -64,7 +64,7 @@ const cs = {
     rtop: 'right: 0; bottom: 0;',
     lbottom: 'left: 0; bottom: 0;',
     rbottom: 'right: 0; bottom: 0;',
-    
+
     get: (v) => `position: ${v};`,
   },
 
@@ -226,6 +226,8 @@ const cs = {
     upper: `text-transform: uppercase;`,
     lower: `text-transform: lowercase;`,
 
+    family: (v) => `font-family: ${v};`,
+    style: (v) => `font-family: ${v};`,
     deco: (v) => `text-decoration: ${v};`,
     line: (v) => Number.isInteger(v) ? `line-height: ${v}px;` : `line-height: ${v};`,
     color: (v) => `color: ${v};`,
@@ -295,7 +297,8 @@ const cs = {
     alphagray: `background: ${color.alphagray};`,
     select: `background: ${color.select};`,
     back: `background: ${color.back};`,
-    vgradint: `background: linear-gradient(45deg, #f1f8ff33, #c8e1ffa0);`,
+    vgradint: `background: linear-gradient(45deg,#f1f8ff33,#c8e1ffa0);`,
+    hgradint: `background: linear-gradient(180deg,#e8f1ffa0,#a7cfffa0,#147effa0);`,
 
     color: (v) => `background: ${v};`,
     get: (v) => `background: ${v};`,
@@ -310,7 +313,7 @@ const cs = {
     xs: `width: 14px; height: 14px;`,
     xxs: `width: 12px; height: 12px;`,
 
-    fill: (v) => `fill: ${v};`, 
+    fill: (v) => `fill: ${v};`,
     get: (v) => `width: ${v}px; height: ${v}px;`,
   },
 
@@ -321,10 +324,10 @@ const cs = {
     line: `border: solid 1px ${color.gray};`,
     shadow: `box-shadow: 1px 1px 2px 2px #2121219c;`,
 
-    left: (v) => Number.isInteger(v) ? `border-left: solid ${v}px ${color.lightgray};` :`border-left: ${v};`,
-    right: (v) => Number.isInteger(v) ? `border-right: solid ${v}px ${color.lightgray};` :`border-right: ${v};`,
-    top: (v) => Number.isInteger(v) ? `border-top: solid ${v}px ${color.lightgray};` :`border-top: ${v};`,
-    bottom: (v) => Number.isInteger(v) ? `border-bottom: solid ${v}px ${color.lightgray};` :`border-bottom: ${v};`,
+    left: (v) => Number.isInteger(v) ? `border-left: solid ${v}px ${color.lightgray};` : `border-left: ${v};`,
+    right: (v) => Number.isInteger(v) ? `border-right: solid ${v}px ${color.lightgray};` : `border-right: ${v};`,
+    top: (v) => Number.isInteger(v) ? `border-top: solid ${v}px ${color.lightgray};` : `border-top: ${v};`,
+    bottom: (v) => Number.isInteger(v) ? `border-bottom: solid ${v}px ${color.lightgray};` : `border-bottom: ${v};`,
     get: (v) => `border: ${v};`,
   },
 

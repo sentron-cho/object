@@ -322,8 +322,11 @@ const cs = {
     round: `border-radius: 10px;`,
     circle: `border-radius: 100%;`,
     line: `border: solid 1px ${color.gray};`,
+    doted: `border: doted 1px ${color.gray};`,
+    dashed: `border: dashed 1px ${color.gray};`,
     shadow: `box-shadow: 1px 1px 2px 2px #2121219c;`,
 
+    style: (v) => `border-style: ${v};`,
     left: (v) => Number.isInteger(v) ? `border-left: solid ${v}px ${color.lightgray};` : `border-left: ${v};`,
     right: (v) => Number.isInteger(v) ? `border-right: solid ${v}px ${color.lightgray};` : `border-right: ${v};`,
     top: (v) => Number.isInteger(v) ? `border-top: solid ${v}px ${color.lightgray};` : `border-top: ${v};`,

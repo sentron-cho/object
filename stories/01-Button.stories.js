@@ -9,6 +9,8 @@ import { cs } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
+    .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
+
     .lb-box.type .lb-li > * { margin: 0; }
     .lb-box.size .lb-li { height: 48px; }
   }
@@ -53,11 +55,14 @@ export const normal = () => {
         <Button className={"red"} title={"red"} onClick={action('onClick')} />
         <Button className={"green"} title={"green"} onClick={action('onClick')} />
         <Button className={"dark"} title={"dark"} onClick={action('onClick')} />
+      </Linebox>
+
+      <Linebox title={""} sample={samplecode()}>
         <Button className={"black"} title={"black"} onClick={action('onClick')} />
-        <Button className={"primary-line"} title={"primary-line"} onClick={action('onClick')} />
-        <Button className={"lightgray"} title={"lightgray"} onClick={action('onClick')} />
         <Button className={"gray"} title={"gray"} onClick={action('onClick')} />
         <Button className={"white"} title={"white"} onClick={action('onClick')} />
+        <Button className={"lightgray"} title={"lightgray"} onClick={action('onClick')} />
+        <Button className={"primary-line"} title={"primary-line"} onClick={action('onClick')} />
         <Button className={"gray-line"} title={"gray-line"} onClick={action('onClick')} />
         <Button className={"gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
@@ -77,11 +82,14 @@ export const disabled = () => {
         <Button className={"disabled red"} title={"red"} onClick={action('onClick')} />
         <Button className={"disabled green"} title={"green"} onClick={action('onClick')} />
         <Button className={"disabled dark"} title={"dark"} onClick={action('onClick')} />
+      </Linebox>
+      
+      <Linebox title={""} sample={samplecode()}>
         <Button className={"disabled black"} title={"black"} onClick={action('onClick')} />
-        <Button className={"disabled primary-line"} title={"primary-line"} onClick={action('onClick')} />
-        <Button className={"disabled lightgray"} title={"lightgray"} onClick={action('onClick')} />
         <Button className={"disabled gray"} title={"gray"} onClick={action('onClick')} />
         <Button className={"disabled white"} title={"white"} onClick={action('onClick')} />
+        <Button className={"disabled lightgray"} title={"lightgray"} onClick={action('onClick')} />
+        <Button className={"disabled primary-line"} title={"primary-line"} onClick={action('onClick')} />
         <Button className={"disabled gray-line"} title={"gray-line"} onClick={action('onClick')} />
         <Button className={"disabled gd-gray"} title={"gd-gray"} onClick={action('onClick')} />
       </Linebox>
@@ -132,7 +140,9 @@ export const size = () => {
         <Button className={"primary md"} title={"primary md"} onClick={action('onClick')} />
         <Button className={"primary lg"} title={"primary lg"} onClick={action('onClick')} />
         <Button className={"primary xl"} title={"primary xl"} onClick={action('onClick')} />
-
+      </Linebox>
+      
+      <Linebox title={""} className={"size"} sample={samplecode()} box={true}>
         <Button className={"primary xs top"} title={"primary top"} onClick={action('onClick')} />
         <Button className={"primary xs middle"} title={"primary middle"} onClick={action('onClick')} />
         <Button className={"primary xs bottom"} title={"primary bottom"} onClick={action('onClick')} />

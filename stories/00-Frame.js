@@ -5,7 +5,7 @@ import { cs, Button, Util } from '../src';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const StyledBox = styled.div`{
-  &.lb-box { ${cs.m.a5} ${cs.m.t20} ${props => cs.w.get(props.width)} ${cs.disp.inblock}
+  &.lb-box { ${cs.m.a5} ${cs.m.t20} ${props => cs.w.get(props.width)} ${cs.disp.block}
 
     .lb-tl { ${cs.disp.inblock} ${cs.font.md} ${cs.font.upper} }
     .lb-desc { ${cs.disp.inblock} ${cs.font.sm} ${cs.p.l10} ${cs.font.darkgray} }
@@ -13,7 +13,11 @@ const StyledBox = styled.div`{
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
       ${cs.w.calc("100% - 20px")}
 
-      & > * { ${cs.m.r10} }
+      & > * { ${cs.m.r10} ${props => cs.m.top(props.top)}}
+    }
+
+    &.box {
+      .lb-li { ${cs.box.dashed} }
     }
 
     .lb-show { ${cs.m.t5} ${cs.m.r30} &.ok{ ${cs.font.red} } }
@@ -36,7 +40,7 @@ export const Linebox = (props) => {
     setCopy("code copy");
   }, []);
 
-  const { className='', width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.' } = props;
+  const { className = '', width = "calc(100% - 20px)", inline = false, sample = 'There is no sample code.', top = "", box = false } = props;
 
   let cwidth = "";
   if (inline) {
@@ -54,8 +58,8 @@ export const Linebox = (props) => {
 
   const iscopy = copy === 'copy ok';
 
-  return <StyledBox className={cx("lb-box", className, { inline })} width={width} cwidth={cwidth}>
-    <label className={"lb-tl"}>{props.title}</label>
+  return <StyledBox className={cx("lb-box", className, { inline }, { box })} width={width} cwidth={cwidth} top={top}>
+    {props.title && <label className={"lb-tl"}>{props.title}</label>}
     {props.desc && <p className={"lb-desc"}>{props.desc}</p>}
     <div className={cx("lb-li", props.className)}>
       {props.children}
@@ -63,7 +67,7 @@ export const Linebox = (props) => {
     <CopyToClipboard text={sample} onCopy={onClick} >
       <Button className={cx("lb-show gd-gray xs right", iscopy && 'ok')} title={copy} />
     </CopyToClipboard>
-    
+
     {iscopy && <p className={"lb-ex"}>{sample}</p>}
   </StyledBox>
 }

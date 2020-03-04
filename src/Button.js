@@ -53,7 +53,7 @@ const StyledObject = styled.span`{
 
     &.left { }
     &.right { ${cs.float.right} }
-    &.center { ${cs.align.xcenter} ${cs.pos.relative} }
+    &.center { ${cs.align.xcenter} ${cs.pos.get("sticky")} }
     &.top { ${cs.top(0)} ${cs.pos.relative} }
     &.middle { ${cs.align.ycenter} ${cs.pos.relative} }
     &.bottom { ${cs.top("100%")} ${cs.align.y("-100%")} ${cs.pos.relative} }
@@ -62,7 +62,7 @@ const StyledObject = styled.span`{
     &.ltype { ${cs.border.radius("2px 0 0 2px")} ${cs.box.line} ${cs.border.gray} border-right: 0px; }
     &.ctype { ${cs.border.radius("0")} ${cs.box.line} ${cs.border.gray} border-right: 0px; border-left: 0px; }
 
-    &.full { ${cs.w.full} }
+    &.full { ${cs.w.full} ${cs.p.h0} }
 
     .btn-label {
       ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.block} 

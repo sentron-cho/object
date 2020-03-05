@@ -149,6 +149,11 @@ const cs = {
     fit: 'height: fit-content;',
     min: 'height: min-content;',
     max: 'height: max-content;',
+    dsxl: 'width: 1200px;',
+    dslg: 'width: 800px;',
+    dsmd: 'width: 640px;',
+    dssm: 'width: 420px;',
+    dsxs: 'width: 320px;',
 
     calc: (v) => Number.isInteger(v) ? `height: calc(${v}px);` : `height: calc(${v});`,
     get: (v) => Number.isInteger(v) ? `height: ${v}px;` : `height: ${v};`,
@@ -171,6 +176,11 @@ const cs = {
     fit: 'width: fit-content;',
     min: 'width: min-content;',
     max: 'width: max-content;',
+    dsxl: 'width: 1280px;',
+    dslg: 'width: 800px;',
+    dsmd: 'width: 640px;',
+    dssm: 'width: 480px;',
+    dsxs: 'width: 320px;',
 
     calc: (v) => Number.isInteger(v) ? `width: calc(${v}px);` : `width: calc(${v});`,
     get: (v) => Number.isInteger(v) ? `width: ${v}px;` : `width: ${v};`,

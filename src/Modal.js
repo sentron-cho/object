@@ -6,49 +6,64 @@ import { EID, ST } from './Config';
 import { connect } from 'react-redux';
 import { Button, Svg } from './index';
 
-export const StyledObject = styled.div`
-&.modal {
-  display: block; padding-right: 0; z-index: 999999 !important; height: 100%; ${cs.font.black} 
-  position: fixed; width: 100%; top: 0; left: 0;
+export const StyledObject = styled.div`{ 
+  &.modal {
+    ${cs.disp.block} ${cs.p.a0} ${cs.z.popup} ${cs.font.black} 
+    ${cs.pos.fixed} ${cs.size.full} ${cs.pos.ltop}
 
-  .bg { height: 100%; position: absolute; width: 100%; background: #00000055; }
+    .bg { ${cs.size.full} ${cs.pos.absolute} ${cs.bg.alphablack} }
+    .md-desc { ${cs.m.t15} ${cs.p.l5} }
+    .md-cancel { ${cs.m.r10} }
 
-  .md-desc { margin: 15px; padding-left: 5px; }
+    .md-frame { ${cs.z.get(99)} ${cs.w.get(560)} ${cs.min.height("fit-content")}
+      ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.box.shadow}
 
-  .btn-cancel { float: right; }
+        .md-head { 
+          ${cs.over.hidden} ${cs.border.radius("5px 5px 0 0")} ${cs.p.a10} 
+          ${cs.border.bottom} ${cs.border.lightgray}
 
-  .md-frame { z-index: 99; width: 540px; min-height: fit-content;
-    ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.box.shadow}
+          .md-close { ${cs.float.right} ${cs.m.t2} ${cs.m.r0} ${cs.p.h10} }
+          .md-title { ${cs.font.bold} ${cs.font.lg} ${cs.m.l5} }
+        }
 
-      .md-head { clear: both; overflow: hidden; border-radius: 5px 5px 0 0; padding: 10px 10px;
-        border-bottom: solid 1px #aaa; ${cs.border.lightgray}
-        .close{ margin-top: 2px; margin-right: 0; padding: 0 10px;}
-        .md-title { font-weight:400; margin-left: 5px; font-size: 18px;}
+        .md-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.max.height(400)} ${cs.over.auto} ${cs.h.fit} }
+
+        .md-foot { ${cs.p.a10} ${cs.over.hidden} ${cs.font.right}
+          ${cs.border.top} ${cs.border.lightgray}
+          .button { ${cs.m.l20} }
+        }
+
+      .no-child { ${cs.color.red} ${cs.opac.get(0.7)} ${cs.font.xl} ${cs.font.line(80)} ${cs.font.center} }
+    }
+
+    &.xl { .md-frame { ${cs.w.dsxl} } }
+    &.lg { .md-frame { ${cs.w.dslg} } }
+    &.md { .md-frame { ${cs.w.dsmd} } }
+    &.sm { .md-frame { ${cs.w.dssm} } }
+    &.xs { .md-frame { ${cs.w.dsxs} } }
+
+    &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} 
+      .md-head { ${cs.border.darkgray} }
+      .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
+      .svg-path { fill: white; }
+    }
+    &.white { .md-head, .md-frame { ${cs.bg.white} ${cs.font.dark} } 
+      .md-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
+    }
+
+
+    @media screen and (max-width : 767px) {
+      .bg { ${cs.disp.none} }
+      .md-frame {
+        ${cs.size.full} ${cs.m.a0} ${cs.min.width(400)}
+  
+        .md-head { 
+          ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(60)} 
+          ${cs.p.t20} ${cs.bg.get("#13203a")} ${cs.font.white}
+        };
+        .md-body { ${cs.h.calc("100% - 140px")} };
+        .md-foot { ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(80)} }
       }
-
-      .md-body { padding: 10px 25px; max-height: 400px; overflow: auto; height: fit-content; }
-
-      .md-foot { padding: 10px; overflow: hidden; ${cs.font.right}
-        border-top: solid 1px #aaa; ${cs.border.lightgray}
-        .button { margin-left: 20px; }
-      }
-
-    .no-child { color: red; font-size: 18px; line-height: 80px; text-align: center; font-weight: 500; }
-
-    &.xl { width: 1200px; }
-    &.lg { width: 900px;}
-    &.lm { width: 640px;}
-    &.sm { width: 420px;}
-  }
-
-  @media screen and (max-width : 767px) {
-    .bg { display: none; }
-    .md-frame {
-      width: 100%; margin: 0; height: 100%; min-width: 400px;
-
-      .md-head { border-radius: 0; border: none; height: 60px; padding-top: 20px; background: #13203a; color: #fff; };
-      .md-body { height: calc(100% - 140px)};
-      .md-foot { border-radius: 0; border: none; height: 80px; }
     }
   }
 }`;
@@ -78,10 +93,12 @@ class Modal extends React.PureComponent {
   ///*
   showBodyScroll(isShow) {
     let object = document.getElementById("body-frame");
-    object.style.overflow = isShow ? "auto" : "hidden";
+    if (object && object.style) {
+      object.style.overflow = isShow ? "auto" : "hidden";
+    }
   }
   //*/
-  
+
   getValueWithValidateCheck = (refs) => {
     if (!refs) return null;
 
@@ -149,12 +166,12 @@ class Modal extends React.PureComponent {
 
     return (
       state.show &&
-      <StyledObject className={cx("modal", state.className)} history={this.props.history} onKeyPress={this.onKeyPressed}>
+      <StyledObject className={cx("modal", state.className,  state.size)} history={this.props.history} onKeyPress={this.onKeyPressed}>
         <div className="bg" eid={EID.CANCEL}></div>
-        <div className={cx("md-frame", (state.size))} style={styled}>
+        <div className={cx("md-frame")} style={styled}>
           <div className="md-head">
             <span className="md-title">{state.title}<span>{state.key}</span></span>
-            <Svg className="btn-cancel sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />
+            <Svg className="md-close sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />
           </div>
 
           {state.desc && <div className="md-desc">{state.desc}</div>}
@@ -165,8 +182,8 @@ class Modal extends React.PureComponent {
           </div>
 
           <div className="md-foot">
-            {state.ok && <Button className={cx("primary")} onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />}
-            {state.cancel && <Button className={cx("primary")} onClick={this.onClicked} title={state.cancel} eid={EID.CANCEL} />}
+            {state.ok && <Button className={cx("primary right")} onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />}
+            {state.cancel && <Button className={cx("primary right md-cancel")} onClick={this.onClicked} title={state.cancel} eid={EID.CANCEL} />}
           </div>
         </div>
       </StyledObject>

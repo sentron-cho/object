@@ -10,23 +10,28 @@ const StyledObject = styled.div`
   ${cs.pos.fixed} ${cs.p.right(0)} ${cs.z.popup} ${cs.disp.black} ${cs.pos.ltop} ${cs.size.full}
 
   .bg { ${cs.size.full} ${cs.bg.back} ${cs.pos.ltop} }
-  .btn-cancel { ${cs.float.right} }
+  .cf-close { ${cs.float.right} }
+  .cf-cancel { ${cs.m.r10} }
 
   .cf-frame { ${cs.font.black} ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.border.shadow()} 
     ${cs.anim.show} ${cs.w.get(400)} ${cs.align.center} ${cs.bg.white} ${cs.box.radius}
-
-    &.lg { ${cs.w.get(600)} ${cs.font.md} }
-    &.sm { ${cs.w.get(300)} ${cs.font.sm} }
-    &.xs { ${cs.w.get(200)} ${cs.font.sm} }
 
     .cf-head { 
       ${cs.over.hidden} ${cs.border.radius("5px 5px 0 0")} ${cs.p.a10} ${cs.border.bottom}
       .cf-title { ${cs.font.bold} ${cs.font.lg} ${cs.m.l5} }
     }
 
-    .cf-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.font.preline} ${cs.font.line(24)} }
+    .cf-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.font.preline} ${cs.font.line(24)} ${cs.font.md} }
 
     .cf-foot { ${cs.border.radius("0 0 5px 5px")} ${cs.p.a10} ${cs.over.hidden} ${cs.font.right} }
+
+    &.left { .cf-body .msg { ${cs.font.left} } }
+    &.right { .cf-body .msg { ${cs.font.right} } }
+    &.center { .cf-body .msg { ${cs.font.center} } }
+
+    &.lg { ${cs.w.get(600)} ${cs.font.md} .cf-body { ${cs.p.a20} ${cs.min.height(140)} ${cs.font.md} } }
+    &.sm { ${cs.w.get(300)} ${cs.font.sm} .cf-body { ${cs.p.v10} ${cs.min.height(80)} ${cs.font.md} } }
+    &.xs { ${cs.w.get(200)} ${cs.font.sm} .cf-body { ${cs.p.v5} ${cs.min.height(40)} ${cs.font.sm} } }
   }
 
   &.warn { .cf-head { ${cs.bg.orange} ${cs.font.white} } }
@@ -40,10 +45,6 @@ const StyledObject = styled.div`
   &.white { .cf-head, .cf-frame { ${cs.bg.white} ${cs.font.dark} } 
     .cf-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
   }
-
-  &.left { .cf-frame .cf-body .msg { ${cs.font.left} } }
-  &.right { .cf-frame .cf-body .msg { ${cs.font.right} } }
-  &.center { .cf-frame .cf-body .msg { ${cs.font.center} } }
 }`;
 
 class Confirm extends React.PureComponent {
@@ -79,7 +80,7 @@ class Confirm extends React.PureComponent {
         <div className={cx("cf-frame", state.className)}>
           <div className="cf-head">
             <span className="cf-title">{state.title}</span>
-            <Svg className="btn-cancel sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />
+            <Svg className="cf-close sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />
           </div>
 
           <div className="cf-body">
@@ -87,8 +88,8 @@ class Confirm extends React.PureComponent {
           </div>
 
           <div className="cf-foot">
-            <Button className="primary" onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />
-            {state.cancel && <Button className="primary mL10" onClick={this.onClicked} title={state.cancel ? state.cancel : EID.CANCEL} eid={EID.CANCEL} />}
+            <Button className="primary right" onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />
+            {state.cancel && <Button className="primary right cf-cancel" onClick={this.onClicked} title={state.cancel ? state.cancel : EID.CANCEL} eid={EID.CANCEL} />}
           </div>
         </div>
       </StyledObject>

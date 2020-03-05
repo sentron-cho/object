@@ -16,9 +16,6 @@ const StyledObject = styled.span`{
     }
 
     .align { ${cs.pos.relative} }
-    .szie-c {
-
-    }
   }
 }`;
 
@@ -31,28 +28,41 @@ export default {
 const samplecode = (value, classname = '') => `<Cardbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
-  // const classname = text('classname', 'primary');
+  const classname = text('classname', '');
   // const label = text('label', 'Editbox');
   // const guide = text('guide', 'Editbox');
   // const value = text('value', '');
   // const helper = text('helper', 'help text');
-  // const multi = boolean('multi', false);
   // const inline = boolean('inline', false);
   // const readonly = boolean('readonly', false);
   // const disabled = boolean('disabled', false);
-  // const select = radios('size', { lg: 'lg', sm: 'sm' }, '', 'Other');
   // const type = radios('type', { text: 'text', date: 'date', number: 'number' }, 'text', 'Other');
   // const bordercolor = text('bordercolor', '');
-  // const border = bordercolor ? true : false;
-  // const fontcolor = text('fontcolor', '');
-  // const bgcolor = text('bgcolor', '');
+  const align = radios('align', { center: 'center', ycenter: 'ycenter', middle: 'middle' }, '', 'Other');
+  const animtype = radios('animtype', {
+    slidein: 'slidein', slideout: 'slideout',
+    fadein: 'fadein', fadeout: 'fadeout',
+    slidedown: 'slidedown', slideup: 'slideup'
+  }, '', 'Other');
+  const animtime = text('animtime', "1.5s");
+  const radius = boolean('radius', false);
+  const round = boolean('round', false);
+  const shadow = boolean('shadow', false);
+  const invisible = boolean('child invisible', false);
+  const border = { color: null, width: null, radius: null };
+  const bgcolor = text('bgcolor', '');
+  const box = boolean('border', true);
+  const width = text('width', '140px');
+  const height = text('height', '100px');
+  const size = radios('size', { w50: 'w50', w33: 'w33', w25: 'w25', w20: 'w20', w10: 'w10', full: 'full', half: 'half' }, '', 'Other');
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        {/* <Cardbox className={cx('b-s', select, classname, { border })} type={type} label={label} helper={helper}
-          guide={guide} value={value} inline={inline} multi={multi} readonly={readonly} disabled={disabled}
-          bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} /> */}
+      <Linebox className={"align"} title={"sample"} box={true} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
+        <Cardbox className={cx('b-s', classname, align, size, box && 'border', { radius }, { round }, { shadow }, {invisible})}
+          bgcolor={bgcolor} border={border} width={width} height={height} anim={{ type: animtype, time: animtime }}>
+          <div>child</div>
+        </Cardbox>
       </Linebox>
     </StyledObject>
   );
@@ -69,9 +79,17 @@ const option = {
 export const normal = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"normal"} top={option.top} sample={samplecode()}>
-        <Cardbox className={'border'}>Cardbox</Cardbox>
+      <Linebox title={"normal nobox nosize"} top={option.top} sample={samplecode("", "")} box={true}>
+      <Cardbox className={''}><div style={{background: "#aaa"}}>cardbox child</div></Cardbox>
       </Linebox>
+
+      <Linebox title={"border"} top={option.top} box={true} sample={samplecode("", "border invisible")}>
+        <Cardbox className={'border'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{background: "#aaa"}}>size 160 * 100</div></Cardbox>
+      </Linebox>
+
+      <Linebox title={"border child-invisible"} top={option.top} box={true} sample={samplecode("", "border invisible")}>
+        <Cardbox className={'border invisible'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{background: "#aaa"}}>child</div></Cardbox>
+      </Linebox>      
     </StyledObject>
   );
 };

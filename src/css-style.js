@@ -269,6 +269,8 @@ const cs = {
     fadeout: (v) => `animation: fadeout linear 1 forwards ${v ? v : "150ms"}; @keyframes fadeout { from { opacity: 1; } to { opacity: 0; } };`,
     slidein: (v) => `animation: slidein linear 1 forwards ${v ? v : "150ms"}; @keyframes slidein { from  { transform: translateX(-100%); opacity: 0.3; } to { transform: translateX(0%); opacity: 1; } };`,
     slideout: (v) => `animation: slideout linear 1 forwards ${v ? v : "150ms"}; @keyframes slideout { from  { transform: translateX(0%);  opacity: 0.3; } to { transform: translateX(-100%);  opacity: 1; } };`,    
+    slidedown: (v) => `animation: slidedown linear 1 forwards ${v ? v : "150ms"}; @keyframes slidedown { from  { transform: translateY(-100%); opacity: 0.3; } to { transform: translateY(0%); opacity: 1; } };`,
+    slideup: (v) => `animation: slideup linear 1 forwards ${v ? v : "150ms"}; @keyframes slideup { from  { transform: translateY(0%);  opacity: 0.3; } to { transform: translateY(-100%);  opacity: 1; } };`,    
   },
 
   align: {
@@ -375,6 +377,7 @@ const cs = {
 
     shadow: (v) => v ? `box-shadow: ${v};` : `box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);`,
     color: (v) => `border-color: ${v};`,
+    width: (v) => Number.isInteger(v) ? `border-width: ${v}px;` : `border-width: ${v};`,
     get: (v) => `border: ${v};`,
     radius: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
     outline: (v) => `outline: ${v};`,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import cs from './css-style';
@@ -13,23 +13,42 @@ const StyledObject = styled.div`{
     height: ${(props) => props.height};
     padding: ${(props) => props.margin};
 
-    &.border { ${cs.box.line} }
     &.radius { ${cs.box.radius} }
     &.round { ${cs.box.round} }
-    &.shodow { ${cs.border.shadow()} }
+    &.shadow { ${cs.border.shadow()} }
     
-    &.sky { ${cs.bg.sky} }
-    &.yellow { ${cs.bg.yellow} }
-    &.green { ${cs.bg.green} }
-    &.orange { ${cs.bg.orange} }
-    &.red { ${cs.bg.red} }
-    &.primary { ${cs.bg.primary} }
-    &.blue { ${cs.bg.blue} }
-    &.alphagray { ${cs.bg.alphagray} }
-    &.gray { ${cs.bg.gray} }
-    &.alphablack { ${cs.bg.alphablack} }
-    &.dark { ${cs.bg.dark} ${cs.font.white} }
-    &.black { ${cs.bg.black} ${cs.font.white} }
+    &.border {
+      ${cs.box.line}
+
+      &.yellow { ${cs.border.yellow} }
+      &.sky { ${cs.border.sky} }
+      &.red { ${cs.border.red} }
+      &.primary { ${cs.border.primary} }
+      &.gray { ${cs.border.gray} }
+      &.alphablack { ${cs.border.alphablack} }
+      &.dark { ${cs.border.dark} }
+      &.black { ${cs.border.black} }
+
+      ${props => props.border.color && cs.border.color(props.border.color)}
+      ${props => props.border.radius && cs.border.radius(props.border.radius)}
+      ${props => props.border.width && cs.border.width(props.border.width)}
+    }
+
+    &:not(.border) {
+      &.sky { ${cs.bg.sky} }
+      &.yellow { ${cs.bg.yellow} }
+      &.green { ${cs.bg.green} }
+      &.orange { ${cs.bg.orange} }
+      &.red { ${cs.bg.red} ${cs.font.white} }
+      &.primary { ${cs.bg.primary} }
+      &.blue { ${cs.bg.blue} ${cs.font.white} }
+      &.alphagray { ${cs.bg.alphagray} }
+      &.gray { ${cs.bg.gray} }
+      &.alphablack { ${cs.bg.alphablack} ${cs.font.white} }
+      &.dark { ${cs.bg.dark} ${cs.font.white} }
+      &.black { ${cs.bg.black} ${cs.font.white} }
+    }
+    
     
     &.center { ${cs.align.xcenter} }
     &.ycenter { ${cs.align.ycenter} }
@@ -52,47 +71,51 @@ const StyledObject = styled.div`{
       ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
     }
 
+    ${props => props.bgcolor && cs.bg.get(props.bgcolor)}
+
     @media screen and (max-width : 1280px) { }
 
     @media screen and (max-width : 600px) { }
   }
 }`;
 
-export default class Cardbox extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { anim: props.anim };
+const Cardbox = (props) => {
+  const [anim, setAnim] = useState(props.anim)
+
+  const { eid, width = "100%", height = "100%", margin = "20px", mouse = "default", bgcolor = null } = props;
+  const { border = { color: null, width: null, radius: null } } = props;
+  const cursor = props.onClick ? "pointer" : mouse;
+  const params = { width, height, margin, cursor };
+
+  useEffect(() => {
+    setAnim(props.anim);
+  }, [props.anim])
+
+  const onClicked = (e) => {
+    props.onClick && props.onClick(eid, e);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.anim) {
-      this.setState({ anim: nextProps.anim });
-    }
+  const onKeyPress = (e) => {
+    props.onKeyPress && props.onKeyPress(e.key, e);
   }
 
-  onClicked = (e) => {
-    if (this.props.onClick != null) {
-      this.props.onClick(this.props.eid, e);
-    }
+  const onAnimStart = (e) => {
+    props.onAnimation && props.onAnimation('start', e);
   }
 
-  onAnimEnd = (e) => {
-    this.setState({ anim: '' });
+  const onAnimEnd = (e) => {
+    props.onAnimation && props.onAnimation('end', e);
+    setAnim({ anim: '' });
   }
 
-  render() {
-    const { props, state } = this;
-    const { anim } = state;
-    const { width = "100%", height = "100%", margin = "20px", mouse = "default" } = props;
-    const cursor = props.onClick ? "pointer" : mouse;
-    const params = { width, height, margin, cursor };
 
-    return (
-      <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"))}
-        {...params} style={props.style} eid={props.eid} onClick={this.onClicked} anim={state.anim}
-        onAnimationEnd={this.onAnimEnd}>
-        {props.children}
-      </StyledObject>
-    )
-  }
+  return (
+    <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"))}
+      {...params} style={props.style} eid={props.eid} onClick={onClicked} anim={anim} bgcolor={bgcolor} border={border}
+      onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart} onKeyPress={onKeyPress}>
+      {props.children}
+    </StyledObject>
+  )
 }
+
+export default Cardbox;

@@ -14,6 +14,11 @@ const StyledObject = styled.span`{
     .anim-test { ${cs.h.get(60)}
       .anim-time { ${cs.w.get(100)} ${cs.disp.inblock} ${cs.float.left} ${cs.m.r20} }
     }
+
+    .align { ${cs.pos.relative} }
+    .szie-c {
+
+    }
   }
 }`;
 
@@ -85,20 +90,54 @@ export const color = () => {
         <Cardbox className={'red'}>red</Cardbox>
         <Cardbox className={'primary'}>primary</Cardbox>
         <Cardbox className={'blue'}>blue</Cardbox>
-        <Cardbox className={'alphagray'}>red</Cardbox>
+        <Cardbox className={'alphagray'}>alphagray</Cardbox>
       </Linebox>
 
       <Linebox title={""} top={option.top} sample={samplecode("","black")} inline={true}>
-        <Cardbox className={'gray'}>primary</Cardbox>
-        <Cardbox className={'alphablack'}>red</Cardbox>
-        <Cardbox className={'dark'}>red</Cardbox>
-        <Cardbox className={'black'}>primary</Cardbox>
+        <Cardbox className={'gray'}>gray</Cardbox>
+        <Cardbox className={'dark'}>dark</Cardbox>
+        <Cardbox className={'black'}>black</Cardbox>
+        <Cardbox className={'alphablack'} bgcolor={cs.color.alphablack} >bgcolor option</Cardbox>
       </Linebox>
     </StyledObject>
   );
 };
 
-export const type = () => {
+export const border = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"border and color"} top={option.top} sample={samplecode("","border radius")} inline={true}>
+        <Cardbox className={'border'}>border</Cardbox>
+        <Cardbox className={'border radius'}>border radius</Cardbox>
+        <Cardbox className={'border round'}>border round</Cardbox>
+        <Cardbox className={'border shadow'} style={{ height: "calc(100% - 10px)" }} >border shadow</Cardbox>
+      </Linebox>
+
+      <Linebox title={""} top={option.top} sample={samplecode("", "border sky")} inline={true}>
+        <Cardbox className={'border yellow'}>yellow</Cardbox>
+        <Cardbox className={'border sky'}>sky</Cardbox>
+        <Cardbox className={'border red'}>red</Cardbox>
+        <Cardbox className={'border primary'}>primary</Cardbox>
+      </Linebox>
+
+      <Linebox title={""} top={option.top} sample={samplecode("", "border gray")} inline={true}>
+        <Cardbox className={'border gray'}>gray</Cardbox>
+        <Cardbox className={'border alphablack'}>alphablack</Cardbox>
+        <Cardbox className={'border dark'}>dark</Cardbox>
+        <Cardbox className={'border black'}>black</Cardbox>
+      </Linebox>
+
+      <Linebox title={""} top={option.top} sample={samplecode("", "border gray")} inline={true}>
+        <Cardbox className={'border'} border={{color: cs.color.alphagray}}>gray</Cardbox>
+        <Cardbox className={'border'} border={{width: "2px"}}>alphablack</Cardbox>
+        <Cardbox className={'border'} border={{radius: "20px"}}>dark</Cardbox>
+        <Cardbox className={'border'} border={{color: cs.color.alphagray, width: "2px", radius: "20px"}}>black</Cardbox>
+      </Linebox>      
+    </StyledObject>
+  );
+};
+
+export const sizetype = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"full"} top={option.top} sample={samplecode('type={"w50"}', "border")} inline={false}>
@@ -120,41 +159,19 @@ export const type = () => {
   );
 };
 
-export const animation = () => {
-  const [refresh, setRefresh] = useState(false);
-  const [value, setValue] = useState("3s");
-  let time = 0;
-
-  const onClick = (e) => {
-    setValue(time || '200ms');
-    setRefresh(true);
-    setTimeout(() => setRefresh(false), 200);
-  };
-
-  if(refresh) {
-    return null;
-  }
-
+export const align = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox className={"anim-test"} title={"test"} >
-        <Editbox className={"anim-time"} type={"text"} value={value} onChange={(value, e) => time = value}/>
-        <Button className={"primary sm"} title={"refresh"} onClick={onClick} />
+      <Linebox className={"align szie-c"} title={"align center"} box={true} desc={"parent {position: relative}"} top={option.top} sample={samplecode('center')}>
+        <Cardbox className={'border center'} width={"140px"} height={"80px"}>x center</Cardbox>
       </Linebox>
 
-      <Linebox title={"slide"} top={option.top} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }}')} inline={true}>
-        <Cardbox className={'border'} anim={{ type: 'slidein', time: value }}>{`slidein(${value})`}</Cardbox>
-        <Cardbox className={'border'} anim={{ type: 'slideout', time: value }}>{`slideout(${value})`}</Cardbox>
-      </Linebox>
-      
-      <Linebox title={"show"} top={option.top} sample={samplecode('anim={{ type: "showin", time: "0.3s" }}')} inline={true}>
-        <Cardbox className={'border'} anim={{ type: 'showin', time: value }}>{`showin(${value})`}</Cardbox>
-        <Cardbox className={'border'} anim={{ type: 'showout', time: value }}>{`showout(${value})`}</Cardbox>
+      <Linebox className={"align szie-y"} title={"align ycenter"} box={true} desc={"parent {position: relative}"} top={option.top} sample={samplecode('ycenter')}>
+        <Cardbox className={'border ycenter'} width={"140px"} height={"80px"}>y center</Cardbox>
       </Linebox>
 
-      <Linebox title={"fade"} top={option.top} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }}')} inline={true}>
-        <Cardbox className={'border'} anim={{ type: 'fadein', time: value }}>{`fadein(${value})`}</Cardbox>
-        <Cardbox className={'border'} anim={{ type: 'fadeout', time: value }}>{`fadeout(${value})`}</Cardbox>
+      <Linebox className={"align szie-m"} title={"align middle"} box={true} desc={"parent {position: relative}"} top={option.top} sample={samplecode('middle')}>
+        <Cardbox className={'border middle'} width={"140px"} height={"80px"}>x/y center</Cardbox>
       </Linebox>
     </StyledObject>
   );
@@ -173,9 +190,48 @@ export const margin = () => {
 export const event = () => {
   return (
     <StyledObject className={"t-main"} >
-      <Linebox title={"clear && event"} top={option.top} sample={samplecode(`onClear={} onEnter={} onChange={}`)}>
+      
+      <Linebox title={"click && event"} top={option.top} sample={samplecode(`onClick={}`)}>
         <Cardbox className={'gray'} anim={true} onClick={action('onClick')}>{"onClick={}"}</Cardbox>
+      </Linebox>
+
+      {/* <Linebox title={"keypress && event"} top={option.top} sample={samplecode(`onKeyPress={}`)}>
         <Cardbox className={'gray'} anim={true} onKeyPress={(e) => action('onKeyPress')}>{"onKeyPress={}"}</Cardbox>
+      </Linebox> */}
+    </StyledObject>
+  );
+};
+
+export const animation = () => {
+  const value = text('time', '3s');
+
+  // const [value, setValue] = useState("3s");
+  const [animtag, setAnimtag] = useState("");
+
+  const onAnimation = (eid, e) => {
+    if (eid === "start") {
+      setAnimtag(eid);
+    } else {  //end
+      // setValue(time || '200ms');
+      setTimeout(() => setAnimtag(eid), 500)
+    }
+  }
+
+  return (
+    <StyledObject className={"t-main"}>      
+      <Linebox title={"slidein/out"} top={option.top} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }}')} inline={true}>
+        <Cardbox className={'border'} anim={{ type: 'slidein', time: value }} >{`slidein(${value})`}</Cardbox>
+        <Cardbox className={'border'} anim={{ type: 'slideout', time: value }} >{`slideout(${value})`}</Cardbox>
+      </Linebox>
+
+      <Linebox title={"slideup/down"} top={option.top} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }}')} inline={true}>
+        <Cardbox className={'border'} anim={{ type: 'slidedown', time: value }}>{`slidedown(${value})`}</Cardbox>
+        <Cardbox className={'border'} anim={{ type: 'slideup', time: value }}>{`slideup(${value})`}</Cardbox>
+      </Linebox>
+
+      <Linebox title={"showin/out & event"} top={option.top} sample={samplecode('anim={{ type: "showin", time: "0.3s" }}')} inline={true}>
+        <Cardbox className={'border'} anim={{ type: 'showin', time: value }} onAnimation={onAnimation}>{`showin(${value}) - onAnimation(eid=start, e)`}</Cardbox>
+        <Cardbox className={'border'} anim={{ type: 'showout', time: value }} onAnimation={onAnimation}>{`showout(${value}) - onAnimation(eid=end, e)`}</Cardbox>
       </Linebox>
     </StyledObject>
   );

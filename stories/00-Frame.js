@@ -27,7 +27,7 @@ const StyledBox = styled.div`{
 
     &.inline {
       .lb-li { 
-        & > * { ${cs.m.r10} ${cs.disp.inblock} ${props => props.cwidth && cs.w.get(`calc(${props.cwidth} - 10px)`)} }
+        & > * { ${cs.m.r10} ${cs.disp.inblock} ${props => props.cwidth && cs.w.get(`calc(${props.cwidth} - 20px)`)} }
       } 
     }
   }

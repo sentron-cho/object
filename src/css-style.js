@@ -352,6 +352,7 @@ const cs = {
     doted: `border: doted 1px ${color.gray};`,
     dashed: `border: dashed 1px ${color.gray};`,
     shadow: `box-shadow: 1px 1px 2px 2px #2121219c;`,
+    inner: `box-sizing: border-box;`,
 
     style: (v) => `border-style: ${v};`,
     left: (v) => Number.isInteger(v) ? `border-left: solid ${v}px ${color.lightgray};` : `border-left: ${v};`,

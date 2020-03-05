@@ -4,45 +4,58 @@ import styled from 'styled-components';
 import { Svg, cs } from './index';
 
 const StyledObject = styled.div` {
-  &.chk-box { width: 100%;
-    .chk-group {
-      display: inline-block; width: auto;
+  &.chk-box { ${cs.w.fit} ${cs.disp.inblock}
+    ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
 
-      .chk-itm { max-width: 100%; padding: 5px 0; display: inline-block; margin-right: 5px;
-        &:hover { opacity: 0.9; cursor: pointer; }
-        .chk-icon { float: left; }
+    .chk-group {
+      ${cs.disp.inblock} ${cs.w.auto}
+
+      .chk-itm { 
+        ${cs.max.width("100%")} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
+        .chk-icon { ${cs.float.left} }
+
+        &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
       }
 
     }
 
-    .chk-guide { font-size: 11px; ${cs.font.darkgray} display: block; padding-left: 15px; margin-top: -3px; margin-bottom: 5px; }
-
-    .chk-label, .chk-txt { display: inline-block; padding: 0 5px; }
-    // .chk-label, .chk-txt { display: inline-block; padding-right: 10px;
-    //   position: relative; top: 50%; transform: translateY(-50%); }
-
-    &.xl { ${cs.font.xl} .chk-txt, .chk-label { line-height: 34px  } .chk-icon { ${cs.icon.lg} } }
-    &.lg { ${cs.font.lg} .chk-txt, .chk-label { line-height: 26px  } .chk-icon { ${cs.icon.md} } }
-    &.md { ${cs.font.md} .chk-txt, .chk-label { line-height: 18px  } .chk-icon { ${cs.icon.sm} } }
-    &.sm { ${cs.font.sm} .chk-txt, .chk-label { line-height: 14px  } .chk-icon { ${cs.icon.xs} } }
-    &.xs { ${cs.font.xs} .chk-txt, .chk-label { line-height: 12px  } .chk-icon { ${cs.icon.xxs} } }
-  
-    .input { width: calc(100% - 50px) }
-    .button { width: 40px; margin-left 10px;}
-  
-    &.box { width: 100%; background: #efefef; padding: 5px 20px; border-radius: 30px; }
-
-    &.black {
-      .chk-txt { color: rgba(0,0,0,0.8); }
+    .chk-guide { 
+      ${cs.font.xs} ${cs.font.darkgray} ${cs.disp.block} 
+      ${cs.p.l15} ${cs.m.get(-3)} ${cs.m.b5} 
     }
 
-    &.white {
-      .chk-txt { color: rgba(255,255,255,0.8); }
+    .chk-label, .chk-txt { ${cs.disp.inblock} ${cs.p.h5} }
+
+    &.md { ${cs.font.md} .chk-txt, .chk-label { ${cs.font.md} ${cs.font.line(16)} } .chk-icon { ${cs.icon.sm} } }
+    &.xl { ${cs.font.xl} .chk-txt, .chk-label { ${cs.font.xxl} ${cs.font.line(26)}  } .chk-icon { ${cs.icon.md} } }
+    &.lg { ${cs.font.lg} .chk-txt, .chk-label { ${cs.font.xl} ${cs.font.line(16)}  } .chk-icon { ${cs.w.get(20)} ${cs.h.get(20)} } }
+    &.sm { ${cs.font.sm} .chk-txt, .chk-label { ${cs.font.sm} ${cs.font.line(14)}  } .chk-icon { ${cs.icon.xs} ${cs.m.t1} } }
+    &.xs { ${cs.font.xs} .chk-txt, .chk-label { ${cs.font.xs} ${cs.font.line(12)}  } .chk-icon { ${cs.icon.xxs} ${cs.m.t1} } }
+  
+    &:not(.border) {
+      &.gray { ${cs.bg.gray} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { fill: white } }
     }
+
+    &.border { 
+      ${cs.box.line} ${cs.box.inner}
+
+      &.green { ${cs.border.green} }
+      &.primary { ${cs.border.primary} }
+      &.red { ${cs.border.red} }
+      &.gray { ${cs.border.gray} }
+      &.dark { ${cs.border.dark} }
+      &.black { ${cs.border.black} }
+    }
+    
+    &.radius { ${cs.box.radius} }
+    &.round { ${cs.border.radius("100px")} }
+    &.full { ${cs.w.full} }
   
     @media screen and (max-width : 860px) {
-      font-size: 12px; 
-      .chk-itm { div { margin-right: 5px; .chk-txt { margin-left: 2px; } } }
+      ${cs.font.sm}
+      .chk-itm { div { ${cs.m.r5} .chk-txt { ${cs.m.l2} } } }
     }
   }
 }`;
@@ -85,30 +98,9 @@ export default class Checkbox extends React.PureComponent {
     return this.isEmpty() ? null : this.props.radio ? array[0] : array;
   }
 
-  // getChecked = () => {
-  //   return this.state.list.filter(item => item.check === true && item);
-  //   if (this.props.radio) {
-  //     return this.state.list.find(o => o.check === true);
-  //   } else {
-  //     return this.state.list;
-  //   }
-  // }
-
-  // getSelected = () => {
-  //   return this.getChecked();
-  // }
-
   showNoti = (value) => {
     return false;
   }
-
-  // onChanged = (e) => {
-  //   const { state, props } = this;
-  //   const eid = e.currentTarget.getAttribute("eid");
-  //   const value = state.list.find(o => o.id === eid);
-  //   props.onChange && props.onChange(value);
-  //   state.modified = true;
-  // }
 
   onClickItem = (e) => {
     let eid = e.currentTarget.getAttribute("eid");
@@ -125,17 +117,17 @@ export default class Checkbox extends React.PureComponent {
 
     this.props.onClick && this.props.onClick(eid, e, array);
 
-    const value = this.state.list.find(o => o.id === eid);
+    const value = this.state.list.find(o => String(o.id) === String(eid));
     this.props.onChange && this.props.onChange(value);
   }
 
   render() {
     const { label, guide } = this.props;
     const { list } = this.state;
-    const { radio, theme = "black", type = "" } = this.props;
+    const { radio, theme = "", type = "" } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', this.props.className, { radio }, theme, { type })}>
+      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)}>
         {label && <div className="chk-label">{label}</div>}
         <ul className={"chk-group"}>
         {list.map((item, index) => {

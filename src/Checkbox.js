@@ -33,7 +33,10 @@ const StyledObject = styled.div` {
     &.xs { ${cs.font.xs} .chk-txt, .chk-label { ${cs.font.xs} ${cs.font.line(12)}  } .chk-icon { ${cs.icon.xxs} ${cs.m.t1} } }
   
     &:not(.border) {
-      &.gray { ${cs.bg.gray} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.green { ${cs.bg.green} }
+      &.primary { ${cs.bg.primary} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.red { ${cs.bg.red} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.gray { ${cs.bg.gray} }
       &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { fill: white } }
       &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { fill: white } }
     }

@@ -47,7 +47,7 @@ export const object = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"modal type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
+      <Linebox title={"checkbox"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
         <Checkbox className={"primary"} list={list1} onClick={onClick} onChange={onChange} />
         <Checkbox className={"primary"} label={"title : "} list={list2} onClick={onClick} onChange={onChange} />
       </Linebox>
@@ -74,45 +74,12 @@ const option = {
   top: "20px",
 }
 
-export const radiobox = () => {
-  const [result, setResult] = useState(null);
-  const [change, setChange] = useState(null);
-
-  const onClick = (eid, e, list) => {
-    setResult(`eid = ${eid}, ${JSON.stringify(list)}`);
-  }
-
-  const onChange = (value) => {
-    setChange(`${JSON.stringify(value)}`);
-  }
-
-  const list3 = [{ id: 1, name: 'radio 1', check: true }, { id: 2, name: 'radio 2', check: false }];
-
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"modal type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
-        <Checkbox className={"primary"} label={"radio : "} list={list3} radio={true} onClick={onClick} onChange={onChange} />
-      </Linebox>
-
-      <div className={"res-view"}>
-        <p>onClick</p>
-        <p>{result}</p>
-      </div>
-
-      <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
-      </div>
-    </StyledObject>
-  );
-};
-
 export const size = () => {
   const list = [{ id: 1, name: 'check', check: true }];
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"modal type"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
+      <Linebox title={"size"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
         <Checkbox className={"xs"} label={"xs : "} list={list} />
         <Checkbox className={"sm"} label={"sm : "} list={list} />
         <Checkbox className={"md"} label={"md : "} list={list} />
@@ -148,7 +115,7 @@ export const border = () => {
 
       <Linebox title={"modal type"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
         <Checkbox className={"border full"} label={"border full : "} list={list} />
-      </Linebox>      
+      </Linebox>
     </StyledObject>
   );
 };
@@ -159,10 +126,60 @@ export const color = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"background"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
-        <Checkbox className={"gray"} label={"green : "} list={list} />
-        <Checkbox className={"dark"} label={"primary : "} list={list} />
-        <Checkbox className={"round black"} label={"round black : "} list={list} />
+        <Checkbox className={"green"} label={"green : "} list={list} />
+        <Checkbox className={"primary"} label={"primary : "} list={list} />
+        <Checkbox className={"round red"} label={"round red : "} list={list} />
       </Linebox>
+
+      <Linebox title={"background"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
+        <Checkbox className={"gray"} label={"gray : "} list={list} />
+        <Checkbox className={"dark"} label={"dark : "} list={list} />
+        <Checkbox className={"round black"} label={"round black : "} list={list} />
+      </Linebox>      
+    </StyledObject>
+  );
+};
+
+export const radiobox = () => {
+  const [result, setResult] = useState(null);
+  const [change, setChange] = useState(null);
+
+  const onClick = (eid, e, list) => {
+    setResult(`eid = ${eid}, ${JSON.stringify(list)}`);
+  }
+
+  const onChange = (value) => {
+    setChange(`${JSON.stringify(value)}`);
+  }
+
+  const list = [{ id: 1, name: 'radio' }];
+  const list3 = [{ id: 1, name: 'radio 1', check: true }, { id: 2, name: 'radio 2', check: false }];
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"radio type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
+        <Checkbox className={"primary"} label={"radio : "} list={list3} radio={true} onClick={onClick} onChange={onChange} />
+      </Linebox>
+
+      <StyledObject className={"t-main"}>
+        <Linebox title={"radio size"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
+          <Checkbox className={"xs"} label={"xs : "} list={list} radio={true} />
+          <Checkbox className={"sm"} label={"sm : "} list={list} radio={true} />
+          <Checkbox className={"md"} label={"md : "} list={list} radio={true} />
+          <Checkbox className={"lg"} label={"lg : "} list={list} radio={true} />
+          <Checkbox className={"xl"} label={"xl : "} list={list} radio={true} />
+        </Linebox>
+      </StyledObject>
+
+      <div className={"res-view"}>
+        <p>onClick</p>
+        <p>{result}</p>
+      </div>
+
+      <div className={"res-view"}>
+        <p>onChange</p>
+        <p>{change}</p>
+      </div>
     </StyledObject>
   );
 };

@@ -40,7 +40,7 @@ export const Linebox = (props) => {
     setCopy("code copy");
   }, []);
 
-  const { className = '', width = "calc(100% - 20px)", inline = false, sample = null, top = "", box = false } = props;
+  const { className = '', width = "calc(100% - 20px)", inline = false, sample = null, top = "", box = false, id = null } = props;
 
   let cwidth = "";
   if (inline) {
@@ -58,7 +58,7 @@ export const Linebox = (props) => {
 
   const iscopy = copy === 'copy ok';
 
-  return <StyledBox className={cx("lb-box", className, { inline }, { box })} width={width} cwidth={cwidth} top={top}>
+  return <StyledBox className={cx("lb-box", className, { inline }, { box })} id={id} width={width} cwidth={cwidth} top={top}>
     {props.title && <label className={"lb-tl"}>{props.title}</label>}
     {props.desc && <p className={"lb-desc"}>{props.desc}</p>}
     <div className={cx("lb-li", props.className)}>

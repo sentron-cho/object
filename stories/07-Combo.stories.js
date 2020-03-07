@@ -32,14 +32,19 @@ const samplecode = (value, classname = '') => `<Combobox list={list} className={
 export const sobject = () => {
 
   const classname = text('classname', '');
-  const label = text('label', 'combo');
-  const disable = boolean('disable', false);
-  const bg = options('background',
-    { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black', 'primary-line': 'primary-line' },
-    '', { display: 'inline-radio' }, 'Other');
   const size = options('size',
     { 'md(middle)': 'md', 'xl(xlarge)': 'xl', 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs', 'full': 'full' },
     '', { display: 'inline-radio' }, 'Other');
+  const halign = options('horizontal', { 'left': 'left', 'center': 'center', 'right': 'right' },
+    '', { display: 'inline-radio' }, 'Other');
+  const valign = options('vertical', { 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' },
+    '', { display: 'inline-radio' }, 'Other');
+  const bg = options('background',
+    { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black', 'primary-line': 'primary-line' },
+    '', { display: 'inline-radio' }, 'Other');
+  const label = text('label', 'combo');
+  const disable = boolean('disable', false);
+
   // const size = radios('size', { md: 'md', xl: 'xl', lg: 'lg', sm: 'sm', xs: 'xs', full: 'full' }, '', 'Other');
 
   const [result, setResult] = useState(null);
@@ -57,9 +62,9 @@ export const sobject = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"checkbox"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
-        sample={samplecode('label={"combo"} onClick={onClick} onChange={onChange}', 'primary')}>
-        <Combobox className={cx(classname, bg, size, { disable })} label={label} list={list} onClick={onClick} onChange={onChange} frameid={"f0001"} />
+      <Linebox title={"checkbox"} className={"align"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
+        sample={samplecode('label={"combo"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
+        <Combobox className={cx(classname, bg, size, { disable }, halign, valign)} label={label} list={list} onClick={onClick} onChange={onChange} frameid={"f0001"} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -114,22 +119,22 @@ export const align = () => {
         <Combobox className={"primary right"} label={"right"} list={list} frameid={"f0001"} />
         <Combobox className={"primary center"} label={"center"} list={list} frameid={"f0001"} />
       </Linebox>
-      
+
       <Linebox title={"vertical align"} className={"align"} sample={samplecode('label={"combo"}', '')} box={true}>
         <Combobox className={"primary top"} label={"top"} list={list} frameid={"f0001"} />
         <Combobox className={"primary middle"} label={"middle"} list={list} frameid={"f0001"} />
         <Combobox className={"primary bottom"} label={"bottom"} list={list} frameid={"f0001"} />
-      </Linebox>  
+      </Linebox>
 
       <Linebox title={"align"} className={"align v-align"} mple={samplecode('label={"combo"}', '')} box={true}>
         <Combobox className={"primary left top"} label={"left top"} list={list} frameid={"f0001"} />
         <Combobox className={"primary center top"} label={"center top"} list={list} frameid={"f0001"} />
         <Combobox className={"primary right top"} label={"right top"} list={list} frameid={"f0001"} />
-        
+
         <Combobox className={"primary left middle"} label={"left middle"} list={list} frameid={"f0001"} />
         <Combobox className={"primary center middle"} label={"center middle"} list={list} frameid={"f0001"} />
         <Combobox className={"primary right middle"} label={"right middle"} list={list} frameid={"f0001"} />
-        
+
         <Combobox className={"primary left bottom"} label={"left bottom"} list={list} frameid={"f0001"} />
         <Combobox className={"primary center bottom"} label={"center bottom"} list={list} frameid={"f0001"} />
         <Combobox className={"primary right bottom"} label={"right bottom"} list={list} frameid={"f0001"} />
@@ -159,26 +164,6 @@ export const color = () => {
         <Combobox className={"gray"} label={"gray"} list={list} frameid={"f0001"} />
         <Combobox className={"dark"} label={"dark"} list={list} pos={1} frameid={"f0001"} />
         <Combobox className={"black"} label={"black"} list={list} frameid={"f0001"} />
-      </Linebox>      
-    </StyledObject>
-  );
-};
-
-export const label = () => {
-  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
-
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"align"} sample={samplecode('label={"combo"}', 'primary')}>
-        <Combobox className={"primary"} label={"left"} options={{label: {align: "left", color: "red"}}} list={list} frameid={"f0001"} />
-        <Combobox className={"primary"} label={"center"} options={{label: {align: "center", color: "green"}}} list={list} frameid={"f0001"} />
-        <Combobox className={"primary"} label={"right"} options={{label: {align: "right", color: "blue"}}} list={list} frameid={"f0001"} />
-      </Linebox>
-
-      <Linebox title={"align"} sample={samplecode('label={"combo"}', 'primary')}>
-        <Combobox className={"primary"} label={"left"} options={{text: {align: "left", color: "red"}}} list={list} frameid={"f0001"} />
-        <Combobox className={"primary"} label={"center"} options={{text: {align: "center", color: "green"}}} list={list} frameid={"f0001"} />
-        <Combobox className={"primary"} label={"right"} options={{text: {align: "right", color: "blue"}}} list={list} frameid={"f0001"} />
       </Linebox>
     </StyledObject>
   );
@@ -205,7 +190,28 @@ export const disable = () => {
         <Combobox className={"gray"} label={"gray"} list={list} frameid={"f0001"} disable={true} />
         <Combobox className={"dark"} label={"dark"} list={list} pos={1} frameid={"f0001"} disable={true} />
         <Combobox className={"black"} label={"black"} list={list} frameid={"f0001"} disable={true} />
-      </Linebox>      
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+
+export const label = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+
+  return (
+    <StyledObject className={"t-main"} id={"f0001"}>
+      <Linebox title={"align"} sample={samplecode('label={"combo"}', 'primary')}>
+        <Combobox className={"primary"} label={"left"} options={{ label: { align: "left", color: "red" } }} list={list} frameid={"f0001"} />
+        <Combobox className={"primary"} label={"center"} options={{ label: { align: "center", color: "green" } }} list={list} frameid={"f0001"} />
+        <Combobox className={"primary"} label={"right"} options={{ label: { align: "right", color: "blue" } }} list={list} frameid={"f0001"} />
+      </Linebox>
+
+      <Linebox title={"align"} sample={samplecode('label={"combo"}', 'primary')}>
+        <Combobox className={"primary"} label={"left"} options={{ text: { align: "left", color: "red" } }} list={list} frameid={"f0001"} />
+        <Combobox className={"primary"} label={"center"} options={{ text: { align: "center", color: "green" } }} list={list} frameid={"f0001"} />
+        <Combobox className={"primary"} label={"right"} options={{ text: { align: "right", color: "blue" } }} list={list} frameid={"f0001"} />
+      </Linebox>
     </StyledObject>
   );
 };
@@ -216,9 +222,9 @@ export const border = () => {
   return (
     <StyledObject className={"t-main"} id={"f0001"}>
       <Linebox title={"border options"} sample={samplecode('label={"combo"}', 'border')}>
-        <Combobox className={"primary"} label={"blue radius"} list={list} frameid={"f0001"} border={{radius: '5px', color: "blue"}} />
-        <Combobox className={"primary"} label={"red radius 2px"} list={list} frameid={"f0001"} border={{radius: '10px', color: "red", width: "2px"}} />
-        <Combobox className={"primary"} label={"black radius 3px"} list={list} frameid={"f0001"} border={{radius: '15px', color: "black", width: "3px"}} />
+        <Combobox className={"primary"} label={"blue radius"} list={list} frameid={"f0001"} border={{ radius: '5px', color: "blue" }} />
+        <Combobox className={"primary"} label={"red radius 2px"} list={list} frameid={"f0001"} border={{ radius: '10px', color: "red", width: "2px" }} />
+        <Combobox className={"primary"} label={"black radius 3px"} list={list} frameid={"f0001"} border={{ radius: '15px', color: "black", width: "3px" }} />
       </Linebox>
     </StyledObject>
   );

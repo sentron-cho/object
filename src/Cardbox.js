@@ -7,7 +7,7 @@ import cs from './css-style';
 const StyledObject = styled.div`{
   &.card-box {
     cursor: ${(props) => props.cursor}; ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}
-    ${cs.disp.inblock} ${cs.bg.trans} ${cs.align.vertical("top")} ${cs.box.sizing("border-box")}
+    ${cs.disp.inblock} ${cs.bg.trans} ${cs.align.vertical("top")} ${cs.box.inner}
 
     width: ${(props) => props.width};
     height: ${(props) => props.height};

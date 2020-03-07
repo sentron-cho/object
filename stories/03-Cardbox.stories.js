@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
+import { optionsKnob as options, withKnobs, text, boolean, radios, array, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
@@ -29,21 +29,6 @@ const samplecode = (value, classname = '') => `<Cardbox className={"${classname}
 
 export const object = () => {
   const classname = text('classname', '');
-  // const label = text('label', 'Editbox');
-  // const guide = text('guide', 'Editbox');
-  // const value = text('value', '');
-  // const helper = text('helper', 'help text');
-  // const inline = boolean('inline', false);
-  // const readonly = boolean('readonly', false);
-  // const disabled = boolean('disabled', false);
-  // const type = radios('type', { text: 'text', date: 'date', number: 'number' }, 'text', 'Other');
-  // const bordercolor = text('bordercolor', '');
-  const align = radios('align', { center: 'center', ycenter: 'ycenter', middle: 'middle' }, '', 'Other');
-  const animtype = radios('animtype', {
-    slidein: 'slidein', slideout: 'slideout',
-    fadein: 'fadein', fadeout: 'fadeout',
-    slidedown: 'slidedown', slideup: 'slideup'
-  }, '', 'Other');
   const animtime = text('animtime', "1.5s");
   const radius = boolean('radius', false);
   const round = boolean('round', false);
@@ -54,12 +39,24 @@ export const object = () => {
   const box = boolean('border', true);
   const width = text('width', '140px');
   const height = text('height', '100px');
-  const size = radios('size', { w50: 'w50', w33: 'w33', w25: 'w25', w20: 'w20', w10: 'w10', full: 'full', half: 'half' }, '', 'Other');
+  const align = options('align',
+    { center: 'center', ycenter: 'ycenter', middle: 'middle' }, '',
+    { display: 'inline-radio' }, 'Other');
+  const animtype = options('animation',
+    {
+      slidein: 'slidein', slideout: 'slideout',
+      fadein: 'fadein', fadeout: 'fadeout',
+      slidedown: 'slidedown', slideup: 'slideup'
+    }, '',
+    { display: 'inline-radio' }, 'Other');
+  const size = options('size',
+    { 'w50(1/2)': 'w50', 'w33(1/3)': 'w33', 'w25(1/4)': 'w25', 'w20(1/5)': 'w20', 'w10(1/10)': 'w10', 'full': 'full', half: 'half' }, '',
+    { display: 'inline-radio' }, 'Other');
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox className={"align"} title={"sample"} box={true} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Cardbox className={cx('b-s', classname, align, size, box && 'border', { radius }, { round }, { shadow }, {invisible})}
+        <Cardbox className={cx('b-s', classname, align, size, box && 'border', { radius }, { round }, { shadow }, { invisible })}
           bgcolor={bgcolor} border={border} width={width} height={height} anim={{ type: animtype, time: animtime }}>
           <div>child</div>
         </Cardbox>
@@ -80,16 +77,16 @@ export const normal = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"normal nobox nosize"} top={option.top} sample={samplecode("", "")} box={true}>
-      <Cardbox className={''}><div style={{background: "#aaa"}}>cardbox child</div></Cardbox>
+        <Cardbox className={''}><div style={{ background: "#aaa" }}>cardbox child</div></Cardbox>
       </Linebox>
 
       <Linebox title={"border"} top={option.top} box={true} sample={samplecode("", "border invisible")}>
-        <Cardbox className={'border'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{background: "#aaa"}}>size 160 * 100</div></Cardbox>
+        <Cardbox className={'border'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{ background: "#aaa" }}>size 160 * 100</div></Cardbox>
       </Linebox>
 
       <Linebox title={"border child-invisible"} top={option.top} box={true} sample={samplecode("", "border invisible")}>
-        <Cardbox className={'border invisible'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{background: "#aaa"}}>child</div></Cardbox>
-      </Linebox>      
+        <Cardbox className={'border invisible'} style={{ margin: "5px" }} width={"160px"} height={"100px"}><div style={{ background: "#aaa" }}>child</div></Cardbox>
+      </Linebox>
     </StyledObject>
   );
 };
@@ -97,21 +94,21 @@ export const normal = () => {
 export const color = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"color"} top={option.top} sample={samplecode("","sky")} inline={true}>
+      <Linebox title={"color"} top={option.top} sample={samplecode("", "sky")} inline={true}>
         <Cardbox className={'sky'}>sky</Cardbox>
         <Cardbox className={'yellow'}>yellow</Cardbox>
         <Cardbox className={'green'}>green</Cardbox>
         <Cardbox className={'orange'}>orange</Cardbox>
       </Linebox>
 
-      <Linebox title={""} top={option.top} sample={samplecode("","primary")} inline={true}>
+      <Linebox title={""} top={option.top} sample={samplecode("", "primary")} inline={true}>
         <Cardbox className={'red'}>red</Cardbox>
         <Cardbox className={'primary'}>primary</Cardbox>
         <Cardbox className={'blue'}>blue</Cardbox>
         <Cardbox className={'alphagray'}>alphagray</Cardbox>
       </Linebox>
 
-      <Linebox title={""} top={option.top} sample={samplecode("","black")} inline={true}>
+      <Linebox title={""} top={option.top} sample={samplecode("", "black")} inline={true}>
         <Cardbox className={'gray'}>gray</Cardbox>
         <Cardbox className={'dark'}>dark</Cardbox>
         <Cardbox className={'black'}>black</Cardbox>
@@ -124,7 +121,7 @@ export const color = () => {
 export const border = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"border and color"} top={option.top} sample={samplecode("","border radius")} inline={true}>
+      <Linebox title={"border and color"} top={option.top} sample={samplecode("", "border radius")} inline={true}>
         <Cardbox className={'border'}>border</Cardbox>
         <Cardbox className={'border radius'}>border radius</Cardbox>
         <Cardbox className={'border round'}>border round</Cardbox>
@@ -146,11 +143,11 @@ export const border = () => {
       </Linebox>
 
       <Linebox title={""} top={option.top} sample={samplecode("", "border gray")} inline={true}>
-        <Cardbox className={'border'} border={{color: cs.color.alphagray}}>gray</Cardbox>
-        <Cardbox className={'border'} border={{width: "2px"}}>alphablack</Cardbox>
-        <Cardbox className={'border'} border={{radius: "20px"}}>dark</Cardbox>
-        <Cardbox className={'border'} border={{color: cs.color.alphagray, width: "2px", radius: "20px"}}>black</Cardbox>
-      </Linebox>      
+        <Cardbox className={'border'} border={{ color: cs.color.alphagray }}>gray</Cardbox>
+        <Cardbox className={'border'} border={{ width: "2px" }}>alphablack</Cardbox>
+        <Cardbox className={'border'} border={{ radius: "20px" }}>dark</Cardbox>
+        <Cardbox className={'border'} border={{ color: cs.color.alphagray, width: "2px", radius: "20px" }}>black</Cardbox>
+      </Linebox>
     </StyledObject>
   );
 };
@@ -161,7 +158,7 @@ export const sizetype = () => {
       <Linebox title={"full"} top={option.top} sample={samplecode('type={"w50"}', "border")} inline={false}>
         <Cardbox className={'border'} type={"full"}>full(width: 100%)</Cardbox>
       </Linebox>
-      
+
       <Linebox title={"half"} top={option.top} sample={samplecode()} inline={false}>
         <Cardbox className={'border'} type={"half"}>half(width: 50%)</Cardbox>
         <Cardbox className={'border'} type={"w50"}>w50(width: 50%)</Cardbox>
@@ -172,7 +169,7 @@ export const sizetype = () => {
         <Cardbox className={'border'} type={"w25"}>w25(width: 25%)</Cardbox>
         <Cardbox className={'border'} type={"w20"}>w20(width: 20%)</Cardbox>
         <Cardbox className={'border'} type={"w10"}>w10(width: 10%)</Cardbox>
-      </Linebox>      
+      </Linebox>
     </StyledObject>
   );
 };
@@ -208,7 +205,7 @@ export const margin = () => {
 export const event = () => {
   return (
     <StyledObject className={"t-main"} >
-      
+
       <Linebox title={"click && event"} top={option.top} sample={samplecode(`onClick={}`)}>
         <Cardbox className={'gray'} anim={true} onClick={action('onClick')}>{"onClick={}"}</Cardbox>
       </Linebox>
@@ -236,7 +233,7 @@ export const animation = () => {
   }
 
   return (
-    <StyledObject className={"t-main"}>      
+    <StyledObject className={"t-main"}>
       <Linebox title={"slidein/out"} top={option.top} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }}')} inline={true}>
         <Cardbox className={'border'} anim={{ type: 'slidein', time: value }} >{`slidein(${value})`}</Cardbox>
         <Cardbox className={'border'} anim={{ type: 'slideout', time: value }} >{`slideout(${value})`}</Cardbox>

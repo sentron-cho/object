@@ -113,6 +113,12 @@ export const border = () => {
         <Checkbox className={"border black"} label={"red : "} list={list} />
       </Linebox>
 
+      <Linebox title={"border options"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
+        <Checkbox className={"primary"} label={"blue radius"} list={list} border={{radius: '5px', color: "blue"}} />
+        <Checkbox className={"primary"} label={"red radius 2px"} list={list} border={{radius: '10px', color: "red", width: "2px"}} />
+        <Checkbox className={"primary"} label={"black radius 3px"} list={list} border={{radius: '15px', color: "black", width: "3px"}} />
+      </Linebox>
+
       <Linebox title={"modal type"} top={option.top} sample={samplecode('label={"label"} list={list}', '')}>
         <Checkbox className={"border full"} label={"border full : "} list={list} />
       </Linebox>

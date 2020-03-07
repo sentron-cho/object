@@ -8,56 +8,87 @@ import { Util } from './Utils';
 
 const StyledObject = styled.div` {
   &.combo-box {
-    ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
-    ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} ${cs.w.auto} ${cs.h.auto} ${cs.z.front}
+    ${cs.noselect} ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} 
+    ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} ${cs.float.left}    
 
-    .cb-sel { ${cs.bg.primary} ${cs.pos.relative} ${cs.p.h30} ${cs.size.full} ${cs.mouse.pointer}
-      .cb-txt { ${cs.align.ycenter} }
+    ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
+    .cb-sel { ${cs.pos.relative} ${cs.p.h30} ${cs.size.full} ${cs.mouse.pointer} 
+      ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner}
+
+      .cb-txt { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} 
+        &.noitem { ${cs.opac.alpha} } 
+      }
       &:hover { ${cs.anim.show} }
 
       .cb-icon { ${cs.pos.absolute} ${cs.align.ycenter} ${cs.right(5)} ${cs.opac.get(0.6)} 
-        .svg-path { ${cs.fill.white} } 
+        .svg-path { ${cs.fill.dark} } 
 
         &:hover { ${cs.opac.get(0.9)} }
       }
 
-      .cb-ul { ${cs.min.width("100%")} ${cs.w.auto} ${cs.p.h5} ${cs.align.ltop} ${cs.z.front}
-        ${cs.bg.primary} ${cs.box.radius} ${cs.border.lightgray} ${cs.box.shadow}
+      .cb-ul { ${cs.bg.white} ${cs.min.width("100px")} ${cs.w.get("calc(100% - 20px)")} ${cs.max.width("calc(100% - 20px)")} 
+        ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t15}
+        ${cs.box.radius} ${cs.border.lightgray} ${cs.box.shadow}
         .cb-li { ${cs.p.get("5px 10px")}
-          &:hover { ${cs.bg.blue} ${cs.font.white} }
+          &:hover { ${cs.bg.lightgray} }
         }
       }  
     }
 
     .cb-label { ${cs.disp.block} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.weight(500)} }
-
-    &.right.disable { .cb-li { ${cs.font.line(34)} ${cs.font.right} ${cs.p.r10} } }
-
-    &.full { ${cs.w.full} ${cs.disp.inblock} }
-
-    &.radius { ${cs.box.radius} }
     
-    &.md { .cb-sel { ${cs.h.md} } ${cs.font.md} }
-    &.xl { .cb-sel { ${cs.h.xl} } ${cs.font.xl} }
-    &.lg { .cb-sel { ${cs.h.lg} } ${cs.font.lg} }
-    &.sm { .cb-sel { ${cs.h.sm} } ${cs.font.sm} }
-    &.xs { .cb-sel { ${cs.h.xs} } ${cs.font.xs} }
+    &.md { .cb-sel { ${cs.h.md} ${cs.p.h50} } ${cs.font.md} }
+    &.xs { .cb-sel { ${cs.h.xs} ${cs.p.h30} } ${cs.font.xs} .cb-ul { ${cs.m.t10} } }
+    &.sm { .cb-sel { ${cs.h.sm} ${cs.p.h40} } ${cs.font.sm} }
+    &.lg { .cb-sel { ${cs.h.lg} ${cs.p.h50} } ${cs.font.xl} .cb-ul { ${cs.m.t20} } }
+    &.xl { .cb-sel { ${cs.h.xl} ${cs.p.h50} } ${cs.font.t1} .cb-ul { ${cs.m.t25} } }
+    &.full { ${cs.w.full} ${cs.disp.inblock} .cb-sel { ${cs.w.full} ${cs.p.a0} .cb-txt { ${cs.p.l20} } } }
+    
+    &.left { }
+    &.right { ${cs.align.right} }
+    &.center { ${cs.align.xcenter} }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
 
+    &.trans { .cb-sel, .cb-ul { ${cs.bg.white} ${cs.font.black} .cb-li:hover { ${cs.bg.lightgray} } } .cb-sel { ${cs.bg.trans} ${cs.border.color('transparent')} } }
+    &.sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
+    &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#da3e00")}} } }
+    &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#006b20")}} } }
+    &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#9a1919")}} } }
     &.primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
-    &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} } }
-    &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} } .svg-icon .svg-path { fill: black; } }
-    &.white { .cb-sel, .cb-ul { ${cs.bg.white} ${cs.font.black} } .svg-icon .svg-path { fill: black; } }
-    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} } }
-    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} } }
-    &.trans { .cb-sel, .cb-ul { ${cs.bg.trans} ${cs.font.black} } }
-    &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} } }
-    &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} } }
-    &.primary-line { .cb-sel, .cb-ul { ${cs.bg.trans} ${cs.box.border} ${cs.font.black} } }
-
+    &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
+    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }
+    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } }
+    
     &.disable {
-      .cb-sel { cursor: default; ${cs.bg.lightgray} ${cs.font.darkgray} ${cs.opac.show} ${cs.box.line} ${cs.border.darkgray} 
+      .cb-sel { ${cs.mouse.default} ${cs.opac.alpha} ${cs.font.dark}
         .cb-icon { .svg-path { fill: ${cs.color.darkgray} } }
       }
+
+      &.dark, &.black, &.primary { .cb-sel { ${cs.font.lightgray} } }
+    }
+
+    // &.right.disable { .cb-li { ${cs.font.line(34)} ${cs.font.right} ${cs.p.r10} } }
+    &.radius { ${cs.box.radius} }
+
+    .cb-label {
+      ${({label}) => label && label.align && cs.font.align(label.align)}
+      ${({label}) => label && label.color && cs.font.color(label.color)}
+    }
+
+    .cb-sel {
+      ${({text}) => text && text.color && cs.font.color(text.color)}
+      ${({text}) => text && text.align && cs.font.align(text.align)}
+
+      ${({text}) => text && text.align && text.align === "left" && `padding-left: 10px !important;`}
+      ${({text}) => text && text.align && text.align === "right" && `padding-right: 30px !important;`}
+
+      ${({border}) => border && cs.box.line}
+      ${({border}) => border && border.color && cs.border.color(border.color)}
+      ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+      ${({border}) => border && border.width && cs.border.width(border.width)}
     }
   }
 }`;
@@ -144,17 +175,19 @@ export default class Combobox extends React.PureComponent {
 
   render() {
     const { props, state } = this;
-    const { list, noti, show, pos } = state;
-    const { disable } = props;
-    const selected = list[pos];
+    const { list = null, noti, show, pos } = state;
+    const { disable, aling="center", labelalign="left" } = props;
+    const selected = list ? list.length < pos ? list[pos] : list[0] : null;
+    const title = selected ? selected.name.toString() : 'noitem';
+    const { text, label } = props.options || {text: null, label: null};
 
     return (
-      <StyledObject className={cx('combo-box md', this.props.className, { disable })} >
+      <StyledObject className={cx('combo-box md', this.props.className, { disable })} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
-        <div ref={(ref) => { this.input = ref }} className="cb-sel" onClick={this.onClick} >
-          <span className="cb-txt">{selected && selected.name.toString()}</span>
+        <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
+          <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>
           <Svg className={cx("cb-icon sm")} icon={'arrowdn'} />
-          {!disable && show &&
+          {!disable && show && list &&
             <ul className="cb-ul" name="selector">
               {list.map((item, index) => {
                 const active = index === pos;

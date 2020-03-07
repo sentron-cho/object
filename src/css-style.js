@@ -53,10 +53,12 @@ const cs = {
     height: (v) => Number.isInteger(v) ? `max-height: ${v}px;` : `max-height: ${v};`,
   },
 
-  right: (v) => Number.isInteger(v) ? `right: ${v}px;` : `right: ${v};`,
-  left: (v) => Number.isInteger(v) ? `left: ${v}px;` : `left: ${v};`,
-  top: (v) => Number.isInteger(v) ? `top: ${v}px;` : `top: ${v};`,
-  bottom: (v) => Number.isInteger(v) ? `bottom: ${v}px;` : `bottom: ${v};`,
+  right: (v) => Number.isInteger(v) ? `left: unset; right: ${v}px;` : `left: unset; right: ${v};`,
+  left: (v) => Number.isInteger(v) ? `right: unset; left: ${v}px;` : `right: unset; left: ${v};`,
+  top: (v) => Number.isInteger(v) ? `bottom:unset; top: ${v}px;` : `bottom:unset; top: ${v};`,
+  bottom: (v) => Number.isInteger(v) ? `top: unset; bottom: ${v}px;` : `top: unset; bottom: ${v};`,
+
+  noselect: 'user-select: none;',
 
   pos: {
     absolute: 'position: absolute;',
@@ -103,6 +105,7 @@ const cs = {
     visible: 'overflow: visible;',
     xvisible: 'overflow-x: visible;',
     yvisible: 'overflow-y: visible;',
+    unset: 'overflow: unset;',
 
     get: (v) => `overflow: ${v};`,
   },
@@ -252,6 +255,7 @@ const cs = {
     size: (v) => Number.isInteger(v) ? `font-size: ${v}px;` : `font-size: ${v};`,
     get: (v) => Number.isInteger(v) ? `font-size: ${v}px;` : `font: ${v};`,
     weight: (v) => `font-weight: ${v};`,
+    align: (v) => `text-align: ${v};`,
   },
 
   opac: {
@@ -285,17 +289,20 @@ const cs = {
   },
 
   align: {
+    top: `position: absolute; bottom: unset; top: 0;`,
+    bottom: `position: absolute; top: unset; bottom: 0;`,
+    left: `position: absolute; right: unset; left: 0;`,
+    right: `position: absolute; left: unset; right: 0;`,
+
     center: `position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);`,
+
     ycenter: `position: absolute; top: 50%; transform: translateY(-50%);`,
     xcenter: `position: absolute; left: 50%; transform: translateX(-50%);`,
-    top: `position: absolute; left: 50%; top: 5px; transform: translateX(-50%);`,
     ltop: `position: absolute; left: 5px; top: 5px;`,
     rtop: `position: absolute; right: 5px; top: 5px;`,
-    bottom: `position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%);`,
     lbottom: `position: absolute; left: 5px; bottom: 5px;`,
     rbottom: `position: absolute; right: 5px; bottom: 5px;`,
-    left: `position: absolute; left: 0;`,
-    right: `position: absolute; right: 0;`,
+
     
     x: (v) => Number.isInteger(v) ? `transform: translateX(${v}px);` : `transform: translateX(${v});`,
     y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,

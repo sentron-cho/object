@@ -7,8 +7,8 @@ import cs from './css-style';
 
 // 버튼 오브젝트
 const StyledObject = styled.span`{
-  &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} ${cs.disp.inblock} ${cs.mouse.pointer}
-    ${cs.float.left} ${cs.top(0)}
+  &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} 
+    ${cs.disp.inblock} ${cs.mouse.pointer} ${cs.float.left} ${cs.top(0)} ${cs.border.trans}
 
     &:hover { ${cs.anim.show} ${cs.opac.get(0.8)} }
 
@@ -32,18 +32,18 @@ const StyledObject = styled.span`{
     }
 
     &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
-    &.primary { ${cs.bg.primary} ${cs.font.white} ${cs.border.trans} }
-    &.yellow { ${cs.bg.yellow} ${cs.font.white} ${cs.border.trans} }
-    &.orange { ${cs.bg.orange} ${cs.font.white} ${cs.border.trans} }
-    &.red { ${cs.bg.red} ${cs.font.white} ${cs.border.trans} }
-    &.green { ${cs.bg.green} ${cs.font.white} ${cs.border.trans} }
-    &.dark { ${cs.bg.dark} ${cs.font.white} ${cs.border.trans} }
-    &.black { ${cs.bg.black} ${cs.font.white} ${cs.border.trans} }
+    &.primary { ${cs.bg.primary} ${cs.font.white} }
+    &.yellow { ${cs.bg.yellow} ${cs.font.black} }
+    &.orange { ${cs.bg.orange} ${cs.font.white} }
+    &.red { ${cs.bg.red} ${cs.font.white} }
+    &.green { ${cs.bg.green} ${cs.font.white} }
+    &.dark { ${cs.bg.dark} ${cs.font.white} }
+    &.black { ${cs.bg.black} ${cs.font.white} }
+    &.lightgray { ${cs.bg.lightwhite} ${cs.font.black} }
+    &.gray { ${cs.bg.gray} ${cs.font.black} }
+    &.white { ${cs.bg.white} ${cs.font.black} }
     &.primary-line { ${cs.bg.trans} ${cs.font.primary} ${cs.box.line} ${cs.border.primary} }
-    &.lightgray { ${cs.bg.lightwhite} ${cs.font.black} ${cs.box.line} ${cs.border.lightgray} }
-    &.gray { ${cs.bg.gray} ${cs.font.black} ${cs.border.trans} }
-    &.white { ${cs.bg.white} ${cs.font.black} ${cs.border.trans} }
-    &.gray-line { ${cs.bg.trans} ${cs.font.gray} ${cs.box.line} ${cs.border.gray} }
+    &.gray-line { ${cs.bg.trans} ${cs.font.dark} ${cs.box.line} ${cs.border.gray} }
     &.gd-gray { background-image: linear-gradient(-180deg, ${cs.color.lightgray}, ${cs.color.lightwhite} 90%); ${cs.font.dark} ${cs.box.line} ${cs.border.lightgray} }
 
     &.disabled { ${cs.mouse.default} ${cs.font.darkgray} ${cs.opac.alpha}
@@ -51,12 +51,12 @@ const StyledObject = styled.span`{
       &.trans:hover { &:hover { ${cs.font.noneline} } }
     }
 
-    &.left { }
-    &.right { ${cs.float.right} }
-    &.center { ${cs.align.xcenter} ${cs.pos.get("sticky")} }
-    &.top { ${cs.top(0)} ${cs.pos.relative} }
-    &.middle { ${cs.align.ycenter} ${cs.pos.relative} }
-    &.bottom { ${cs.top("100%")} ${cs.align.y("-100%")} ${cs.pos.relative} }
+    &.right { ${cs.align.right} }
+    &.center { ${cs.align.xcenter} }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
 
     &.rtype { ${cs.border.radius("0 2px 2px 0")} ${cs.box.line} ${cs.border.gray} }
     &.ltype { ${cs.border.radius("2px 0 0 2px")} ${cs.box.line} ${cs.border.gray} border-right: 0px; }
@@ -68,6 +68,11 @@ const StyledObject = styled.span`{
       ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.block} 
       ${cs.font.center} ${cs.h.fit} ${cs.mouse.pointer}
     }
+
+    ${({border}) => border && cs.box.line}
+    ${({border}) => border && border.color && cs.border.color(border.color)}
+    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+    ${({border}) => border && border.width && cs.border.width(border.width)}
   }
 }`;
 
@@ -83,10 +88,11 @@ const Button = (props) => {
   if (isrun) disabled = true;
   const { icon, type, iconcolor = cs.color.white, color } = props;
   const isicon = icon || isrun ? 'icon' : '';
+  const { text , label } = props.options || {text: null, label: null};
 
   return (
     <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon)}
-      onClick={disabled ? () => null : onClicked} to={props.to} >
+      onClick={disabled ? () => null : onClicked} to={props.to} text={text} label={label} border={props.border}>
       {isrun && <img className={cx("btn-icon running")} src={IMG.LoadingRing} alt='r' />}
       {!isrun && icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}
       <label className="btn-label">{props.title}</label>

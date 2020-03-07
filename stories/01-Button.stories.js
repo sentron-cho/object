@@ -11,9 +11,9 @@ const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
-    .lb-box .lb-li > * { ${cs.m.r10} }
+    // .lb-box .lb-li > * { ${cs.m.r10} }
     .lb-box.type .lb-li > * { ${cs.m.a0} }
-    .lb-box.size .lb-li { ${cs.h.get(48)} }
+    .lb-box.size { .lb-li { ${cs.h.get(48)} }}
   }
 }`;
 
@@ -101,10 +101,30 @@ export const disabled = () => {
 export const align = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"align"} sample={samplecode()}>
-        <Button className={"primary left"} title={"primary left"} onClick={action('onClick')} />
-        <Button className={"primary right"} title={"primary right"} onClick={action('onClick')} />
-        <Button className={"primary center"} title={"primary center"} onClick={action('onClick')} />
+      <Linebox title={"horizontal align"} className={"align"} sample={samplecode()} box={true}>
+        <Button className={"primary left"} title={"left"} onClick={action('onClick')} />
+        <Button className={"primary center"} title={"center"} onClick={action('onClick')} />
+        <Button className={"primary right"} title={"right"} onClick={action('onClick')} />
+      </Linebox>
+
+      <Linebox title={"vertical align"} className={"align v-align"} sample={samplecode()} box={true}>
+        <Button className={"primary top"} title={"top"} onClick={action('onClick')} />
+        <Button className={"primary middle"} title={"middle"} onClick={action('onClick')} />
+        <Button className={"primary bottom"} title={"bottom"} onClick={action('onClick')} />
+      </Linebox>
+
+      <Linebox title={"align"} className={"align v-align"} sample={samplecode()} box={true}>
+        <Button className={"primary left top"} title={"left top"} onClick={action('onClick')} />
+        <Button className={"primary center top"} title={"center top"} onClick={action('onClick')} />
+        <Button className={"primary right top"} title={"right top"} onClick={action('onClick')} />
+        
+        <Button className={"primary left middle"} title={"left middle"} onClick={action('onClick')} />
+        <Button className={"primary center middle"} title={"center middle"} onClick={action('onClick')} />
+        <Button className={"primary right middle"} title={"right middle"} onClick={action('onClick')} />
+        
+        <Button className={"primary left bottom"} title={"left bottom"} onClick={action('onClick')} />
+        <Button className={"primary center bottom"} title={"center bottom"} onClick={action('onClick')} />
+        <Button className={"primary right bottom"} title={"right bottom"} onClick={action('onClick')} />
       </Linebox>
     </StyledObject>
   );
@@ -113,7 +133,7 @@ export const align = () => {
 export const type = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"type"} className={"type"} sample={samplecode()}>
+      <Linebox title={"type"} className={"nomargin"} sample={samplecode()}>
         <Button className={"primary ltype"} title={"primary ltype"} onClick={action('onClick')} />
         <Button className={"primary ctype"} title={"primary ctype"} onClick={action('onClick')} />
         <Button className={"primary rtype"} title={"primary rtype"} onClick={action('onClick')} />
@@ -125,7 +145,7 @@ export const type = () => {
 export const full = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"full"} sample={samplecode()}>
+      <Linebox title={"full"} className={"nomargin"} sample={samplecode()}>
         <Button className={"primary full"} title={"primary full"} onClick={action('onClick')} />
       </Linebox>
     </StyledObject>
@@ -142,11 +162,19 @@ export const size = () => {
         <Button className={"primary lg"} title={"primary lg"} onClick={action('onClick')} />
         <Button className={"primary xl"} title={"primary xl"} onClick={action('onClick')} />
       </Linebox>
-      
-      <Linebox title={""} className={"size"} sample={samplecode()} box={true}>
-        <Button className={"primary xs top"} title={"primary top"} onClick={action('onClick')} />
-        <Button className={"primary xs middle"} title={"primary middle"} onClick={action('onClick')} />
-        <Button className={"primary xs bottom"} title={"primary bottom"} onClick={action('onClick')} />
+    </StyledObject>
+  );
+};
+
+export const border = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+
+  return (
+    <StyledObject className={"t-main"} id={"f0001"}>
+      <Linebox title={"border options"} sample={samplecode('label={"combo"}', 'border')}>
+        <Button className={"primary"} title={"blue radius"} list={list} frameid={"f0001"} border={{radius: '5px', color: "blue"}} />
+        <Button className={"primary"} title={"red radius 2px"} list={list} frameid={"f0001"} border={{radius: '10px', color: "red", width: "2px"}} />
+        <Button className={"primary"} title={"black radius 3px"} list={list} frameid={"f0001"} border={{radius: '15px', color: "black", width: "3px"}} />
       </Linebox>
     </StyledObject>
   );

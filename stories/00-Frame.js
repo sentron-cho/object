@@ -10,11 +10,14 @@ const StyledBox = styled.div`{
     .lb-tl { ${cs.disp.inblock} ${cs.font.md} ${cs.font.upper} }
     .lb-desc { ${cs.disp.inblock} ${cs.font.sm} ${cs.p.l10} ${cs.font.darkgray} }
 
-    .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden}
+    .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden} ${cs.pos.relative}
       ${cs.w.calc("100% - 20px")} ${props => cs.m.top(props.top)}
 
-      & > * { }
+      & > * { ${cs.m.r10} }
     }
+    
+    &.align, &.nomargin { .lb-li > * { ${cs.m.a0} }}
+    &.v-align { .lb-li { ${cs.h.get(140)} }}
 
     &.box {
       .lb-li { ${cs.box.dashed} }

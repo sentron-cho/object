@@ -55,6 +55,11 @@ const StyledObject = styled.div` {
     &.radius { ${cs.box.radius} }
     &.round { ${cs.border.radius("100px")} }
     &.full { ${cs.w.full} }
+
+    ${({border}) => border && cs.box.line}
+    ${({border}) => border && border.color && cs.border.color(border.color)}
+    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+    ${({border}) => border && border.width && cs.border.width(border.width)}
   
     @media screen and (max-width : 860px) {
       ${cs.font.sm}
@@ -127,10 +132,10 @@ export default class Checkbox extends React.PureComponent {
   render() {
     const { label, guide } = this.props;
     const { list } = this.state;
-    const { radio, theme = "", type = "" } = this.props;
+    const { radio, theme = "", type = "", border } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)}>
+      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)} border={border}>
         {label && <div className="chk-label">{label}</div>}
         <ul className={"chk-group"}>
         {list.map((item, index) => {

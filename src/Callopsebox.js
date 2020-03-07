@@ -1,82 +1,87 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
+import cs from './css-style';
 
 const StyledObject = styled.div`{
-  &.callopse-box { position: relative; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 3px;
-    background: ${ (props) => props.bgcolor};
+  &.callopse-box { 
+    ${cs.noselect} ${cs.pos.relative} ${cs.box.bgcolor} ${cs.bg.white}
+    ${cs.font.md} ${cs.box.inner} ${cs.box.line} ${cs.border.lightwhite}
 
-    .cls-title {
-      padding: 10px; cursor: pointer;
-      &:hover { background: rgba(0, 0, 0, 0.2); }
+    .cls-title { ${cs.p.a10} ${cs.mouse.pointer}
+      &:hover { ${cs.bg.sky} }
     }
 
-    .cls-frame { width: 100%; position: relative; font-size: 14px; 
-      visibility: hidden; height: 0; min-height: 0; padding: 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.2);
+    .cls-frame { 
+      ${cs.box.inner} ${cs.w.full} ${cs.pos.relative} ${cs.disp.hidden}
+      ${cs.h.get(0)} ${cs.min.height(0)} ${cs.p.a0} ${cs.border.top} ${cs.border.lightwhite}
     }
 
     &.active {
-      .cls-title {
-        background: rgba(0, 0, 0, 0.2);
-      }
       .cls-frame {
-        background: rgba(0, 0, 0, 0.2);
-        animation: callopse-in ease-out 1 forwards ${ (fade) => fade.time};
+        animation: callopse-in ease-out 1 forwards ${ ({ time }) => time};
       }
     }
 
-    @media screen and (max-width : 1280px) {
-    }
+    &.xs { ${cs.font.xs} .cls-title { ${cs.p.v5} } }
+    &.sm { ${cs.font.md} .cls-title { ${cs.p.v5} } }
+    &.lg { ${cs.font.xl} .cls-title { ${cs.p.v10} } }
 
-    @media screen and (max-width : 1024px) {
-    }
+    &.left { ${cs.font.left} }
+    &.center { ${cs.font.center} }
+    &.right { ${cs.font.right} }
 
-    @media screen and (max-width : 860px) {
-      padding: 0; font-size: 12px;
-    }
+    &.radius { ${cs.box.radius} }
+
+    &.trans { ${cs.bg.trans} .cls-title:hover { ${cs.bg.sky} } }
+    &.white { ${cs.bg.get("white")} .cls-title:hover { ${cs.bg.sky} } }
+    &.sky { ${cs.bg.sky} .cls-title:hover { ${cs.bg.lightgray} } }
+    &.orange { ${cs.bg.orange} .cls-title:hover { ${cs.bg.orangehover} } }
+    &.green { ${cs.bg.green} .cls-title:hover { ${cs.bg.greenhover} } }
+    &.red { ${cs.bg.red} .cls-title:hover { ${cs.bg.redhover} } }
+    &.primary { ${cs.bg.primary} ${cs.font.white} .cls-title:hover { ${cs.bg.blue} } }
+    &.gray { ${cs.bg.lightgray} .cls-title:hover { ${cs.bg.gray} } }
+    &.dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } }
+    &.black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } }
+
+    ${({border}) => border && cs.box.line}
+    ${({border}) => border && border.color && cs.border.color(border.color)}
+    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+    ${({border}) => border && border.width && cs.border.width(border.width)}
+
+    @media screen and (max-width : 1280px) {}
+    @media screen and (max-width : 1024px) {}
+    @media screen and (max-width : 860px) { ${cs.p.a0} ${cs.font.sm} }
 
     @keyframes callopse-in {
-      0% { opacity: 0; height: 0; visibility: hidden; }
-      50% { opacity: 0; height: fit-content; padding: 10px; visibility: hidden; }
-      100% { opacity: 1; height: fit-content; padding: 10px; visibility: visible; } 
+      0% { ${cs.opac.invisible} ${cs.h.none} ${cs.disp.hidden} }
+      50% { ${cs.opac.invisible} ${cs.h.fit} ${cs.p.a10} ${cs.disp.hidden} }
+      100% { ${cs.opac.visible} ${cs.h.fit} ${cs.p.a10} ${cs.disp.visible} } 
     }
   }
 }`;
 
-class Callopsebox extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.interval = '200ms';
-    this.state = { active: props.active };
-  }
+const Callopsebox = (props) => {
+  const interval = '200ms';
+  const [active, setActive] = useState(props.active || false);
+  const { label = "notitle", align = "left", minHeight = "100px", eid = null, rowid = null, border = null } = props;
 
-  onClicked = (e) => {
+  useEffect(() => setActive(props.active), [props]);
+
+  const onClick = (e) => {
     // const rowid = e.currentTarget.getAttribute("rowid");
-    // this.setState({ active: !this.state.active });
-    (this.props.onClick != null) && this.props.onClick(this.props.label, this.props.rowid, e);
+    setActive(!active);
+    props.onClick && props.onClick(rowid || eid || 0, props.label, !active, e);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({ active: nextProps.active });
-  }
-
-  render() {
-    const { props, state, interval } = this;
-    const fade = { time: interval };
-    const align = props.align;
-    const active = state.active;
-    const minHeight = props.minHeight ? props.minHeight : '100px';
-
-    return (
-      <StyledObject className={cx('callopse-box', props.className, { active })} align={align} minHeight={minHeight} {...fade} bgcolor={props.bgcolor}>
-        <div className="cls-title" onClick={this.onClicked}>{props.label}</div>
-        <div className="cls-frame">
-          {props.children}
-        </div>
-      </StyledObject >
-    );
-  }
+  return (
+    <StyledObject className={cx('callopse-box', props.className, { active })}
+      align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor} 
+      border={border} >
+      <div className="cls-title" onClick={onClick}>{label}</div>
+      <div className="cls-frame">{props.children}</div>
+    </StyledObject >
+  );
 }
 
 export default Callopsebox;

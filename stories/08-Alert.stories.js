@@ -76,7 +76,7 @@ export const object = () => {
   return (
     <Provider store={store} >
       <StyledObject className={"t-main"}>
-        <Linebox title={"confirm type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+        <Linebox title={"confirm type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode('title={"info"}', 'primary')}>
           <Button className={"primary"} title={"info"} onClick={onClick} eid={"info"}/>
           <Button className={"primary"} title={"warning"} onClick={onClick} eid={"warn"} />
           <Button className={"primary"} title={"error"} onClick={onClick} eid={"err"} />
@@ -90,13 +90,13 @@ export const object = () => {
           <Button className={"primary"} title={"dark"} onClick={onClick} eid={"dark"} />
         </Linebox>
 
-        <Linebox title={"align"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+        <Linebox title={"align"} sample={samplecode('title={"info"}', 'primary')}>
           <Button className={"primary"} title={"left"} onClick={onClickAlign} eid={"left"}/>
           <Button className={"primary"} title={"center"} onClick={onClickAlign} eid={"center"} />
           <Button className={"primary"} title={"right"} onClick={onClickAlign} eid={"right"} />
         </Linebox>
 
-        <Linebox title={"size"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+        <Linebox title={"size"} sample={samplecode('title={"info"}', 'primary')}>
           <Button className={"primary"} title={"large"} onClick={onClickSize} eid={"lg"}/>
           <Button className={"primary"} title={"small"} onClick={onClickSize} eid={"sm"} />
           <Button className={"primary"} title={"x small"} onClick={onClickSize} eid={"xs"} />

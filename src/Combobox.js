@@ -54,9 +54,9 @@ const StyledObject = styled.div` {
 
     &.trans { .cb-sel, .cb-ul { ${cs.bg.white} ${cs.font.black} .cb-li:hover { ${cs.bg.lightgray} } } .cb-sel { ${cs.bg.trans} ${cs.border.color('transparent')} } }
     &.sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
-    &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#da3e00")}} } }
-    &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#006b20")}} } }
-    &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.color("#9a1919")}} } }
+    &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} .cb-li:hover { ${cs.bg.orangehover} } } }
+    &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} .cb-li:hover { ${cs.bg.greenhover} } } }
+    &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.redhover} } } }
     &.primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
     &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
     &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }

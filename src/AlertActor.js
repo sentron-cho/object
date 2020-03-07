@@ -14,7 +14,7 @@ class AlertActor extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.show) {
-      this.showAlert(nextProps.data);
+      this.showAlert(nextProps.data || nextProps);
     }
   }
 
@@ -35,7 +35,7 @@ class AlertActor extends React.PureComponent {
     }
 
     this.props.showAlert({
-      msg: msg, type: type, ...data,
+      msg: msg, type: type, size: data.size || '', ...data, 
       onClose: (data == null || data.onClose == null) ? () => console.log('fire at closing event') : data.onClose,
     });
   }
@@ -45,10 +45,4 @@ class AlertActor extends React.PureComponent {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    showAlert: (obj) => dispatch(showAlert(obj)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AlertActor);
+export default connect(null, (dispatch) => ({ showAlert: (obj) => dispatch(showAlert(obj)) }))(AlertActor);

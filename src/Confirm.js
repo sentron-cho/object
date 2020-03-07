@@ -11,7 +11,6 @@ const StyledObject = styled.div`
 
   .bg { ${cs.size.full} ${cs.bg.back} ${cs.pos.ltop} }
   .cf-close { ${cs.float.right} }
-  .cf-cancel { ${cs.m.r10} }
 
   .cf-frame { ${cs.font.black} ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.border.shadow()} 
     ${cs.anim.show} ${cs.w.get(400)} ${cs.align.center} ${cs.bg.white} ${cs.box.radius}
@@ -23,7 +22,13 @@ const StyledObject = styled.div`
 
     .cf-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.font.preline} ${cs.font.line(24)} ${cs.font.md} }
 
-    .cf-foot { ${cs.border.radius("0 0 5px 5px")} ${cs.p.a10} ${cs.over.hidden} ${cs.font.right} }
+    .cf-foot { 
+      ${cs.border.radius("0 0 5px 5px")} ${cs.p.a10} ${cs.over.hidden} ${cs.font.right} 
+      .button { 
+        ${cs.pos.relative} 
+        &.cf-cancel { ${cs.m.l10} }
+      }
+    }
 
     &.left { .cf-body .msg { ${cs.font.left} } }
     &.right { .cf-body .msg { ${cs.font.right} } }

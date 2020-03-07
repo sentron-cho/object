@@ -30,7 +30,10 @@ export const StyledObject = styled.div`{
 
         .md-foot { ${cs.p.a10} ${cs.over.hidden} ${cs.font.right}
           ${cs.border.top} ${cs.border.lightgray}
-          .button { ${cs.m.l20} }
+          .button { 
+            ${cs.pos.relative} 
+            &.md-cancel { ${cs.m.l10} }
+          }
         }
 
       .no-child { ${cs.color.red} ${cs.opac.get(0.7)} ${cs.font.xl} ${cs.font.line(80)} ${cs.font.center} }

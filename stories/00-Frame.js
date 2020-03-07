@@ -68,7 +68,7 @@ export const Linebox = (props) => {
       {props.children}
     </div>
     {sample && <CopyToClipboard text={sample} onCopy={onClick} >
-      <Button className={cx("lb-show gd-gray xs right", iscopy && 'ok')} title={copy} />
+      <Button className={cx("lb-show gd-gray xs", iscopy && 'ok')} title={copy} />
     </CopyToClipboard>}
 
     {iscopy && <p className={"lb-ex"}>{sample}</p>}

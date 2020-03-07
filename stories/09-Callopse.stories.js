@@ -107,25 +107,31 @@ export const color = () => {
   const [active, setactive] = useState(null);
   const [time, settime] = useState(null);
 
-  const onClick = (eid, e) => {
+  const onClickClose = (eid, e) => {
     setactive(false);
+    settime(new Date().getTime());
+  }
+
+  const onClickOpen = (eid, e) => {
+    setactive(true);
     settime(new Date().getTime());
   }
 
   return (
     <StyledObject className={"t-main"} >
-      <Button className={"primary"} title={"all close"} onClick={onClick} eid={"info"}/>
+      <Button className={"primary"} title={"close all"} onClick={onClickClose} eid={"info"}/>
+      <Button className={"primary"} title={"open all"} onClick={onClickOpen} eid={"info"}/>
       <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} >
-        <Callopsebox className={"trans"} label={"transparent"} refresh={time} active={active} eid={"trans"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"white"} label={"white"} refresh={time} active={active} eid={"white"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"sky"} label={"sky"} refresh={time} active={active} eid={"sky"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"orange"} label={"orange"} refresh={time} active={active} eid={"orange"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"green"} label={"green"} refresh={time} active={active} eid={"green"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"red"} label={"red"} refresh={time} active={active} eid={"red"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"primary"} label={"primary"} refresh={time} active={active} eid={"primary"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"gray"} label={"gray"} refresh={time} active={active} eid={"gray"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"dark"} label={"dark"} refresh={time} active={active} eid={"dark"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
-        <Callopsebox className={"black"} label={"black"} refresh={time} active={active} eid={"black"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"trans"} label={"transparent"} active={active} eid={"trans"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"white"} label={"white"} active={active} eid={"white"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"sky"} label={"sky"} active={active} eid={"sky"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"orange"} label={"orange"} active={active} eid={"orange"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"green"} label={"green"} active={active} eid={"green"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"red"} label={"red"} active={active} eid={"red"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"primary"} label={"primary"} active={active} eid={"primary"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"gray"} label={"gray"} active={active} eid={"gray"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"dark"} label={"dark"} active={active} eid={"dark"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox className={"black"} label={"black"} active={active} eid={"black"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
       </Linebox>
     </StyledObject>
   );

@@ -13,7 +13,7 @@ const StyledObject = styled.div`{
   &.table-box { width: 100%; height: fit-content; min-height: ${(props) => props.boxHeight}; position: relative;
     padding-bottom: 50px;
     .search-box { width: 50%; display: inline-block; margin-bottom: 20px; }
-    .btn-new { top: 0; right: 0px; position: absolute; z-index: 99; width: 70px; height: 38px; }
+    .btn-new { top: 0; right: 0px; position: absolute; z-index: 99; width: 70px; }
     
     .tline { width: 100%; height: fit-content; display: block; position: relative; font-size: 14px; 
       .trow { width: 100%; position: relative; display: flex; flex-direction: row;
@@ -109,16 +109,16 @@ class Tablebox extends React.PureComponent {
   }
 
   onClickPage = (page, e) => {
-    this.props.onPageClick && this.props.onPageClick(page, e);
+    this.props.onClickPage && this.props.onClickPage(page, e);
   }
 
   onClickSearch = (value, key, e) => {
-    this.props.onSearchClick && this.props.onSearchClick(value, key, e);
+    this.props.onClickSearch && this.props.onClickSearch(value, key, e);
   }
 
   onClickHead = (e) => {
     const eid = e.currentTarget.getAttribute("eid");
-    this.props.onHeadClick && this.props.onHeadClick(eid, e);
+    this.props.onClickHead && this.props.onClickHead(eid, e);
   }
 
   onClickMove = (rowid, e) => {
@@ -156,8 +156,8 @@ class Tablebox extends React.PureComponent {
   }
 
   render() {
-    const makeTableItem = (list, tags = []) => {
-      let array = list == null || list.length < 1 ? [] : list.map(item => {
+    const makeTableItem = (list = null, tags = []) => {
+      let array = list == null || list.length < 1 ? null : list.map(item => {
         let temps = [];
         tags.map(key => temps = [...temps, { key: key, value: item[key] }]);
         return temps;
@@ -167,28 +167,26 @@ class Tablebox extends React.PureComponent {
     }
 
     const { props } = this;
-    const { head, list } = props;
+    const { head = null, list = null } = props;
     const cursor = props.onSelect == null ? 'default' : "pointer";
     const height = `${lineHeight}px`;
     const boxHeight = `${lineHeight * 11}px`; //header 포함
     const style = { cursor, height, boxHeight };
-    const searchbox = props.onSearchClick == null ? false : true;
     const selection = (cursor === 'pointer');
-    // const drag = this.props.onDrag == null ? false : true;
 
     // 테이블 아이템중에 head에 설정된 col만 추출하자.
-    const tlist = makeTableItem(list, head.map(item => item.key));
+    const tlist = makeTableItem(list, head && head.map(item => item.key));
 
     return (
-      <StyledObject className={cx('table-box', props.className, { searchbox })} {...style}>
-        {props.onSearchClick && <Search guide={ST.SEARCH} onClick={this.onClickSearch} className="" list={props.searchs} searchkey={props.searchkey}/>}
+      <StyledObject className={cx('table-box', props.className)} {...style}>
+        {props.onClickSearch && <Search guide={ST.SEARCH} onClick={this.onClickSearch} className="" list={props.searchs} searchkey={props.searchkey}/>}
         {props.onClickNew &&
           <Button className="btn-new green md" title={ST.ADD} onClick={this.onClickNew} eid={EID.NEW} />
           // <Svg className="btn-new md" onClick={this.onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
         }
 
         {/* head */}
-        <div className="tline head">
+        {head && <div className="tline head">
           <div className="trow" >
             {head.map((item, index) => {
               const { tablet = 'show', mobile = 'show', flex } = item;
@@ -197,11 +195,11 @@ class Tablebox extends React.PureComponent {
                 className={cx("tcol", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')} >{item.title}</div>
             })}
           </div>
-        </div>
+        </div>}
 
-        {Util.isEmpty(tlist) && <div className="no-data"><Nodata /></div>}
+        {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
         {/* body */}
-        {!Util.isEmpty(tlist) && <ul className="tline body">
+        {tlist && <ul className="tline body">
           {/* row */}
           {tlist.map((item, index) => {
             const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
@@ -221,7 +219,9 @@ class Tablebox extends React.PureComponent {
 
           <div className="total-txt">{`${ST.TOTAL} : ${props.total}`}</div>
         </ul>}
-
+        
+        {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
+        
         {/* page navi */}
         <Pagenavi pos={props.pos} max={props.max} onItemClick={this.onClickPage} color="white" />
       </StyledObject>

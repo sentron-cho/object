@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, cs } from './index';
+import { Search, Pagenavi, Nodata, Util, Svg, Button, cs } from './index';
 import { EID, ST } from './Config';
 
 const style = {
@@ -10,12 +10,15 @@ const style = {
 
 const StyledObject = styled.div`{
   &.callopse-list { position: relative;
-    .top-frame { margin-bottom: 10px; padding-right: 50px;
-      .search-box { width: 50%; display: inline-block; }
-      .info-label { display: inline-block; height: 100%; font-size: 18px; font-weight: 500; text-align: left;
-        float: right; position: relative; line-height: 48px;
-      }
-    }
+    // .top-frame { margin-bottom: 10px; padding-right: 50px;
+    //   .search-box { width: 50%; display: inline-block; }
+    //   .info-label { display: inline-block; height: 100%; font-size: 18px; font-weight: 500; text-align: left;
+    //     float: right; position: relative; line-height: 48px;
+    //   }
+    // }
+
+    .search-box { width: 50%; display: inline-block; margin-bottom: 20px; }
+    .btn-new { top: 0; right: 0px; position: absolute; z-index: 99; width: 70px; }
     
     .callopse-body { width: 100%; height: auto; position: relative; font-size: 14px; 
       min-height: ${(props) => props.boxHeight};
@@ -64,7 +67,6 @@ const StyledObject = styled.div`{
       }
     }
     
-    .btn-new { top: 15px; right: 10px; position: absolute; z-index: 99; }
     .page-navi { margin-top: 40px; }
 
     @media screen and (max-width : 1280px) {
@@ -105,21 +107,20 @@ class Callopselist extends React.PureComponent {
   }
 
   onClickPage = (page, e) => {
-    (this.props.onPageClick != null) && this.props.onPageClick(page, e);
+    this.props.onClickPage && this.props.onClickPage(page, e);
   }
 
-  onClickPage = (page, e) => {
-    (this.props.onPageClick != null) && this.props.onPageClick(page, e);
-  }
-
-  onClickSearch = (page, e) => {
-    (this.props.onSearchClick != null) && this.props.onSearchClick(page, e);
+  onClickSearch = (value, key, e) => {
+    this.props.onClickSearch && this.props.onClickSearch(value, key, e);
   }
 
   renderBody = () => {
     const { props } = this;
-    const { tags, list } = props;
+    const { tags = null, list = null } = props;
     // const eidatable = this.props.onClickItem ? true : false;
+    if (!tags || !list) {
+      return <div className="frame"><Nodata /></div>
+    }
 
     // tags 배열에 나열된 아이템들만 추출
     const makeTableItem = (list, tags = []) => {
@@ -135,7 +136,7 @@ class Callopselist extends React.PureComponent {
 
     // 테이블 아이템중에 head에 설정된 col만 추출하자.
     const tlist = makeTableItem(list, tags.map(item => item.key));
-    if (tlist == null || tlist.length < 1) {
+    if (!tlist || tlist.length < 1) {
       return <div className="frame"><Nodata /></div>
     } else {
       return <React.Fragment>
@@ -182,14 +183,18 @@ class Callopselist extends React.PureComponent {
     return (
       <StyledObject className={cx('callopse-list', props.className)} {...style}>
         {/* button group */}
-        <div className="top-frame">
+        {/* <div className="top-frame">
           <div className="search-box"><Search guide={ST.SEARCH} onClick={this.onClickSearch} className="box" /></div>
           <div className="info-label"> <span className="info">{`${ST.TOTAL} : ${props.total}`}</span></div>
-        </div>
+        </div> */}
+
+        {props.onClickSearch && <Search guide={ST.SEARCH} onClick={this.onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
+        {props.onClickNew &&
+          <Button className="btn-new green md" title={ST.ADD} onClick={this.onClickNew} eid={EID.NEW} />
+          // <Svg className="btn-new md" onClick={this.onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
+        }
 
         {this.renderBody()}
-
-        {props.onClickNew && <Svg className="btn-new sm" name={"new"} onClick={this.onClickNew} color={props.color} />}
       </StyledObject >
     );
   }

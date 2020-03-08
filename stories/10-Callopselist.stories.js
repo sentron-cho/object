@@ -4,13 +4,13 @@ import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Callopselist, Tablebox, Button } from '../src';
+import { cs, Callopselist, Tablebox, Button, Util } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
-    .lb-box .lb-li > * { ${cs.m.b10} }
+    // .lb-box .lb-li > * { ${cs.m.b10} }
 
     .t-child { ${cs.h.get(100)} & > p { ${cs.align.center} } }
   }
@@ -19,6 +19,28 @@ const StyledObject = styled.span`{
 export default { title: 'object|Callopselist', component: Callopselist, decorators: [withKnobs] };
 
 const samplecode = (value, classname = '') => `<Callopselist className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>`;
+
+const tags = [
+  { key: 'no', title: 'number', flex: '1 1 40px' },
+  { key: 'name', title: 'name', flex: '10 1 100px', mobile: 'hide' },
+  // { key: 'text', title: 'text', flex: '20 1 200px', tablet: 'hide', align: 'left' },
+  { key: 'utime', title: 'uptime', flex: '3 1 120px', type: 'date', tablet: 'hide' }
+];
+
+const jsonlist = (count = 5, lines=10) => {
+  let texts = "collpse list contents - 1";
+  for(let i = 0; i<lines-1; i++) {
+    texts += "\ncollpse list contents - " + (i + 2);
+  }
+
+  let data = [];
+  for(let i = 0; i<count; i++ ) {
+    data.push({no: i+1, rowid: i, text: `${texts}`, utime: Util.getCurrentDate()});
+    // data.push({no: i+1, rowid: i, name: `data-${i}`, text: `${texts}-${i}`, utime: Util.getCurrentDate()});
+  }
+
+  return data;
+};
 
 export const object = () => {
   // const classname = text('classname', null);
@@ -59,17 +81,11 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={true}>
-        <Callopselist className={cx(size, align, bg)} label={title} onClickSearch={onClickSearch}
-          onSelect={onSelect} onClickNew={onClickNew} onClickItem={onClickItem} onClickPage={onClickPage} >
+        <Callopselist className={cx(size, align, bg)} label={title} 
+          tags={tags} list={jsonlist(5)} //datakey={"text"}
+          onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew} onClickItem={onClickItem} onClickPage={onClickPage} >
           <div className={"t-child"}><p>{"child component"}</p></div>
         </Callopselist>
-      </Linebox>
-
-      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={true}>
-        <Tablebox className={cx(size, align, bg)} label={title} onClickSearch={onClickSearch}
-          onSelect={onSelect} onClickNew={onClickNew} onClickItem={onClickItem} onClickPage={onClickPage} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Tablebox>
       </Linebox>
 
       <div className={"res-view"}>

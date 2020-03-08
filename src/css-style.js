@@ -62,6 +62,7 @@ const cs = {
   bottom: (v) => Number.isInteger(v) ? `top: unset; bottom: ${v}px;` : `top: unset; bottom: ${v};`,
 
   noselect: 'user-select: none;',
+  noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
 
   pos: {
     absolute: 'position: absolute;',
@@ -69,7 +70,7 @@ const cs = {
     fixed: 'position: fixed;',
 
     ltop: 'left: 0; top: 0;',
-    rtop: 'right: 0; bottom: 0;',
+    rtop: 'right: 0; top: 0;',
     lbottom: 'left: 0; bottom: 0;',
     rbottom: 'right: 0; bottom: 0;',
 
@@ -199,6 +200,7 @@ const cs = {
     back: 'z-index: 0;',
     front: 'z-index: 1;',
     icon: 'z-index: 9;',
+    over: 'z-index: 99;',
     menu: 'z-index: 99999;',
     header: 'z-index: 199999;',
     popup: 'z-index: 999999;',
@@ -308,7 +310,6 @@ const cs = {
     lbottom: `position: absolute; left: 5px; bottom: 5px;`,
     rbottom: `position: absolute; right: 5px; bottom: 5px;`,
 
-    
     x: (v) => Number.isInteger(v) ? `transform: translateX(${v}px);` : `transform: translateX(${v});`,
     y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,
     vertical: (v) => `vertical-align : ${v};`,

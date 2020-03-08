@@ -21,21 +21,21 @@ export default { title: 'object|Callopselist', component: Callopselist, decorato
 const samplecode = (value, classname = '') => `<Callopselist className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>`;
 
 const tags = [
-  { key: 'no', title: 'number', flex: '1 1 40px' },
-  { key: 'name', title: 'name', flex: '10 1 100px', mobile: 'hide' },
+  { key: 'no', title: 'number', flex: '1 1 40px', align: 'left' },
+  { key: 'name', title: 'name', flex: '10 1 100px', mobile: 'hide', align: 'center' },
   // { key: 'text', title: 'text', flex: '20 1 200px', tablet: 'hide', align: 'left' },
-  { key: 'utime', title: 'uptime', flex: '3 1 120px', type: 'date', tablet: 'hide' }
+  { key: 'utime', title: 'uptime', flex: '3 1 120px', type: 'date', tablet: 'hide', align: 'right' }
 ];
 
-const jsonlist = (count = 5, lines=10) => {
+const jsonlist = (count = 5, lines = 10) => {
   let texts = "collpse list contents - 1";
-  for(let i = 0; i<lines-1; i++) {
+  for (let i = 0; i < lines - 1; i++) {
     texts += "\ncollpse list contents - " + (i + 2);
   }
 
   let data = [];
-  for(let i = 0; i<count; i++ ) {
-    data.push({no: i+1, rowid: i, text: `${texts}`, utime: Util.getCurrentDate()});
+  for (let i = 0; i < count; i++) {
+    data.push({ no: i + 1, rowid: i, name: `title-${i}`, cont: `${texts}`, utime: Util.getCurrentDate() });
     // data.push({no: i+1, rowid: i, name: `data-${i}`, text: `${texts}-${i}`, utime: Util.getCurrentDate()});
   }
 
@@ -44,8 +44,7 @@ const jsonlist = (count = 5, lines=10) => {
 
 export const object = () => {
   // const classname = text('classname', null);
-  const title = text('title', "callopse");
-  const eid = text('eid', "12345");
+  const multi = boolean('multi', false);
   const size = options('size',
     { 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs' },
     '', { display: 'inline-radio' }, 'Other');
@@ -54,9 +53,12 @@ export const object = () => {
   const bg = options('background',
     { trans: 'trans', white: 'white', sky: 'sky', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
-
+   
+  const perpage = 10; // 페이지당 표시 개수
+  const alldata = jsonlist(50);
   const [result, setResult] = useState(null);
-  const [change, setChange] = useState(null);
+  const [pos, setPos] = useState(1);
+  const [list, setList] = useState([...alldata.slice(0, perpage)]);
 
   const onSelect = (rowid, e) => {
     setResult(`onSelect(rowid = ${rowid}, e)`);
@@ -71,6 +73,9 @@ export const object = () => {
   }
 
   const onClickPage = (page, e) => {
+    const array = [...alldata.slice((page-1) * perpage, page * perpage)]
+    setList(array);
+    setPos(page);
     setResult(`onClickPage(page = ${page}, e)`);
   }
 
@@ -78,14 +83,14 @@ export const object = () => {
     setResult(`onClickSearch(value = ${value}, key = ${key}, e)`);
   }
 
+  const max = Math.floor(alldata.length / perpage);
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={true}>
-        <Callopselist className={cx(size, align, bg)} label={title} 
-          tags={tags} list={jsonlist(5)} //datakey={"text"}
-          onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew} onClickItem={onClickItem} onClickPage={onClickPage} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopselist>
+      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx(size, align, bg)} pos={pos} max={max} multi={multi}
+          tags={tags} list={list} datakey={"cont"} options={{ inner: { height: 160 } }}
+          onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
+          onClickItem={onClickItem} onClickPage={onClickPage} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -110,33 +115,21 @@ const option = {
 }
 
 export const size = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")}>
-        <Callopselist className={"xs"} label={"x small"} eid={"xs"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopselist>
-      </Linebox>
+    return (
+      <StyledObject className={"t-main"}>
+        <Linebox title={"small"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+          <Callopselist className={cx("sm")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        </Linebox>
 
-      <Linebox title={"small"} className={"nomargin"} sample={samplecode('eid={"sm"}', "xs")}>
-        <Callopselist className={"sm"} label={"small"} eid={"sm"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopselist>
-      </Linebox>
+        <Linebox title={"none size"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+          <Callopselist className={cx("")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        </Linebox>
 
-      <Linebox title={"no size"} className={"nomargin"} sample={samplecode('eid={"lg"}', "xs")}>
-        <Callopselist className={""} label={"no size"} eid={"none"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopselist>
-      </Linebox>
-
-      <Linebox title={"large"} className={"nomargin"} sample={samplecode('eid={"lg"}', "xs")}>
-        <Callopselist className={"lg"} label={"large"} eid={"lg"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopselist>
-      </Linebox>
-    </StyledObject>
-  );
+        <Linebox title={"large"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+          <Callopselist className={cx("lg")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        </Linebox>
+      </StyledObject>
+    );
 };
 
 export const color = () => {
@@ -155,8 +148,8 @@ export const color = () => {
 
   return (
     <StyledObject className={"t-main"} >
-      <Button className={"primary"} title={"close all"} onClick={onClickClose} eid={"info"}/>
-      <Button className={"primary"} title={"open all"} onClick={onClickOpen} eid={"info"}/>
+      <Button className={"primary"} title={"close all"} onClick={onClickClose} eid={"info"} />
+      <Button className={"primary"} title={"open all"} onClick={onClickOpen} eid={"info"} />
       <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} >
         <Callopselist className={"trans"} label={"transparent"} active={active} eid={"trans"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
         <Callopselist className={"white"} label={"white"} active={active} eid={"white"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>

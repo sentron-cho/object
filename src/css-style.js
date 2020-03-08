@@ -96,6 +96,7 @@ const cs = {
     invisible: 'visibility: invisible;',
     hidden: 'visibility: hidden;',
 
+    flex: (v) => `flex: ${v};`,
     get: (v) => `display: ${v};`,
   },
 
@@ -253,7 +254,10 @@ const cs = {
     noneline: `text-decoration: none;`,
     upper: `text-transform: uppercase;`,
     lower: `text-transform: lowercase;`,
+    ellipsis: `text-overflow: ellipsis; white-space: nowrap;`,
 
+    overflow: (v) => `text-overflow: ${v};`,
+    space: (v) => `white-space: ${v};`,
     family: (v) => `font-family: ${v};`,
     style: (v) => `font-family: ${v};`,
     deco: (v) => `text-decoration: ${v};`,

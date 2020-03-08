@@ -3,31 +3,36 @@ import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { EID } from './Config';
-import { Svg, Util } from './index';
+import { Svg, Util, cs } from './index';
 
 const StyledObject = styled.div`{
-    height: 60px; width: 100%; position: relative; text-align: center; padding: 10px;
-    display: inline-block; background: transparent;
-
-    &.s-mobile { padding: 0px; .pgn-frame { margin: 10px 0px; } }
-
-    &.s-tablet { padding: 0px; .pgn-frame { margin: 10px 0px; } }
+  &.page-navi {
+    ${cs.font.dark} ${cs.h.get(60)} ${cs.w.full} ${cs.pos.relative} 
+    ${cs.font.center} ${cs.p.a10} ${cs.disp.inblock}
 
     .pgn-frame {
-        height: 40px; width: 100%;
-        .pg-no {
-            height: 40px; width: 36px; border: 1px solid transparent; border-radius: 2px;
-            margin: 0 1px; display: inline-block; line-height: 40px; opacity: 0.6;
-            text-align: center; font-size: 14px; font-weight: 600; position: relative;
+      ${cs.h.get(40)} ${cs.w.full}
+      .pg-no {
+        ${cs.mouse.pointer} ${cs.h.full} ${cs.w.get(36)} ${cs.border.radius(2)}
+        ${cs.box.line} ${cs.border.trans} ${cs.disp.inblock} ${cs.m.h2} ${cs.opac.alpha}
+        ${cs.font.md} ${cs.font.weight(600)} ${cs.pos.relative}
 
-            &:hover { border-color: #337ab7; opacity: 1; .svg-icon { opacity: 1; } }
-            &.active { background: #337ab7; opacity: 1; }
-            &.invisable { visibility: hidden; }
-            
-            .svg-icon { position: relative; left: 0; top: 3px; display: inline-block; float: none; } }
-        }
-
+        &:hover { ${cs.border.primary} ${cs.opac.show} .svg-icon { ${cs.opac.show} } }
+        &.active { ${cs.bg.primary} ${cs.font.white} ${cs.opac.show} }
+        &.invisable { ${cs.disp.invisible} }
+        
+        span { ${cs.align.center} }
+      }
     };
+
+    &.sm { ${cs.h.get(40)} .pgn-frame { ${cs.h.get(30)} .pg-no { ${cs.w.get(24)} ${cs.m.h1} } } }
+    &.md { ${cs.h.get(50)} .pgn-frame { ${cs.h.get(34)} .pg-no { ${cs.w.get(28)} ${cs.m.h2} } } }
+    &.lg { ${cs.h.get(68)} .pgn-frame { ${cs.h.get(48)} .pg-no { ${cs.w.get(40)} ${cs.m.h3} } } }
+
+    &.s-mobile { ${cs.p.a0} .pgn-frame { ${cs.m.get("10px 0px")} } }
+
+    &.s-tablet {  ${cs.p.a0} .pgn-frame { ${cs.m.get("10px 0px")} } }
+  }
 }`;
 
 class Pagenavi extends React.Component {
@@ -109,13 +114,15 @@ class Pagenavi extends React.Component {
       return null;
     } else {
       return (
-        <StyledObject className={cx('page-navi', (type))}>
-          <ul className={cx('pgn-frame', className)}>
+        <StyledObject className={cx('page-navi', (type), className)}>
+          <ul className={cx('pgn-frame')}>
             <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
               <Svg className="prev sm" name={"prev"} color={this.props.color} />
             </li>
             {items.map((item, index) => (
-              <li className={cx('pg-no', String(item.page) === String(pos) ? 'active' : '')} key={String(index)} onClick={this.onClicked} eid={EID.PAGE}>{item.page}</li>
+              <li className={cx('pg-no', String(item.page) === String(pos) ? 'active' : '')} 
+                key={String(index)} onClick={this.onClicked} eid={EID.PAGE}><span>{item.page}</span>
+              </li>
             ))}
             <li className={cx('pg-no pg-icon', { invisable })} onClick={this.onClicked} eid={EID.NEXT}>
               <Svg className="next sm" name={"next"} color={this.props.color} />

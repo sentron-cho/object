@@ -11,7 +11,7 @@ const StyledBox = styled.div`{
     .lb-desc { ${cs.disp.inblock} ${cs.font.sm} ${cs.p.l10} ${cs.font.darkgray} }
 
     .lb-li { ${cs.m.t5} ${cs.max.width("100%")} ${cs.over.hidden} ${cs.pos.relative}
-      ${cs.w.calc("100% - 20px")} ${props => cs.m.top(props.top)}
+      ${cs.w.calc("100% - 20px")} ${props => cs.m.top(props.top)}  ${cs.min.height(60)}
 
       & > * { ${cs.m.r10} }
     }

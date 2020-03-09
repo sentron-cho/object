@@ -87,15 +87,18 @@ const StyledObject = styled.span` {
     &.box { ${cs.border.get("2px solid rgba(250, 250, 250, 0.95)")} ${cs.p.get("4px")} ${cs.border.radius(5)} }
     &.bg { ${cs.bg.get("rgba(0, 0, 0, 0.5)")} }
     &.radius { ${cs.border.radius("50%")} }
-    &.center { ${cs.align.xcenter} }
-    &.middle { ${cs.align.ycenter} }
+    
     &.left { ${cs.align.left} }
+    &.center { ${cs.align.xcenter} }
     &.right { ${cs.align.right} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
 
+    &.md { ${cs.icon.md} &.box { ${cs.p.get("5px")} } }
     &.xxl { ${cs.icon.xxl} &.box { ${cs.p.get("10px")} } }
     &.xl { ${cs.icon.xl} &.box { ${cs.p.get("7px")} } }
     &.lg { ${cs.icon.lg} &.box { ${cs.p.get("5px")} } }
-    &.md { ${cs.icon.md} &.box { ${cs.p.get("5px")} } }
     &.sm { ${cs.icon.sm} &.box { ${cs.p.get("4px")} } }
     &.xs { ${cs.icon.xs} &.box { ${cs.p.get("3px")} } }
 
@@ -126,7 +129,7 @@ const Svg = (props) => {
   const active = (props.name && props.active) && props.active === props.name;
 
   return (
-    <StyledObject className={cx("svg-icon", props.className, { disabled }, { clickable }, { active })} style={props.style}
+    <StyledObject className={cx("svg-icon md", props.className, { disabled }, { clickable }, { active })} style={props.style}
       name={name} color={props.color} onClick={props.disabled ? () => null : onClicked} eid={props.eid} title={props.help} >
       <svg x={"0px"} y={"0px"} width={"100%"} height={"100%"} viewBox={icon.viewbox} eid={props.eid} >
         <path className={"svg-path"} fill={color} d={icon.path} />
@@ -195,7 +198,7 @@ export const Svglist = (props) => {
 
   return (
     <SvgListStyle className={cx("svg-list", props.className)}>
-      <Svg className={"btn-svg-show lg"} icon={show ? "hide" : "show"} color={"black"} eid={show ? "show" : "hide"} onClick={onClick} />
+      <Svg className={"btn-svg-show md"} icon={show ? "hide" : "show"} color={"black"} eid={show ? "show" : "hide"} onClick={onClick} />
       {show && <div className={"sl-frame"}>
         {list.map((item, index) => {
           return <span key={index} className={"svg-item"}>

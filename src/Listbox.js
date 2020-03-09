@@ -1,21 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, cs, Button } from './index';
+import { Search, Pagenavi, Nodata, Util, Svg, cs, Button, Guidebox } from './index';
 import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.list-box {
-    width: 100%; z-index: 1; height: fit-content; position: relative;
-    border: 1px transparent; max-height: 100%; ${cs.opac.show}
+    ${cs.noliststyle} ${cs.noselect}
+    ${cs.w.full} ${cs.z.front} ${cs.h.fit} ${cs.pos.relative}
+    ${cs.box.line} ${cs.border.trans} ${cs.max.height("100%")} ${cs.opac.show}
 
-    .search { margin-bottom: 20px; padding-right: 0px; width: 50%; display: inline-block; }
-    .btn-new { top: 10px; right: 0px; position: absolute; z-index: 99; width: 70px; height: 38px; }
+    .search-box { ${cs.w.half} ${cs.disp.inblock} }
+    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
     .li-body {
-      .lbx-li { position: relative; height: auto; ${cs.border.bottom} min-height: 20px; 
-        padding: 4px 10px;
-
+      .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.min.height(20)}
+        ${cs.p.get("4px 10px")}
+        
         .lbx-tl { 
           padding: 5px 10px; position: relative;
           &.right { text-align: right };
@@ -65,8 +66,9 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, list = null, children = null, rowid = 'rowid', title = 'title',
-    disable = false, date = 'date', count = 'count' } = props;
+    divider, list = null, children = null, rowid = 'rowid',
+    title = 'title', date = 'date', count = 'count', disable = false
+  } = props;
 
   let styled = {};
   if (divider != null) {
@@ -91,48 +93,87 @@ const Listbox = (props) => {
   }
 
   const onClickSearch = (value, e) => {
-    props.onSearchClick && props.onSearchClick(value, e);
+    props.onClickSearch && props.onClickSearch(value, e);
   }
-  
-  const renderList = (title, list) => {
-    // const array = list.map(item => { return { "key": key, value: item[key] } });
-    const talign = props.titlealign || 'left';
-    const dalign = props.datealign || 'right';
-    const calign = props.countalign || 'right';
-    const selection = (props.onSelect !== null);
-    return list.map((item, index) => {
-      const active = false; //selpos === index;
-      const stitle = item[title] || '';
-      const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';      
-      const scount = item[count] >= 0 ? item[count] : -1;
 
-      return <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={onSelect}>
-        <p className={cx('lbx-tl', talign)}>{stitle}
-          {scount >= 0 && <span className={cx('lbx-cnt', calign)}>{scount}</span>}
-        </p>
-        <p className={cx('lbx-date', dalign)}>{sdate}</p>
-        {props.onClickDelete &&
-          <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
-        }
-      </li>
-    })
-  }
+  // const renderList = (title, list) => {
+  //   // const array = list.map(item => { return { "key": key, value: item[key] } });
+  //   const talign = props.titlealign || 'left';
+  //   const dalign = props.datealign || 'right';
+  //   const calign = props.countalign || 'right';
+  //   const selection = (props.onSelect !== null);
+
+  //   return list.map((item, index) => {
+  //     const active = false; //selpos === index;
+  //     const stitle = item[title] || '';
+  //     const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
+  //     const scount = item[count] >= 0 ? item[count] : -1;
+
+  //     return <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={onSelect}>
+  //       <p className={cx('lbx-tl', talign)}>{stitle}
+  //         {scount >= 0 && <span className={cx('lbx-cnt', calign)}>{scount}</span>}
+  //       </p>
+  //       <p className={cx('lbx-date', dalign)}>{sdate}</p>
+  //       {props.onClickDelete &&
+  //         <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
+  //       }
+  //     </li>
+  //   })
+  // }
+
+
+  // const renderGuide = () => {
+  //   if (data && data[0]) {
+  //     const item = data[0];
+  //     if (item.rowid == null || item.rowid === undefined) {
+  //       guide = "'rowid' is required in the list.\n"
+  //         + "ex. const list = [{ rowid: 'a12345', title: 'callopse', text: 'callopse test', utime: '20200101' }, {...}\n"
+  //         + "rowid and text is required. Rest is optional.\n"
+  //         + "rowid is used to show or hide text(contents)";
+  //     }
+  //   }
+
+  //   if (guide) {
+  //     return <Guidebox text={guide} />
+  //   }
+  // }
+
+  const talign = props.titlealign || 'left';
+  const dalign = props.datealign || 'right';
+  const calign = props.countalign || 'right';
+  const selection = (props.onSelect !== null);
 
   return (
     <StyledObject className={cx("list-box", props.className, { disable })} eid="select" style={styled}>
-      {props.onSearchClick && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
-      {props.onClickNew &&
-        <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />
-        // <Svg className="btn-new md" onClick={onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
-      }
-      
+      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
+      {props.onClickNew && <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
+
+      {/* error guid */}
+      {/* {renderGuide()} */}
+
+      {/* no data view */}
+      {!list && <div className="frame"><Nodata /></div>}
+
       {children && children}
-      {list && list.length > 0 && <ul className={"li-body"}>
-        {renderList(title, list)}
+      {list && <ul className={"li-body"}>
+        {list.map((item, index) => {
+          const stitle = item[title] || '';
+          const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
+          const scount = item[count] >= 0 ? item[count] : -1;
+
+          return <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
+            <p className={cx('lbx-tl', talign)}>{stitle}
+              {scount >= 0 && <span className={cx('lbx-cnt', calign)}>{scount}</span>}
+            </p>
+            <p className={cx('lbx-date', dalign)}>{sdate}</p>
+            {props.onClickDelete &&
+              <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
+            }
+          </li>
+        })}
         <div className="total-txt">{`${ST.TOTAL} : ${props.total}`}</div>
       </ul>}
-      {(!list || list.length <= 0) && <Nodata />}
-      
+
       {/* page navi */}
       <Pagenavi pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />
     </StyledObject >

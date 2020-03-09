@@ -148,14 +148,16 @@ const StyledSvgbox = styled.div`{
     &.right { ${cs.float.right} }
     &.left { ${cs.float.right} }
     &.center { ${cs.align.xcenter} }
+
+    &.full { ${cs.w.full} }
   }
 }`;
 
 export const Svgbox = (props) => {
-  const { list = null, size = 'sm', color='dark' } = props;
+  const { list = null, size = 'sm', color='dark', rowid=0 } = props;
 
   const onClick = (eid, e) => {
-    props.onClick && props.onClick(eid, e);
+    props.onClick && props.onClick(eid, rowid, e);
   }
 
   return <StyledSvgbox className={cx("svg-box", props.className)}>

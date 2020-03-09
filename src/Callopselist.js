@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { Search, Pagenavi, Nodata, Util, Svg, Button, Guidebox, cs } from './index';
 import { EID, ST } from './Config';
+import { Svgbox } from './Svg';
 
 const style = {
   border: '1px solid rgba(180, 180, 180, 0.2)',
@@ -17,15 +18,18 @@ const StyledObject = styled.div`{
       ${cs.box.line} ${cs.box.inner}
 
       .csl-row { ${cs.w.full} ${cs.disp.block} ${cs.p.a0} ${cs.h.fit}
-        ${({ height }) => cs.font.line(height)};
+        // ${({ height }) => cs.font.line(height)};
         // ${({ height }) => cs.min.height(height)};
 
         ${cs.border.top}
         transition: all .5s ease-in-out;
         &:first-child { ${cs.border.none} }
         
-        .csl-line { ${cs.disp.get("flex; flex-direction: row")}
+        .csl-line {
+          ${({ height }) => cs.font.line(height)};
+          ${cs.disp.get("flex; flex-direction: row")}
           cursor: ${(props) => props.cursor}; 
+          ${cs.noselect}
         }
 
         .csl-col { 
@@ -40,27 +44,38 @@ const StyledObject = styled.div`{
         .csl-col:last-child { ${cs.p.r10} }
       }
 
-      .csl-cont { ${cs.border.lightwhite} ${cs.p.a10} ${cs.font.line(20)} //${cs.anim.showin("3s")}
+      .csl-cont { ${cs.border.lightwhite} ${cs.p.a10} //${cs.anim.showin("3s")}
         ${cs.h.fit} ${cs.font.prewrap} ${cs.over.yauto} ${cs.pos.relative} ${cs.scrollbar.t4} 
-        ${cs.border.top} ${cs.border.lightwhite}
+        ${cs.border.lightwhite} ${cs.border.top} ${cs.font.line(20)}
+        // ${({ height }) => cs.font.line(height - 10)};
 
         animation: slidedown linear 1 forwards 0.2s; 
         @keyframes slidedown { 
           from  { height: 0px; opacity: 0.7; } 
           to { height: 
             ${({ inner }) => inner && inner.height ? inner.height + 'px' : '100px'}; 
-            opacity: 1; } 
+            opacity: 1; 
+          } 
         };
+      }
+
+      .cls-icon { ${cs.m.l5} ${cs.m.top(2)} ${cs.opac.show} }
+
+      .cls-cont-btns {
+        ${cs.font.right} ${cs.p.t5} ${cs.bg.lightgray} 
+        .svg-icon { ${cs.opac.get(0.3)} }
+
+        &:hover { .svg-icon { ${cs.opac.get(0.7)} } }
       }
     }
 
-
     .page-navi { ${cs.m.t40} }
+    .csl-border { ${cs.border.gray} }
 
     &.sm { 
       .csl-body { ${cs.font.sm} 
         .csl-row { 
-          ${({ height }) => cs.font.line(height-6)};
+          ${({ height }) => cs.font.line(height - 6)};
         }
       } 
     }
@@ -68,11 +83,34 @@ const StyledObject = styled.div`{
     &.lg { 
       .csl-body { ${cs.font.lg} 
         .csl-row { 
-          ${({ height }) => cs.font.line(height+6)};
+          ${({ height }) => cs.font.line(height + 6)};
         }
-      } 
+      }
     }
 
+    &.primary {
+      .csl-body { ${cs.bg.primary} .csl-border { ${cs.border.semiblack} } .cls-icon { .svg-path { ${cs.fill.lightgray} } } }
+    }
+    &.gray {
+      .csl-body { ${cs.bg.lightgray} .csl-border { ${cs.border.semiblack} } }
+    }
+    &.dark {
+      .csl-body { ${cs.bg.dark} ${cs.font.white} .csl-border { ${cs.border.black} } }
+    }
+
+    &.radius { .csl-body { ${cs.box.radius} } }
+
+    ${({ border }) => border && `.csl-body { ${cs.box.line} }`}
+    ${({ border }) => border && border.color && `.csl-border { ${cs.border.color(border.color + " !important")} }`}
+    ${({ border }) => border && border.radius && `.csl-body { ${cs.border.radius(border.radius + " !important")} }`}
+    ${({ border }) => border && border.width && `.csl-body { ${cs.border.width(border.width + " !important")} }`}
+    
+    ${({ font }) => font && font.size && `.csl-body { ${cs.font.size(font.size + " !important")} }`}
+    ${({ font }) => font && font.color && `.csl-body { ${cs.font.color(font.color)} }`}
+    ${({ font }) => font && font.align && `.csl-body { ${cs.font.align(font.align)} }`}
+    
+    ${({ bgcolor }) => bgcolor && `.csl-body { ${cs.bg.color(bgcolor)} }`}
+    
     @media screen and (max-width : 1280px) { }
 
     @media screen and (max-width : 1024px) { }
@@ -104,7 +142,7 @@ const Callopselist = (props) => {
   const onSelect = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
 
-    if(multi) {
+    if (multi) {
       const item = data && data.find(item => String(item.rowid) === String(rowid));
       if (item) {
         item.show ? item.show = !item.show : item["show"] = true;
@@ -122,10 +160,10 @@ const Callopselist = (props) => {
     props.onClickNew && props.onClickNew(e);
   }
 
-  // const onClickItem = (rowid, e) => {
-  //   e.stopPropagation();
-  //   props.onClickItem && props.onClickItem(EID.EDIT, rowid, e);
-  // }
+  const onClickItem = (eid, rowid, e) => {
+    e.stopPropagation();
+    props.onClickItem && props.onClickItem(eid, rowid, e);
+  }
 
   const onClickPage = (page, e) => {
     props.onClickPage && props.onClickPage(page, e);
@@ -173,8 +211,10 @@ const Callopselist = (props) => {
   }
 
   const tlist = makeTableItem(data, tags && tags.map(item => item.key));
+  console.dir(props.font)
   return (
-    <StyledObject className={cx('callopse-list', props.className)} {...style}>
+    <StyledObject className={cx('callopse-list', props.className)} {...style}
+      border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew && <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
 
@@ -185,7 +225,7 @@ const Callopselist = (props) => {
       {!tlist && <div className="frame"><Nodata /></div>}
 
       {/* callopse list  */}
-      {tlist && <ul className="csl-body">
+      {tlist && <ul className="csl-body csl-border">
         {/* row */}
         {tlist.map((item, index) => {
           const rowid = props.rowid != null ? data[index][props.rowid] : data[index]['rowid'];
@@ -194,7 +234,7 @@ const Callopselist = (props) => {
           const { show = false } = data[index];
 
           return (
-            <li className={cx("csl-row")} key={String(index)} >
+            <li className={cx("csl-row csl-border")} key={String(index)} >
 
               {/* col title */}
               <div className="csl-line" rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
@@ -206,13 +246,22 @@ const Callopselist = (props) => {
                     : type === "date" ? Util.toStringSymbol(value).substr(0, 10) : value;
                   return <p key={String(index)} style={styled} className={cx("csl-col", col.key)}>{data}</p>
                 })}
+                <Svg className="cls-icon md" name={show ? "arrowup" : "arrowdn"} color={cs.color.darkgray} />
               </div>
 
               {/* show/hide callopse contents */}
-              {show && <div className={cx("csl-cont")} rowid={rowid}>
+              {show && <div className={cx("csl-cont csl-border")} rowid={rowid}>
                 {text}
                 {/* {<div className="cslc-child" rowid={rowid}></div>} */}
               </div>}
+
+              {/* {show && props.onClickItem && <div className={"cls-cont-btns"}>
+                <Svg className="cls-icon sm" name={"edit"} color={cs.color.darkgray} eid={rowid} onClick={(eid, e) => onClickItem(EID.EDIT, rowid, e)} />
+                <Svg className="cls-icon sm" name={"delete"} color={cs.color.darkgray} eid={rowid} onClick={(eid, e) => onClickItem(EID.DELETE, rowid, e)} />
+              </div>} */}
+              {show && props.onClickItem &&
+                <Svgbox className={cx('cls-cont-btns full')} size={"sm"} rowid={rowid} list={[{ icon: EID.EDIT }, { icon: EID.DELETE }]} onClick={onClickItem} />
+              }
             </li>
           )
         })}

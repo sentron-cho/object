@@ -28,6 +28,25 @@ const StyledObject = styled.div`{
     &.sm { ${cs.h.get(40)} .pgn-frame { ${cs.h.get(30)} .pg-no { ${cs.w.get(24)} ${cs.m.h1} } } }
     &.md { ${cs.h.get(50)} .pgn-frame { ${cs.h.get(34)} .pg-no { ${cs.w.get(28)} ${cs.m.h2} } } }
     &.lg { ${cs.h.get(68)} .pgn-frame { ${cs.h.get(48)} .pg-no { ${cs.w.get(40)} ${cs.m.h3} } } }
+    
+    &.green {
+      .pg-no { &.active { ${cs.bg.green} } &:hover { ${cs.border.green} } .svg-icon { .svg-path { ${cs.fill.green} } } } 
+    }
+    &.orange {
+      .pg-no { &.active { ${cs.bg.orange} } &:hover { ${cs.border.orange} } .svg-icon { .svg-path { ${cs.fill.orange} } } } 
+    }
+    &.red {
+      .pg-no { &.active { ${cs.bg.red} } &:hover { ${cs.border.red} } .svg-icon { .svg-path { ${cs.fill.red} } } } 
+    }
+    &.primary {
+      .pg-no { &.active { ${cs.bg.primary} } &:hover { ${cs.border.primary} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+    }
+    &.gray {
+      .pg-no { &.active { ${cs.bg.gray} } &:hover { ${cs.border.darkgray} } .svg-icon { .svg-path { ${cs.fill.gray} } } } 
+    }
+    &.dark {
+      .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
+    }
 
     &.s-mobile { ${cs.p.a0} .pgn-frame { ${cs.m.get("10px 0px")} } }
 

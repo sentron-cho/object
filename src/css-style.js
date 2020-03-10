@@ -98,7 +98,7 @@ const cs = {
     inline: 'display: inline;',
     
     visible: 'visibility: visible;',
-    invisible: 'visibility: invisible;',
+    invisible: 'visibility: hidden;',
     hidden: 'visibility: hidden;',
 
     flex: (v) => `flex: ${v};`,

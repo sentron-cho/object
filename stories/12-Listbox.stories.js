@@ -21,7 +21,7 @@ const StyledObject = styled.span`{
 
 export default { title: 'object|Listbox', component: Listbox, decorators: [withKnobs] };
 
-const samplecode = (value, classname = '') => `<Listbox className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>`;
+const samplecode = (value, classname = '') => `<Listbox className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Listbox>`;
 
 const jsonlist = (count = 5, lines = 10) => {
   let data = [];

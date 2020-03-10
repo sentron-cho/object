@@ -139,6 +139,32 @@ export const size = () => {
     );
 };
 
+export const color = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx("")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx("primary")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"gray"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx("gray")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"dark"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx("dark")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
 export const border = () => {
   return (
     <StyledObject className={"t-main"}>

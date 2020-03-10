@@ -114,6 +114,17 @@ const StyledObject = styled.div`{
       .selection:hover { ${cs.bg.primaryhover} }
     }
 
+    ${({ border }) => border && `.tb-body { ${cs.box.line} .tb-li:last-child { ${cs.border.trans} } }`}
+    ${({ border }) => border && border.color && `.tb-body { ${cs.border.color(border.color + " !important")} }`}
+    ${({ border }) => border && border.radius && `.tb-body { ${cs.border.radius(border.radius + " !important")} }`}
+    ${({ border }) => border && border.width && `.tb-body { ${cs.border.width(border.width + " !important")} }`}
+    
+    ${({ font }) => font && font.size && `.tb-body { ${cs.font.size(font.size + " !important")} }`}
+    ${({ font }) => font && font.color && `.tb-body { ${cs.font.color(font.color)} }`}
+    ${({ font }) => font && font.align && `.tb-body { ${cs.font.align(font.align)} }`}
+    
+    ${({ bgcolor }) => bgcolor && `.tb-body { ${cs.bg.color(bgcolor)} }`}
+
     @media screen and (max-width : 1280px) {}
   
     @media screen and (max-width : 1024px) {
@@ -246,7 +257,8 @@ const Tablebox = (props) => {
   const tlist = makeTableItem(list, head && head.map(item => item.key));
 
   return (
-    <StyledObject className={cx('table-box', props.className)} {...style}>
+    <StyledObject className={cx('table-box', props.className)} {...style}
+      border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew &&
         <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />

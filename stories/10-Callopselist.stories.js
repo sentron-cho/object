@@ -43,17 +43,22 @@ const jsonlist = (count = 5, lines = 10) => {
 };
 
 export const object = () => {
-  // const classname = text('classname', null);
   const multi = boolean('multi', false);
   const size = options('size',
-    { 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs' },
-    '', { display: 'inline-radio' }, 'Other');
-  const align = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
+    { 'sm(small)': 'sm', 'lg(large)': 'lg', 'none': '' },
     '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
-    { trans: 'trans', white: 'white', sky: 'sky', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
+    { primary: 'primary', gray: 'gray', dark: 'dark', none: '' },
     '', { display: 'inline-radio' }, 'Other');
-   
+  const fontsize = text('fontsize', '14px');
+  const fontcolor = text('fontcolor', '#353535');
+  const align = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
+    '', { display: 'inline-radio' }, 'Other');
+  const border = text('border color', '#909090');
+  const radius = text('border radius', '0px');
+  const width = text('border width', '1px');
+
+  const bgcolor = text('border color', '#ffffff');
   const perpage = 10; // 페이지당 표시 개수
   const alldata = jsonlist(50);
   const [result, setResult] = useState(null);
@@ -89,6 +94,8 @@ export const object = () => {
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
         <Callopselist className={cx(size, align, bg)} pos={pos} max={max} multi={multi}
           tags={tags} list={list} datakey={"cont"} options={{ inner: { height: 160 } }}
+          border={{ color: border, radius: radius, width: width }}
+          font={{ color: fontcolor, size: fontsize, align: align }}
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
           onClickItem={onClickItem} onClickPage={onClickPage} />
       </Linebox>
@@ -130,62 +137,4 @@ export const size = () => {
         </Linebox>
       </StyledObject>
     );
-};
-
-export const color = () => {
-  const [active, setactive] = useState(null);
-  const [time, settime] = useState(null);
-
-  const onClickClose = (eid, e) => {
-    setactive(false);
-    settime(new Date().getTime());
-  }
-
-  const onClickOpen = (eid, e) => {
-    setactive(true);
-    settime(new Date().getTime());
-  }
-
-  return (
-    <StyledObject className={"t-main"} >
-      <Button className={"primary"} title={"close all"} onClick={onClickClose} eid={"info"} />
-      <Button className={"primary"} title={"open all"} onClick={onClickOpen} eid={"info"} />
-      <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} >
-        <Callopselist className={"trans"} label={"transparent"} active={active} eid={"trans"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"white"} label={"white"} active={active} eid={"white"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"sky"} label={"sky"} active={active} eid={"sky"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"orange"} label={"orange"} active={active} eid={"orange"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"green"} label={"green"} active={active} eid={"green"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"red"} label={"red"} active={active} eid={"red"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"primary"} label={"primary"} active={active} eid={"primary"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"gray"} label={"gray"} active={active} eid={"gray"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"dark"} label={"dark"} active={active} eid={"dark"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"black"} label={"black"} active={active} eid={"black"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const border = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"align"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} box={true}>
-        <Callopselist className={""} label={'{radius: "5px", color: "blue"}'} eid={"radius"} border={{ radius: '5px', color: "blue" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={""} label={'{radius: "10px", color: "red", width: "2px"}'} eid={"color"} border={{ radius: "10px", color: "red", width: "2px" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={""} label={'{radius: "15px", color: "black", width: "3px"}'} eid={"width"} border={{ radius: "15px", color: "black", width: "3px" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const align = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"align"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} box={true}>
-        <Callopselist className={"left"} label={"left"} eid={"left"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"center"} label={"center"} eid={"center"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-        <Callopselist className={"right"} label={"right"} eid={"right"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>
-      </Linebox>
-    </StyledObject>
-  );
 };

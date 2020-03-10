@@ -11,8 +11,8 @@ const StyledObject = styled.div` {
       ${cs.disp.inblock} ${cs.w.auto}
 
       .chk-itm { 
-        ${cs.max.width("100%")} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
-        .chk-icon { ${cs.float.left} }
+        ${cs.max.width('100%')} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
+        .chk-icon { ${cs.float.left} ${cs.m.h5} }
 
         &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
       }
@@ -24,7 +24,9 @@ const StyledObject = styled.div` {
       ${cs.p.l15} ${cs.m.get(-3)} ${cs.m.b5} 
     }
 
-    .chk-label, .chk-txt { ${cs.disp.inblock} ${cs.p.h5} }
+    .chk-label, .chk-txt { ${cs.disp.inblock} ${cs.p.r5} }
+
+    .no-data { ${cs.font.red} }
 
     &.md { ${cs.font.md} .chk-txt, .chk-label { ${cs.font.md} ${cs.font.line(16)} } .chk-icon { ${cs.icon.sm} } }
     &.xl { ${cs.font.xl} .chk-txt, .chk-label { ${cs.font.xxl} ${cs.font.line(26)}  } .chk-icon { ${cs.icon.md} } }
@@ -33,17 +35,19 @@ const StyledObject = styled.div` {
     &.xs { ${cs.font.xs} .chk-txt, .chk-label { ${cs.font.xs} ${cs.font.line(12)}  } .chk-icon { ${cs.icon.xxs} ${cs.m.t1} } }
   
     &:not(.border) {
+      &.white { ${cs.bg.white} ${cs.font.dark} .svg-path { ${cs.fill.dark} } }
       &.green { ${cs.bg.green} }
-      &.primary { ${cs.bg.primary} ${cs.font.lightwhite} .svg-path { fill: white } }
-      &.red { ${cs.bg.red} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.primary { ${cs.bg.primary} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
+      &.red { ${cs.bg.red} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
       &.gray { ${cs.bg.gray} }
-      &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { fill: white } }
-      &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { fill: white } }
+      &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
+      &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
     }
 
     &.border { 
       ${cs.box.line} ${cs.box.inner}
 
+      &.white { ${cs.border.white} }
       &.green { ${cs.border.green} }
       &.primary { ${cs.border.primary} }
       &.red { ${cs.border.red} }
@@ -53,13 +57,15 @@ const StyledObject = styled.div` {
     }
     
     &.radius { ${cs.box.radius} }
-    &.round { ${cs.border.radius("100px")} }
+    &.round { ${cs.border.radius('100px')} }
     &.full { ${cs.w.full} }
 
-    ${({border}) => border && cs.box.line}
-    ${({border}) => border && border.color && cs.border.color(border.color)}
-    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
-    ${({border}) => border && border.width && cs.border.width(border.width)}
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
+
+    ${({ bgcolor }) => bgcolor && cs.bg.color(bgcolor + '!important')}
   
     @media screen and (max-width : 860px) {
       ${cs.font.sm}
@@ -71,11 +77,12 @@ const StyledObject = styled.div` {
 export default class Checkbox extends React.PureComponent {
   constructor(props) {
     super(props);
-    const list = props.value ? props.list.map(item => {
+    const list = props.list && props.value ? props.list.map(item => {
       item.check = (item.id === props.value);
       return item;
     }) : props.list;
-    this.state = { list: list, noti: false, noti_value: '', modified: false };
+
+    this.state = { list: list || null, noti: false, modified: false };
   }
 
   isValidate = () => {
@@ -111,7 +118,7 @@ export default class Checkbox extends React.PureComponent {
   }
 
   onClickItem = (e) => {
-    let eid = e.currentTarget.getAttribute("eid");
+    let eid = e.currentTarget.getAttribute('eid');
     const array = [...this.state.list];
     const { radio } = this.props;
 
@@ -132,21 +139,21 @@ export default class Checkbox extends React.PureComponent {
   render() {
     const { label, guide } = this.props;
     const { list } = this.state;
-    const { radio, theme = "", type = "", border } = this.props;
+    const { radio, theme = '', type = '', border, bgcolor } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)} border={border}>
+      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)} border={border} bgcolor={bgcolor} >
         {label && <div className="chk-label">{label}</div>}
-        <ul className={"chk-group"}>
-        {list.map((item, index) => {
-          const icon = radio ? item.check ? "radio" : "unradio" : item.check ? "check" : "uncheck";
-          return <li key={index} className="chk-itm" onClick={this.onClickItem} eid={item.id}>
-            {<React.Fragment><Svg className="chk-icon" name={icon} color={theme} /> <span className="chk-txt">{item.name}</span></React.Fragment>}
-          </li>
-        })}
+        <ul className={'chk-group'}>
+          {list ? list.map((item, index) => {
+            const icon = radio ? item.check ? 'radio' : 'unradio' : item.check ? 'check' : 'uncheck';
+            return <li key={index} className="chk-itm" onClick={this.onClickItem} eid={item.id}>
+              {<React.Fragment><Svg className="chk-icon" name={icon} color={theme} /> <span className="chk-txt">{item.name}</span></React.Fragment>}
+            </li>;
+          }) : <span className={'no-data'}>no list</span>}
         </ul>
         {guide && <div className="chk-guide">{guide}</div>}
       </StyledObject>
-    )
+    );
   }
 }

@@ -2,22 +2,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { ST } from './Config';
 import { Svg, cs } from './index';
+
+const ST = {
+  NOT: "문장안에 \" 대신 ' 를 사용하세요",
+};
 
 const StyledObject = styled.div` {
   &.edit-box {
     .box {
-      ${cs.bg.trans} ${cs.w.full} ${cs.disp.get("inline-flex")} ${cs.pos.relative} ${cs.font.line(20)}
+      ${cs.bg.trans} ${cs.w.full} ${cs.disp.get('inline-flex')} ${cs.pos.relative} ${cs.font.line(20)}
       
       .input {
-        ${cs.bg.sky} ${cs.disp.inblock} ${cs.w.full} ${cs.p.get("6px 12px")}
+        ${cs.bg.sky} ${cs.disp.inblock} ${cs.w.full} ${cs.p.get('6px 12px')}
         ${cs.min.height(14)} ${cs.max.height(200)} ${cs.border.get(0)}
         ${(props) => cs.font.size(props.fontsize)}
         ${(props) => props.bgcolor && cs.bg.color(props.bgcolor)};
         ${(props) => props.fontcolor && cs.font.color(props.fontcolor)};
 
-        &:focus { ${cs.bg.get("#fffbcf")} ${cs.border.outline("none")} ${cs.border.shadow("none")} }
+        &:focus { ${cs.bg.get('#fffbcf')} ${cs.border.outline('none')} ${cs.border.shadow('none')} }
         &.noti { ${cs.border.red} }
         &::placeholder { ${cs.font.gray} ${cs.font.sm} }
 
@@ -27,7 +30,7 @@ const StyledObject = styled.div` {
           &:focus { ${cs.border.gray} }
         }
 
-        &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get("width 180ms ease-out, opacity 120ms ease-in")} }
+        &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get('width 180ms ease-out, opacity 120ms ease-in')} }
 
         &.readonly { ${cs.mouse.default} ${cs.border.none} ${cs.bg.alphagray}
           &:hover, &:active, &:focus { ${cs.bg.alphagray} }
@@ -54,13 +57,13 @@ const StyledObject = styled.div` {
 
       span.noti {
         ${cs.pos.absolute} ${cs.opac.show} ${cs.bottom(2)} ${cs.font.xs} ${cs.z.get(10)} ${cs.font.red}
-        &.left { ${cs.left("5px")} }
-        &.right { ${cs.right("5px")} }
+        &.left { ${cs.left('5px')} }
+        &.right { ${cs.right('5px')} }
       }
 
 
       .btn-clear { ${cs.pos.absolute} ${cs.right(5)} ${cs.bottom(5)} ${cs.mouse.pointer} 
-        &.multi { ${cs.bottom("auto")} ${cs.top(5)} }
+        &.multi { ${cs.bottom('auto')} ${cs.top(5)} }
       }
     }
 
@@ -71,7 +74,7 @@ const StyledObject = styled.div` {
 
     .guide { 
       ${cs.font.sm} ${cs.font.gray} ${cs.font.right} 
-      display: ${cs.disp.get((props) => props.helper && `block`)} 
+      display: ${cs.disp.get((props) => props.helper && 'block')} 
       ${(props) => props.helpcolor && cs.font.color(props.helpcolor)};
     }
     
@@ -92,7 +95,7 @@ const StyledObject = styled.div` {
     }
 
     
-    &.inline { ${cs.m.get("5px 0")}
+    &.inline { ${cs.m.get('5px 0')}
       .ed-label { 
         ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} 
         ${cs.font.primary} ${cs.m.top(-2)}
@@ -100,7 +103,7 @@ const StyledObject = styled.div` {
 
       .box {
         &:focus-within {
-          .ed-label { ${cs.font.xs} ${cs.anim.get("scale(0.7) 150ms ease-in")} }
+          .ed-label { ${cs.font.xs} ${cs.anim.get('scale(0.7) 150ms ease-in')} }
           .ed-label.noti { ${cs.opac.hide} ${cs.anim.show} }
         }
 
@@ -108,8 +111,8 @@ const StyledObject = styled.div` {
       }
     }
 
-    &.sm .box .input { ${cs.h.get(20)} ${cs.min.height(20)} ${cs.p.get("0 5px")} ${cs.font.line(18)} ${cs.font.sm} }
-    &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get("0 10px")} ${cs.font.line(32)} ${cs.font.lg} }
+    &.sm .box .input { ${cs.h.get(20)} ${cs.min.height(20)} ${cs.p.get('0 5px')} ${cs.font.line(18)} ${cs.font.sm} }
+    &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get('0 10px')} ${cs.font.line(32)} ${cs.font.lg} }
 
     &.scroll-t1 { .box > textarea.input { ${cs.scrollbar.t1} } }
     &.scroll-t2 { .box > textarea.input { ${cs.scrollbar.t2} } }
@@ -126,9 +129,9 @@ class Editbox extends React.PureComponent {
     super(props);
 
     this.state = {
-      noti: false, clear: false, noti_value: '', modified: props.modified ? true : false,
+      noti: false, clear: false, notitext: '', modified: props.modified ? true : false,
       value: props.value ? props.value : ''
-    }
+    };
 
     this.timer = null;
   }
@@ -148,13 +151,8 @@ class Editbox extends React.PureComponent {
     const { validate, noti } = this.props;
     const { value, validationMessage } = this.input;
 
-    // 숫자 타입에서 숫자가 아닌 값이 입력될 경우.
-    // if (type.indexOf("number") >= 0 && value && !this.isNumeric(value)) {
-    //   return this.showNoti(ST.NOTI.ONLY_NUMBER);
-    // }
-
     // " 는 무조건 입력 못하도록 하자.. DB 입력시 오류 발생으로...
-    if (value.indexOf('"') >= 0) { return this.showNoti(ST.NOTI.NOT_DOUBLE_QUARTER); }
+    if (value.indexOf('"') >= 0) { return this.showNoti(ST.NOT_DOUBLE_QUARTER); }
 
     // validation 체크이면...
     if (validate) {
@@ -167,7 +165,7 @@ class Editbox extends React.PureComponent {
       // }
 
       // 그외 타입 오류 및 기타 시스템 오류
-      if (validationMessage) { return this.showNoti(validationMessage) };
+      if (validationMessage) { return this.showNoti(validationMessage); };
     }
 
     return true;
@@ -210,9 +208,9 @@ class Editbox extends React.PureComponent {
 
   showNoti = (value) => {
     if (value) {
-      this.setState({ noti_value: value, noti: true });
+      this.setState({ notitext: value, noti: true });
     } else {
-      this.setState({ noti_value: this.props.noti, noti: true });
+      this.setState({ notitext: this.props.noti, noti: true });
     }
 
     this.input.focus();
@@ -237,10 +235,10 @@ class Editbox extends React.PureComponent {
   // clear = () => ( this.setState({ value: "" }) )
 
   onClear = (eid, e) => {
-    this.setState({ value: "" }); this.focus();
+    this.setState({ value: '' }); this.focus();
 
-    this.props.onChange && this.props.onChange("", e);
-    this.props.onClear && this.props.onClear("", e);
+    this.props.onChange && this.props.onChange('', e);
+    this.props.onClear && this.props.onClear('', e);
   }
 
   onChange = (e) => {
@@ -252,19 +250,19 @@ class Editbox extends React.PureComponent {
 
   elemNoti = () => {
     let value = ST.NO_INPUT_VALUE;
-    if (this.state.noti_value != null && this.state.noti_value.length > 1) {
-      value = this.state.noti_value;
+    if (this.state.notitext != null && this.state.notitext.length > 1) {
+      value = this.state.notitext;
     }
 
     const { type, inline } = this.props;
-    let align = type && type.indexOf("number") >= 0 ? 'left' : 'right';
-    if (inline) { align = 'left' };
-    if (this.props.className != null && this.props.className.indexOf("right") > -1) {
-      align = "left";
+    let align = type && type.indexOf('number') >= 0 ? 'left' : 'right';
+    if (inline) { align = 'left'; };
+    if (this.props.className != null && this.props.className.indexOf('right') > -1) {
+      align = 'left';
     }
 
     if (this.state.noti) {
-      return <span className={cx("noti", align)}>{value}</span>
+      return <span className={cx('noti', align)}>{value}</span>;
     }
 
     return null;
@@ -276,14 +274,14 @@ class Editbox extends React.PureComponent {
     const { disabled = false } = props;
     const { disable = disabled, border, readonly, type, guide } = props;
 
-    let addedClass = "";
+    let addedClass = '';
     let attr = { spellCheck: false };
     attr.placeholder = (!readonly && !disable) ? guide : null;
 
-    const right = type && type.indexOf("number") >= 0 ? 'right' : '';
-    if (type === "date") {
-      addedClass = "input-date";
-      attr = { 'data-date-format': 'yyyy-mm-dd' }
+    const right = type && type.indexOf('number') >= 0 ? 'right' : '';
+    if (type === 'date') {
+      addedClass = 'input-date';
+      attr = { 'data-date-format': 'yyyy-mm-dd' };
     }
 
     attr.required = props.required || props.validate ? true : false;
@@ -291,9 +289,9 @@ class Editbox extends React.PureComponent {
 
     if (props.multi) {
       return <textarea
-        ref={(ref) => { this.input = ref }}
+        ref={(ref) => { this.input = ref; }}
         name={props.name}
-        className={cx("input", { noti }, addedClass, { disable }, { readonly }, { border }, { right })}
+        className={cx('input', { noti }, addedClass, { disable }, { readonly }, { border }, { right })}
         type={type ? type : 'text'}
         value={state.value}
         onChange={this.onChange}
@@ -302,17 +300,17 @@ class Editbox extends React.PureComponent {
         max={props.max}
         accept={props.accept}
         required={attr.required}
-        autoComplete={props.autoComplete ? "on" : "off"}
+        autoComplete={props.autoComplete ? 'on' : 'off'}
         readOnly={props.readonly ? true : false}
         {...attr}
         onKeyPress={this.onKeyPressed}
         onFocus={this.onFocused}
-        modefied={state.modified.toString()} />
+        modefied={state.modified.toString()} />;
     } else {
       return <input
-        ref={(ref) => { this.input = ref }}
+        ref={(ref) => { this.input = ref; }}
         name={props.name}
-        className={cx("input", { noti }, addedClass, { disable }, { border }, { readonly }, { right })}
+        className={cx('input', { noti }, addedClass, { disable }, { border }, { readonly }, { right })}
         type={type ? type : 'text'}
         value={state.value != null ? this.state.value : ''}
         onChange={this.onChange}
@@ -321,12 +319,12 @@ class Editbox extends React.PureComponent {
         max={props.max}
         accept={props.accept}
         required={attr.required}
-        autoComplete={props.autoComplete ? "on" : "off"}
+        autoComplete={props.autoComplete ? 'on' : 'off'}
         readOnly={props.readonly}
         {...attr}
         onKeyPress={this.onKeyPressed}
         onFocus={this.onFocused}
-        modefied={state.modified.toString()} />
+        modefied={state.modified.toString()} />;
     }
   }
 
@@ -336,26 +334,26 @@ class Editbox extends React.PureComponent {
     const { disabled = false } = props;
     const {
       disable = disabled, readonly, inline, multi,
-      fontsize = "14px", height = "80px", minheight, maxheight,
-      bordercolor, helpcolor, bgcolor, fontcolor 
+      fontsize = '14px', height = '80px', minheight, maxheight,
+      bordercolor, helpcolor, bgcolor, fontcolor
     } = props;
 
     return (
-      <StyledObject className={cx('edit-box', props.className, { inline })} 
-        height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight} 
+      <StyledObject className={cx('edit-box', props.className, { inline })}
+        height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight}
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}</label>}
-        <div className={cx("box", { disable }, { readonly })} >
-          {props.label && inline && <label className={cx("ed-label", { noti })}>{props.label}</label>}
+        <div className={cx('box', { disable }, { readonly })} >
+          {props.label && inline && <label className={cx('ed-label', { noti })}>{props.label}</label>}
           {this.elemInput()}
           {!readonly && <div className="underline"></div>}
           {this.elemNoti()}
-          {(props.onClear || props.clear) && <Svg className={cx("btn-clear sm", {multi})} onClick={this.onClear} name={"clear"} color={'black'} />
+          {(props.onClear || props.clear) && <Svg className={cx('btn-clear sm', {multi})} onClick={this.onClear} name={'clear'} color={'black'} />
           }
         </div>
         {props.helper && <div className="guide">{props.helper}</div>}
       </StyledObject>
-    )
+    );
   }
 }
 

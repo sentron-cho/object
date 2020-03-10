@@ -51,10 +51,10 @@ const StyledObject = styled.div`{
 
         animation: slidedown linear 1 forwards 0.2s; 
         @keyframes slidedown { 
-          from  { height: 0px; opacity: 0.7; } 
+          from  { ${cs.h.get(0)} ${cs.opac.get(0.7)} } 
           to { height: 
-            ${({ inner }) => inner && inner.height ? inner.height + 'px' : '100px'}; 
-            opacity: 1; 
+            ${({ inner }) => inner && inner.height ? inner.height + 'px' : '200px'}; 
+            ${cs.opac.show}
           } 
         };
       }
@@ -62,7 +62,7 @@ const StyledObject = styled.div`{
       .cls-icon { ${cs.m.l5} ${cs.m.top(2)} ${cs.opac.show} }
 
       .cls-cont-btns {
-        ${cs.font.right} ${cs.p.t5} ${cs.bg.lightgray} 
+        ${cs.font.right} ${cs.p.t5} ${cs.border.top} ${cs.bg.lightgray} 
         .svg-icon { ${cs.opac.get(0.3)} }
 
         &:hover { .svg-icon { ${cs.opac.get(0.7)} } }
@@ -89,13 +89,23 @@ const StyledObject = styled.div`{
     }
 
     &.primary {
-      .csl-body { ${cs.bg.primary} .csl-border { ${cs.border.semiblack} } .cls-icon { .svg-path { ${cs.fill.lightgray} } } }
+      .csl-body { ${cs.bg.primary} ${cs.font.white} 
+        .csl-border { ${cs.border.semiblack} } 
+        .cls-icon { .svg-path { ${cs.fill.lightgray} } } 
+        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
     }
     &.gray {
-      .csl-body { ${cs.bg.lightgray} .csl-border { ${cs.border.semiblack} } }
+      .csl-body { ${cs.bg.lightgray} 
+        .csl-border { ${cs.border.semiblack} } 
+        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.black} } } 
+      }
     }
     &.dark {
-      .csl-body { ${cs.bg.dark} ${cs.font.white} .csl-border { ${cs.border.black} } }
+      .csl-body { ${cs.bg.dark} ${cs.font.white} 
+        .csl-border { ${cs.border.black} } 
+        .cls-cont-btns { ${cs.bg.black} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
     }
 
     &.radius { .csl-body { ${cs.box.radius} } }
@@ -252,13 +262,8 @@ const Callopselist = (props) => {
               {/* show/hide callopse contents */}
               {show && <div className={cx("csl-cont csl-border")} rowid={rowid}>
                 {text}
-                {/* {<div className="cslc-child" rowid={rowid}></div>} */}
               </div>}
-
-              {/* {show && props.onClickItem && <div className={"cls-cont-btns"}>
-                <Svg className="cls-icon sm" name={"edit"} color={cs.color.darkgray} eid={rowid} onClick={(eid, e) => onClickItem(EID.EDIT, rowid, e)} />
-                <Svg className="cls-icon sm" name={"delete"} color={cs.color.darkgray} eid={rowid} onClick={(eid, e) => onClickItem(EID.DELETE, rowid, e)} />
-              </div>} */}
+              
               {show && props.onClickItem &&
                 <Svgbox className={cx('cls-cont-btns full')} size={"sm"} rowid={rowid} list={[{ icon: EID.EDIT }, { icon: EID.DELETE }]} onClick={onClickItem} />
               }

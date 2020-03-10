@@ -35,6 +35,7 @@ const jsonlist = (count = 5, lines = 10) => {
 export const object = () => {
   // const classname = text('classname', null);
   const multi = boolean('multi', false);
+  const isdelete = boolean('delete icon and event', false);
   const size = options('size',
     { 'sm(small)': 'sm', 'lg(large)': 'lg', 'none': '' },
     '', { display: 'inline-radio' }, 'Other');
@@ -64,8 +65,8 @@ export const object = () => {
     setResult(`onClickNew(e)`);
   }
 
-  const onClickItem = (eid, rowid, e) => {
-    setResult(`onClickItem(eid = ${eid}, rowid = ${rowid}, e)`);
+  const onClickDelete = (rowid, e) => {
+    setResult(`onClickDelete(rowid = ${rowid}, e)`);
   }
 
   const onClickPage = (page, e) => {
@@ -84,11 +85,11 @@ export const object = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'pos={pos} max={max} list={list} options={{ inner: { height: 160 } }}')}>
-        <Listbox className={cx(size, bg)} pos={pos} max={max} list={list}
+        <Listbox className={cx(size, align, bg)} pos={pos} max={max} list={list} total={alldata.length}
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize, align: align }}
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
-          onClickItem={onClickItem} onClickPage={onClickPage} />
+          onClickDelete={isdelete ? onClickDelete : null} onClickPage={onClickPage} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -116,15 +117,15 @@ export const size = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"small"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Listbox className={cx("sm")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        <Listbox className={cx("sm")} pos={1} max={10} list={jsonlist(5)} />
       </Linebox>
 
       <Linebox title={"none size"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Listbox className={cx("")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        <Listbox className={cx("")} pos={1} max={10} list={jsonlist(5)} />
       </Linebox>
 
       <Linebox title={"large"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Listbox className={cx("lg")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+        <Listbox className={cx("lg")} pos={1} max={10} list={jsonlist(5)} />
       </Linebox>
     </StyledObject>
   );

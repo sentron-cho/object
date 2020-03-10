@@ -48,7 +48,7 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"checkbox"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
-        <Checkbox className={"primary"} list={list1} onClick={onClick} onChange={onChange} />
+        <Checkbox className={"primary"} onClick={onClick} onChange={onChange} />
         <Checkbox className={"primary"} label={"title : "} list={list2} onClick={onClick} onChange={onChange} />
       </Linebox>
 

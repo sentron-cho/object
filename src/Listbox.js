@@ -6,68 +6,126 @@ import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.list-box {
-    ${cs.noliststyle} ${cs.noselect}
-    ${cs.w.full} ${cs.z.front} ${cs.h.fit} ${cs.pos.relative}
-    ${cs.box.line} ${cs.border.trans} ${cs.max.height("100%")} ${cs.opac.show}
+    ${cs.pos.relative} ${cs.noliststyle}
 
     .search-box { ${cs.w.half} ${cs.disp.inblock} }
     .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
-    .li-body {
-      .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.min.height(20)}
+    .lbx-body {
+      ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t20}
+      ${cs.box.line} ${cs.box.inner} ${cs.noselect} ${cs.font.dark}
+
+      .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.border.gray}
+        ${({ height }) => cs.h.get(height)};
         ${cs.p.get("4px 10px")}
         
-        .lbx-tl { 
-          padding: 5px 10px; position: relative;
-          &.right { text-align: right };
-          &.left { text-align: left };
-          &.center { text-align: center };
+        .lbx-tl { ${cs.pos.relative} ${cs.align.ycenter}
+          &.left { ${cs.font.left} };
+          &.center { ${cs.font.center} };
+          &.right { ${cs.font.right} };
         }
 
         .lbx-date { 
-          position: absolute; font-size: 12px; line-height: 18px; opacity: 0.7;
-          padding: 0 5px; z-index: 1; ${cs.bg.alphagray} ${cs.box.round}
+          ${cs.pos.absolute} ${cs.opac.get(0.7)} ${cs.p.h5} 
+          ${cs.bg.alphagray} ${cs.box.round} ${cs.z.front} ${cs.font.sm}
 
-          &.top { right: 0px; top: 0px; }
-          &.right { ${cs.align.rbottom} }
-          &.bottom { right: 0px; bottom: 0px; }
+          &.top { ${cs.pos.rtop} }
+          &.right { ${cs.align.rbottom} &.delete { ${cs.right(30)} } }
+          &.bottom { ${cs.pos.rbottom} }
           &.left { ${cs.align.lbottom} }
-          &.center { ${cs.align.bottom} bottom: -10px; }
+          &.center { ${cs.align.bottom} ${cs.bottom(-10)} }
         }
 
         .lbx-cnt {
-          margin-left: 10px; min-width: 20px; font-size: 10px; padding: 1px 5px;
-          ${cs.font.dark} ${cs.bg.lightgray} ${cs.box.round} ${cs.align.ycenter} position: relative;
+          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.v1} ${cs.p.h5} ${cs.pos.relative}
+          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.p.b2}
         }
 
-        &.selection { cursor: pointer; 
-          &:hover { ${cs.bg.primary} }
+        .lbx-icon {
+          ${cs.align.right} ${cs.opac.hide} ${cs.right(5)} ${cs.align.ycenter} 
         }
 
-        &.active {  ${cs.bg.primary} }
+        &.selection { ${cs.mouse.pointer}
+          &:hover { ${cs.bg.hover} 
+            .lbx-icon { ${cs.opac.alpha} &:hover { ${cs.opac.show} } }
+          }
+        }
+
+        &.active {  ${cs.bg.hover} }
       }
 
-      &.disable { color: #ffffffaf; opacity: 0.8;
-        &.selection { cursor: default;  &:hover { ${cs.opac.show} } }
+      &.disable { ${cs.font.gray} ${cs.opac.get(0.8)}
+        &.selection { ${cs.mouse.default}  &:hover { ${cs.opac.show} } }
       }
 
-      .total-txt { text-align: right; padding: 3px; font-size: 11px; opacity: 0.7; }
     }
 
-    .page-navi { margin-top: 40px; }
+    .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
+    .page-navi { ${cs.m.t40} }
+
+    &.border { ${cs.border.gray} ${cs.box.inner} }
+
+    &.sm { 
+      .lbx-body { ${cs.font.sm} 
+        .lbx-li { 
+          ${({ height }) => cs.h.get(height - 6)};
+        }
+      } 
+    }
+
+    &.lg { 
+      .lbx-body { ${cs.font.lg} 
+        .lbx-li { 
+          ${({ height }) => cs.h.get(height + 6)};
+        }
+      }
+    }
+
+    &.primary {
+      .lbx-body { ${cs.bg.primary} ${cs.font.white}
+        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
+        .lbx-date { ${cs.bg.blue} ${cs.font.white} }
+        .lbx-li.selection:hover { ${cs.bg.primaryhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+    }
+    &.gray {
+      .lbx-body { ${cs.bg.lightgray} 
+        .lbx-li.selection:hover { ${cs.bg.grayhover} }
+        .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
+      }
+    }
+    &.dark {
+      .lbx-body { ${cs.bg.dark} ${cs.font.white} 
+        .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
+        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+    }
+
+    ${({ border }) => border && `.lbx-body { ${cs.box.line} }`}
+    ${({ border }) => border && border.color && `.lbx-body { ${cs.border.color(border.color + " !important")} }`}
+    ${({ border }) => border && border.radius && `.lbx-body { ${cs.border.radius(border.radius + " !important")} }`}
+    ${({ border }) => border && border.width && `.lbx-body { ${cs.border.width(border.width + " !important")} }`}
+    
+    ${({ font }) => font && font.size && `.lbx-body { ${cs.font.size(font.size + " !important")} }`}
+    ${({ font }) => font && font.color && `.lbx-body { ${cs.font.color(font.color)} }`}
+    ${({ font }) => font && font.align && `.lbx-body { ${cs.font.align(font.align)} }`}
+    
+    ${({ bgcolor }) => bgcolor && `.lbx-body { ${cs.bg.color(bgcolor)} }`}
 
     @media screen and (max-width : 860px) { 
-      padding: 10px; position: relative;
-      .search { width: calc(100% - 100px); }
-      .btn-new { right: 10px; }
+      ${cs.p.a0} ${cs.font.sm} ${cs.p.b30} ${cs.p.t10}
+      .search { ${cs.w.calc("100% - 100px")} }
+      .btn-new { ${cs.top(10)} }
     }
   }
 }`
 
 const Listbox = (props) => {
   const {
-    divider, list = null, children = null, rowid = 'rowid',
-    title = 'title', date = 'date', count = 'count', disable = false
+    divider, list = null, children = null, rowid = 'rowid', total = '',
+    title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
 
   let styled = {};
@@ -89,62 +147,27 @@ const Listbox = (props) => {
   }
 
   const onClickPage = (page, e) => {
-    props.onPageClick && props.onPageClick(page, e);
+    props.onClickPage && props.onClickPage(page, e);
   }
 
-  const onClickSearch = (value, e) => {
-    props.onClickSearch && props.onClickSearch(value, e);
+  const onClickSearch = (value, key, e) => {
+    props.onClickSearch && props.onClickSearch(value, key, e);
   }
 
-  // const renderList = (title, list) => {
-  //   // const array = list.map(item => { return { "key": key, value: item[key] } });
-  //   const talign = props.titlealign || 'left';
-  //   const dalign = props.datealign || 'right';
-  //   const calign = props.countalign || 'right';
-  //   const selection = (props.onSelect !== null);
+  const onClickDelete = (eid, e) => {
+    e.stopPropagation();
+    // const rowid = e.currentTarget.getAttribute('rowid');
+    const rowid = eid;
+    props.onClickDelete && props.onClickDelete(rowid, e);
+  }  
 
-  //   return list.map((item, index) => {
-  //     const active = false; //selpos === index;
-  //     const stitle = item[title] || '';
-  //     const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
-  //     const scount = item[count] >= 0 ? item[count] : -1;
-
-  //     return <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={onSelect}>
-  //       <p className={cx('lbx-tl', talign)}>{stitle}
-  //         {scount >= 0 && <span className={cx('lbx-cnt', calign)}>{scount}</span>}
-  //       </p>
-  //       <p className={cx('lbx-date', dalign)}>{sdate}</p>
-  //       {props.onClickDelete &&
-  //         <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
-  //       }
-  //     </li>
-  //   })
-  // }
-
-
-  // const renderGuide = () => {
-  //   if (data && data[0]) {
-  //     const item = data[0];
-  //     if (item.rowid == null || item.rowid === undefined) {
-  //       guide = "'rowid' is required in the list.\n"
-  //         + "ex. const list = [{ rowid: 'a12345', title: 'callopse', text: 'callopse test', utime: '20200101' }, {...}\n"
-  //         + "rowid and text is required. Rest is optional.\n"
-  //         + "rowid is used to show or hide text(contents)";
-  //     }
-  //   }
-
-  //   if (guide) {
-  //     return <Guidebox text={guide} />
-  //   }
-  // }
-
-  const talign = props.titlealign || 'left';
-  const dalign = props.datealign || 'right';
-  const calign = props.countalign || 'right';
+  const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props;
   const selection = (props.onSelect !== null);
 
   return (
-    <StyledObject className={cx("list-box", props.className, { disable })} eid="select" style={styled}>
+    <StyledObject className={cx("list-box", props.className, { disable })}
+      eid="select" style={styled} height={height}
+      border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew && <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
 
@@ -155,27 +178,27 @@ const Listbox = (props) => {
       {!list && <div className="frame"><Nodata /></div>}
 
       {children && children}
-      {list && <ul className={"li-body"}>
+      {list && <ul className={"lbx-body"}>
         {list.map((item, index) => {
           const stitle = item[title] || '';
           const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
           const scount = item[count] >= 0 ? item[count] : -1;
 
           return <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
-            <p className={cx('lbx-tl', talign)}>{stitle}
-              {scount >= 0 && <span className={cx('lbx-cnt', calign)}>{scount}</span>}
+            <p className={cx('lbx-tl', titlealign)}>{stitle}
+              {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
             </p>
-            <p className={cx('lbx-date', dalign)}>{sdate}</p>
+            <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>
             {props.onClickDelete &&
-              <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
+              <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]}/>
             }
           </li>
         })}
-        <div className="total-txt">{`${ST.TOTAL} : ${props.total}`}</div>
       </ul>}
+      {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      <Pagenavi pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />
+      <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />
     </StyledObject >
   );
 };

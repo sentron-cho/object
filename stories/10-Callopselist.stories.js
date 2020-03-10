@@ -13,6 +13,11 @@ const StyledObject = styled.span`{
     // .lb-box .lb-li > * { ${cs.m.b10} }
 
     .t-child { ${cs.h.get(100)} & > p { ${cs.align.center} } }
+
+    .res-view { 
+      ${cs.h.get(100)} ${cs.w.get(800)} ${cs.bg.lightgray} 
+      p { ${cs.m.a5} }
+    }    
   }
 }`;
 
@@ -104,11 +109,6 @@ export const object = () => {
         <p>onClick</p>
         <p>{result}</p>
       </div>
-
-      {/* <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
-      </div> */}
     </StyledObject>
   );
 };
@@ -137,4 +137,95 @@ export const size = () => {
         </Linebox>
       </StyledObject>
     );
+};
+
+export const border = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"radius"} className={""} sample={samplecode("", "primary")} box={false}>
+        <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'red', radius: '10px', width: '5px' }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const font = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"no options"} className={""} sample={samplecode("", "")} box={false}>
+        <Callopselist className={cx("")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"} />
+      </Linebox>
+
+      <Linebox title={"font options(contents left)"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          font={{ color: 'red', size: '12px', align: 'left' }} />
+      </Linebox>
+
+      <Linebox title={"font options(contents center)"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          font={{ color: 'blue', size: '16px', align: 'center' }} />
+      </Linebox>
+
+      <Linebox title={"font options(contents right)"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          font={{ color: '#123456', size: '18px', align: 'right' }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const event = () => {
+  const perpage = 10; // 페이지당 표시 개수
+  const alldata = jsonlist(50);
+  const [result, setResult] = useState(null);
+  const [pos, setPos] = useState(1);
+  const [list, setList] = useState([...alldata.slice(0, perpage)]);
+
+  const onSelect = (rowid, e) => {
+    setResult(`onSelect(rowid = ${rowid}, e)`);
+  }
+
+  const onClickNew = (e) => {
+    setResult(`onClickNew(e)`);
+  }
+
+  const onClickItem = (eid, rowid, e) => {
+    setResult(`onClickItem(eid = ${eid}, rowid = ${rowid}, e)`);
+  }
+
+  const onClickPage = (page, e) => {
+    const array = [...alldata.slice((page - 1) * perpage, page * perpage)]
+    setList(array);
+    setPos(page);
+    setResult(`onClickPage(page = ${page}, e)`);
+  }
+
+  const onClickSearch = (value, key, e) => {
+    setResult(`onClickSearch(value = ${value}, key = ${key}, e)`);
+  }
+
+  const max = Math.floor(alldata.length / perpage);
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"callopse events"} className={"nomargin"} box={false}
+      sample={samplecode("", 'pos={pos} max={max} tags={tags} list={list} datakey={"cont"} ' + 
+      'onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew} ' +
+      'onClickItem={onClickItem} onClickPage={onClickPage} ')}>
+        <Callopselist className={cx('')} pos={pos} max={max}
+          tags={tags} list={list} datakey={"cont"}
+          onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
+          onClickItem={onClickItem} onClickPage={onClickPage} />
+      </Linebox>
+
+      <div className={"res-view"}>
+        <p>onClick</p>
+        <p>{result}</p>
+      </div>
+    </StyledObject>
+  );
 };

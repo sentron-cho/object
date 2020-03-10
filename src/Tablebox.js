@@ -24,10 +24,10 @@ const StyledObject = styled.div`{
         .tb-col {  
           ${cs.font.center} ${cs.disp.inblock} ${cs.p.v4} ${cs.h.full}
           ${cs.over.hidden} ${cs.font.ellipsis}
-          ${({flex}) => flex && cs.disp.flex(flex)};
+          ${({ flex }) => flex && cs.disp.flex(flex)};
           ${cs.border.right} ${cs.border.white}
 
-          p { ${cs.font.ellipsis} ${({align}) => cs.font.align(align)}; }
+          p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; }
 
           // &:nth-child(1) { ${cs.p.l10} }
           &:last-child { ${cs.border.none} }
@@ -37,10 +37,6 @@ const StyledObject = styled.div`{
 
         &:hover {
           .i-btn { ${cs.opac.show} ${cs.anim.show} }
-        }
-
-        &.selection {
-          &:hover { ${cs.bg.hover} }
         }
 
         .i-btn { ${cs.align.ycenter} ${cs.z.icon} ${cs.opac.hide} ${cs.pos.relative}
@@ -63,19 +59,66 @@ const StyledObject = styled.div`{
       }
 
       &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.gray} ${cs.m.t10}
-        .tb-row { ${cs.bg.gray} .tb-col { ${cs.border.darkgray} } } 
+        .tb-row { .tb-col { ${cs.border.darkgray} } } 
       }
 
+      .selection {
+        &:hover { ${cs.bg.hover} }
+      }
     }
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
     .page-navi { ${cs.m.t40} }
 
+    
+    &.sm { 
+      .tb-row { 
+        ${({ height }) => cs.font.line(height - 6)};
+        ${({ height }) => cs.h.get(height - 6)};
+        .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
+      }
+      .tb-body { ${cs.font.sm} } 
+      .tb-head { ${cs.font.md} }
+    }
+
+    &.lg { 
+      .tb-row { 
+        ${({ height }) => cs.font.line(height + 6)};
+        ${({ height }) => cs.h.get(height + 6)};
+      }
+      .tb-body { ${cs.font.lg} }
+      .tb-head { ${cs.font.xl} }
+    }
+
+    
+    &.primary {
+      .tb-body { ${cs.bg.primary} ${cs.font.white} 
+        .i-btn { .svg-path { ${cs.fill.lightgray} } }
+      }
+      .tb-head { ${cs.bg.blue} ${cs.font.white} }
+
+      .selection:hover { ${cs.bg.primaryhover} }
+    }
+    &.gray {
+      .tb-body { ${cs.bg.lightgray} 
+        .tb-border { ${cs.border.semiblack} } 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+      }
+    }
+    &.dark {
+      .tb-body { ${cs.bg.dark} ${cs.font.white} 
+        .tb-border { ${cs.border.black} } 
+        .i-btn { .svg-path { ${cs.fill.white} } }
+      }
+      .tb-head { ${cs.bg.black} ${cs.font.white} }
+      .selection:hover { ${cs.bg.primaryhover} }
+    }
+
     @media screen and (max-width : 1280px) {}
   
     @media screen and (max-width : 1024px) {
       .tb-line .tb-row {
-        .tb-col.tablet { display: none; }
+        .tb-col.tablet { ${cs.disp.none} }
       }
 
       .tb-col {font-size: 13px;}
@@ -186,7 +229,7 @@ const Tablebox = (props) => {
       return <Guidebox text={guide} />
     }
   }
-  
+
   const makeTableItem = (list = null, tags = []) => {
     if (list && tags) {
       return list.map(item => {
@@ -216,15 +259,15 @@ const Tablebox = (props) => {
       {/* head */}
       {head && <div className="tb-line tb-head">
         <div className="tb-row" >
-          {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} /> }   
+          {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} />}
           {head.map((item, index) => {
             const { tablet = 'show', mobile = 'show', flex } = item;
             const styled = { flex: flex, };
             return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
               className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
-              tablet === 'hide' && 'tablet')} >{item.title}</div>
+                tablet === 'hide' && 'tablet')} >{item.title}</div>
           })}
-          {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} /> }
+          {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} />}
         </div>
       </div>}
 
@@ -241,7 +284,7 @@ const Tablebox = (props) => {
             {/* col */}
             {props.onClickMove &&
               <Svg className="i-btn btn-move sm" onClick={onClickMove} eid={rowid} name={"move"} />
-            }            
+            }
             {renderColumnElem(item, head)}
             {props.onClickDelete &&
               <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />

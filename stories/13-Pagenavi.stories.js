@@ -31,11 +31,14 @@ export const object = () => {
     { primary: 'primary', gray: 'gray', dark: 'dark', none: '' },
     '', { display: 'inline-radio' }, 'Other');
   const fontcolor = text('fontcolor', '#353535');
+  const fontsize = text('fontsize', '12px');
   const bgcolor = text('bgcolor', '#ffffff');
-  const buttoncolor = text('buttoncolor', '#4a92e4');
   const border = text('border color', '#909090');
   const radius = text('border radius', '0px');
   const width = text('border width', '0px');
+  const bcolor = text('button color', '');
+  const bhover = text('button hover color', '#4a92e4');
+  const bactive = text('button select color', '#4a92e4');
 
   const [result, setResult] = useState(null);
   const [pos, setPos] = useState(1);
@@ -49,7 +52,11 @@ export const object = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"Pagenavi"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", '')}>
-        <Pagenavi className={cx(size, align, bg)} pos={pos} max={20} onClick={onClickPage}/>
+        <Pagenavi className={cx(size, align, bg)} pos={pos} max={20} onClick={onClickPage}
+          border={{ color: border, radius: radius, width: width }}
+          font={{ color: fontcolor, size: fontsize }} bgcolor={bgcolor}
+          button={{ color: bcolor, hover: bhover, active: bactive }}
+        />
       </Linebox>
 
       <div className={"res-view"}>
@@ -112,10 +119,10 @@ export const color = () => {
       <Linebox title={"gray"} className={"nomargin"} sample={samplecode("", "gray")} box={false}>
         <Pagenavi className={cx("gray")} pos={1} max={20} />
       </Linebox>
-      
+
       <Linebox title={"dark"} className={"nomargin"} sample={samplecode("", "dark")} box={false}>
         <Pagenavi className={cx("dark")} pos={1} max={20} />
-      </Linebox>      
+      </Linebox>
     </StyledObject>
   );
 };
@@ -142,15 +149,15 @@ export const border = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"border"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
-        <Pagenavi className={cx("")} border={{color: "#ff0000", radius: "5px", width: "1px"}} pos={1} max={20} />
-      </Linebox>
-      
-      <Linebox title={"border"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
-        <Pagenavi className={cx("")} border={{color: "#00ff00", radius: "10px", width: "2px"}} pos={1} max={20} />
+        <Pagenavi className={cx("")} border={{ color: "#ff0000", radius: "5px", width: "1px" }} pos={1} max={20} />
       </Linebox>
 
       <Linebox title={"border"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
-        <Pagenavi className={cx("")} border={{color: "#0000ff", radius: "20px", width: "3px"}} pos={1} max={20} />
+        <Pagenavi className={cx("")} border={{ color: "#00ff00", radius: "10px", width: "2px" }} pos={1} max={20} />
+      </Linebox>
+
+      <Linebox title={"border"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
+        <Pagenavi className={cx("")} border={{ color: "#0000ff", radius: "20px", width: "3px" }} pos={1} max={20} />
       </Linebox>
     </StyledObject>
   );
@@ -162,7 +169,7 @@ export const rest = () => {
       <Linebox title={"font color and size"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
         <Pagenavi className={cx("")} font={{ color: "#ff0000", size: '12px' }} pos={1} max={20} />
       </Linebox>
-      
+
       <Linebox title={"font color and size"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
         <Pagenavi className={cx("")} font={{ color: "#0000ff", size: '18px' }} pos={1} max={20} />
       </Linebox>
@@ -176,11 +183,11 @@ export const rest = () => {
       </Linebox>
 
       <Linebox title={"button color"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
-        <Pagenavi className={cx("")} button={{color: "#ff0000", hover: "#aa0000", active: "#aa0000"}} pos={1} max={20} />
+        <Pagenavi className={cx("")} button={{ color: "#ff0000", hover: "#aa0000", active: "#aa0000" }} pos={1} max={20} />
       </Linebox>
 
       <Linebox title={"button color"} className={"nomargin"} sample={samplecode("", "green border")} box={true}>
-        <Pagenavi className={cx("")} button={{color: "#0000ff", hover: "#0000aa", active: "#0000aa"}} pos={1} max={20} />
+        <Pagenavi className={cx("")} button={{ color: "#0000ff", hover: "#0000aa", active: "#0000aa" }} pos={1} max={20} />
       </Linebox>
     </StyledObject>
   );

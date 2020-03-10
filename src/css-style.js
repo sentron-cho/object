@@ -259,7 +259,7 @@ const cs = {
     noneline: `text-decoration: none;`,
     upper: `text-transform: uppercase;`,
     lower: `text-transform: lowercase;`,
-    ellipsis: `text-overflow: ellipsis; white-space: nowrap;`,
+    ellipsis: `text-overflow: ellipsis; overflow: hidden; white-space: nowrap;`,
 
     overflow: (v) => `text-overflow: ${v};`,
     space: (v) => `white-space: ${v};`,

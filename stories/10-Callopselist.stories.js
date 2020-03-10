@@ -18,7 +18,7 @@ const StyledObject = styled.span`{
 
 export default { title: 'object|Callopselist', component: Callopselist, decorators: [withKnobs] };
 
-const samplecode = (value, classname = '') => `<Callopselist className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Callopselist>`;
+const samplecode = (value, classname = '') => `<Callopselist className={"${classname}"} ${value} />`;
 
 const tags = [
   { key: 'no', title: 'number', flex: '1 1 40px', align: 'left' },

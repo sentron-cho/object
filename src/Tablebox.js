@@ -1,132 +1,140 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, Button, cs } from './index';
+import { Search, Pagenavi, Nodata, Util, Svg, Button, cs, Guidebox } from './index';
 import { EID, ST } from './Config';
 
-// const svg = {
-//   arrowup: { name: "arrowup", viewbox: "70 150 170 220", path: "M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z" },
-//   arrowdn: { name: "arrowdn", viewbox: "70 150 170 220", path: "M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"}
-// }
-
 const StyledObject = styled.div`{
-  &.table-box { width: 100%; height: fit-content; min-height: ${(props) => props.boxHeight}; position: relative;
-    padding-bottom: 50px;
-    .search-box { width: 50%; display: inline-block; margin-bottom: 20px; }
-    .btn-new { top: 0; right: 0px; position: absolute; z-index: 99; width: 70px; }
+  &.table-box { 
+    ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle}
+
+    .search-box { ${cs.w.half} ${cs.disp.inblock} }
+    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
-    .tline { width: 100%; height: fit-content; display: block; position: relative; font-size: 14px; 
-      .trow { width: 100%; position: relative; display: flex; flex-direction: row;
-        line-height: ${(props) => props.height};
-        height: ${(props) => props.height};
-        .tcol {  text-align: center; display: inline-block; padding: 0 4px; height: 100%;
-            vertical-align: middle; border-bottom: solid rgba(0, 0, 0, 0.1) 1px; font-size: 14px; 
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: ${(props) => props.flex};
+    .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block} 
+      ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
 
-            p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: ${(props) => props.align}; }
-            .last { padding-right: 30px; }
+      .tb-row { 
+        ${cs.w.full} ${cs.pos.relative} ${cs.disp.get("flex; flex-direction: row;")}
+        ${cs.border.bottom}
+        ${({ height }) => cs.font.line(height)};
+        ${({ height }) => cs.h.get(height)};
+        cursor: ${(props) => props.cursor};
 
-            &:nth-child(1) { padding-left: 10px; }
+        .tb-col {  
+          ${cs.font.center} ${cs.disp.inblock} ${cs.p.v4} ${cs.h.full}
+          ${cs.over.hidden} ${cs.font.ellipsis}
+          ${({flex}) => flex && cs.disp.flex(flex)};
+          ${cs.border.right} ${cs.border.white}
+
+          p { ${cs.font.ellipsis} ${({align}) => cs.font.align(align)}; }
+
+          // &:nth-child(1) { ${cs.p.l10} }
+          &:last-child { ${cs.border.none} }
         }
 
+        .btn-head { ${cs.disp.hidden} }
+
         &:hover {
-          .i-btn { opacity: 0.8; transition: all 200ms ease-in; }
+          .i-btn { ${cs.opac.show} ${cs.anim.show} }
         }
 
         &.selection {
-          &:hover { ${cs.bg.primary} }
+          &:hover { ${cs.bg.hover} }
         }
 
-        .i-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 100; opacity: 0; 
-          &.btn-del { right: 5px; }
-          &.btn-move { left: 10px; }
+        .i-btn { ${cs.align.ycenter} ${cs.z.icon} ${cs.opac.hide} ${cs.pos.relative}
+          &.btn-del { ${cs.right(5)} ${cs.pos.relative} ${cs.m.l10} }
+          &.btn-move { ${cs.left(5)} ${cs.pos.relative} }
         }
         
-        &:first-child { .btn-up { visibility: hidden; } }
-        &:last-child { .btn-dn { visibility: hidden; } }
+        &:first-child { .btn-up { ${cs.disp.hidden} } }
+        &:last-child { .btn-dn { ${cs.disp.hidden} } }
 
-        &.active { 
-          background: rgba(57, 107, 255, 0.9) !important; 
-    
-          &.green { background:${cs.color.green} !important; color:#fff; }
-          &.yellow { background:${cs.color.yellow} !important; color: #fff; }
+        &.active { ${cs.bg.hover}
+          &.green { background:${cs.color.green} !important; ${cs.font.white} }
+          &.yellow { background:${cs.color.yellow} !important; ${cs.font.white} }
           &.orange { background:${cs.color.orange} !important; }
           &.red { background:${cs.color.red} !important; }
-          &.dark { background:${cs.color.dark} !important; color:#fff; border: 1px solid rgba(148, 148, 148, 0.8); }
+          &.dark { background:${cs.color.dark} !important; ${cs.font.white} ${cs.box.line} }
         }
         
-        &.disable { background: transparent; color:#ffffff33; }
+        &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      .total-txt { text-align: right; padding: 3px; font-size: 11px; opacity: 0.7; }
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.gray} ${cs.m.t10}
+        .tb-row { ${cs.bg.gray} .tb-col { ${cs.border.darkgray} } } 
+      }
+
     }
+    
+    .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
+    .page-navi { ${cs.m.t40} }
 
-    .tline.head { font-size: 16px; font-weight: 600; .trow { background: #2e3338 } }
-    .tline.body .trow { cursor: ${(props) => props.cursor}; border-left: 1px solid #2e3338; border-right: 1px solid #2e3338; }
-
-    .page-navi { margin-top: 40px; }
-
-    @media screen and (max-width : 1280px) {
-    }
+    @media screen and (max-width : 1280px) {}
   
     @media screen and (max-width : 1024px) {
-      .tline .trow {
-        .tcol.tablet { display: none; }
+      .tb-line .tb-row {
+        .tb-col.tablet { display: none; }
       }
 
-      .tcol {font-size: 13px;}
+      .tb-col {font-size: 13px;}
     }
   
     @media screen and (max-width : 860px) {
       padding: 0; font-size: 12px; padding-bottom: 30px; padding-top: 10px;
-      .tline .trow {
-        .tcol.mobile { display: none; }
+      .tb-line .tb-row {
+        .tb-col.mobile { display: none; }
         .i-btn { opacity: 0.8; }
       } 
       
-      .tcol {font-size: 12px;}
+      .tb-col {font-size: 12px;}
       .search { width: calc(100% - 100px); }
       .btn-new { top: 10px; }
     }
   }
 }`;
 
-const lineHeight = 40;
+const Tablebox = (props) => {
+  const { head = null, list = null, total = '', height = 30 } = props;
+  const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
+  const align = 'center';
+  const style = { cursor, height, align };
+  const selection = (cursor === 'pointer');
 
-class Tablebox extends React.PureComponent {
-  onSelect = (e) => {
+  const onSelect = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
-    this.props.onSelect && this.props.onSelect(rowid, e);
+    props.onSelect && props.onSelect(rowid, e);
   }
 
-  onClickDelete = (rowid, e) => {
+  const onClickDelete = (rowid, e) => {
     e.stopPropagation();
-    this.props.onClickDelete && this.props.onClickDelete(rowid, e);
+    props.onClickDelete && props.onClickDelete(rowid, e);
   }
 
-  onClickNew = (eid, e) => {
-    this.props.onClickNew && this.props.onClickNew(e);
+  const onClickNew = (eid, e) => {
+    props.onClickNew && props.onClickNew(e);
   }
 
-  onClickPage = (page, e) => {
-    this.props.onClickPage && this.props.onClickPage(page, e);
+  const onClickPage = (page, e) => {
+    props.onClickPage && props.onClickPage(page, e);
   }
 
-  onClickSearch = (value, key, e) => {
-    this.props.onClickSearch && this.props.onClickSearch(value, key, e);
+  const onClickSearch = (value, key, e) => {
+    props.onClickSearch && props.onClickSearch(value, key, e);
   }
 
-  onClickHead = (e) => {
+  const onClickHead = (e) => {
     const eid = e.currentTarget.getAttribute("eid");
-    this.props.onClickHead && this.props.onClickHead(eid, e);
+    props.onClickHead && props.onClickHead(eid, e);
   }
 
-  onClickMove = (rowid, e) => {
+  const onClickMove = (rowid, e) => {
     e.stopPropagation();
-    this.props.onClickMove && this.props.onClickMove(rowid, e);
+    props.onClickMove && props.onClickMove(rowid, e);
   }
 
-  renderColumnElem = (item, head) => {
+  const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
       const { value } = col;
       const { type, tablet = 'show', mobile = 'show', align, flex } = head[index];
@@ -141,93 +149,113 @@ class Tablebox extends React.PureComponent {
 
       let color = {};
       if (type === "color") {
-        // let textcolor = parseInt(Util.replaceAll(data, "#", ""), 16);
-        // textcolor = textcolor ^ 0xffffff;
-        // textcolor = (textcolor + 0x1000000).toString(16).substr(-6).toUpperCase();
-        // color = { 'background': data, 'color': `#${textcolor}` };
+        // let textb-color = parseInt(Util.replaceAll(data, "#", ""), 16);
+        // textb-color = textb-color ^ 0xffffff;
+        // textb-color = (textb-color + 0x1000000).toString(16).substr(-6).toUpperCase();
+        // color = { 'background': data, 'color': `#${textb-color}` };
         color = { 'color': data, 'textTransform': 'uppercase' }
       }
 
       const styled = { flex: flex, textAlign: align };
-      return <div key={String(index)} style={styled} className={cx("tcol", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
+      return <div key={String(index)} style={styled} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
         <p style={color}>{data}</p>
       </div>
     })
   }
 
-  render() {
-    const makeTableItem = (list = null, tags = []) => {
-      let array = list == null || list.length < 1 ? null : list.map(item => {
+  const renderGuide = () => {
+    let guide = null;
+    if (!head) {
+      guide = "You must set head props.\n"
+        + "ex. const head = [{ key: 'no', title: 'utime', type: 'date', align: 'left', flex: '1 1 40px' }, {...}\n"
+        + "key and title is required. Rest is optional.\n"
+        + "type is text or date or datetime";
+    }
+
+    if (list && list[0]) {
+      const item = list[0];
+      if (item.rowid == null || item.rowid === undefined) {
+        guide = "'rowid' is required in the list.\n"
+          + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n"
+          + "rowid and text is required. Rest is optional.\n"
+          + "rowid is used to show or hide text(contents)";
+      }
+    }
+
+    if (guide) {
+      return <Guidebox text={guide} />
+    }
+  }
+  
+  const makeTableItem = (list = null, tags = []) => {
+    if (list && tags) {
+      return list.map(item => {
         let temps = [];
         tags.map(key => temps = [...temps, { key: key, value: item[key] }]);
         return temps;
       })
-
-      return array;
+    } else {
+      return null;
     }
-
-    const { props } = this;
-    const { head = null, list = null } = props;
-    const cursor = props.onSelect == null ? 'default' : "pointer";
-    const height = `${lineHeight}px`;
-    const boxHeight = `${lineHeight * 11}px`; //header 포함
-    const style = { cursor, height, boxHeight };
-    const selection = (cursor === 'pointer');
-
-    // 테이블 아이템중에 head에 설정된 col만 추출하자.
-    const tlist = makeTableItem(list, head && head.map(item => item.key));
-
-    return (
-      <StyledObject className={cx('table-box', props.className)} {...style}>
-        {props.onClickSearch && <Search guide={ST.SEARCH} onClick={this.onClickSearch} className="" list={props.searchs} searchkey={props.searchkey}/>}
-        {props.onClickNew &&
-          <Button className="btn-new green md" title={ST.ADD} onClick={this.onClickNew} eid={EID.NEW} />
-          // <Svg className="btn-new md" onClick={this.onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
-        }
-
-        {/* head */}
-        {head && <div className="tline head">
-          <div className="trow" >
-            {head.map((item, index) => {
-              const { tablet = 'show', mobile = 'show', flex } = item;
-              const styled = { flex: flex, };
-              return <div key={index} style={styled} onClick={this.onClickHead} eid={item.id}
-                className={cx("tcol", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')} >{item.title}</div>
-            })}
-          </div>
-        </div>}
-
-        {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
-        {/* body */}
-        {tlist && <ul className="tline body">
-          {/* row */}
-          {tlist.map((item, index) => {
-            const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
-            const active = Number(this.props.sel) === Number(index);
-            const color = this.props.activeColor ? this.props.activeColor : '';
-            return <li className={cx("trow green", color, {selection}, {active})} key={String(index)} rowid={rowid} onClick={this.onSelect} eid={EID.SELECT}>
-              {/* col */}
-              {this.renderColumnElem(item, head)}
-              {props.onClickDelete &&
-                <Svg className="i-btn btn-del sm" onClick={this.onClickDelete} eid={rowid} name={"delete"} color={'white'} />
-              }
-              {props.onClickMove &&
-                <Svg className="i-btn btn-move sm" onClick={this.onClickMove} eid={rowid} name={"move"} color={'white'} />
-              }
-            </li>
-          })}
-
-          <div className="total-txt">{`${ST.TOTAL} : ${props.total}`}</div>
-        </ul>}
-        
-        {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
-        
-        {/* page navi */}
-        <Pagenavi pos={props.pos} max={props.max} onItemClick={this.onClickPage} color="white" />
-      </StyledObject>
-    );
-    // }
   }
+
+  // 테이블 아이템중에 head에 설정된 col만 추출하자.
+  const tlist = makeTableItem(list, head && head.map(item => item.key));
+
+  return (
+    <StyledObject className={cx('table-box', props.className)} {...style}>
+      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
+      {props.onClickNew &&
+        <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />
+        // <Svg className="btn-new md" onClick={onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
+      }
+
+      {/* error guid */}
+      {renderGuide()}
+
+      {/* head */}
+      {head && <div className="tb-line tb-head">
+        <div className="tb-row" >
+          {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} /> }   
+          {head.map((item, index) => {
+            const { tablet = 'show', mobile = 'show', flex } = item;
+            const styled = { flex: flex, };
+            return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
+              className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
+              tablet === 'hide' && 'tablet')} >{item.title}</div>
+          })}
+          {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} /> }
+        </div>
+      </div>}
+
+      {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
+      {/* body */}
+      {tlist && <ul className="tb-line tb-body">
+        {/* row */}
+        {tlist.map((item, index) => {
+          const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+          const active = Number(props.sel) === Number(index);
+          const color = props.activeColor ? props.activeColor : '';
+          return <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
+            key={String(index)} rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
+            {/* col */}
+            {props.onClickMove &&
+              <Svg className="i-btn btn-move sm" onClick={onClickMove} eid={rowid} name={"move"} />
+            }            
+            {renderColumnElem(item, head)}
+            {props.onClickDelete &&
+              <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
+            }
+          </li>
+        })}
+      </ul>}
+
+      {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
+
+      {/* page navi */}
+      <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />
+    </StyledObject>
+  );
 }
 
 export default Tablebox;

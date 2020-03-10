@@ -17,11 +17,8 @@ const StyledObject = styled.div`{
     .csl-body { ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t20}
       ${cs.box.line} ${cs.box.inner}
 
-      .csl-row { ${cs.w.full} ${cs.disp.block} ${cs.p.a0} ${cs.h.fit}
-        // ${({ height }) => cs.font.line(height)};
-        // ${({ height }) => cs.min.height(height)};
-
-        ${cs.border.top}
+      .csl-row { ${cs.w.full} ${cs.disp.block} ${cs.p.a0} 
+        ${cs.h.fit} ${cs.border.top}
         transition: all .5s ease-in-out;
         &:first-child { ${cs.border.none} }
         

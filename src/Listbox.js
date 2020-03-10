@@ -13,7 +13,7 @@ const StyledObject = styled.div`{
     
     .lbx-body {
       ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t20}
-      ${cs.box.line} ${cs.box.inner} ${cs.noselect} ${cs.font.dark}
+      ${cs.box.inner} ${cs.noselect} ${cs.font.dark}
 
       .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.border.gray}
         ${({ height }) => cs.h.get(height)};
@@ -63,7 +63,7 @@ const StyledObject = styled.div`{
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
     .page-navi { ${cs.m.t40} }
 
-    &.border { ${cs.border.gray} ${cs.box.inner} }
+    &.border { .lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } } }
 
     &.sm { 
       .lbx-body { ${cs.font.sm} 
@@ -103,7 +103,7 @@ const StyledObject = styled.div`{
       }
     }
 
-    ${({ border }) => border && `.lbx-body { ${cs.box.line} }`}
+    ${({ border }) => border && `.lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } }`}
     ${({ border }) => border && border.color && `.lbx-body { ${cs.border.color(border.color + " !important")} }`}
     ${({ border }) => border && border.radius && `.lbx-body { ${cs.border.radius(border.radius + " !important")} }`}
     ${({ border }) => border && border.width && `.lbx-body { ${cs.border.width(border.width + " !important")} }`}

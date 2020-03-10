@@ -48,7 +48,7 @@ export const object = () => {
     '', { display: 'inline-radio' }, 'Other');
   const border = text('border color', '#909090');
   const radius = text('border radius', '0px');
-  const width = text('border width', '1px');
+  const width = text('border width', '0px');
 
   const bgcolor = text('border color', '#ffffff');
   const perpage = 10; // 페이지당 표시 개수
@@ -81,12 +81,13 @@ export const object = () => {
   }
 
   const max = Math.floor(alldata.length / perpage);
+  const lborder = !width || width === 0 || width === "0px" ? null : { color: border, radius: radius, width: width };
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'pos={pos} max={max} list={list} options={{ inner: { height: 160 } }}')}>
-        <Listbox className={cx(size, align, bg)} pos={pos} max={max} list={list} total={alldata.length}
-          border={{ color: border, radius: radius, width: width }}
+        <Listbox className={cx(size, align, bg )} pos={pos} max={max} list={list} total={alldata.length}
+          border={lborder}
           font={{ color: fontcolor, size: fontsize, align: align }}
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
           onClickDelete={isdelete ? onClickDelete : null} onClickPage={onClickPage} />

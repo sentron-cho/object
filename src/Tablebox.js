@@ -11,6 +11,8 @@ const StyledObject = styled.div`{
     .search-box { ${cs.w.half} ${cs.disp.inblock} }
     .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
+    .tb-frame { ${cs.m.t10} ${cs.over.hidden} }
+
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block} 
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
 
@@ -58,7 +60,7 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.gray} ${cs.m.t10}
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.gray}
         .tb-row { .tb-col { ${cs.border.darkgray} } } 
       }
 
@@ -69,7 +71,6 @@ const StyledObject = styled.div`{
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
     .page-navi { ${cs.m.t40} }
-
     
     &.sm { 
       .tb-row { 
@@ -96,14 +97,16 @@ const StyledObject = styled.div`{
         .i-btn { .svg-path { ${cs.fill.lightgray} } }
       }
       .tb-head { ${cs.bg.blue} ${cs.font.white} }
-
       .selection:hover { ${cs.bg.primaryhover} }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
       .tb-body { ${cs.bg.lightgray} 
         .tb-border { ${cs.border.semiblack} } 
         .i-btn { .svg-path { ${cs.fill.dark} } }
       }
+      .selection:hover { ${cs.bg.grayhover} }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
     }
     &.dark {
       .tb-body { ${cs.bg.dark} ${cs.font.white} 
@@ -111,15 +114,16 @@ const StyledObject = styled.div`{
         .i-btn { .svg-path { ${cs.fill.white} } }
       }
       .tb-head { ${cs.bg.black} ${cs.font.white} }
-      .selection:hover { ${cs.bg.primaryhover} }
+      .selection:hover { ${cs.bg.darkhover} }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
     }
 
-    ${({ border }) => border && `.tb-body { ${cs.box.line} .tb-li:last-child { ${cs.border.trans} } }`}
-    ${({ border }) => border && border.color && `.tb-body { ${cs.border.color(border.color + " !important")} }`}
-    ${({ border }) => border && border.radius && `.tb-body { ${cs.border.radius(border.radius + " !important")} }`}
-    ${({ border }) => border && border.width && `.tb-body { ${cs.border.width(border.width + " !important")} }`}
+    ${({ border }) => border && `.tb-frame { ${cs.box.line} .tb-body .tb-row:last-child { ${cs.border.none} } }`}
+    ${({ border }) => border && border.color && `.tb-frame { ${cs.border.color(border.color)} }`}
+    ${({ border }) => border && border.radius && `.tb-frame { ${cs.border.radius(border.radius)} }`}
+    ${({ border }) => border && border.width && `.tb-frame { ${cs.border.width(border.width)} }`}
     
-    ${({ font }) => font && font.size && `.tb-body { ${cs.font.size(font.size + " !important")} }`}
+    ${({ font }) => font && font.size && `.tb-body { ${cs.font.size(font.size)} }`}
     ${({ font }) => font && font.color && `.tb-body { ${cs.font.color(font.color)} }`}
     ${({ font }) => font && font.align && `.tb-body { ${cs.font.align(font.align)} }`}
     
@@ -261,49 +265,51 @@ const Tablebox = (props) => {
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew &&
-        <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />
+        <Button className={"btn-new green md"} title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />
         // <Svg className="btn-new md" onClick={onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
       }
 
       {/* error guid */}
       {renderGuide()}
 
-      {/* head */}
-      {head && <div className="tb-line tb-head">
-        <div className="tb-row" >
-          {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} />}
-          {head.map((item, index) => {
-            const { tablet = 'show', mobile = 'show', flex } = item;
-            const styled = { flex: flex, };
-            return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
-              className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
-                tablet === 'hide' && 'tablet')} >{item.title}</div>
-          })}
-          {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} />}
-        </div>
-      </div>}
+      <div className={"tb-frame"}>
+        {/* head */}
+        {head && <div className="tb-line tb-head">
+          <div className="tb-row" >
+            {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} />}
+            {head.map((item, index) => {
+              const { tablet = 'show', mobile = 'show', flex } = item;
+              const styled = { flex: flex, };
+              return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
+                className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
+                  tablet === 'hide' && 'tablet')} >{item.title}</div>
+            })}
+            {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} />}
+          </div>
+        </div>}
 
-      {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
-      {/* body */}
-      {tlist && <ul className="tb-line tb-body">
-        {/* row */}
-        {tlist.map((item, index) => {
-          const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
-          const active = Number(props.sel) === Number(index);
-          const color = props.activeColor ? props.activeColor : '';
-          return <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
-            key={String(index)} rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
-            {/* col */}
-            {props.onClickMove &&
-              <Svg className="i-btn btn-move sm" onClick={onClickMove} eid={rowid} name={"move"} />
-            }
-            {renderColumnElem(item, head)}
-            {props.onClickDelete &&
-              <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
-            }
-          </li>
-        })}
-      </ul>}
+        {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
+        {/* body */}
+        {tlist && <ul className="tb-line tb-body">
+          {/* row */}
+          {tlist.map((item, index) => {
+            const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+            const active = Number(props.sel) === Number(index);
+            const color = props.activeColor ? props.activeColor : '';
+            return <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
+              key={String(index)} rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
+              {/* col */}
+              {props.onClickMove &&
+                <Svg className="i-btn btn-move sm" onClick={onClickMove} eid={rowid} name={"move"} />
+              }
+              {renderColumnElem(item, head)}
+              {props.onClickDelete &&
+                <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
+              }
+            </li>
+          })}
+        </ul>}
+      </div>
 
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 

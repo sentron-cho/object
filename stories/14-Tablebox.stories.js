@@ -183,15 +183,27 @@ export const border = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"radius"} className={""} sample={samplecode("", "primary")} box={false}>
-        <Tablebox className={cx("radius")} pos={1} max={10} head={tags} list={jsonlist(5)} 
+        <Tablebox className={cx("")} pos={1} max={10} head={tags} list={jsonlist(5)} 
         onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
 
       <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
-        <Tablebox className={cx("radius")} pos={1} max={10} head={tags} list={jsonlist(5)} datakey={"cont"}
-          border={{ color: 'red', radius: '10px', width: '5px' }} 
+        <Tablebox className={cx("")} pos={1} max={10} head={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'red', radius: '5px', width: '1px' }} 
           onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Tablebox className={cx("")} pos={1} max={10} head={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'blue', radius: '10px', width: '2px' }} 
+          onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Tablebox className={cx("dark")} pos={1} max={10} head={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'black', radius: '20px', width: '5px' }} 
+          onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>      
     </StyledObject>
   );
 };

@@ -11,6 +11,7 @@ export const IMG = {
   Pdf: require('./images/pdf.png'),
   NoimageBig: require('./images/noimage_big.png'),
   BgFeature01: require('./images/bg_feature_01.png'),
+  Sample: require('./images/sample.jpg'),
 }
 
 export const ICON = {

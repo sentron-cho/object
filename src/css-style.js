@@ -271,7 +271,7 @@ const cs = {
     size: (v) => Number.isInteger(v) ? `font-size: ${v}px;` : `font-size: ${v};`,
     get: (v) => Number.isInteger(v) ? `font-size: ${v}px;` : `font: ${v};`,
     weight: (v) => `font-weight: ${v};`,
-    align: (v) => `text-align: ${v};`,
+    align: (v) => `text-align: ${v};`,    
   },
 
   opac: {
@@ -325,6 +325,7 @@ const cs = {
     y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,
     vertical: (v) => `vertical-align : ${v};`,
     get: (v) => `transform: ${v};`,
+    justify: (v) => `justify-content: ${v};`,
   },
 
   bg: {
@@ -469,6 +470,7 @@ const cs = {
     primary: `border-color: ${color.primary};`,
     yellow: `border-color: ${color.yellow};`,
     orange: `border-color: ${color.orange};`,
+    blue: `border-color: ${color.blue};`,
     red: `border-color: ${color.red};`,
     green: `border-color: ${color.green};`,
     black: `border-color: ${color.black};`,

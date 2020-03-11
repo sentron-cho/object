@@ -174,8 +174,18 @@ export const border = () => {
 
       <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
         <Callopselist className={cx("radius")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
-          border={{ color: 'red', radius: '10px', width: '5px' }} />
+          border={{ color: 'red', radius: '5px', width: '1px' }} />
       </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'blue', radius: '10px', width: '2px' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Callopselist className={cx("dark")} pos={1} max={10} tags={tags} list={jsonlist(5)} datakey={"cont"}
+          border={{ color: 'black', radius: '20px', width: '5px' }} />
+      </Linebox>      
     </StyledObject>
   );
 };

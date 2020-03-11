@@ -14,7 +14,7 @@ const StyledObject = styled.div`{
     .search-box { ${cs.w.half} ${cs.disp.inblock} }
     .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
-    .csl-body { ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t20}
+    .csl-body { ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t10}
       ${cs.box.line} ${cs.box.inner}
 
       .csl-row { ${cs.w.full} ${cs.disp.block} ${cs.p.a0} 
@@ -91,18 +91,21 @@ const StyledObject = styled.div`{
         .cls-icon { .svg-path { ${cs.fill.lightgray} } } 
         .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.white} } } 
       }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
       .csl-body { ${cs.bg.lightgray} 
         .csl-border { ${cs.border.semiblack} } 
         .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.black} } } 
       }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
     }
     &.dark {
       .csl-body { ${cs.bg.dark} ${cs.font.white} 
         .csl-border { ${cs.border.black} } 
         .cls-cont-btns { ${cs.bg.black} .svg-icon .svg-path { ${cs.fill.white} } } 
       }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
     }
 
     &.radius { .csl-body { ${cs.box.radius} } }

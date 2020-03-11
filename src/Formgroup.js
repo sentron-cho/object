@@ -1,55 +1,73 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Util, } from './index';
+import { Util, Guidebox, cs } from './index';
 
 const StyledObject = styled.div`{
-  &.form-grp { width: 100%; 
-    .row { margin: 0; padding: 0; width: 100%; display: flex; justify-content: space-between;
-      .col { 
-        flex-direction: column; min-width: 0; width: auto; flex: 1 1 200px; margin: 5px 0; margin-right: 10px; 
-        width: ${(props) => props.width}; height: ${(props) => props.height}; min-width: ${(props) => props.minWidth};
+  &.form-grp { 
+    ${cs.w.full}
+    .fg-row { 
+      ${cs.m.a0} ${cs.p.a0} ${cs.w.full} ${cs.disp.get("flex")}
+      .fg-col { 
+        ${cs.w.auto} ${cs.disp.flex("1 1 200px; flex-direction: column;")}
+        ${cs.m.v5} ${cs.m.r10} ${cs.min.width(0)}
+        ${({ width }) => width && cs.w.get(width)} 
+        ${({ height }) => height && cs.h.get(height)} 
+        ${({ minWidth }) => minWidth && cs.min.width(minWidth)}
       }
-      .col:last-child { margin-right: 0; }
+      .fg-col:last-child { ${cs.m.r0} }
       ${(props) => props.justify && `justify-content: ${props.justify}`};
     }
 
     &.inline { 
-      .row { 
-        .col { margin: 0; margin: 5px;
+      .fg-row { 
+        .fg-col { ${cs.m.a5}
           ${(props) => props.flex && `flex: ${props.flex}`};
         }
-        // .col:last-child { margin-right: 0; }
       }
     }
 
-    &.vertical { display: inline-block; }
+    &.vertical { ${cs.disp.inblock} }
 
     &.flexwrap {
-      .row { 
+      .fg-row { 
         flex-flow: wrap;
       }
     }
 
     &.right {
-      text-align: right;
+      ${cs.font.right}
     }
 
-    &.anim { animation: ${({ anim }) => anim && anim.type ? anim.type : "fadein"} ${({ anim }) => anim && anim.time ? anim.time : "0.3s"}; }
-
-    @media screen and (max-width : 1280px) {
+    &.anim { 
+      ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
     }
+
+    &.primary {
+      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary}
+    }
+    &.gray {
+      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} 
+    }
+    &.dark {
+      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark}  
+    }
+    &.radius { ${cs.box.radius} }
+
+    // &.anim { animation: ${({ anim }) => anim && anim.type ? anim.type : "fadein"} ${({ anim }) => anim && anim.time ? anim.time : "0.3s"}; }
+
+    @media screen and (max-width : 1280px) { }
   
     @media screen and (max-width : 1024px) {
-      .row .col { margin: 5px; }
+      .fg-row .fg-col { margin: 5px; }
     }
   
     @media screen and (max-width : 860px) {
-      .row .col { margin: 2px; }
+      .fg-row .fg-col { margin: 2px; }
 
       &.inline { 
-        .row { display: block;
-          .col { margin: 10px 0; width: auto; }
+        .fg-row { display: block;
+          .fg-col { margin: 10px 0; width: auto; }
         }
       }
     }
@@ -87,10 +105,23 @@ export default class Formgroup extends React.PureComponent {
     return this.state.list.find(item => item.check === true && item);
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.anim != null) {
+      // this.state.isanim = this.state.anim = nextProps.anim;
+      this.setState({ anim: nextProps.anim });
+    }
+  }
+
+  // onAnimEnd = (e) => {
+  //   this.setState({ anim: '' });
+  // }
+
+  onAnimStart = (e) => {
+    this.props.onAnimation && this.props.onAnimation('start', e);
   }
 
   onAnimEnd = (e) => {
+    this.props.onAnimation && this.props.onAnimation('end', e);
     this.setState({ anim: '' });
   }
 
@@ -116,12 +147,24 @@ export default class Formgroup extends React.PureComponent {
   render() {
     const { state, props } = this;
     const { child, inline, children, flexwrap, disable } = props;
+    const { config = { child: null } } = props;
     const { list, selected, anim } = state;
-    const Child = child;
+
+    const renderGuide = () => {
+      let guide = null;
+      if (!child && !children) {
+        guide = "One of both 'children' and 'child' must be in props.\n"
+          + "ex. <Formgroup child={<div>child</div>} .../> or <Formgroup><div>children</div></Formgroup>";
+      }
+
+      if (guide) {
+        return <Guidebox text={guide} />
+      }
+    }
 
     const renderChildren = () => {
       if (inline && children.length > 0) {
-        
+
         // 자식 컨텐츠가 리스트의 형식일 경우
         const isarray = children.find((item) => Array.isArray(item));
         let list = children;
@@ -138,21 +181,27 @@ export default class Formgroup extends React.PureComponent {
           const { flex, name } = item.props;
           const styled = { "flex": flex };
           const type = item.type.name ? item.type.name.toLowerCase() : item.type.toLowerCase();
-          return <div className={cx("col", type, name)} key={index} style={styled}>{item}</div>
+          return <div className={cx("fg-col", type, name)} key={index} style={styled}>{item}</div>
         });
       } else {
-        return <div className="col">{children}</div>
+        return <div className="fg-col">{children}</div>
       }
     }
 
+    const Child = child;
     return (
-      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable })} {...props.options}
-        {...props.style} anim={state.anim} onAnimationEnd={this.onAnimEnd}>
-        <div className="row">
+      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable })}
+        {...props.options} {...props.style} anim={state.anim} onAnimationEnd={this.onAnimEnd}>
+
+        {renderGuide()}
+
+        <div className="fg-row">
           {children && renderChildren()}
-          {props.list && list.map((item, index) =>
-            <div className="col" key={index}>
-              <Child {...item} onClicked={this.props.onSelected ? this.onSelected : null} active={item.id === selected} full={true} disable={disable} />
+
+          {child && props.list && list.map((item, index) =>
+            <div className="fg-col" key={index}>
+              <Child {...item} {...config.child} active={item.id === selected} full={true} disable={disable}
+                onClicked={this.props.onSelected ? this.onSelected : null} />
             </div>)
           }
         </div>

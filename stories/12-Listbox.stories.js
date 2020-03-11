@@ -166,8 +166,18 @@ export const border = () => {
       </Linebox>
 
       <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
-        <Listbox className={cx("radius")} pos={1} max={10} list={jsonlist(5)}
-          border={{ color: 'red', radius: '10px', width: '5px' }} />
+        <Listbox className={cx("")} pos={1} max={10} list={jsonlist(5)}
+          border={{ color: 'red', radius: '5px', width: '1px' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Listbox className={cx("")} pos={1} max={10} list={jsonlist(5)}
+          border={{ color: 'blue', radius: '10px', width: '2px' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""} sample={samplecode("options={{ border: { color: 'black', radius: 10, width: 1 } }}", "primary")} box={false}>
+        <Listbox className={cx("dark")} pos={1} max={10} list={jsonlist(5)}
+          border={{ color: 'black', radius: '20px', width: '10px' }} />
       </Linebox>
     </StyledObject>
   );

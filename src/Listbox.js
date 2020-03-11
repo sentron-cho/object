@@ -12,8 +12,8 @@ const StyledObject = styled.div`{
     .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
     
     .lbx-body {
-      ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t20}
-      ${cs.box.inner} ${cs.noselect} ${cs.font.dark}
+      ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t10}
+      ${cs.box.inner} ${cs.noselect} ${cs.font.dark} ${cs.over.hidden}
 
       .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.border.gray}
         ${({ height }) => cs.h.get(height)};
@@ -88,12 +88,14 @@ const StyledObject = styled.div`{
         .lbx-li.selection:hover { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
       .lbx-body { ${cs.bg.lightgray} 
         .lbx-li.selection:hover { ${cs.bg.grayhover} }
         .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
       }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
     }
     &.dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
@@ -101,6 +103,7 @@ const StyledObject = styled.div`{
         .lbx-li.selection:hover { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
     }
 
     ${({ border }) => border && `.lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } }`}

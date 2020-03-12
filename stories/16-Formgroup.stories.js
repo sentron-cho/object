@@ -35,23 +35,26 @@ const jsonlist = (count = 5) => {
 
 export const object = () => {
   const size = options('size',
-    { 'sm(small)': 'sm', 'lg(large)': 'lg', 'none': '' },
+    { 'none': '', 'sm(small)': 'sm', 'lg(large)': 'lg', },
     '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
-    { primary: 'primary', gray: 'gray', dark: 'dark', none: '' },
+    { none: '', primary: 'primary', gray: 'gray', dark: 'dark' },
     '', { display: 'inline-radio' }, 'Other');
+  // const bgcolor = text('background color', '#ffffff');
+  const animtime = text('animation time', '1s');
   const animtype = options('animation',
     {
-      slidein: 'slidein', slideout: 'slideout',
+      none: '', slidein: 'slidein', slideout: 'slideout',
       fadein: 'fadein', fadeout: 'fadeout',
-      slidedown: 'slidedown', slideup: 'slideup'
+      slidedown: 'slidedown', slideup: 'slideup',
     }, '',
     { display: 'inline-radio' }, 'Other');
-  const border = text('border color', '#909090');
-  const radius = text('border radius', '0px');
-  const width = text('border width', '1px');
+  const isborder = boolean('border', false);
+  const border = isborder ? text('border color', '#909090') : '';
+  const radius = isborder ? text('border radius', '1px') : '';
+  const width = isborder ? text('border width', '1px') : '';
+  const padding = isborder ? text('border padding', '5px') : '';
 
-  const bgcolor = text('border color', '#ffffff');
   const [result, setResult] = useState(null);
 
   const onSelected = (eid, rowid, e) => {
@@ -60,20 +63,21 @@ export const object = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"formgroup"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={true}>
-        <Formgroup className={cx(size, bg)}
+      <Linebox title={"formgroup"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
+        <Formgroup className={cx(size, bg)} anim={{ type: animtype, time: animtime }}
           child={Widgetbox} flex={true} list={jsonlist(3)}
-          style={{ width: "80px" }}
-          config={{ child: { className: `${size}` } }}
-          border={{ color: border, radius: radius, width: width }}
+          style={{ width: '80px' }}
+          config={{ child: { className: size } }}
+          border={isborder ? { color: border, radius: radius, width: width, padding: padding } : null}
           onSelected={onSelected} />
       </Linebox>
 
-      <Linebox title={"formgroup"} className={"nomargin"} sample={samplecode("", "")} box={true}>
-        <Formgroup className={cx(size, bg)}
+      <Linebox title={"formgroup"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Formgroup className={cx(size, bg)} anim={{ type: animtype, time: animtime }}
           child={Widgetbox} flex={true} list={jsonlist(5)}
-          config={{ child: { className: `${size}` } }}
-          border={{ color: border, radius: radius, width: width }}
+          style={{ width: '80px' }}
+          config={{ child: { className: size } }}
+          border={isborder ? { color: border, radius: radius, width: width, padding: padding } : null}
           onSelected={onSelected} />
       </Linebox>
 
@@ -85,24 +89,23 @@ export const object = () => {
   );
 };
 
-
 export const color = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }}/>
+        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }} />
       </Linebox>
 
       <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Formgroup className={'primary'} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }}/>
+        <Formgroup className={'primary'} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }} />
       </Linebox>
-      
+
       <Linebox title={"dark radius(child sm dark)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
         <Formgroup className={'dark radius'} child={Widgetbox}
           config={{ child: { className: "sm dark" } }}
-          flex={true} list={jsonlist(3)} onSelected={() => { }}/>
-      </Linebox>  
-      
+          flex={true} list={jsonlist(3)} onSelected={() => { }} />
+      </Linebox>
+
       <Linebox title={"gray"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Formgroup className={'gray'} child={Widgetbox}
           config={{ child: { className: "sm dark" } }}
@@ -112,8 +115,43 @@ export const color = () => {
       <Linebox title={"dark radius(child sm gray)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
         <Formgroup className={'dark radius'} child={Widgetbox}
           config={{ child: { className: "sm gray" } }}
-          flex={true} list={jsonlist(3)} onSelected={() => { }}/>
-      </Linebox>        
+          flex={true} list={jsonlist(3)} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"bgcolor option"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Formgroup className={'radius'} child={Widgetbox}
+          config={{ child: { className: "sm gray" } }} bgcolor={"#fff252"}
+          flex={true} list={jsonlist(3)} onSelected={() => { }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+
+export const border = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"no border"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""}
+        sample={samplecode("border={{ color: 'red', radius: '5px', width: '1px', padding: '0' }}", "")}>
+        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }}
+          border={{ color: 'red', radius: '5px', width: '1px', padding: '0' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""}
+        sample={samplecode("border={{ color: 'blue', radius: '10px', width: '2px', padding: '5px' }}", "")}>
+        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }}
+          border={{ color: 'blue', radius: '10px', width: '2px', padding: '5px' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={""}
+        sample={samplecode("border={{ color: 'black', radius: '20px', width: '10px', padding: '5px 10px' }}", "")}>
+        <Formgroup className={''} child={Widgetbox} flex={true} list={jsonlist(3)} onSelected={() => { }}
+          border={{ color: 'black', radius: '20px', width: '10px', padding: '5px 10px' }} />
+      </Linebox>
     </StyledObject>
   );
 };

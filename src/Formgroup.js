@@ -5,12 +5,12 @@ import { Util, Guidebox, cs } from './index';
 
 const StyledObject = styled.div`{
   &.form-grp { 
-    ${cs.w.full}
+    ${cs.w.full} ${cs.box.inner} ${cs.over.hidden}
     .fg-row { 
       ${cs.m.a0} ${cs.p.a0} ${cs.w.full} ${cs.disp.get("flex")}
       .fg-col { 
         ${cs.w.auto} ${cs.disp.flex("1 1 200px; flex-direction: column;")}
-        ${cs.m.v5} ${cs.m.r10} ${cs.min.width(0)}
+        ${cs.m.r10} ${cs.min.width(0)} //${cs.m.v5}
         ${({ width }) => width && cs.w.get(width)} 
         ${({ height }) => height && cs.h.get(height)} 
         ${({ minWidth }) => minWidth && cs.min.width(minWidth)}
@@ -44,17 +44,25 @@ const StyledObject = styled.div`{
     }
 
     &.primary {
-      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary}
+      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary}
     }
     &.gray {
-      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} 
+      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} 
     }
     &.dark {
-      ${cs.p.h10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark}  
+      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark}  
     }
-    &.radius { ${cs.box.radius} }
 
-    // &.anim { animation: ${({ anim }) => anim && anim.type ? anim.type : "fadein"} ${({ anim }) => anim && anim.time ? anim.time : "0.3s"}; }
+    &.radius { ${cs.box.radius} }
+    &.border { ${cs.box.line} }
+
+    ${({ border }) => border && `${cs.box.line}`}
+    ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
+    ${({ border }) => border && border.radius && `${cs.border.radius(border.radius)}`}
+    ${({ border }) => border && border.width && `${cs.border.width(border.width)}`}
+    ${({ border }) => border && border.padding && `${cs.p.get(border.padding)}`}
+
+    ${({ bgcolor }) => bgcolor && `${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.color(bgcolor)}`}
 
     @media screen and (max-width : 1280px) { }
   
@@ -191,7 +199,8 @@ export default class Formgroup extends React.PureComponent {
     const Child = child;
     return (
       <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable })}
-        {...props.options} {...props.style} anim={state.anim} onAnimationEnd={this.onAnimEnd}>
+        {...props.options} {...props.style} border={props.border} bgcolor={props.bgcolor}
+        anim={state.anim} onAnimationEnd={this.onAnimEnd}>
 
         {renderGuide()}
 

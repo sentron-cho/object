@@ -127,7 +127,7 @@ const StyledObject = styled.div`{
 
     ${({ labelcolor }) => labelcolor && `.st-font-label { ${cs.font.color(labelcolor + '!important')} }`}
     
-    ${({ bgcolor }) => bgcolor && `.tb-body { ${cs.bg.color(bgcolor)} }`}
+    ${({ bgcolor }) => bgcolor && `${cs.bg.color(bgcolor)}`}
 
     @media screen and (max-width : 1024px) {
     }

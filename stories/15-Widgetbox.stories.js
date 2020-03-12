@@ -201,6 +201,15 @@ export const color = () => {
         <Widgetbox className={cx("dark")} type={"image"} name={'widget'} value={"123"}
           cont={"123\ngood image"} src={IMG.Sample} onClick={() => { }} />
       </Linebox>
+
+      <Linebox title={"bgcolor option"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Widgetbox className={cx("")} type={"label"} name={'widget'}
+          bgcolor={"#fff252"} value={"123"} icon={"user"} onClick={() => { }} />
+        <Widgetbox className={cx("")} type={"icon"} name={'widget'}
+          bgcolor={"#fff252"} value={"123"} icon={"user"} onClick={() => { }} />
+        <Widgetbox className={cx("")} type={"image"} name={'widget'}
+          bgcolor={"#fff252"} value={"123"} cont={"123\ngood image"} src={IMG.Sample} onClick={() => { }} />
+      </Linebox>      
     </StyledObject>
   );
 };

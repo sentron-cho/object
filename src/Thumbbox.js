@@ -14,8 +14,9 @@ const StyledObject = styled.div`{
     }
 
     .tmb-odr { 
-      position: absolute; opacity: 0.8; right: 10px; top: 10px; font-size: 12px; border: 1px solid #525252;
-      border-radius: 100px; width: 20px; height: 20px; text-align: center; background: #232323d6; 
+      ${cs.pos.absolute} ${cs.pos.rtop} ${cs.opac.get(0.8)} ${cs.font.xs} 
+      ${cs.box.border} ${cs.size.get(16)} ${cs.font.center} 
+      ${cs.bg.alphablack} ${cs.font.lightgray} ${cs.border.radius("0 5px 0 10px")}
     }
 
     .tmb-noimg { ${cs.align.center} ${cs.opac.alpha} ${cs.font.darkgray} ${cs.font.sm} }

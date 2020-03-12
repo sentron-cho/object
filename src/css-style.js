@@ -90,6 +90,7 @@ const cs = {
     pointer: 'cursor: pointer;',
     default: 'cursor: default;',
     cross: 'cursor: crosshair;',
+    move: 'cursor: move;',
 
     get: (v) => `cursor: ${v};`,
   },
@@ -701,24 +702,24 @@ const cs = {
 
   scrollbar: {
     t1: `
-    ::-webkit-scrollbar { width: 10px; background-color: #F5F5F5; }
-    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: rgb(128, 128, 128); }
+    ::-webkit-scrollbar { width: 10px; height: 10px; background-color: ${color.dark}; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: ${color.gray}; }
     ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: rgba(68, 68, 68, 1); }
     `,
     t2: `
-    ::-webkit-scrollbar { width: 6px; background-color: #F5F5F5; }
-    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: #F5F5F5; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; background-color: ${color.dark}; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: ${color.lightgray}; }
     ::-webkit-scrollbar-thumb { background-color: #000000; }
     `,
     t3: `
-    ::-webkit-scrollbar { width: 4px }
-    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
-    ::-webkit-scrollbar-thumb { background-color: rgb(29, 29, 29); outline: 1px solid rgba(0, 0, 0, 0.658); }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px ${color.alphagray}; }
+    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
     `,
     t4: `
-    ::-webkit-scrollbar { width: 12px }
-    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); }
-    ::-webkit-scrollbar-thumb { background-color: darkgrey; outline: 1px solid #a0a0a087; }
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px ${color.alphagray}; }
+    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
     `,
   },
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Nodata, Svg, Dragbox, Thumbbox, Guidebox } from './index';
-import { EID } from './Config';
+import { Nodata, Svg, Dragbox, Thumbbox, Guidebox, cs } from './index';
 
 const StyledObject = styled.div`{
-  &.thumb-list { position: relative; margin-top: 5px;
-    .btn-new { position: absolute; bottom: 10px; right: 10px; }
+  &.thumb-list { 
+    ${cs.pos.relative} ${cs.m.t5}
+
+    .thumb-new { ${cs.align.rbottom} }
 
     .v-line { background: rgb(43, 43, 43); padding: 5px; display: flex; flex-wrap: wrap;
     
@@ -22,10 +23,10 @@ const StyledObject = styled.div`{
         .t-noimg { display: block; text-align: center; line-height: 70px; color: rgba(250,250,250,0.4); }
         // .t-odr { position: absolute; opacity: 0.7; right: 15px; top: 10px; font-size: 12px; }
 
-        &:hover { opacity: 1; cursor: pointer; .btn-icon { display: block; } }
-        .btn-icon { position: absolute; right: 15px; bottom: 15px; display: none; }
-        .btn-icon.link { bottom: 45px }
-        .btn-icon.edit { bottom: 45px }
+        &:hover { opacity: 1; cursor: pointer; .thumb-delete { display: block; } }
+        .thumb-delete { position: absolute; right: 15px; bottom: 15px; display: none; }
+        .thumb-delete.link { bottom: 45px }
+        .thumb-delete.edit { bottom: 45px }
       }
     }
 
@@ -39,14 +40,14 @@ const StyledObject = styled.div`{
     }
 
     .drop-box {
-      .v-item { .btn-icon, .odr { display: none; } }
+      .v-item { .thumb-delete, .odr { display: none; } }
     }
     
     @media screen and (max-width : 1280px) {
     }
 
     @media screen and (max-width : 860px) {
-      .v-cont .v-line .v-item .btn-icon { display: block; }
+      .v-cont .v-line .v-item .thumb-delete { display: block; }
     }
 
     @media screen and (max-width : 600px) {
@@ -85,7 +86,7 @@ export default class Thumblist extends React.PureComponent {
     const { props } = this;
     const cursor = props.onSelect == null ? 'default' : "pointer";
     const style = { cursor };
-    const { head, list } = props;
+    const { head, list, path = null, rowid = null } = props;
 
 
     const renderGuide = () => {
@@ -101,10 +102,14 @@ export default class Thumblist extends React.PureComponent {
         const item = list[0];
         if (item.rowid == null || item.rowid === undefined) {
           guide = "'rowid' is required in the list.\n"
-            + "ex. const list = [{ rowid: 'a12345', title: 'callopse', text: 'callopse test', utime: '20200101' }, {...}\n"
+            + "ex. const list = [{ rowid: 'a12345', title: 'tablebox', url: 'abc/abc.jpg', utime: '20200101' }, {...}\n"
             + "rowid and text is required. Rest is optional.\n"
             + "rowid is used to show or hide text(contents)";
         }
+      }
+
+      if (this.props.onDrag) {
+        guide = "Use onDragDrop() instead of onDrag()";
       }
 
       if (guide) {
@@ -130,7 +135,7 @@ export default class Thumblist extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => this.frame = ref} className={cx('thumb-list', props.className)} {...style} >
-        {props.onClickNew && <Svg className="btn-new md box radius" onClick={this.onClickNew} eid={EID.NEW} icon={'new'} />}
+        {props.onClickNew && <Svg className="thumb-new lg" onClick={this.onClickNew} icon={'add'} />}
 
         {/* error guid */}
         {renderGuide()}
@@ -141,17 +146,17 @@ export default class Thumblist extends React.PureComponent {
         {tlist && <ul className={cx("v-line")} onMouseDown={this.onMouseDown}>
           {/* items */}
           {list.map((item, index) => {
-            const url = this.props.path + item.url;
-            const rowid = item[props.rowid];
+            const url = path ? path + item.url : item.url;
+            const rid = rowid ? item[rowid] : -1;
             const odr = item.odr ? item.odr : index + 1;
 
             return (
               /* item */
-              <Dragbox key={rowid} rowid={rowid} frameClass={"thumb-list"} onDrag={this.onDrag} >
-                <li key={rowid} className={cx("v-item drag-li")} rowid={rowid} onClick={this.onSelectItem}>
+              <Dragbox key={rid} rowid={rid} frameClass={"thumb-list"} onDrag={this.onDrag} >
+                <li key={rid} className={cx("v-item drag-li")} rowid={rid} onClick={this.onSelectItem}>
                   <Thumbbox className={"thumb-item"} odr={odr} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
-                    <Svg className="btn-icon delete sm" onClick={this.onClickDelete} eid={rowid} icon={'delete'} />
+                    <Svg className="thumb-delete delete sm" onClick={this.onClickDelete} eid={rid} icon={'delete'} />
                   }
                 </li>
               </Dragbox>

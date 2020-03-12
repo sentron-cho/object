@@ -3,7 +3,8 @@ import { optionsKnob as options, withKnobs, text, boolean, radios, number, butto
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Thumblist, Thumbbox, Util } from '../src';
+import { cs, Thumblist, Util } from '../src';
+import { IMG } from '../src/Icons';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -24,10 +25,18 @@ export default { title: 'object|Thumblist', component: Thumblist, decorators: [w
 
 const samplecode = (value, classname = '') => `<Thumblist className={"${classname}"} ${value} />`;
 
+const tags = [
+  { key: 'url', title: 'url', flex: '4 1 200px', align: 'left' },
+  { key: 'color', title: 'text color', flex: '2 1 100px', align: 'center', type: 'color' },
+  { key: 'title', title: 'title', flex: '3 1 100px', align: 'left' },
+];
+
 const jsonlist = (count = 5, lines = 10) => {
+
   let data = [];
   for (let i = 0; i < count; i++) {
-    data.push({ no: i + 1, rowid: i, title: `title-${i}`, date: Util.getCurrentDate(), count: i});
+    data.push({ no: i + 1, rowid: i, title: `title-${i}`, url: IMG.Sample, utime: Util.getCurrentDate() });
+    // data.push({no: i+1, rowid: i, name: `data-${i}`, text: `${texts}-${i}`, utime: Util.getCurrentDate()});
   }
 
   return data;
@@ -63,6 +72,7 @@ export const object = () => {
   const [pos, setPos] = useState(1);
   const [list, setList] = useState([...alldata.slice(0, perpage)]);
 
+
   const onSelect = (rowid, e) => {
     setResult(`onSelect(rowid = ${rowid}, e)`);
   }
@@ -71,12 +81,12 @@ export const object = () => {
     setResult(`onClickNew(e)`);
   }
 
-  const onClickDelete = (rowid, e) => {
-    setResult(`onClickDelete(rowid = ${rowid}, e)`);
+  const onClickItem = (eid, rowid, e) => {
+    setResult(`onClickItem(eid = ${eid}, rowid = ${rowid}, e)`);
   }
 
   const onClickPage = (page, e) => {
-    const array = [...alldata.slice((page - 1) * perpage, page * perpage)]
+    const array = [...alldata.slice((page-1) * perpage, page * perpage)]
     setList(array);
     setPos(page);
     setResult(`onClickPage(page = ${page}, e)`);
@@ -86,17 +96,30 @@ export const object = () => {
     setResult(`onClickSearch(value = ${value}, key = ${key}, e)`);
   }
 
+  const onClickDelete = (rowid, e) => {
+    setResult(`onClickDelete(rowid = ${rowid}, e)`);
+  }
+
+  const onClickMove = (rowid, e) => {
+    setResult(`onClickMove(rowid = ${rowid}, e)`);
+  }
+
+  const onDrag = (eid, param, e) => {
+    
+  }
+
   const max = Math.floor(alldata.length / perpage);
   const lborder = !width || width === 0 || width === "0px" ? null : { color: border, radius: radius, width: width };
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'pos={pos} max={max} list={list} options={{ inner: { height: 160 } }}')}>
-        <Thumblist className={cx(size, bg )} pos={pos} max={max} list={list} total={alldata.length}
-          border={lborder}
-          font={{ color: fontcolor, size: fontsize}}
+        <Thumblist className={cx(size, bg)} pos={pos} max={max} head={tags} list={list}
+          border={{ color: border, radius: radius, width: width }}
+          font={{ color: fontcolor, size: fontsize }}
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
-          onClickDelete={isdelete ? onClickDelete : null} onClickPage={onClickPage} />
+          onClickDelete={onClickDelete} onClickMove={onClickMove} onDragDrop={onDrag}
+          onClickItem={onClickItem} onClickPage={onClickPage} />
       </Linebox>
 
       <div className={"res-view"}>

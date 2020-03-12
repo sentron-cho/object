@@ -221,7 +221,6 @@ const Callopselist = (props) => {
   }
 
   const tlist = makeTableItem(data, tags && tags.map(item => item.key));
-  console.dir(props.font)
   return (
     <StyledObject className={cx('callopse-list', props.className)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >

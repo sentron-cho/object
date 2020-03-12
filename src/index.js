@@ -64,3 +64,4 @@ export { EditableButtons } from "./Editable";
 export { default as Texteditor } from "./Texteditor";
 export { default as Sidemenu } from "./Sidemenu";
 export { default as Guidebox } from "./Guidebox";
+export { default as Dragable } from "./Dragable";

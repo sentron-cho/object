@@ -35,7 +35,7 @@ const jsonlist = (count = 5, lines = 10) => {
 
   let data = [];
   for (let i = 0; i < count; i++) {
-    data.push({ no: i + 1, rowid: i, title: `title-${i}`, url: IMG.Sample, utime: Util.getCurrentDate() });
+    data.push({ no: i + 1, uuid: i + 1, title: `title-${i}`, url: IMG[`Sample${(i % 3) + 1}`], utime: Util.getCurrentDate() });
     // data.push({no: i+1, rowid: i, name: `data-${i}`, text: `${texts}-${i}`, utime: Util.getCurrentDate()});
   }
 
@@ -66,11 +66,8 @@ export const object = () => {
   const radius = isborder ? text('border radius', '1px') : '';
   const width = isborder ? text('border width', '1px') : '';
   const padding = isborder ? text('border padding', '5px') : '';
-  const perpage = 10; // 페이지당 표시 개수
-  const alldata = jsonlist(50);
   const [result, setResult] = useState(null);
-  const [pos, setPos] = useState(1);
-  const [list, setList] = useState([...alldata.slice(0, perpage)]);
+  const [list, setList] = useState(jsonlist(10));
 
 
   const onSelect = (rowid, e) => {
@@ -85,41 +82,28 @@ export const object = () => {
     setResult(`onClickItem(eid = ${eid}, rowid = ${rowid}, e)`);
   }
 
-  const onClickPage = (page, e) => {
-    const array = [...alldata.slice((page-1) * perpage, page * perpage)]
-    setList(array);
-    setPos(page);
-    setResult(`onClickPage(page = ${page}, e)`);
-  }
-
-  const onClickSearch = (value, key, e) => {
-    setResult(`onClickSearch(value = ${value}, key = ${key}, e)`);
-  }
-
   const onClickDelete = (rowid, e) => {
     setResult(`onClickDelete(rowid = ${rowid}, e)`);
   }
 
-  const onClickMove = (rowid, e) => {
-    setResult(`onClickMove(rowid = ${rowid}, e)`);
+  const onDragDrop = (eid, array) => {
+    // console.dir(eid);
+    // if (eid === 'drop') {
+      // console.dir(eid);
+      setList(array);
+    // }
   }
 
-  const onDrag = (eid, param, e) => {
-    
-  }
-
-  const max = Math.floor(alldata.length / perpage);
   const lborder = !width || width === 0 || width === "0px" ? null : { color: border, radius: radius, width: width };
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
-        sample={samplecode("", 'pos={pos} max={max} list={list} options={{ inner: { height: 160 } }}')}>
-        <Thumblist className={cx(size, bg)} pos={pos} max={max} head={tags} list={list}
+        sample={samplecode("", 'list={list}')}>
+        <Thumblist className={cx(size, bg)} list={list} head={tags} rowid={"uuid"}
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize }}
-          onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
-          onClickDelete={onClickDelete} onClickMove={onClickMove} onDragDrop={onDrag}
-          onClickItem={onClickItem} onClickPage={onClickPage} />
+          onSelect={onSelect} onClickNew={onClickNew} onClickItem={onClickItem}
+          onClickDelete={onClickDelete} onDragDrop={onDragDrop} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -136,3 +120,51 @@ export const object = () => {
 };
 
 object.story = { name: 'Base' };
+
+
+export const color = () => {
+  const list = jsonlist(10);
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={''} fid={'1'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'primary'} fid={'2'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"dark radius(child sm)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
+        <Thumblist className={'dark radius'} fid={'3'} list={list} head={tags} rowid={"uuid"}
+          config={{ child: { className: "sm" } }}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"gray radius(child md)"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'gray'} fid={'4'} list={list}
+          config={{ child: { className: "md" } }} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+
+      <Linebox title={"dark radius(child lg)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
+        <Thumblist className={'dark radius'} fid={'5'} list={list} head={tags} rowid={"uuid"}
+          config={{ child: { className: "lg" } }}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const border = () => {
+  const list = jsonlist(10);
+  return (
+    <StyledObject className={"t-main"}>
+    <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+      <Thumblist className={''} fid={'1'} list={list} head={tags} rowid={"uuid"}
+        onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      </Linebox>
+    </StyledObject>
+  );
+};

@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Nodata, Svg, Dragbox, Thumbbox, Guidebox, cs } from './index';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
+import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
+
+const DT = { CARD: 'card' };
 
 const StyledObject = styled.div`{
   &.thumb-list { 
     ${cs.pos.relative} ${cs.m.t5} ${cs.box.line} ${cs.border.lightgray} 
-    ${cs.noselect} ${cs.noliststyle}
+    ${cs.noselect} ${cs.noliststyle} ${cs.w.full} ${cs.box.inner}
 
     .thb-new { ${cs.align.rbottom} }
 
-    .v-line { ${cs.over.xauto} ${cs.disp.get("flex")} ${cs.over.xauto} ${cs.scrollbar.t3}
-      ${cs.mouse.pointer}
+    .v-line { ${cs.over.xauto} ${cs.scrollbar.t3} ${cs.disp.get("flex")} ${cs.w.full}
       .v-item { 
         ${cs.disp.inblock} ${cs.p.a5} ${cs.pos.relative} ${cs.opac.show}
 
@@ -22,10 +26,22 @@ const StyledObject = styled.div`{
         }
       }
 
-      &.dragdrop { ${cs.mouse.move} }
+      &.dragdrop { .v-item { ${cs.mouse.move} } }
     }
 
-    &.flex { ${cs.disp.get('flex; flex-wrap: wrap;')} }
+    &.primary { ${cs.box.line} ${cs.box.radius} ${cs.bg.primary} }
+    &.gray { ${cs.box.line} ${cs.box.radius} ${cs.bg.gray} }
+    &.dark { ${cs.box.line} ${cs.box.radius} ${cs.bg.dark} }
+
+    &.full { ${cs.size.full} .tmb-img { ${cs.object.contain} } }
+    &.border { ${cs.box.line} }
+    &.radius { ${cs.box.radius} }
+
+    ${({ border }) => border && `${cs.box.line}`}
+    ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
+    ${({ border }) => border && border.radius && `${cs.border.radius(border.radius + "!important")}`}
+    ${({ border }) => border && border.width && `${cs.border.width(border.width)}`}
+    ${({ border }) => border && border.padding && `${cs.p.get(border.padding)}`}
     
     @media screen and (max-width : 1280px) {}
 
@@ -44,7 +60,14 @@ const StyledObject = styled.div`{
 const Thumblist = (props) => {
   const cursor = props.onSelect == null ? 'default' : "pointer";
   const style = { cursor };
-  const { head, list, path = null, rowid = null } = props;
+  const { head, path = null, rowid = 'rowid', list, fid = null } = props;
+  const [anim, setAnim] = useState(props.anim);
+  const { config = { child: null } } = props;
+
+  useEffect(() => {
+    setAnim(props.anim);
+    console.log("refresh");
+  }, [props.anim]);
 
   const onSelectItem = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
@@ -65,13 +88,13 @@ const Thumblist = (props) => {
     (props.onClickNew != null) && props.onClickNew(e);
   }
 
-  const onDrag = (...args) => {
-    props.onDragDrop && props.onDragDrop(...args);
-  }
+  // const onDrag = (...args) => {
+  //   props.onDragDrop && props.onDragDrop(...args);
+  // }
 
   const onWheel = (e) => {
     e.preventDefault();
-    const fr = document.getElementById('s-frame');
+    const fr = document.getElementById(`s-frame${fid || ''}`);
     const pos = fr.scrollLeft + e.deltaY / 2;
     fr.scrollTo({ top: 0, left: pos, behaviour: 'smooth' })
   }
@@ -85,15 +108,15 @@ const Thumblist = (props) => {
         + "type is text or date or datetime";
     }
 
-    if (list && list[0]) {
-      const item = list[0];
-      if (item.rowid == null || item.rowid === undefined) {
-        guide = "'rowid' is required in the list.\n"
-          + "ex. const list = [{ rowid: 'a12345', title: 'tablebox', url: 'abc/abc.jpg', utime: '20200101' }, {...}\n"
-          + "rowid and text is required. Rest is optional.\n"
-          + "rowid is used to show or hide text(contents)";
-      }
-    }
+    // if (list && list[0]) {
+    //   const item = list[0];
+    //   if (item.rowid == null || item.rowid === undefined) {
+    //     guide = "'rowid' is required in the list.\n"
+    //       + "ex. const list = [{ rowid: 'a12345', title: 'tablebox', url: 'abc/abc.jpg', utime: '20200101' }, {...}\n"
+    //       + "rowid and text is required. Rest is optional.\n"
+    //       + "rowid is used to show or hide text(contents)";
+    //   }
+    // }
 
     if (props.onDrag) {
       guide = "Use onDragDrop() instead of onDrag()";
@@ -121,6 +144,18 @@ const Thumblist = (props) => {
   const tlist = makeItems(list, head && head.map(item => item.key));
   const dragdrop = props.onDragDrop ? true : false;
 
+  const onDragDrop = useCallback(
+    (eid, dragIndex, hoverIndex) => {
+      // console.log(dragIndex, hoverIndex);
+      // if (eid === 'drop') {
+      const dragitem = list[dragIndex];
+      const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
+      // console.dir(array);
+      // setList(array);
+      props.onDragDrop && props.onDragDrop(eid, array);
+      // }
+    }, [list]);
+
   return (
     <StyledObject className={cx('thumb-list', props.className)} {...style} >
       {props.onClickNew && <Svg className="thb-new lg" onClick={onClickNew} icon={'add'} />}
@@ -131,23 +166,27 @@ const Thumblist = (props) => {
       {/* no data view */}
       {!tlist && <div className="no-data"><Nodata /></div>}
 
-      {tlist && <ul className={cx("v-line", {dragdrop})} id={'s-frame'}>
-        {/* items */}
-        {list.map((item, index) => {
-          const url = path ? path + item.url : item.url;
-          const rid = rowid ? item[rowid] : -1;
-          const odr = item.odr ? item.odr : index + 1;
+      <DndProvider backend={Backend}>
+        {tlist && <div className={cx("v-line", { dragdrop })} id={`s-frame${fid || ''}`}>
+          {/* items */}
+          {list.map((item, index) => {
+            const url = path ? path + item.url : item.url;
+            const rid = item[rowid] || index;
+            const odr = item.odr ? item.odr : index + 1;
 
-          return (
-            <li key={rid} className={cx("v-item drag-li")} rowid={rid} onClick={onSelectItem} onWheel={onWheel}>
-              <Thumbbox className={"border radius"} odr={odr} thumb={url} anim={true} delay={index * 50} />
-              {props.onClickDelete &&
-                <Svg className="thb-delete delete sm" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray}/>
-              }
-            </li>
-          )
-        })}
-      </ul>}
+            return (
+              <Dragable key={rid} id={rid} index={index} onDragDrop={onDragDrop} >
+                <span className={cx("v-item drag-li")} rowid={rid} onClick={onSelectItem} onWheel={onWheel}>
+                  <Thumbbox className={"border radius"} {...config.child} odr={odr} thumb={url} anim={true} delay={index * 50} />
+                  {props.onClickDelete &&
+                    <Svg className="thb-delete delete sm" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
+                  }
+                </span>
+              </Dragable>
+            )
+          })}
+        </div>}
+      </DndProvider>
     </StyledObject >
   );
 }

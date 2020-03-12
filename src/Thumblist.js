@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Nodata, Svg, Dragbox, Thumbbox } from './index';
+import { Nodata, Svg, Dragbox, Thumbbox, Guidebox } from './index';
 import { EID } from './Config';
 
 const StyledObject = styled.div`{
@@ -81,32 +81,64 @@ export default class Thumblist extends React.PureComponent {
     this.props.onDrag && this.props.onDrag(...args);
   }
 
-  renderBody = () => {
+  render() {
     const { props } = this;
+    const cursor = props.onSelect == null ? 'default' : "pointer";
+    const style = { cursor };
     const { head, list } = props;
 
-    const makeItems = (list, tags = []) => {
-      let array = list == null || list.length < 1 ? [] :
-        list.map(item => {
+
+    const renderGuide = () => {
+      let guide = null;
+      if (!head) {
+        guide = "You must set head props.\n"
+          + "ex. const head = [{ key: 'no', title: 'utime', type: 'date', align: 'left', flex: '1 1 40px' }, {...}\n"
+          + "key and title is required. Rest is optional.\n"
+          + "type is text or date or datetime";
+      }
+
+      if (list && list[0]) {
+        const item = list[0];
+        if (item.rowid == null || item.rowid === undefined) {
+          guide = "'rowid' is required in the list.\n"
+            + "ex. const list = [{ rowid: 'a12345', title: 'callopse', text: 'callopse test', utime: '20200101' }, {...}\n"
+            + "rowid and text is required. Rest is optional.\n"
+            + "rowid is used to show or hide text(contents)";
+        }
+      }
+
+      if (guide) {
+        return <Guidebox text={guide} />
+      }
+    }
+
+    // tags 배열에 나열된 아이템들만 추출
+    const makeItems = (list = null, head = null) => {
+      if (list && head) {
+        return list.map(item => {
           let temps = [];
-          tags.map(key => {
-            temps = [...temps, { key: key, value: item[key] }];
-            return 0;
-          })
+          head.map(key => temps = [...temps, { key: key, value: item[key] }]);
           return temps;
         })
-
-      return array;
+      } else {
+        return null;
+      }
     }
 
     // 테이블 아이템중에 head에 설정된 col만 추출하자.
-    const tlist = makeItems(list, head.map(item => item.key));
+    const tlist = makeItems(list, head && head.map(item => item.key));
 
-    if (tlist == null || tlist.length < 1) {
-      return <div className="no-data"><Nodata /></div>
-    } else {
-      return <React.Fragment>
-        <ul className="v-line" onMouseDown={this.onMouseDown}>
+    return (
+      <StyledObject ref={ref => this.frame = ref} className={cx('thumb-list', props.className)} {...style} >
+        {props.onClickNew && <Svg className="btn-new md box radius" onClick={this.onClickNew} eid={EID.NEW} icon={'new'} />}
+
+        {/* error guid */}
+        {renderGuide()}
+
+        {/* no data view */}
+        {!tlist && <div className="no-data"><Nodata /></div>}
+
+        {tlist && <ul className={cx("v-line")} onMouseDown={this.onMouseDown}>
           {/* items */}
           {list.map((item, index) => {
             const url = this.props.path + item.url;
@@ -125,20 +157,7 @@ export default class Thumblist extends React.PureComponent {
               </Dragbox>
             )
           })}
-        </ul>
-      </React.Fragment>
-    }
-  }
-
-  render() {
-    const { props } = this;
-    const cursor = props.onSelect == null ? 'default' : "pointer";
-    const style = { cursor };
-
-    return (
-      <StyledObject ref={ref => this.frame = ref} className={cx('thumb-list', props.className)} {...style} >
-        {props.onClickNew && <Svg className="btn-new md box radius" onClick={this.onClickNew} eid={EID.NEW} icon={'new'} />}
-        {this.renderBody()}
+        </ul>}
       </StyledObject >
     );
   }

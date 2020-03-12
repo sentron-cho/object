@@ -89,6 +89,8 @@ export const object = () => {
   );
 };
 
+object.story = { name: 'Base' };
+
 export const color = () => {
   return (
     <StyledObject className={"t-main"}>
@@ -162,7 +164,7 @@ export const animation = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"slidein"} top={option.top} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }} config={{ child: { className: "sm" } }}')}>
+      <Linebox title={"slidein"} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }} config={{ child: { className: "sm" } }}')}>
         <Formgroup className={'sm'} anim={{ type: 'slidein', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
@@ -171,7 +173,7 @@ export const animation = () => {
           child={Widgetbox} flex={true} list={jsonlist(3)} />
       </Linebox>
 
-      <Linebox title={"slideup/slidedown"} top={option.top} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }} config={{ child: { className: "sm dark" } }}')} inline={true}>
+      <Linebox title={"slideup/slidedown"} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }} config={{ child: { className: "sm dark" } }}')} inline={true}>
         <Formgroup className={'border'} anim={{ type: 'slideup', time: value }}
           config={{ child: { className: "sm dark" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
@@ -180,7 +182,7 @@ export const animation = () => {
           child={Widgetbox} flex={true} list={jsonlist(3)} />
       </Linebox>
 
-      <Linebox title={"showin/showout"} top={option.top} sample={samplecode('anim={{ type: "showin", time: "0.3s" }} config={{ child: { className: "sm" } }}')} inline={true} >
+      <Linebox title={"showin/showout"} sample={samplecode('anim={{ type: "showin", time: "0.3s" }} config={{ child: { className: "sm" } }}')} inline={true} >
         <Formgroup className={'border'} anim={{ type: 'showin', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
@@ -191,11 +193,3 @@ export const animation = () => {
     </StyledObject>
   );
 };
-
-object.story = {
-  name: 'Base'
-};
-
-const option = {
-  top: "20px",
-}

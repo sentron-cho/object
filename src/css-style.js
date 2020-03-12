@@ -109,6 +109,15 @@ const cs = {
     get: (v) => `display: ${v};`,
   },
 
+  object: {
+    contain: 'object-fit: contain;',
+    scaledown: 'object-fit: scale-down;',
+    cover: 'object-fit: cover;',
+    fill: 'object-fit: fill;',
+
+    fit: (v) => `object-fit: ${v};`,    
+  },
+
   over: {
     hidden: 'overflow: hidden;',
     xhidden: 'overflow-x: hidden;',

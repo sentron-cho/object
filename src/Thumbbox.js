@@ -1,48 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
+import { cs } from './index';
 
 const StyledObject = styled.div`{
-  &.thumb-box { width: 100%; height: 100%; opacity: 0;
-    .t-img { 
-      width: 100%; height: 100%; border-radius: 5px; border: 1px solid transparent; 
-      object-fit: contain; padding: 5px;      
+  &.thumb-box { 
+    ${cs.pos.relative} ${cs.noselect} ${cs.box.inner} ${cs.over.hidden}
+    ${cs.disp.inblock}
+    // ${cs.opac.invisible} 
+    
+    .tmb-img { 
+      ${cs.pos.relative} ${cs.size.full} ${cs.object.fill}
     }
 
-    .t-odr { position: absolute; opacity: 0.8; right: 10px; top: 10px; font-size: 12px; border: 1px solid #525252;
-      border-radius: 100px; width: 20px; height: 20px; text-align: center; background: #232323d6; }
+    .tmb-odr { 
+      position: absolute; opacity: 0.8; right: 10px; top: 10px; font-size: 12px; border: 1px solid #525252;
+      border-radius: 100px; width: 20px; height: 20px; text-align: center; background: #232323d6; 
+    }
 
-    &.show { opacity: 1; }
+    .tmb-noimg { ${cs.align.center} ${cs.opac.alpha} ${cs.font.darkgray} ${cs.font.sm} }
+
+    &.md { ${cs.h.get(100)} ${cs.w.get(80)} }
+    &.sm { ${cs.h.get(64)} ${cs.w.get(52)} }
+    &.lg { ${cs.h.get(140)} ${cs.w.get(110)} }
+
+    &.full { ${cs.size.full} .tmb-img { ${cs.object.contain} } }
+    &.border { ${cs.box.line} }
+    &.radius { ${cs.box.radius} }
+
+    &.primary { ${cs.box.line} ${cs.box.radius} ${cs.border.primary} }
+    &.gray { ${cs.box.line} ${cs.box.radius} ${cs.border.gray} }
+    &.dark { ${cs.box.line} ${cs.box.radius} ${cs.border.dark} }
+
+    ${({ border }) => border && `${cs.box.line}`}
+    ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
+    ${({ border }) => border && border.radius && `${cs.border.radius(border.radius + "!important")}`}
+    ${({ border }) => border && border.width && `${cs.border.width(border.width)}`}
+    ${({ border }) => border && border.padding && `${cs.p.get(border.padding)}`}
+
+    ${({ bgcolor }) => bgcolor && `${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.color(bgcolor)}`}    
+
+    &.show { ${cs.anim.show} }
     
-    &.anim { transition: all 150ms ease-in; opacity: 1; }
+    &.anim { 
+      ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
+    }
   }
 }`;
 
-export default class Thumbbox extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    
-    this.state = { anim: !props.anim };
+const Thumbbox = (props) => {
+  const [anim, setAnim] = useState(props.anim);
 
-    if (props.anim) {
-      const delay = props.delay ? props.delay : 0;
-      setTimeout(() => {
-        this.setState({ anim: true });
-      }, 100 + delay);
-    }
+  const { thumb, odr, src, border } = props;
+  const image = props.thumb || props.src;
+
+  useEffect(() => {
+    setAnim(props.anim);
+  }, [props.anim])
+
+  const onClicked = (e) => {
+    props.onClick && props.onClick(eid, e);
   }
 
-  render() {
-    const { props } = this;
-    const { thumb, odr } = props;
-    const { anim } = this.state;
-    
-    return (
-      <StyledObject className={cx("thumb-box", props.className, { anim })} >
-        {thumb && <img className={"t-img"} src={thumb} alt="thumb"/>}
-        {!thumb && <span className={"t-noimg"} >{"No Image"}</span>}
-        {odr && <span className="t-odr">{odr}</span>}
-      </StyledObject>
-    )
+  const onAnimStart = (e) => {
+    props.onAnimation && props.onAnimation('start', e);
   }
+
+  const onAnimEnd = (e) => {
+    props.onAnimation && props.onAnimation('end', e);
+    setAnim({ anim: '' });
+  }
+
+  return (
+    <StyledObject className={cx("thumb-box md", props.className, (anim && "anim"))} border={border}
+      onClick={onClicked} anim={anim} onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart} >
+      {image && <img className={"tmb-img"} src={image} alt="thumb" />}
+      {!image && <span className={"tmb-noimg"} >{"Noimage"}</span>}
+      {odr && <span className="tmb-odr">{odr}</span>}
+    </StyledObject>
+  )
 };
+
+export default Thumbbox;

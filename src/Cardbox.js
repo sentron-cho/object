@@ -80,7 +80,7 @@ const StyledObject = styled.div`{
 }`;
 
 const Cardbox = (props) => {
-  const [anim, setAnim] = useState(props.anim)
+  const [anim, setAnim] = useState(props.anim);
 
   const { eid, width = "100%", height = "100%", margin = "20px", mouse = "default", bgcolor = null } = props;
   const { border = { color: null, width: null, radius: null } } = props;

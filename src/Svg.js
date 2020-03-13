@@ -97,6 +97,17 @@ const StyledObject = styled.span` {
     &.top { ${cs.align.top} }
     &.center.middle { ${cs.pos.absolute} ${cs.top('50%')} ${cs.left('50%')} ${cs.align.get('translate(-50%, -50%)')} }
 
+    &.primary { .svg-path { ${cs.fill.primary} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.primaryhover} } } }
+    &.yellow { .svg-path { ${cs.fill.yellow} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.orange} } } }
+    &.orange { .svg-path { ${cs.fill.orange} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.orangehover} } } }
+    &.red { .svg-path { ${cs.fill.red} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.redhover} } } }
+    &.green { .svg-path { ${cs.fill.green} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.greenhover} } } }
+    &.dark { .svg-path { ${cs.fill.dark} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.darkhover} } } }
+    &.black { .svg-path { ${cs.fill.black} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.darkhover} } } }
+    &.lightgray { .svg-path { ${cs.fill.lightgray} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.gray} } } }
+    &.gray { .svg-path { ${cs.fill.gray} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.grayhover} } } }
+    &.white { .svg-path { ${cs.fill.white} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.lightgray} } } }
+
     &.md { ${cs.icon.md} &.box { ${cs.p.get('5px')} } }
     &.xxl { ${cs.icon.xxl} &.box { ${cs.p.get('10px')} } }
     &.xl { ${cs.icon.xl} &.box { ${cs.p.get('7px')} } }

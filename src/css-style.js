@@ -308,14 +308,14 @@ const cs = {
 
     name: (v) => `animation-name: ${v};`,
     time: (v) => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
-    showin: (v) => `animation: show-in linear 1 forwards ${v ? v : '150ms'}; @keyframes show-in { from { opacity: 0.1;  } to { opacity: 1; } };`,
-    showout: (v) => `animation: show-out linear 1 forwards ${v ? v : '150ms'}; @keyframes show-out { from { opacity: 1;  } to { opacity: 0; } };`,
-    fadein: (v) => `animation: fadein linear 1 forwards ${v ? v : '150ms'}; @keyframes fadein { from { opacity: 0; } to { opacity: 1; } };`,
-    fadeout: (v) => `animation: fadeout linear 1 forwards ${v ? v : '150ms'}; @keyframes fadeout { from { opacity: 1; } to { opacity: 0; } };`,
-    slidein: (v) => `animation: slidein linear 1 forwards ${v ? v : '150ms'}; @keyframes slidein { from  { transform: translateX(-100%); opacity: 0.3; } to { transform: translateX(0%); opacity: 1; } };`,
-    slideout: (v) => `animation: slideout linear 1 forwards ${v ? v : '150ms'}; @keyframes slideout { from  { transform: translateX(0%);  opacity: 0.3; } to { transform: translateX(-100%);  opacity: 1; } };`,
-    slidedown: (v) => `animation: slidedown linear 1 forwards ${v ? v : '150ms'}; @keyframes slidedown { from  { transform: translateY(-100%); opacity: 0.3; } to { transform: translateY(0%); opacity: 1; } };`,
-    slideup: (v) => `animation: slideup linear 1 forwards ${v ? v : '150ms'}; @keyframes slideup { from  { transform: translateY(0%);  opacity: 0.3; } to { transform: translateY(-100%);  opacity: 1; } };`,
+    showin: (v = '150ms', s = '0.1', e = '1') => `animation: show-in linear 1 forwards ${v}; @keyframes show-in { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    showout: (v, s = '1', e = '0') => `animation: show-out linear 1 forwards ${v}; @keyframes show-out { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    fadein: (v = '150ms', s = '0', e = '1') => `animation: fadein linear 1 forwards ${v}; @keyframes fadein { from { opacity: ${s}; } to { opacity: ${e}; } };`,
+    fadeout: (v = '150ms', s = '1', e = '0') => `animation: fadeout linear 1 forwards ${v}; @keyframes fadeout { from { opacity: ${s}; } to { opacity: ${e}; } };`,
+    slidein: (v = '150ms', s = '-100%', e = '0') => `animation: slidein linear 1 forwards ${v}; @keyframes slidein { from  { transform: translateX(${s}); opacity: 0.3; } to { transform: translateX(${e}); opacity: 1; } };`,
+    slideout: (v = '150ms', s = '0', e = '-100%') => `animation: slideout linear 1 forwards ${v}; @keyframes slideout { from  { transform: translateX(${s});  opacity: 0.3; } to { transform: translateX(${e});  opacity: 1; } };`,
+    slidedown: (v = '150ms', s = '-100%', e = '0') => `animation: slidedown linear 1 forwards ${v}; @keyframes slidedown { from  { transform: translateY(${s}); opacity: 0.3; } to { transform: translateY(${e}); opacity: 1; } };`,
+    slideup: (v = '150ms', s = '0', e = '-100%') => `animation: slideup linear 1 forwards ${v}; @keyframes slideup { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
   },
 
   align: {

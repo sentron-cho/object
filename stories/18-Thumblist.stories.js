@@ -273,8 +273,8 @@ export const dragdrop = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'list={list}')}>
-        <Thumblist className={cx('lg')} list={list} head={tags} rowid={"uuid"}
-          onDragDrop={onDragDrop} onDraging={onDraging}/>
+        <Thumblist className={cx('')} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
       </Linebox>
 
       <div className={"res-view"}>

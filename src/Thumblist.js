@@ -39,9 +39,9 @@ const StyledObject = styled.div`{
     &.border { ${cs.box.line} }
     &.radius { ${cs.box.radius} }
 
-    &.sm {}
-    &.md {}
-    &.lg {}
+    &.sm { .thb-new { ${cs.size.get(20)} } }
+    &.md { }
+    &.lg { .thb-new { ${cs.size.get(28)} } .v-line { ${cs.scrollbar.t4} } }
 
     ${({ border }) => border && `${cs.box.line}`}
     ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}

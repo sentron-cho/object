@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, cs, Button, Guidebox } from './index';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
+import { SearchFrame, Pagenavi, Nodata, Util, Svg, cs, Guidebox, Dragable } from './index';
 import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.list-box {
     ${cs.pos.relative} ${cs.noliststyle}
 
-    .search-box { ${cs.w.half} ${cs.disp.inblock} }
-    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
-    
     .lbx-body {
       ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t10}
       ${cs.box.inner} ${cs.noselect} ${cs.font.dark} ${cs.over.hidden}
@@ -19,7 +19,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.h.get(height)};
         ${cs.p.get("4px 10px")}
         
-        .lbx-tl { ${cs.pos.relative} ${cs.align.ycenter}
+        .lbx-tl { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock}
           &.left { ${cs.font.left} };
           &.center { ${cs.font.center} };
           &.right { ${cs.font.right} };
@@ -45,9 +45,12 @@ const StyledObject = styled.div`{
           ${cs.align.right} ${cs.opac.hide} ${cs.right(5)} ${cs.align.ycenter} 
         }
 
+        .btn-move { ${cs.left(-5)} ${cs.align.ycenter} ${cs.pos.relative} ${cs.m.r0} ${cs.opac.get(0.3)} }
+
         &.selection { ${cs.mouse.pointer}
           &:hover { ${cs.bg.hover} 
             .lbx-icon { ${cs.opac.alpha} &:hover { ${cs.opac.show} } }
+            .btn-move { ${cs.opac.show} }
           }
         }
 
@@ -127,9 +130,10 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, list = null, children = null, rowid = 'rowid', total = '',
+    divider, children = null, total = '',
     title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
+  const [list, setList] = useState(props.list);
 
   let styled = {};
   if (divider != null) {
@@ -145,16 +149,8 @@ const Listbox = (props) => {
     props.onSelect && props.onSelect(rowid, e);
   }
 
-  const onClickNew = (eid, e) => {
-    props.onClickNew && props.onClickNew(e);
-  }
-
   const onClickPage = (page, e) => {
     props.onClickPage && props.onClickPage(page, e);
-  }
-
-  const onClickSearch = (value, key, e) => {
-    props.onClickSearch && props.onClickSearch(value, key, e);
   }
 
   const onClickDelete = (eid, e) => {
@@ -162,42 +158,92 @@ const Listbox = (props) => {
     // const rowid = e.currentTarget.getAttribute('rowid');
     const rowid = eid;
     props.onClickDelete && props.onClickDelete(rowid, e);
-  }  
+  }
 
   const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props;
   const selection = (props.onSelect !== null);
+
+  const renderGuide = () => {
+    let guide = null;
+    if (list && list[0]) {
+      const item = list[0];
+      if (item.rowid == null || item.rowid === undefined) {
+        guide = "'rowid' is required in the list.\n"
+          + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n"
+          + "rowid and text is required. Rest is optional.\n"
+          + "rowid is used to show or hide text(contents)";
+      }
+    }
+
+    if (props.onClickMove) {
+      guide = "Use onDragDrop() instead of onClickMove()";
+    }
+
+    if (guide) {
+      return <Guidebox text={guide} />
+    }
+  }
+
+  const dragdrop = props.onDragDrop ? true : false;
+  const onDragDrop = useCallback((eid, dragIndex, hoverIndex) => {
+    const dragitem = list[dragIndex];
+    const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
+    setList(array);
+
+    if (eid === 'drag') {
+      props.onDraging && props.onDraging(eid, array);
+    } else if (eid === 'drop') {
+      props.onDragDrop && props.onDragDrop(eid, array);
+    }
+  }, [list]);
 
   return (
     <StyledObject className={cx("list-box", props.className, { disable })}
       eid="select" style={styled} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
-      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
-      {props.onClickNew && <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
+
+      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+        onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
+        onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
 
       {/* error guid */}
-      {/* {renderGuide()} */}
+      {renderGuide()}
 
       {/* no data view */}
       {!list && <div className="frame"><Nodata /></div>}
 
       {children && children}
-      {list && <ul className={"lbx-body"}>
-        {list.map((item, index) => {
-          const stitle = item[title] || '';
-          const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
-          const scount = item[count] >= 0 ? item[count] : -1;
 
-          return <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
-            <p className={cx('lbx-tl', titlealign)}>{stitle}
-              {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
-            </p>
-            <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>
-            {props.onClickDelete &&
-              <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]}/>
-            }
-          </li>
-        })}
-      </ul>}
+      <DndProvider backend={Backend}>
+        {list && <ul className={"lbx-body"}>
+          {list.map((item, index) => {
+            const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+            const stitle = item[title] || '';
+            const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
+            const scount = item[count] >= 0 ? item[count] : -1;
+
+            return (
+              <Dragable key={rowid} id={rowid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
+                <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
+                  {props.onDragDrop &&
+                    <Svg className="i-btn btn-move xs" eid={rowid} name={"move"} />
+                  }
+
+                  <p className={cx('lbx-tl', titlealign)}>{stitle}
+                    {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
+                  </p>
+                  <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>
+                  
+                  {props.onClickDelete &&
+                    <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
+                  }
+                </li>
+              </Dragable>
+            )
+          })}
+        </ul>}
+      </DndProvider>
+
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}

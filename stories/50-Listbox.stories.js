@@ -80,6 +80,17 @@ export const object = () => {
     setResult(`onClickSearch(value = ${value}, key = ${key}, e)`);
   }
 
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
+    array.map((item, i) => item.no = i + 1);
+    setList(array);
+    console.dir(array);
+  }
+
+  const onDraging = (eid, array) => {
+    setResult(`onDraging() eid = ${eid}, [array]`);
+  }
+
   const max = Math.floor(alldata.length / perpage);
   const lborder = !width || width === 0 || width === "0px" ? null : { color: border, radius: radius, width: width };
   return (
@@ -88,7 +99,8 @@ export const object = () => {
         sample={samplecode("", 'pos={pos} max={max} list={list} options={{ inner: { height: 160 } }}')}>
         <Listbox className={cx(size, align, bg )} pos={pos} max={max} list={list} total={alldata.length}
           border={lborder}
-          font={{ color: fontcolor, size: fontsize}}
+          font={{ color: fontcolor, size: fontsize }}
+          onDragDrop={onDragDrop} onDraging={onDraging} 
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
           onClickDelete={isdelete ? onClickDelete : null} onClickPage={onClickPage} />
       </Linebox>
@@ -279,3 +291,35 @@ export const event = () => {
     </StyledObject>
   );
 };
+
+
+export const dragdrop = () => {
+  const [result, setResult] = useState(null);
+  const [list, setList] = useState(jsonlist(10));
+
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
+    array.map((item, i) => item.no = i + 1);
+    setList(array);
+    console.dir(array);
+  }
+
+  const onDraging = (eid, array) => {
+    setResult(`onDraging() eid = ${eid}, [array]`);
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
+        sample={samplecode("", 'list={list}')}>
+        <Listbox className={cx('')} list={list}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+      </Linebox>
+
+      <div className={"res-view"}>
+        <p>onClick</p>
+        <p>{result}</p>
+      </div>
+    </StyledObject>
+  );
+}

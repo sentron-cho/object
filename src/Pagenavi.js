@@ -138,7 +138,6 @@ class Pagenavi extends React.Component {
     const { type, scp } = this.state = { ...this.state, pos, max, scp: (this.state.type === "s-pc" ? 10 : 5) };
 
     const first = this.getFirstPage(pos, scp);
-    console.log(first);
     let last = first + scp - 1;
     let invisable = true;
     // 전체 페이지수가 scp보다 크면...

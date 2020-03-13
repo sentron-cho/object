@@ -91,8 +91,9 @@ export const object = () => {
     setResult(`onClickDelete(rowid = ${rowid}, e)`);
   }
 
-  const onClickMove = (rowid, e) => {
-    setResult(`onClickMove(rowid = ${rowid}, e)`);
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
+    setList(array);
   }
 
   const max = Math.floor(alldata.length / perpage);
@@ -103,7 +104,7 @@ export const object = () => {
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize, align: align }}
           onClickSearch={onClickSearch} onSelect={onSelect} onClickNew={onClickNew}
-          onClickDelete={onClickDelete} onClickMove={onClickMove}
+          onClickDelete={onClickDelete} onDragDrop={onDragDrop}
           onClickItem={onClickItem} onClickPage={onClickPage} />
       </Linebox>
 
@@ -286,3 +287,34 @@ export const event = () => {
     </StyledObject>
   );
 };
+
+export const dragdrop = () => {
+  const [result, setResult] = useState(null);
+  const [list, setList] = useState(jsonlist(10));
+
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
+    array.map((item, i) => item.no = i + 1);
+    setList(array);
+    console.dir(array);
+  }
+
+  const onDraging = (eid, array) => {
+    setResult(`onDraging() eid = ${eid}, [array]`);
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
+        sample={samplecode("", 'list={list}')}>
+        <Tablebox className={cx('')} head={tags} list={list} datakey={"cont"}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+      </Linebox>
+
+      <div className={"res-view"}>
+        <p>onClick</p>
+        <p>{result}</p>
+      </div>
+    </StyledObject>
+  );
+}

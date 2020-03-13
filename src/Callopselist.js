@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, Button, Guidebox, cs } from './index';
+import { SearchFrame, Pagenavi, Nodata, Util, Svg, Button, Guidebox, cs } from './index';
 import { EID, ST } from './Config';
 import { Svgbox } from './Svg';
 
@@ -11,9 +11,6 @@ const style = {
 
 const StyledObject = styled.div`{
   &.callopse-list { ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle}
-    .search-box { ${cs.w.half} ${cs.disp.inblock} }
-    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
-    
     .csl-body { ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t10}
       ${cs.box.line} ${cs.box.inner}
 
@@ -166,10 +163,6 @@ const Callopselist = (props) => {
     props.onSelect && props.onSelect(rowid, e);
   }
 
-  const onClickNew = (eid, e) => {
-    props.onClickNew && props.onClickNew(e);
-  }
-
   const onClickItem = (eid, rowid, e) => {
     e.stopPropagation();
     props.onClickItem && props.onClickItem(eid, rowid, e);
@@ -177,10 +170,6 @@ const Callopselist = (props) => {
 
   const onClickPage = (page, e) => {
     props.onClickPage && props.onClickPage(page, e);
-  }
-
-  const onClickSearch = (value, key, e) => {
-    props.onClickSearch && props.onClickSearch(value, key, e);
   }
 
   // tags 배열에 나열된 아이템들만 추출
@@ -224,8 +213,10 @@ const Callopselist = (props) => {
   return (
     <StyledObject className={cx('callopse-list', props.className)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
-      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
-      {props.onClickNew && <Button className="btn-new green md" title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
+      
+      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+        onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
+        onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
 
       {/* error guid */}
       {renderGuide()}

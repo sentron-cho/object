@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Search, Pagenavi, Nodata, Util, Svg, Button, cs, Guidebox } from './index';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
+import { SearchFrame, Pagenavi, Nodata, Util, Svg, Button, cs, Guidebox, Dragable } from './index';
 import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.table-box { 
     ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle}
 
-    .search-box { ${cs.w.half} ${cs.disp.inblock} }
-    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
-    
     .tb-frame { ${cs.m.t10} ${cs.over.hidden} }
 
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block} 
@@ -154,11 +154,12 @@ const StyledObject = styled.div`{
 }`;
 
 const Tablebox = (props) => {
-  const { head = null, list = null, total = '', height = 30 } = props;
+  const { head = null, total = '', height = 30 } = props;
   const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
   const align = 'center';
   const style = { cursor, height, align };
   const selection = (cursor === 'pointer');
+  const [list, setList] = useState(props.list);
 
   const onSelect = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
@@ -170,16 +171,8 @@ const Tablebox = (props) => {
     props.onClickDelete && props.onClickDelete(rowid, e);
   }
 
-  const onClickNew = (eid, e) => {
-    props.onClickNew && props.onClickNew(e);
-  }
-
   const onClickPage = (page, e) => {
     props.onClickPage && props.onClickPage(page, e);
-  }
-
-  const onClickSearch = (value, key, e) => {
-    props.onClickSearch && props.onClickSearch(value, key, e);
   }
 
   const onClickHead = (e) => {
@@ -187,10 +180,10 @@ const Tablebox = (props) => {
     props.onClickHead && props.onClickHead(eid, e);
   }
 
-  const onClickMove = (rowid, e) => {
-    e.stopPropagation();
-    props.onClickMove && props.onClickMove(rowid, e);
-  }
+  // const onClickMove = (rowid, e) => {
+  //   e.stopPropagation();
+  //   props.onClickMove && props.onClickMove(rowid, e);
+  // }
 
   const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
@@ -207,10 +200,6 @@ const Tablebox = (props) => {
 
       let color = {};
       if (type === "color") {
-        // let textb-color = parseInt(Util.replaceAll(data, "#", ""), 16);
-        // textb-color = textb-color ^ 0xffffff;
-        // textb-color = (textb-color + 0x1000000).toString(16).substr(-6).toUpperCase();
-        // color = { 'background': data, 'color': `#${textb-color}` };
         color = { 'color': data, 'textTransform': 'uppercase' }
       }
 
@@ -240,6 +229,10 @@ const Tablebox = (props) => {
       }
     }
 
+    if (props.onClickMove) {
+      guide = "Use onDragDrop() instead of onClickMove()";
+    }
+
     if (guide) {
       return <Guidebox text={guide} />
     }
@@ -259,16 +252,27 @@ const Tablebox = (props) => {
 
   // 테이블 아이템중에 head에 설정된 col만 추출하자.
   const tlist = makeTableItem(list, head && head.map(item => item.key));
+  const dragdrop = props.onDragDrop ? true : false;
+  const onDragDrop = useCallback((eid, dragIndex, hoverIndex) => {
+    const dragitem = list[dragIndex];
+    const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
+    setList(array);
+
+    if (eid === 'drag') {
+      props.onDraging && props.onDraging(eid, array);
+    } else if (eid === 'drop') {
+      props.onDragDrop && props.onDragDrop(eid, array);
+    }
+  }, [list]);
 
   return (
     <StyledObject className={cx('table-box', props.className)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
-      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="" list={props.searchs} searchkey={props.searchkey} />}
-      {props.onClickNew &&
-        <Button className={"btn-new green md"} title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />
-        // <Svg className="btn-new md" onClick={onClickNew} eid={EID.NEW} name={"editable"} color={'white'} />
-      }
-
+      
+      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+        onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
+        onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
+      
       {/* error guid */}
       {renderGuide()}
 
@@ -276,7 +280,7 @@ const Tablebox = (props) => {
         {/* head */}
         {head && <div className="tb-line tb-head">
           <div className="tb-row" >
-            {props.onClickMove && <Svg className="i-btn btn-head sm" name={""} />}
+            {props.onDragDrop && <Svg className="i-btn btn-head sm" name={""} />}
             {head.map((item, index) => {
               const { tablet = 'show', mobile = 'show', flex } = item;
               const styled = { flex: flex, };
@@ -290,32 +294,40 @@ const Tablebox = (props) => {
 
         {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
         {/* body */}
-        {tlist && <ul className="tb-line tb-body">
-          {/* row */}
-          {tlist.map((item, index) => {
-            const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
-            const active = Number(props.sel) === Number(index);
-            const color = props.activeColor ? props.activeColor : '';
-            return <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
-              key={String(index)} rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
-              {/* col */}
-              {props.onClickMove &&
-                <Svg className="i-btn btn-move sm" onClick={onClickMove} eid={rowid} name={"move"} />
-              }
-              {renderColumnElem(item, head)}
-              {props.onClickDelete &&
-                <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
-              }
-            </li>
-          })}
-        </ul>}
+        <DndProvider backend={Backend}>
+          {tlist && <ul className="tb-line tb-body">
+            {/* row */}
+            {tlist.map((item, index) => {
+              const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+              const active = Number(props.sel) === Number(index);
+              const color = props.activeColor ? props.activeColor : '';
+              // const rid = item[rowid] || index;
+              const odr = item.odr || item.no || index + 1;
+
+              return (
+                <Dragable key={rowid} id={rowid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
+                  <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
+                    rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
+                    {/* col */}
+                    {props.onDragDrop &&
+                      <Svg className="i-btn btn-move sm" eid={rowid} name={"move"} />
+                    }
+                    {renderColumnElem(item, head)}
+                    {props.onClickDelete &&
+                      <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
+                    }
+                  </li>
+                </Dragable>)
+            })}
+          </ul>}
+        </DndProvider>
       </div>
 
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
       <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />
-    </StyledObject>
+    </StyledObject >
   );
 }
 

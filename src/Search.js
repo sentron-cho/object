@@ -1,7 +1,8 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Editbox, Svg, cs, Combobox } from './index';
+import { Editbox, Svg, cs, Combobox, Button } from './index';
+import { EID, ST } from './Config';
 
 const StyledObject = styled.div` {
   &.search-box {
@@ -40,7 +41,7 @@ export default class Search extends React.PureComponent {
   onClickCombo = (eid, e, value) => {
     // const { props } = this;
     // props.onChange && props.onChange();
-    this.setState({ key: value.id } );
+    this.setState({ key: value.id });
   }
 
   render() {
@@ -59,5 +60,32 @@ export default class Search extends React.PureComponent {
         }
       </StyledObject>
     )
+  }
+}
+
+const StyledFrame = styled.div`{
+  &.search-frame { ${cs.min.height(30)}
+    // .btn-dumy { ${cs.h.get(30)} ${cs.disp.inblock} ${cs.disp.hidden} }
+    .search-box { ${cs.w.half} ${cs.disp.inblock} & + .btn-dumy { ${cs.disp.none} } }
+    .btn-new { ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.front} ${cs.w.get(70)} }
+  }
+}`
+
+export const SearchFrame = (props) => {
+  const onClickNew = (eid, e) => {
+    props.onClickNew && props.onClickNew(e);
+  }
+
+  const onClickSearch = (value, key, e) => {
+    props.onClickSearch && props.onClickSearch(value, key, e);
+  }
+
+  if (!props.onClickNew && !props.onClickSearch) {
+    return null;
+  } else {
+    return <StyledFrame className={"search-frame"}>
+      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
+      {props.onClickNew && <Button className={"btn-new green md"} title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
+    </StyledFrame>
   }
 }

@@ -9,7 +9,7 @@ export const DT = { CARD: 'card' };
 
 const StyledFrame = styled.span`{
   &.drag-drop {
-    ${cs.disp.inblock} ${cs.opac.visible}
+    ${cs.disp.block} ${cs.opac.visible}
     &.draging {
       ${cs.opac.get(0.2)}
     }

@@ -301,10 +301,15 @@ const cs = {
   anim: {
     hide: 'transition: all 200ms ease-out;',
     show: 'transition: all 200ms ease-in;',
+    repeat: 'animation-iteration-count: infinite;',
+    bounding: `animation-timing-function: cubic-bezier(0, 0, 0.4, 1.5);`,
+    quadratic: `animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);`,
 
     in: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
     out: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
     get: (v) => `transition: ${v};`,
+    iteration: (v) => `animation-iteration-count: ${v}`,
+    timing: (v) => `animation-timing-function: ${v}`,
 
     name: (v) => `animation-name: ${v};`,
     time: (v) => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,

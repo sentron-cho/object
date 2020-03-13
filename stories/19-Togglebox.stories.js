@@ -10,11 +10,7 @@ const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
-    .lb-box .lb-li { ${cs.h.get(140)} }
-
-    .lb-box .lb-li > * { ${cs.m.r10} }
-
-    .lb-box .lb-li.full { ${cs.h.get(180)} }
+    .lb-box .lb-li > * { ${cs.m.r20} }
 
     .res-view { 
       ${cs.h.get(100)} ${cs.w.get(800)} ${cs.bg.lightgray} 
@@ -28,10 +24,10 @@ export default { title: 'object|Togglebox', component: Togglebox, decorators: [w
 const samplecode = (value, classname = '') => `<Togglebox className={"${classname}"} ${value} />`;
 
 const list = [
-  { eid: 'card1', title: 'card1', icon: 'thead' },
-  { eid: 'card2', title: 'card2', icon: 'list' },
-  { eid: 'card3', title: 'card3', icon: 'menu' },
-  { eid: 'card4', title: 'card4', icon: 'user' },
+  { eid: 'card', title: 'card', icon: 'thead' },
+  { eid: 'list', title: 'list', icon: 'list' },
+  { eid: 'menu', title: 'menu', icon: 'menu' },
+  { eid: 'user', title: 'user', icon: 'user' },
 ]
 
 export const object = () => {
@@ -41,6 +37,7 @@ export const object = () => {
   const bg = options('background',
     { primary: 'primary', orange: 'orange', green: 'green', red: 'red', gray: 'gray', dark: 'dark', black: 'black' },
     'primary', { display: 'inline-radio' }, 'Other');
+  const anim = boolean('animaion', false);
 
   const [result, setResult] = useState(null);
 
@@ -51,11 +48,11 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Togglebox className={cx(size, bg)} list={list} icon={false} onClick={onClick} />
+        <Togglebox className={cx(size, bg)} list={list} icon={false} anim={anim} onClick={onClick} />
       </Linebox>
 
       <Linebox title={"toggle button icon type"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Togglebox className={cx(size, bg)} list={list} icon={true} onClick={onClick} />
+        <Togglebox className={cx(size, bg)} list={list} icon={true} anim={anim} onClick={onClick} />
       </Linebox>
 
       <div className={"res-view"}>

@@ -89,8 +89,8 @@ export const object = () => {
   const onDragDrop = (eid, array) => {
     // console.dir(eid);
     // if (eid === 'drop') {
-      // console.dir(eid);
-      setList(array);
+    // console.dir(eid);
+    setList(array);
     // }
   }
 
@@ -110,11 +110,6 @@ export const object = () => {
         <p>onClick</p>
         <p>{result}</p>
       </div>
-
-      {/* <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
-      </div> */}
     </StyledObject>
   );
 };
@@ -124,34 +119,35 @@ object.story = { name: 'Base' };
 
 export const color = () => {
   const list = jsonlist(10);
+  //uuid is scroll uniq id;
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Thumblist className={''} fid={'1'} list={list} head={tags} rowid={"uuid"}
-          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+        <Thumblist className={''} uuid={'1'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
       </Linebox>
 
       <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Thumblist className={'primary'} fid={'2'} list={list} head={tags} rowid={"uuid"}
-          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+        <Thumblist className={'primary'} uuid={'2'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
       </Linebox>
 
       <Linebox title={"dark radius(child sm)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
-        <Thumblist className={'dark radius'} fid={'3'} list={list} head={tags} rowid={"uuid"}
+        <Thumblist className={'dark radius'} fiuuidd={'3'} list={list} head={tags} rowid={"uuid"}
           config={{ child: { className: "sm" } }}
-          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
       </Linebox>
 
       <Linebox title={"gray radius(child md)"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-        <Thumblist className={'gray'} fid={'4'} list={list}
+        <Thumblist className={'gray'} uuid={'4'} list={list}
           config={{ child: { className: "md" } }} head={tags} rowid={"uuid"}
-          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
       </Linebox>
 
       <Linebox title={"dark radius(child lg)"} className={"nomargin"} sample={samplecode('child={Widgetbox} config={{ child: { className: "noborder" } }}', "dark radius")} box={false}>
-        <Thumblist className={'dark radius'} fid={'5'} list={list} head={tags} rowid={"uuid"}
+        <Thumblist className={'dark radius'} uuid={'5'} list={list} head={tags} rowid={"uuid"}
           config={{ child: { className: "lg" } }}
-          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
       </Linebox>
     </StyledObject>
   );
@@ -161,10 +157,125 @@ export const border = () => {
   const list = jsonlist(10);
   return (
     <StyledObject className={"t-main"}>
-    <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
-      <Thumblist className={''} fid={'1'} list={list} head={tags} rowid={"uuid"}
-        onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} onSelected={() => { }} />
+      <Linebox title={"no border"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={''} uuid={'1'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={''} uuid={'2'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }}
+          border={{ color: 'red', radius: '5px', width: '1px', padding: '0' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={''} uuid={'3'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }}
+          border={{ color: 'blue', radius: '10px', width: '2px', padding: '5px' }} />
+      </Linebox>
+
+      <Linebox title={"border options"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Thumblist className={''} uuid={'4'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }}
+          border={{ color: 'black', radius: '20px', width: '10px', padding: '5px 10px' }} />
       </Linebox>
     </StyledObject>
   );
 };
+
+
+export const size = () => {
+  const list = jsonlist(3);
+  //uuid is scroll uniq id;
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"no size"} className={""} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'border radius'} uuid={'0'} size={''} list={list} head={tags} rowid={"uuid"} />
+      </Linebox>
+
+      <Linebox title={"small"} className={""} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'border radius'} uuid={'1'} size={'sm'} list={list} head={tags} rowid={"uuid"} />
+      </Linebox>
+
+      <Linebox title={"middle"} className={""} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'border radius'} uuid={'2'} size={'md'} list={list} head={tags} rowid={"uuid"} />
+      </Linebox>
+      
+      <Linebox title={"large"} className={""} sample={samplecode("", "")} box={false}>
+        <Thumblist className={'border radius'} uuid={'3'} size={'lg'} list={list} head={tags} rowid={"uuid"} />
+      </Linebox>      
+    </StyledObject>
+  );
+};
+
+export const animation = () => {
+  const refresh = button('refresh', () => { });
+  const value = text('time', '3s');
+  const list = jsonlist(10);
+  // const [animtag, setAnimtag] = useState("");
+
+  const onAnimation = (eid, e) => {
+    console.log(eid);
+    // if (eid === "start") {
+    //   setAnimtag(eid);
+    // } else {  //end
+    //   // setValue(time || '200ms');
+    //   setTimeout(() => setAnimtag(eid), 500);
+    // }
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"slidein"} sample={samplecode('anim={{ type: "slidein", time: "0.3s" }} config={{ child: { className: "sm" } }}')}>
+        <Thumblist className={'sm'} anim={{ type: 'slidein', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+        <Thumblist className={'border'} anim={{ type: 'slideout', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+      </Linebox>
+
+      <Linebox title={"slideup/slidedown"} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }} config={{ child: { className: "sm dark" } }}')} inline={true}>
+        <Thumblist className={'border'} anim={{ type: 'slideup', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+        <Thumblist className={'border'} anim={{ type: 'slidedown', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+      </Linebox>
+
+      <Linebox title={"showin/showout"} sample={samplecode('anim={{ type: "showin", time: "0.3s" }} config={{ child: { className: "sm" } }}')} inline={true} >
+        <Thumblist className={'border'} anim={{ type: 'showin', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"} onAnimation={onAnimation}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+        <Thumblist className={'border'} anim={{ type: 'showout', time: value }}
+          uuid={'4'} list={list} head={tags} rowid={"uuid"} onAnimation={onAnimation}
+          onSelect={() => { }} onClickNew={() => { }} onClickDelete={() => { }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const dragdrop = () => {
+  const [result, setResult] = useState(null);
+  const [list, setList] = useState(jsonlist(10));
+
+  const onDragDrop = (eid, array, startpos, endpos) => {
+    setResult(`onDragDrop() eid = ${eid}, [array], startpos = ${startpos}, endpos = ${endpos}`);
+    setList(array);
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
+        sample={samplecode("", 'list={list}')}>
+        <Thumblist className={cx('lg')} list={list} head={tags} rowid={"uuid"} onDragDrop={onDragDrop} />
+      </Linebox>
+
+      <div className={"res-view"}>
+        <p>onClick</p>
+        <p>{result}</p>
+      </div>
+    </StyledObject>
+  );
+}

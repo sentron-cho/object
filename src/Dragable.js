@@ -9,17 +9,28 @@ export const DT = { CARD: 'card' };
 
 const StyledFrame = styled.span`{
   &.drag-drop {
-    ${cs.mouse.move} ${cs.disp.inblock} 
-    ${cs.opac.visible}
-    &.draging { ${cs.opac.hide} }
+    ${cs.disp.inblock} ${cs.opac.visible}
+    &.draging {
+      ${cs.opac.get(0.2)}
+    }
+
+    &:not(.disable) { ${cs.mouse.move} }
+    // &:hover { &:first-child { ${cs.box.line} ${cs.border.primary} } }
     // ${cs.w.get(100)} ${cs.h.get(80)} ${cs.box.line}
     // ${cs.w.full}
   }
 }`;
 
 const Dragable = (props) => {
-  const { id, index, onDragDrop, children } = props;
-  const ref = useRef(null)
+  const { id, index, onDragDrop, children, disable = false } = props;
+  let startpos = -1;
+
+  // disable이면 그냥 child만 리턴하자...
+  if (disable) {
+    return (children);
+  }
+
+  const ref = useRef(null);
   const [, drop] = useDrop({
     accept: DT.CARD,
     hover(item, monitor) {
@@ -44,19 +55,16 @@ const Dragable = (props) => {
       // Dragging upwards
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) { return; };
       // Time to actually perform the action
-      onDragDrop && onDragDrop('drag', dragIndex, hoverIndex);
+      (!disable && onDragDrop) && onDragDrop('drag', dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
-      // console.log(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
     drop(item) {
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      onDragDrop('drop', dragIndex, hoverIndex);
-      // console.log('drop');
+      console.log(startpos);
+      (!disable && onDragDrop) && onDragDrop('drop', item.index, item.index, startpos);
     },
   });
   const [{ isDragging }, drag] = useDrag({
@@ -64,10 +72,20 @@ const Dragable = (props) => {
     collect: monitor => ({ isDragging: monitor.isDragging() }),
   });
   drag(drop(ref));
-  // const opacity = isDragging ? 0.1 : 1;
+
+  const onMouseDown = () => {
+    startpos = index;
+    console.log(startpos);
+  }
+
+  const onMouseUp = () => {
+    // startpos = -1;
+    // console.log(startpos);
+  }
 
   return (
-    <StyledFrame className={cx('drag-drop', isDragging && 'draging', (index))} ref={ref}>
+    <StyledFrame className={cx('drag-drop', isDragging && 'draging', (index), { disable })} ref={ref}
+      onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       {children}
       {/* <span>test</span> */}
     </StyledFrame>

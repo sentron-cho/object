@@ -25,7 +25,7 @@ const StyledObject = styled.div`{
           .thb-delete { ${cs.opac.show} } 
         }
 
-        ${({cursor}) => cursor && cs.mouse.get(cursor)};
+        ${({ cursor }) => cursor && cs.mouse.get(cursor)};
       }
     }
 
@@ -78,7 +78,6 @@ const Thumblist = (props) => {
 
   useEffect(() => {
     setAnim(props.anim);
-    console.log(props.anim);
   }, [props.anim]);
 
   // useList(() => {
@@ -156,20 +155,32 @@ const Thumblist = (props) => {
   const tlist = makeItems(list, head && head.map(item => item.key));
 
   const dragdrop = props.onDragDrop ? true : false;
-  const onDragDrop = useCallback((eid, dragIndex, hoverIndex, startpos) => {
-    console.log(eid, dragIndex, hoverIndex);
-    // if (eid === 'drop') {
+  const onDragDrop = useCallback((eid, dragIndex, hoverIndex) => {
     const dragitem = list[dragIndex];
     const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
-    // console.dir(array);
-    // setList(array);
+    setList(array);
+
     if (eid === 'drag') {
-      setList(array);
-      // props.onDragDrop && props.onDragDrop(eid, null, dragIndex, hoverIndex);
+      props.onDraging && props.onDraging(eid, array);
     } else if (eid === 'drop') {
-      setList(array);
-      props.onDragDrop && props.onDragDrop(eid, array, startpos, hoverIndex);
+      props.onDragDrop && props.onDragDrop(eid, array);
     }
+
+    // if (eid === 'drag') {
+    //   const array = list.map(item => {
+    //     item["hover"] = (item.index === hoverIndex) ? true : false;
+    //     console.log(hoverIndex, item.index, item.hover);
+    //     return item;
+    //   });
+    //   console.log(array);
+    //   // setList(array);
+    //   // props.onDragDrop && props.onDragDrop(eid, null, dragIndex, hoverIndex);
+    // } else if (eid === 'drop') {
+    //   // setList(array);
+    //   // const dragitem = list[dragIndex];
+    //   // const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
+    //   // props.onDragDrop && props.onDragDrop(eid, array, startpos, hoverIndex);
+    // }
     // }
   }, [list]);
 
@@ -189,9 +200,10 @@ const Thumblist = (props) => {
         {tlist && <div className={cx("v-line", { dragdrop })} id={`s-frame${uuid || ''}`}>
           {/* items */}
           {list.map((item, index) => {
+            item.index = index;
             const url = path ? path + item.url : item.url;
             const rid = item[rowid] || index;
-            const odr = item.odr ? item.odr : index + 1;
+            const odr = item.odr || item.no || index + 1;
 
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
@@ -260,16 +260,21 @@ export const dragdrop = () => {
   const [result, setResult] = useState(null);
   const [list, setList] = useState(jsonlist(10));
 
-  const onDragDrop = (eid, array, startpos, endpos) => {
-    setResult(`onDragDrop() eid = ${eid}, [array], startpos = ${startpos}, endpos = ${endpos}`);
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
     setList(array);
+  }
+
+  const onDraging = (eid, array) => {
+    setResult(`onDraging() eid = ${eid}, [array]`);
   }
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'list={list}')}>
-        <Thumblist className={cx('lg')} list={list} head={tags} rowid={"uuid"} onDragDrop={onDragDrop} />
+        <Thumblist className={cx('lg')} list={list} head={tags} rowid={"uuid"}
+          onDragDrop={onDragDrop} onDraging={onDraging}/>
       </Linebox>
 
       <div className={"res-view"}>

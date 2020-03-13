@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { useDrag, useDrop } from 'react-dnd';
@@ -23,7 +23,6 @@ const StyledFrame = styled.span`{
 
 const Dragable = (props) => {
   const { id, index, onDragDrop, children, disable = false } = props;
-  let startpos = -1;
 
   // disable이면 그냥 child만 리턴하자...
   if (disable) {
@@ -39,32 +38,32 @@ const Dragable = (props) => {
       const hoverIndex = index;
       // Don't replace items with themselves
       if (dragIndex === hoverIndex) { return; };
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current.getBoundingClientRect();
-      // Get vertical middle
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
-      // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-      // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) { return; };
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) { return; };
-      // Time to actually perform the action
-      (!disable && onDragDrop) && onDragDrop('drag', dragIndex, hoverIndex);
+      // // Determine rectangle on screen
+      // const hoverBoundingRect = ref.current.getBoundingClientRect();
+      // // Get vertical middle
+      // const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // // Determine mouse position
+      // const clientOffset = monitor.getClientOffset();
+      // // Get pixels to the top
+      // const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // // Only perform the move when the mouse has crossed half of the items height
+      // // When dragging downwards, only move when the cursor is below 50%
+      // // When dragging upwards, only move when the cursor is above 50%
+      // // Dragging downwards
+      // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) { return; };
+      // // Dragging upwards
+      // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) { return; };
+      // // Time to actually perform the action
+      // (!disable && onDragDrop) && onDragDrop('drag', dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
+      (!disable && onDragDrop) && onDragDrop('drag', dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
     drop(item) {
-      console.log(startpos);
-      (!disable && onDragDrop) && onDragDrop('drop', item.index, item.index, startpos);
+      (!disable && onDragDrop) && onDragDrop('drop', item.index, item.index);
     },
   });
   const [{ isDragging }, drag] = useDrag({
@@ -73,19 +72,8 @@ const Dragable = (props) => {
   });
   drag(drop(ref));
 
-  const onMouseDown = () => {
-    startpos = index;
-    console.log(startpos);
-  }
-
-  const onMouseUp = () => {
-    // startpos = -1;
-    // console.log(startpos);
-  }
-
   return (
-    <StyledFrame className={cx('drag-drop', isDragging && 'draging', (index), { disable })} ref={ref}
-      onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+    <StyledFrame className={cx('drag-drop', isDragging && 'draging', (index), { disable })} ref={ref}>
       {children}
       {/* <span>test</span> */}
     </StyledFrame>

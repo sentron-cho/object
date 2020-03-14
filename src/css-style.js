@@ -69,6 +69,13 @@ const cs = {
   noselect: 'user-select: none;',
   noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
 
+  content: {
+    none: `content: "";`,
+
+    attr: (v) => `content: attr(${v});`,
+    get: (v) => `content: ${v};`,
+  },
+
   pos: {
     absolute: 'position: absolute;',
     relative: 'position: relative;',

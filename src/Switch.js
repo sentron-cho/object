@@ -1,66 +1,120 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
+import { cs } from './index';
 
 const StyledObject = styled.span`{
-  &.switch { width: 48px; display: inline-block; height: 26px; position: relative; display: inline-block; vertical-align: middle;
+  &.switch { 
+    ${cs.size.fit} ${cs.disp.inblock} ${cs.pos.relative} ${cs.font.dark}
 
-    // .sw-input { display: none }
-    .sw-slider { background-color: transparent; border: 1px solid rgba(128,128,128,0.7);
-      position: relative; display: block; height: inherit; cursor: pointer; border-radius: 3px;
+    .sw-label { 
+      ${cs.disp.block} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} 
+      ${cs.border.none} ${cs.font.weight(500)} 
+    }
 
-      &::before { z-index: 2; position: absolute; top: 2px; left: 2px;
-        box-sizing: border-box; width: 20px; height: 20px; content: ""; background-color: #fff;
-        transform: translateX(0px); transition: .15s ease-out; border-radius: 3px;
+    .sw-slider { ${cs.bg.dark} ${cs.pos.relative} ${cs.mouse.pointer}
+      ${cs.w.get(48)} ${cs.h.get(26)} ${cs.disp.block} ${cs.font.white}
+
+      &::before { 
+        ${cs.z.get(2)} ${cs.align.ltop} ${cs.left(4)} ${cs.top(4)}
+        ${cs.box.sizing('border-box')} ${cs.icon.sm} ${cs.bg.lightwhite}
+        ${cs.align.x(0)} ${cs.anim.hide} ${cs.content.none}
       }
 
       &::after {
-        position: absolute; top: 50%; z-index: 1; width: 50%; margin-top: -.5em;
-        font-size: 10px; font-weight: 600; line-height: 1; text-align: center;
-        text-transform: uppercase; transition: inherit; right: 1px; color: #c8ced3;
-        content: attr(data-unchecked);
+        ${cs.z.get(1)} ${cs.w.half} ${cs.m.top(-2)}
+        ${cs.font.xs} ${cs.font.weight(600)} ${cs.font.center} ${cs.align.ycenter}
+        ${cs.right(1)} ${cs.font.gray} ${cs.anim.get('inherit')}
+        ${cs.content.attr('data-unchecked')}
       }
 
       &.checked {
-        border-color: rgba(255,255,255,0.8);
-        ::before { transform: translateX(22px); }
-        ::after { left: 1px; color: #fff; content: attr(data-checked); }
+        // ${cs.border.gray}
+        ::before { ${cs.align.x(23)} }
+        ::after { ${cs.left(1)} ${cs.font.white} ${cs.content.attr('data-checked')} }
       }
     }
 
-    // &:hover { opacity: 0.9; }
+    &.symbol {
+      .sw-slider { &::after { ${cs.m.top(-1)} } }
+    }
 
-    // &.xl { font-size:20px; height:48px; line-height:46px; padding:0px 20px; .icon{width: 42px; height: 42px} }
-    // &.lg { font-size:16px; height:38px; line-height:36px; padding:0px 14px; .icon{width: 32px; height: 32px} }
-    // &.sm { font-size:14px; height:28px; line-height:26px; padding:0px 8px; .icon{width: 22px; height: 22px} }
-    // &.xs { font-size:12px; height:18px; line-height:16px; padding:1px 3px; .icon{width: 12px; height: 12px} }
+    &.radius { 
+      .sw-slider {
+        ${cs.border.radius(5)} 
+        &::before { ${cs.border.radius(3)} }
+      }
+    }
 
-    // &.trans { background: transparent; color:#000; border: 1px solid #ccc;}
-    // &.primary { background:#4a92e4; color:#fff; border:1px transparent;}
-    // &.yellow { background:#f3c022; color: #fff; border:1px transparent;}
-    // &.orange { background:#ff6600; color:#fff; border:1px transparent;}
-    // &.red { background:#ed6464; color:#fff; border:1px transparent;}
-    // &.green { background:#00c73c; color:#fff; border:1px transparent;}
-    // &.dark { background:#272727; color:#fff; border:1px transparent;}
-    // &.primary-line { background: transparent; border:1px solid #4a92e4; color:#4a92e4; }
-    // &.gray { background:#ecf0f2; border: 1px solid #d0d0d0 ; color:#777; }
-    // &.gray-line { background: transparent; border:1px solid #d0d0d0; color:#777;
-    //   &:not(.disabled):hover { background:#eee; border:1px solid #555; }
-    //   &:not(.disabled):active { background:#ccc; border:1px solid #777; color:#333 };
-    // }
+    &.border {
+      .sw-slider { ${cs.box.line} }
+    }
 
-    // // &.icon { background: transparent; border:1px solid #4a92e4; padding: 0;}
-    // .icon {width: 24px; height: 24px; margin-bottom: 2px;
-    //   &.mR {margin-right: 5px;}
-    // }
+    
+    &.xs { 
+      .sw-label { ${cs.font.get(10)} } 
+      .sw-slider { ${cs.w.get(38)} ${cs.h.get(18)} 
+        &::before { ${cs.icon.get(14)} ${cs.left(2)} ${cs.top(2)} } 
+        &::after { } 
+        &.checked { ::before { ${cs.align.x(19)} } } 
+      } 
+    }
+    &.sm { 
+      .sw-label { ${cs.font.get(12)} } 
+      .sw-slider { ${cs.w.get(42)} ${cs.h.get(22)} 
+        &::before { ${cs.icon.get(14)} ${cs.left(2)} ${cs.top(3)} } 
+        &::after { } 
+        &.checked { ::before { ${cs.align.x(22)} } } 
+      } 
+    }
+    &.lg { 
+      .sw-label { ${cs.font.get(14)} } 
+      .sw-slider { ${cs.w.get(60)} ${cs.h.get(36)} 
+        &::before { ${cs.icon.get(24)} ${cs.left(2)} ${cs.top(6)} } 
+        &::after { ${cs.font.sm} } 
+        &.checked { ::before { ${cs.align.x(29)} } } 
+      } 
+    }
+    
+    &.left { }
+    &.right { ${cs.align.right} .sw-slider { ${cs.float.right} } }
+    &.center { ${cs.align.xcenter} .sw-slider { ${cs.align.xcenter} ${cs.pos.relative} } }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
 
-    // &.disabled { cursor:default; border:none; background:#000; color:#fff; opacity: 0.2; border:1px transparent;
-    //   &:hover {}
-    // }
+    &.trans { .sw-slider { ${cs.bg.white} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
+    &.sky { .sw-slider { ${cs.bg.sky} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
+    &.orange { .sw-slider { ${cs.bg.orange} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.green { .sw-slider { ${cs.bg.green} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.red { .sw-slider { ${cs.bg.red} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.primary { .sw-slider { ${cs.bg.primary} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.gray { .sw-slider { ${cs.bg.lightgray} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
+    &.dark { .sw-slider { ${cs.bg.dark} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.black { .sw-slider { ${cs.bg.black} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    
+    &.disable {
+      .sw-slider { ${cs.mouse.default} ${cs.opac.alpha} ${cs.font.dark}
+      }
 
-    // &.left { float: left; }
-    // &.right { float: right; }
-    // &.center { position: absolute; float: left; left: 50%; transform: translateX(-50%); }
+      &.dark, &.black, &.primary { .sw-slider { ${cs.font.lightgray} } }
+    }
+
+
+    .sw-label {
+      ${({ label }) => label && label.align && cs.font.align(label.align)}
+      ${({ label }) => label && label.color && cs.font.color(label.color)}
+    }
+
+    .sw-slider {
+      ${({border}) => border && cs.box.line}
+      ${({border}) => border && border.color && cs.border.color(border.color)}
+      ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+      ${({border}) => border && border.width && cs.border.width(border.width)}
+
+      &::before, &.checked::before { ${({border}) => border && border.radius && cs.border.radius(`calc(${border.radius} / 2)`)} }
+    }
   }
 }`;
 
@@ -83,20 +137,23 @@ export default class Switch extends React.PureComponent {
     let checked = !state.checked;
     this.setState({ checked: checked, modified: true });
     props.onClick && props.onClick(props.eid, checked, e);
-    console.log('checked = ', checked);
   }
 
   render() {
     const { state, props } = this;
-    const { disabled } = props;
+    const { symbol, on = "ON", off = "OFF" } = props;
     const { checked } = state;
-    const on = props.symbol === true ? "✓" : "ON";
-    const off = props.symbol === true ? "✕" : "OFF";
+    const ton = symbol ? "✓" : on;
+    const toff = symbol ? "✕" : off;
+    const disable = props.disable || props.disabled || null;
+    const { text, label, border } = props.options || { text: null, label: null, border: null };
 
+    console.dir(border);
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disabled })} onClick={disabled ? () => null : this.onClicked} >
-        {/* <input className="sw-input" type="checkbox" value="" checked="" /> */}
-        <span className={cx("sw-slider", { checked })} data-checked={on} data-unchecked={off} />
+      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol })}
+        onClick={disable ? () => null : this.onClicked} text={text} label={label} border={border} >
+        {props.label ? <label className="sw-label">{props.label}</label> : null}
+        <span className={cx("sw-slider", { checked })} data-checked={ton} data-unchecked={toff} />
       </StyledObject>
     )
   }

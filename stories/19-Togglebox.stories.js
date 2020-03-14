@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
 import { cs, Togglebox, Util } from '../src';
-import { IMG } from '../src/Icons';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -51,7 +50,7 @@ export const object = () => {
         <Togglebox className={cx(size, bg)} list={list} icon={false} anim={anim} onClick={onClick} />
       </Linebox>
 
-      <Linebox title={"toggle button icon type"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
+      <Linebox title={"toggle button icon type"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Togglebox className={cx(size, bg)} list={list} icon={true} anim={anim} onClick={onClick} />
       </Linebox>
 

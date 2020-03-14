@@ -122,8 +122,10 @@ const cs = {
     scaledown: 'object-fit: scale-down;',
     cover: 'object-fit: cover;',
     fill: 'object-fit: fill;',
+    center: `object-position: center center;`,
 
     fit: (v) => `object-fit: ${v};`,    
+    position: (v) => `object-position: ${v};`
   },
 
   over: {
@@ -282,6 +284,7 @@ const cs = {
     lower: 'text-transform: lowercase;',
     ellipsis: 'text-overflow: ellipsis; overflow: hidden; white-space: nowrap;',
 
+    outline: (v = '1px', c = 'black') => Number.isInteger(v) ? `-webkit-text-stroke: ${v}px ${c};` : `-webkit-text-stroke: ${v} ${c};`,
     overflow: (v) => `text-overflow: ${v};`,
     space: (v) => `white-space: ${v};`,
     family: (v) => `font-family: ${v};`,
@@ -312,16 +315,16 @@ const cs = {
     bounding: `animation-timing-function: cubic-bezier(0, 0, 0.4, 1.5);`,
     quadratic: `animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);`,
 
-    in: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
-    out: (v) => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
+    in: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
+    out: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
     get: (v) => `transition: ${v};`,
     iteration: (v) => `animation-iteration-count: ${v}`,
     timing: (v) => `animation-timing-function: ${v}`,
 
-    name: (v) => `animation-name: ${v};`,
-    time: (v) => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
+    name: (v = '150ms') => `animation-name: ${v};`,
+    time: (v = '150ms') => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
     showin: (v = '150ms', s = '0.1', e = '1') => `animation: show-in linear 1 forwards ${v}; @keyframes show-in { from { opacity: ${s};  } to { opacity: ${e}; } };`,
-    showout: (v, s = '1', e = '0') => `animation: show-out linear 1 forwards ${v}; @keyframes show-out { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    showout: (v = '150ms', s = '1', e = '0') => `animation: show-out linear 1 forwards ${v}; @keyframes show-out { from { opacity: ${s};  } to { opacity: ${e}; } };`,
     fadein: (v = '150ms', s = '0', e = '1') => `animation: fadein linear 1 forwards ${v}; @keyframes fadein { from { opacity: ${s}; } to { opacity: ${e}; } };`,
     fadeout: (v = '150ms', s = '1', e = '0') => `animation: fadeout linear 1 forwards ${v}; @keyframes fadeout { from { opacity: ${s}; } to { opacity: ${e}; } };`,
     slidein: (v = '150ms', s = '-100%', e = '0') => `animation: slidein linear 1 forwards ${v}; @keyframes slidein { from  { transform: translateX(${s}); opacity: 0.3; } to { transform: translateX(${e}); opacity: 1; } };`,
@@ -389,6 +392,9 @@ const cs = {
 
     color: (v) => `background: ${v};`,
     get: (v) => `background: ${v};`,
+    size: (v) => `background-size: ${v};`,
+    repeat: (v) => `background-repeat: ${v};`,
+    pos: (v) => `background-position: ${v};`
   },
 
   icon: {

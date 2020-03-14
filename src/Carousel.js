@@ -2,76 +2,114 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Util, Loading, Svg } from './index';
-import { EID } from './Config'
-import { IMG } from './Icons'
+import { Util, Loading, Svg, Guidebox, cs } from './index';
+import { EID } from './Config';
+import { IMG } from './Icons';
 
 const StyledObject = styled.div`{
-  &.carousel-box { height: 100%; position: relative; overflow: hidden; width: 1000px;
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+  &.carousel-box { 
+    ${cs.noselect} ${cs.noliststyle} ${cs.h.full} ${cs.min.height(240)} 
+    ${cs.pos.relative} ${cs.over.hidden} ${cs.w.get(1000)} ${cs.box.inner}
+
+    ${({ width }) => cs.w.get(width)};
+    ${({ height }) => cs.h.get(height)};
 
     .cau-ul {
-      height: 100%; width: ${(props) => `calc(100% * 2)`}; 
+      ${cs.h.full} ${cs.w.calc('100% * 2')}
       &.anim { animation: slide ${(props) => props.anitime} 1; animation-fill-mode: both; }
+
+      @keyframes slide {
+        0% {margin-left:0;} /* 0 ~ 10  : 정지 */
+        90% {margin-left:0;} /* 10 ~ 25 : 변이 */
+        100% {margin-left:-100%;} /* 25 ~ 35 : 정지 */
+      }
     }
 
     .cau-li { 
-      position: relative; opacity: 0; width: 100%; display: inline-block; 
-      width: ${(props) => `calc(100% / 2)`};
-      height: 100%; object-fit: cover; object-position: center center;
+      ${cs.pos.relative} ${cs.opac.invisible} ${cs.disp.inblock}
+      ${cs.h.full} ${cs.w.calc('100% / 2')} ${cs.object.cover} ${cs.object.center}
 
-      &.loaded { transition: opacity 150ms ease-in 0s; opacity: 1; 
-        .cau-image { background: transparent; }
+      &.loaded { 
+        // transition: opacity 150ms ease-in 0s; 
+        ${cs.anim.in()} ${cs.opac.visible}
+        .cau-image { ${cs.bg.trans} }
       }
 
-      .cau-image { width: 100%; height: 100%; background-image: url(${IMG.NoimageBig}); 
-        background-size: contain; background-repeat: no-repeat; display: block; background-position: center;
+      .cau-image { 
+        ${cs.size.full} ${cs.bg.get(`url(${IMG.NoimageBig})`)}
+        ${cs.bg.size("contain")} ${cs.bg.repeat("no-repeat")} ${cs.disp.block} ${cs.bg.pos("center")}
         
-        &.noimage { border: 1px solid rgba(255, 255, 255, 0.1); }
+        &.noimage { ${cs.box.line} }
       }
 
-      .cau-caption { position: absolute; width: 100%; bottom: 30px; opacity: 0.8;
-        font-size: 1.2rem; line-height: 1.4; text-align: center; white-space: pre-wrap; padding: 0 30px;
-        .cap-title { font-size: 3.0rem; font-weight: 600; }
+      .cau-caption { ${cs.font.white}
+        ${cs.align.cbottom} ${cs.bottom(30)} ${cs.opac.alpha} ${cs.font.size("1.2rem")} 
+        ${cs.font.space("pre-wrap")} ${cs.font.center} ${cs.p.h30}
+        .cap-title { ${cs.font.size("3.0rem")} ${cs.font.thickbold} }
       }
 
       &.active { }
     }
 
     .cau-navi { 
-      position: absolute; right: 0; bottom: 10px; left: 0; z-index: 15; display: flex;
-      justify-content: center; margin-top: 10px;
+      ${cs.align.cbottom} ${cs.bottom(10)} ${cs.z.front} ${cs.disp.get("flex")}
 
-      li.cau-navi-li { position: relative; width: 30px; height: 5px; margin: 0 3px; border: 1px solid #1e0a5d;
-        cursor: pointer; background-color: rgba(255,255,255); border-radius: 2px; opacity: 0.5;
-        &.active { opacity: 0.9; background-color: rgba(255, 183, 29, 0.9) }
+      li.cau-navi-li { 
+        ${cs.pos.relative} ${cs.w.get(30)} ${cs.h.get(5)} ${cs.m.h3} ${cs.box.line} ${cs.border.dark}
+        ${cs.mouse.pointer} ${cs.bg.white} ${cs.border.radius(2)} ${cs.opac.hide}
+        &.active { ${cs.bg.orange} }
       } 
     }
 
-    .btn-edit { position: absolute; right: 20px; top: 20px; z-index: 100; }
+    // .btn-edit { position: absolute; right: 20px; top: 20px; z-index: 100; }
 
-    .slide-navi { position: absolute; top: 0; z-index: 15; height: 100%; background: rgba(0,0,0,0.1);cursor: pointer;
-      &.prev { left: 0; }
-      &.next { right: 0; }
-      .icon { top: 50%; transform: translateY(-50%); width: 40px}
+    .slide-navi { 
+      ${cs.pos.absolute} ${cs.top(0)} ${cs.z.front} ${cs.h.full} ${cs.mouse.pointer}
+      ${cs.bg.vgradint} ${cs.opac.get(0.3)} //background: rgba(0,0,0,0.1);
+      &.prev { ${cs.left(0)} }
+      &.next { ${cs.right(0)} }
+      .icon { ${cs.align.ycenter} ${cs.pos.relative} ${cs.w.get(40)} .svg-path { ${cs.fill.dark} } }
     }
 
-    &.show-loading { .loading-box { opacity: 1; } }
+    // &.show-loading { .loading-box { opacity: 1; } }
+    // .loading-box { top: 0; opacity: 0; }
+    // .pointer { cursor: pointer; };
+    // .border { border: 2px solid rgba(255, 255, 255, 0); border-radius: 5px; }
 
-    .border { border: 2px solid rgba(255, 255, 255, 0); border-radius: 5px; }
-    
-    .loading-box { top: 0; opacity: 0; }
-    .pointer { cursor: pointer; };
+    &:hover { 
+      .cau-li .cau-caption { ${cs.opac.show} ${cs.anim.in()} }
+      .cau-navi .cau-navi-li { ${cs.opac.alpha} ${cs.anim.in()} &.active { ${cs.opac.get(0.8)} } }
+      .slide-navi { ${cs.opac.show} ${cs.anim.in()} }
+    }
+  
+    .cau-li .cau-caption {
+        ${({ text }) => text && text.size && cs.font.size(text.size)}
+        ${({ text }) => text && text.align && cs.font.align(text.align)}
+        ${({ text }) => text && text.color && cs.font.color(text.color)}
+        ${({ text }) => text && text.outline && cs.font.outline('1px', text.outline)}
+        
+      .cap-title {
+        ${({ title }) => title && title.size && cs.font.size(title.size)}
+        ${({ title }) => title && title.align && cs.font.align(title.align)}
+        ${({ title }) => title && title.color && cs.font.color(title.color)}
+        ${({ title }) => title && title.outline && cs.font.outline('1px', title.outline)}
+      }
+    }
+
+    & {
+      ${({ border }) => border && cs.box.line}
+      ${({ border }) => border && border.color && cs.border.color(border.color)}
+      ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+      ${({ border }) => border && border.width && cs.border.width(border.width)}
+    }
   }
   
-  &.full { width: 100%; }
-
-  &.lg { width: 1200px; }
-
-  &.md { width: 1000px; }
-
-  &.sm { width: 800px; }
+  &.full { ${cs.w.full} }
+  &.lg { ${cs.w.get(1200)} }
+  &.md { ${cs.w.get(1000)} }
+  &.sm { ${cs.w.get(800)} }
+  &.xs { ${cs.w.get(600)} }
+  &.xxs { ${cs.w.get(400)} }
 
   @media screen and (max-width : 1280px) {
   }
@@ -81,13 +119,6 @@ const StyledObject = styled.div`{
 
   @media screen and (max-width : 860px) {
   }
-
-  @keyframes slide {
-    0% {margin-left:0;} /* 0 ~ 10  : 정지 */
-    
-    90% {margin-left:0;} /* 10 ~ 25 : 변이 */
-    100% {margin-left:-100%;} /* 25 ~ 35 : 정지 */
-  }
 };`;
 
 
@@ -95,17 +126,17 @@ export default class Carousel extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
-    const list = props.list && props.list.map((item, index) => {
+    const list = props.list ? props.list.map((item, index) => {
       item.active = index === 0 ? true : false;
       item.index = index;
       item.error = false;
       item.loaded = false;
       return item;
-    });
+    }) : [];
     const isanim = this.props.anim ? true : false;
     this.state = {
       type: type, loaded: false, height: "auto", anim: isanim, isanim: isanim,
-      list: list, pos: 0, current: list[0], next: list[1] ? list[1] : list[0]
+      list: list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null
     };
 
     this.animation = null;
@@ -125,7 +156,8 @@ export default class Carousel extends React.PureComponent {
   }
 
   getHeight = () => {
-    let { rate = "4:3", size } = this.props;
+    let { rate, size = 'wide' } = this.props;
+    console.log(size);
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
@@ -251,7 +283,7 @@ export default class Carousel extends React.PureComponent {
         return <li key={index} className={cx("cau-li")}><div className={cx("cau-image noimage")} index={index} /></li>;
       }
 
-      const urldata = item.url.indexOf("data:") === 0 ? item.url : item.path + item.url;
+      const urldata = item.url.indexOf("data:") === 0 ? item.url : (item.path || '') + item.url;
 
       // 카우셀에서 첫번째 이미지만 loading 처리하자..
       let image;
@@ -263,7 +295,7 @@ export default class Carousel extends React.PureComponent {
         image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
       }
 
-      const { active, color = "#ffffff" } = item;
+      const { active, color = "" } = item;
       const styled = { color };
       // 카우셀 이미지 및 캡션 프레임...
       return <li key={index} className={cx("cau-li", { active }, item.loaded && 'loaded')}>
@@ -280,12 +312,39 @@ export default class Carousel extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { list, anim, current, next } = state;
+    const { text, title, border } = props.options || { text: null, title: null, border: null };
     const { height } = state;
     const styled = { ...props.style, width: props.width, height, anitime: props.anitime ? props.anitime : "3s" };
     const animlist = [current, next];
 
+    const renderGuide = () => {
+      let guide = null;
+      if (!list || list.length < 1) {
+        guide = "list props is required.\n"
+          + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', url: '', path: '', utime: '20200101' }, {...}\n"
+          + "url is required. Rest is optional.\n"
+          + "path is root path to display before url.";
+      }
+
+      if (list && list[0]) {
+        const item = list[0];
+        if (item.url == null || item.url === undefined) {
+          guide = "'url' is required in the list.\n"
+            + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', url: '', path: '', utime: '20200101' }, {...}"
+        }
+      }
+
+      if (guide) {
+        return <Guidebox text={guide} />
+      }
+    }
+
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)} {...styled} length={list.length}>
+      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)}
+        {...styled} length={list.length} text={text} title={title} border={border}>
+        {/* error guid */}
+        {renderGuide()}
+
         <ul className={cx("cau-ul", { anim })} onAnimationEnd={this.onAnimEnd} onAnimationStart={this.onAnimStart} >
           {this.renderContents(animlist, anim)}
         </ul>
@@ -296,9 +355,9 @@ export default class Carousel extends React.PureComponent {
           })}
         </ul>
         <span className="slide-navi prev" onClick={this.onClicked} eid={EID.PREV}>
-          <Svg className="icon lg" name={"prev"} color={props.color} />
+          <Svg className="icon lg" name={"left"} color={props.color} />
         </span>
-        <span className="slide-navi next" onClick={this.onClicked} eid={EID.NEXT}><Svg className="icon lg" name={"next"} color={props.color} /></span>
+        <span className="slide-navi next" onClick={this.onClicked} eid={EID.NEXT}><Svg className="icon lg" name={"right"} color={props.color} /></span>
       </StyledObject>
     )
   };

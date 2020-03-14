@@ -101,7 +101,6 @@ const StyledObject = styled.span`{
       &.dark, &.black, &.primary { .sw-slider { ${cs.font.lightgray} } }
     }
 
-
     .sw-label {
       ${({ label }) => label && label.align && cs.font.align(label.align)}
       ${({ label }) => label && label.color && cs.font.color(label.color)}

@@ -16,8 +16,9 @@ const StyledObject = styled.div`{
 
     .cau-ul {
       ${cs.h.full} ${cs.w.calc('100% * 2')}
-      &.anim { animation: slide ${(props) => props.anitime} 1; animation-fill-mode: both; }
-
+      &.anim { 
+        animation: slide ${({ anitime }) => anitime} 1; animation-fill-mode: both; 
+      }
       @keyframes slide {
         0% {margin-left:0;} /* 0 ~ 10  : 정지 */
         90% {margin-left:0;} /* 10 ~ 25 : 변이 */
@@ -44,7 +45,8 @@ const StyledObject = styled.div`{
 
       .cau-caption { ${cs.font.white}
         ${cs.align.cbottom} ${cs.bottom(30)} ${cs.opac.alpha} ${cs.font.size("1.2rem")} 
-        ${cs.font.space("pre-wrap")} ${cs.font.center} ${cs.p.h30}
+        ${cs.font.space("pre-wrap")} ${cs.p.h30} ${cs.w.full}
+        & > p { ${cs.p.h10} }
         .cap-title { ${cs.font.size("3.0rem")} ${cs.font.thickbold} }
       }
 
@@ -83,16 +85,18 @@ const StyledObject = styled.div`{
     }
   
     .cau-li .cau-caption {
-        ${({ text }) => text && text.size && cs.font.size(text.size)}
-        ${({ text }) => text && text.align && cs.font.align(text.align)}
-        ${({ text }) => text && text.color && cs.font.color(text.color)}
-        ${({ text }) => text && text.outline && cs.font.outline('1px', text.outline)}
-        
+      .cap-text {
+        ${({ text }) => text && text.size ? cs.font.size(text.size) : ''}
+        ${({ text }) => text && text.align ? cs.font.align(text.align) : ''}
+        ${({ text }) => text && text.color ? cs.font.color(text.color) : ''}
+        ${({ text }) => text && text.outline ? cs.font.outline('1px', text.outline) : ''}
+      }
+
       .cap-title {
-        ${({ title }) => title && title.size && cs.font.size(title.size)}
-        ${({ title }) => title && title.align && cs.font.align(title.align)}
-        ${({ title }) => title && title.color && cs.font.color(title.color)}
-        ${({ title }) => title && title.outline && cs.font.outline('1px', title.outline)}
+        ${({ title }) => title && title.size ? cs.font.size(title.size) : ''}
+        ${({ title }) => title && title.align ?  cs.font.align(title.align) : ''}
+        ${({ title }) => title && title.color ? cs.font.color(title.color) : ''}
+        ${({ title }) => title && title.outline ? cs.font.outline('1px', title.outline) : ''}
       }
     }
 
@@ -157,7 +161,6 @@ export default class Carousel extends React.PureComponent {
 
   getHeight = () => {
     let { rate, size = 'wide' } = this.props;
-    console.log(size);
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
@@ -311,10 +314,10 @@ export default class Carousel extends React.PureComponent {
 
   render() {
     const { props, state } = this;
-    const { list, anim, current, next } = state;
-    const { text, title, border } = props.options || { text: null, title: null, border: null };
-    const { height } = state;
-    const styled = { ...props.style, width: props.width, height, anitime: props.anitime ? props.anitime : "3s" };
+    const { list, anim, current, next, height } = state;
+    const { text = null, title = null, border = null } = props.options || { text: null, title: null, border: null };
+    const { time = "3s" } = props;
+    const styled = { ...props.style, width: props.width, height, anitime: props.anitime ? props.anitime : time };
     const animlist = [current, next];
 
     const renderGuide = () => {
@@ -339,9 +342,10 @@ export default class Carousel extends React.PureComponent {
       }
     }
 
+    console.log(time);
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)}
-        {...styled} length={list.length} text={text} title={title} border={border}>
+        {...styled} length={list.length} text={text} title={title} border={border} time={time}>
         {/* error guid */}
         {renderGuide()}
 

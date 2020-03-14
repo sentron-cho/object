@@ -45,7 +45,7 @@ const StyledObject = styled.div`{
 
       .cau-caption { ${cs.font.white}
         ${cs.align.cbottom} ${cs.bottom(30)} ${cs.opac.alpha} ${cs.font.size("1.2rem")} 
-        ${cs.font.space("pre-wrap")} ${cs.p.h30} ${cs.w.full}
+        ${cs.font.space("pre-wrap")} ${cs.p.h30} ${cs.w.full} ${cs.font.center}
         & > p { ${cs.p.h10} }
         .cap-title { ${cs.font.size("3.0rem")} ${cs.font.thickbold} }
       }

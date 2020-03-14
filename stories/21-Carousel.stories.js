@@ -49,14 +49,14 @@ export const object = () => {
   const titlesize = istitle ? text('title size', '3rem') : '';
   const titleoutline = istitle ? text('title outline color', '#ffffff') : '';
   const titlealign = istitle ? options('title align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-  '', { display: 'inline-radio' }, 'Other') : '';
+  'center', { display: 'inline-radio' }, 'Other') : '';
 
   const istext = boolean('text option', false);
   const textcolor = istext ? text('text color', '') : '';
   const textsize = istext ? text('text size', '1rem') : '';
   const textoutline = istext ? text('text outline color', '#ffffff') : '';
   const textalign = istext ? options('text align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-  '', { display: 'inline-radio' }, 'Other') : '';
+  'center', { display: 'inline-radio' }, 'Other') : '';
   
   const isborder = boolean('border option', false);
   const border = isborder ? text('border color', '#909090') : '';

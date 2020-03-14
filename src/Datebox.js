@@ -1,9 +1,10 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import Editbox from './Editbox';
+import {Editbox, cs} from './index';
 
 const StyledObject = styled.div`{
+  ${cs.w.fu}
     width: 100%; color: #fff; z-index: 999; height: fit-content; line-height: 30px; position: relative; color:#000;
 
     &.group { position: relative; display: table; border-collapse: separate; width: 100%}

@@ -78,9 +78,7 @@ const StyledObject = styled.span`{
 
 const Button = (props) => {
   const onClicked = (e) => {
-    if (props.onClick != null) {
-      props.onClick(props.eid, e);
-    }
+    props.onClick && props.onClick(props.eid || 'button', e);
   }
 
   let disabled = (props.disabled === undefined) ? props.disable : props.disabled;

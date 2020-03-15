@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Datebox, Util } from '../src';
+import { cs, Datebox, Util, Button } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -48,11 +48,18 @@ export const object = () => {
   const width = isborder ? text('border width', '1px') : '';
 
   const [result, setResult] = useState(null);
-
-  const onChange = (hex, rgb, e) => {
-    setResult(`onChange(hex = ${hex}, rgb = ${rgb}, e)`);
+  
+  let rObject;
+  const onChange = (eid, value, e) => {
+    setResult(`onChange(eid = ${eid}, value = ${value}, e)`);
   }
 
+  const onClick = () => {
+    const {start, end} = rObject.getValue();
+    setResult(`getValue() start = ${start}, end = ${end}`);
+  }
+
+  // const get = {};
   const opt = {
     border: isborder ? { radius: radius, color: border, width: width } : null,
     title: istitle ? { align: titlealign, color: titlecolor } : null,
@@ -61,7 +68,8 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Datebox className={cx(size, bg)} options={opt} label={'Datebox'} clear={true} onChange={onChange} />
+        <Datebox ref={(ref) => rObject = ref} className={cx(size, bg)} options={opt} label={'Datebox'} clear={true} onChange={onChange} />
+        <Button className={'primary'} title={"getValue"} onClick={onClick} />
       </Linebox>
 
       <div className={"res-view"}>

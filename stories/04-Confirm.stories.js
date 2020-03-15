@@ -14,7 +14,7 @@ const store = createStore(reducers);
 
 const StyledObject = styled.span`{
   &.t-main {
-    .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
+    .lb-box { ${cs.w.get(800)} ${cs.p.b10} }
 
     .lb-box .lb-li > * { ${cs.m.r10} }
   }
@@ -83,6 +83,17 @@ export const object = () => {
     });
   }
 
+  const onClickTheme = (eid, e) => {
+    setConfirm({
+      show: true,
+      title: title || eid,
+      msg: msg || message,
+      type: 'info',
+      theme: eid,
+      onClicked: (isOk) => { },
+    });
+  }
+
   return (
     <Provider store={store} >
       <StyledObject className={"t-main"}>
@@ -105,6 +116,14 @@ export const object = () => {
           <Button className={"primary"} title={"small"} onClick={onClickSize} eid={"sm"} />
           <Button className={"primary"} title={"x small"} onClick={onClickSize} eid={"xs"} />
         </Linebox>
+
+        <Linebox title={"theme"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+          <Button className={"primary"} title={"sky"} onClick={onClickTheme} eid={"sky"}/>
+          <Button className={"primary"} title={"primary"} onClick={onClickTheme} eid={"primary"}/>
+          <Button className={"primary"} title={"gray"} onClick={onClickTheme} eid={"gray"}/>
+          <Button className={"primary"} title={"dark"} onClick={onClickTheme} eid={"dark"} />
+          <Button className={"primary"} title={"black"} onClick={onClickTheme} eid={"black"} />
+        </Linebox>        
       </StyledObject>
 
       <ConfirmActor {...confirm} />

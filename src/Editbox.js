@@ -115,6 +115,16 @@ const StyledObject = styled.div` {
     &.sm .box .input { ${cs.h.get(20)} ${cs.min.height(20)} ${cs.p.get('0 5px')} ${cs.font.line(18)} ${cs.font.sm} }
     &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get('0 10px')} ${cs.font.line(32)} ${cs.font.lg} }
 
+    &.trans { .input { ${cs.bg.white} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
+    &.sky { .input { ${cs.bg.sky} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
+    &.orange { .input { ${cs.bg.orange} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.orangehover} } } }
+    &.green { .input { ${cs.bg.green} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.greenhover} } } }
+    &.red { .input { ${cs.bg.red} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.redhover} } } }
+    &.primary { .input { ${cs.bg.primary} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.primaryhover} } } }
+    &.gray { .input { ${cs.bg.lightgray} ${cs.font.black} &::placeholder { ${cs.font.darkgray} } &:focus { ${cs.bg.darkwhite} } } }
+    &.dark { .input { ${cs.bg.dark} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
+    &.black { .input { ${cs.bg.black} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
+
     &.scroll-t1 { .box > textarea.input { ${cs.scrollbar.t1} } }
     &.scroll-t2 { .box > textarea.input { ${cs.scrollbar.t2} } }
     &.scroll-t3 { .box > textarea.input { ${cs.scrollbar.t3} } }
@@ -340,7 +350,7 @@ class Editbox extends React.PureComponent {
     } = props;
 
     return (
-      <StyledObject className={cx('edit-box', props.className, { inline })}
+      <StyledObject className={cx('edit-box', props.className, { inline }, props.theme)}
         height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight}
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}</label>}

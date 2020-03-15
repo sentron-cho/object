@@ -70,6 +70,22 @@ export const object = () => {
     }); 
   }
 
+  const onClickTheme = (eid, e) => {
+    setModal({
+      show: true,
+      title: title || eid,
+      children: ModalChild,
+      theme: eid,
+      data: { label: label, message: message },
+      onOk: (data) => {
+        setResult(`${JSON.stringify(data)}`);
+      },
+      onCancel: () => {
+        setResult(`cancel`);
+      },
+    });
+  }
+
   return (
     <Provider store={store} >
       <StyledObject className={"t-main"}>
@@ -86,6 +102,14 @@ export const object = () => {
           <Button className={"primary"} title={"small"} onClick={onClickSize} eid={"sm"} />
           <Button className={"primary"} title={"x small"} onClick={onClickSize} eid={"xs"} />
         </Linebox>
+
+        <Linebox title={"theme"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+          <Button className={"primary"} title={"sky"} onClick={onClickTheme} eid={"sky"}/>
+          <Button className={"primary"} title={"primary"} onClick={onClickTheme} eid={"primary"}/>
+          <Button className={"primary"} title={"gray"} onClick={onClickTheme} eid={"gray"}/>
+          <Button className={"primary"} title={"dark"} onClick={onClickTheme} eid={"dark"} />
+          <Button className={"primary"} title={"black"} onClick={onClickTheme} eid={"black"} />
+        </Linebox>  
 
         <div className={"res-view"}>
           {result}

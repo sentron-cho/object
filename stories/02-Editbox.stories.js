@@ -137,10 +137,16 @@ export const bgcolor = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"bgcolor & fontcolor"} sample={samplecode('bgcolor={""}')} top={option.top} width={option.width}>
-        <Editbox className={''} type={"text"} label={"bgcolor"} guide={"bgcolor none"} />
-        <Editbox className={''} type={"text"} label={"bgcolor"} value={'bgcolor={"black"} fontcolor={"white"}'} bgcolor={"black"} fontcolor={"white"} />
-        <Editbox className={''} type={"text"} label={"bgcolor"} value={'bgcolor={"red"} fontcolor={"black"}'} bgcolor={"red"} fontcolor={"black"} />
-        <Editbox className={''} type={"text"} label={"bgcolor"} value={`bgcolor={"${cs.color.primary}"} fontcolor={"${cs.color.red}"}`} bgcolor={cs.color.primary} fontcolor={cs.color.red} />
+        <Editbox className={'trans'} type={"text"} label={"trans"} guide={"trans"} />
+        <Editbox className={'sky'} type={"text"} label={"sky"} guide={"sky"} />
+        <Editbox className={'orange'} type={"text"} label={"orange"} guide={"orange"} />
+        <Editbox className={'green'} type={"text"} label={"green"} guide={"green"} />
+        <Editbox className={'red'} type={"text"} label={"red"} guide={"red"} />
+        <Editbox className={'primary'} type={"text"} label={"primary"} guide={"primary"} />
+        <Editbox className={'gray'} type={"text"} label={"gray"} guide={"gray"} />
+        <Editbox className={'dark'} type={"text"} label={"dark"} guide={"dark"} />
+        <Editbox className={'black'} type={"text"} label={"black"} guide={"black"} />
+        <Editbox className={''} type={"text"} label={"bgcolor"} value={`bgcolor={"${cs.color.primary}"} fontcolor={"${cs.color.red}"}`} bgcolor={cs.color.primary} fontcolor={cs.color.yellow} />
       </Linebox>
     </StyledObject>
   );
@@ -178,6 +184,20 @@ export const textarea = () => {
         <Editbox className={'scroll-t2'} type={"text"} label={"multi(scroll-t2)"} multi={true} guide={"1\n2\n3\n4\n5\n6\n7\n"} />
         <Editbox className={'scroll-t3'} type={"text"} label={"multi(scroll-t3)"} multi={true} guide={"1\n2\n3\n4\n5\n6\n7\n"} />
         <Editbox className={'scroll-t4'} type={"text"} label={"multi(scroll-t4)"} multi={true} value={"1\n2\n3\n4\n5\n6\n7\n"} onClear={action('onClear')} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode('bgcolor={""}')} top={option.top} width={option.width}>
+        <Editbox theme={'sky'} type={"text"} label={"sky"} guide={"sky"} />
+        <Editbox theme={'primary'} type={"text"} label={"primary"} guide={"primary"} />
+        <Editbox theme={'gray'} type={"text"} label={"gray"} guide={"gray"} />
+        <Editbox theme={'dark'} type={"text"} label={"dark"} guide={"dark"} />
+        <Editbox theme={'black'} type={"text"} label={"black"} guide={"black"} />
       </Linebox>
     </StyledObject>
   );

@@ -42,11 +42,32 @@ const StyledObject = styled.div`
   &.warn { .cf-head { ${cs.bg.orange} ${cs.font.white} } }
   &.err { .cf-head { ${cs.bg.red} ${cs.font.white} } }
   &.info { .cf-head { ${cs.bg.trans} ${cs.font.dark} } }
+
+  &.sky { .cf-head, .cf-frame { ${cs.bg.sky} ${cs.font.dark} 
+    .cf-head { ${cs.border.sky} }
+    .cf-foot .button { ${cs.bg.sky} ${cs.box.line} ${cs.border.gray} ${cs.font.dark} } } 
+    .svg-path { ${cs.fill.dark} }
+  }
+  &.primary { .cf-head, .cf-frame { ${cs.bg.primary} ${cs.font.white} 
+    .cf-head { ${cs.border.gray} }
+    .cf-foot .button { ${cs.bg.primary} ${cs.box.line} ${cs.border.lightgray} } } 
+    .svg-path { ${cs.fill.white} }
+  }
+  &.gray { .cf-head, .cf-frame { ${cs.bg.gray} ${cs.font.white} 
+    .cf-head { ${cs.border.lightgray} }
+    .cf-foot .button { ${cs.bg.gray} ${cs.box.line} ${cs.border.lightwhite} } } 
+    .svg-path { ${cs.fill.white} }
+  } 
   &.dark { .cf-head, .cf-frame { ${cs.bg.dark} ${cs.font.white} 
     .cf-head { ${cs.border.darkgray} }
     .cf-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
-    .svg-path { fill: white; }
+    .svg-path { ${cs.fill.white} }
   }
+  &.black { .cf-head, .cf-frame { ${cs.bg.black} ${cs.font.white} 
+    .cf-head { ${cs.border.dark} }
+    .cf-foot .button { ${cs.bg.black} ${cs.box.line} ${cs.border.dark} } } 
+    .svg-path { ${cs.fill.white} }
+  } 
   &.white { .cf-head, .cf-frame { ${cs.bg.white} ${cs.font.dark} } 
     .cf-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
   }
@@ -80,7 +101,7 @@ class Confirm extends React.PureComponent {
     const { state } = this;
     return (
       this.state.show &&
-      <StyledObject className={cx("confirm", state.type)}>
+      <StyledObject className={cx("confirm", state.type, state.theme)}>
         <div className="bg" onKeyPress={this.onKeyPressed} />
         <div className={cx("cf-frame", state.className)}>
           <div className="cf-head">

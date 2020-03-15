@@ -223,3 +223,18 @@ export const running = () => {
     </StyledObject>
   );
 };
+
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode('')}>
+        <Button theme={'sky'} title={"sky"} />
+        <Button theme={'primary'} title={"primary"} />
+        <Button theme={'gray'} title={"gray"} />
+        <Button theme={'dark'} title={"dark"} />
+        <Button theme={'black'} title={"black"} />
+      </Linebox>
+    </StyledObject>
+  );
+};

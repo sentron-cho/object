@@ -39,7 +39,7 @@ const StyledObject = styled.div` {
       &.green { ${cs.bg.green} }
       &.primary { ${cs.bg.primary} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
       &.red { ${cs.bg.red} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
-      &.gray { ${cs.bg.gray} }
+      &.gray { ${cs.bg.gray} .svg-path { ${cs.fill.white} } }
       &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
       &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
     }
@@ -139,16 +139,16 @@ export default class Checkbox extends React.PureComponent {
   render() {
     const { label, guide } = this.props;
     const { list } = this.state;
-    const { radio, theme = '', type = '', border, bgcolor } = this.props;
+    const { radio, theme = '', type = '', border, bgcolor, className } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', this.props.className, { radio }, { type }, theme)} border={border} bgcolor={bgcolor} >
+      <StyledObject className={cx('chk-box md', className, { radio }, { type }, theme)} border={border} bgcolor={bgcolor} >
         {label && <div className="chk-label">{label}</div>}
         <ul className={'chk-group'}>
           {list ? list.map((item, index) => {
             const icon = radio ? item.check ? 'radio' : 'unradio' : item.check ? 'check' : 'uncheck';
             return <li key={index} className="chk-itm" onClick={this.onClickItem} eid={item.id}>
-              {<React.Fragment><Svg className="chk-icon" name={icon} color={theme} /> <span className="chk-txt">{item.name}</span></React.Fragment>}
+              {<React.Fragment><Svg className="chk-icon" name={icon} /> <span className="chk-txt">{item.name}</span></React.Fragment>}
             </li>;
           }) : <span className={'no-data'}>no list</span>}
         </ul>

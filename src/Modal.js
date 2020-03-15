@@ -45,11 +45,37 @@ export const StyledObject = styled.div`{
     &.sm { .md-frame { ${cs.w.dssm} } }
     &.xs { .md-frame { ${cs.w.dsxs} } }
 
+    
+    &.sky { .cf-head, .cf-frame { ${cs.bg.sky} ${cs.font.dark} 
+      .md-head { ${cs.border.sky} }
+      .md-foot .button { ${cs.bg.sky} ${cs.box.line} ${cs.border.gray} ${cs.font.dark} } } 
+      .svg-path { ${cs.fill.dark} }
+    }
+    &.primary { .md-head, .md-frame { ${cs.bg.primary} ${cs.font.white} 
+      .md-head { ${cs.border.gray} }
+      .md-foot .button { ${cs.bg.primary} ${cs.box.line} ${cs.border.lightgray} } } 
+      .svg-path { ${cs.fill.white} }
+    }
+    &.gray { .md-head, .md-frame { ${cs.bg.gray} ${cs.font.white} 
+      .md-head { ${cs.border.lightgray} }
+      .md-foot .button { ${cs.bg.gray} ${cs.box.line} ${cs.border.lightwhite} } } 
+      .svg-path { ${cs.fill.white} }
+    } 
     &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} 
       .md-head { ${cs.border.darkgray} }
       .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
-      .svg-path { fill: white; }
+      .svg-path { ${cs.fill.white} }
     }
+    &.black { .md-head, .md-frame { ${cs.bg.black} ${cs.font.white} 
+      .md-head { ${cs.border.dark} }
+      .md-foot .button { ${cs.bg.black} ${cs.box.line} ${cs.border.dark} } } 
+      .svg-path { ${cs.fill.white} }
+    } 
+    // &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} 
+    //   .md-head { ${cs.border.darkgray} }
+    //   .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
+    //   .svg-path { fill: white; }
+    // }
     &.white { .md-head, .md-frame { ${cs.bg.white} ${cs.font.dark} } 
       .md-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
     }
@@ -169,7 +195,7 @@ class Modal extends React.PureComponent {
 
     return (
       state.show &&
-      <StyledObject className={cx("modal", state.className,  state.size)} history={this.props.history} onKeyPress={this.onKeyPressed}>
+      <StyledObject className={cx("modal", state.className, state.size, state.theme)} history={this.props.history} onKeyPress={this.onKeyPressed}>
         <div className="bg" eid={EID.CANCEL}></div>
         <div className={cx("md-frame")} style={styled}>
           <div className="md-head">

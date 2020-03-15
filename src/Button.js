@@ -32,6 +32,7 @@ const StyledObject = styled.span`{
     }
 
     &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
+    &.sky { ${cs.bg.sky} ${cs.font.dark} }
     &.primary { ${cs.bg.primary} ${cs.font.white} }
     &.yellow { ${cs.bg.yellow} ${cs.font.black} }
     &.orange { ${cs.bg.orange} ${cs.font.white} }
@@ -89,11 +90,11 @@ const Button = (props) => {
   const { text , label } = props.options || {text: null, label: null};
 
   return (
-    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon)}
+    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon, props.theme)}
       onClick={disabled ? () => null : onClicked} to={props.to} text={text} label={label} border={props.border}>
       {isrun && <img className={cx("btn-icon running")} src={IMG.LoadingRing} alt='r' />}
       {!isrun && icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}
-      <label className="btn-label">{props.title}</label>
+      <label className="btn-label">{props.title || 'button'}</label>
     </StyledObject>
   )
 }

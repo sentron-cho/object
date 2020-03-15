@@ -189,3 +189,19 @@ export const radiobox = () => {
     </StyledObject>
   );
 };
+
+export const theme = () => {
+  const list = [{ id: 1, name: 'radio' }];
+  
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")} inline={true}>
+        <Checkbox list={list} theme={'sky'}>sky</Checkbox>
+        <Checkbox list={list} theme={'primary'}>primary</Checkbox>
+        <Checkbox list={list} theme={'gray'}>gray</Checkbox>
+        <Checkbox list={list} theme={'dark'}>dark</Checkbox>
+        <Checkbox list={list} theme={'black'}>black</Checkbox>
+      </Linebox>
+    </StyledObject>
+  );
+};

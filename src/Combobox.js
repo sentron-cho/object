@@ -61,6 +61,12 @@ const StyledObject = styled.div` {
     &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
     &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }
     &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } }
+
+    &.theme-sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
+    &.theme-primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
+    &.theme-gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
+    &.theme-dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }
+    &.theme-black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } }    
     
     &.disable {
       .cb-sel { ${cs.mouse.default} ${cs.opac.alpha} ${cs.font.dark}
@@ -182,7 +188,7 @@ export default class Combobox extends React.PureComponent {
     const { text, label } = props.options || {text: null, label: null};
 
     return (
-      <StyledObject className={cx('combo-box md', className, { disable }, theme)} text={text} label={label} border={props.border} >
+      <StyledObject className={cx('combo-box md', className, { disable }, `theme-${theme}`)} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
         <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
           <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>

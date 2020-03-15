@@ -42,6 +42,12 @@ const StyledObject = styled.div` {
       &.gray { ${cs.bg.gray} .svg-path { ${cs.fill.white} } }
       &.dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
       &.black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
+
+      &.theme-sky { ${cs.bg.sky} ${cs.font.dark} .svg-path { ${cs.fill.dark} } }
+      &.theme-primary { ${cs.bg.primary} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
+      &.theme-gray { ${cs.bg.gray} .svg-path { ${cs.fill.white} } }
+      &.theme-dark { ${cs.bg.dark} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }
+      &.theme-black { ${cs.bg.black} ${cs.font.lightwhite} .svg-path { ${cs.fill.white} } }      
     }
 
     &.border { 
@@ -142,7 +148,7 @@ export default class Checkbox extends React.PureComponent {
     const { radio, theme = '', type = '', border, bgcolor, className } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', className, { radio }, { type }, theme)} border={border} bgcolor={bgcolor} >
+      <StyledObject className={cx('chk-box md', className, { radio }, { type }, `theme-${theme}`)} border={border} bgcolor={bgcolor} >
         {label && <div className="chk-label">{label}</div>}
         <ul className={'chk-group'}>
           {list ? list.map((item, index) => {

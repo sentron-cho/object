@@ -251,3 +251,25 @@ export const border = () => {
     </StyledObject>
   );
 };
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Switch className={'primary'} label={"sky"} theme={'sky'} />
+        <Switch className={'primary'} label={"primary"} theme={'primary'} />
+        <Switch className={'primary'} label={"gray"} theme={'gray'} />
+        <Switch className={'primary'} label={"dark"} theme={'dark'} />
+        <Switch className={'primary'} label={"black"} theme={'black'} />
+      </Linebox>
+
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Switch className={'primary'} symbol={true} label={"sky"} theme={'sky'} />
+        <Switch className={'primary'} symbol={true} label={"primary"} theme={'primary'} />
+        <Switch className={'primary'} symbol={true} label={"gray"} theme={'gray'} />
+        <Switch className={'primary'} symbol={true} label={"dark"} theme={'dark'} />
+        <Switch className={'primary'} symbol={true} label={"black"} theme={'black'} />
+      </Linebox>      
+    </StyledObject>
+  );
+};

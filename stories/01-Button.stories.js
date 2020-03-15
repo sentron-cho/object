@@ -229,11 +229,11 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} sample={samplecode('')}>
-        <Button theme={'sky'} title={"sky"} />
-        <Button theme={'primary'} title={"primary"} />
-        <Button theme={'gray'} title={"gray"} />
-        <Button theme={'dark'} title={"dark"} />
-        <Button theme={'black'} title={"black"} />
+        <Button className={"primary"} theme={'sky'} title={"sky"} />
+        <Button className={"primary"} theme={'primary'} title={"primary"} />
+        <Button className={"primary"} theme={'gray'} title={"gray"} />
+        <Button className={"primary"} theme={'dark'} title={"dark"} />
+        <Button className={"primary"} theme={'black'} title={"black"} />
       </Linebox>
     </StyledObject>
   );

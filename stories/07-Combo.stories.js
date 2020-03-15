@@ -236,14 +236,14 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"} id={"f0001"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
-        <Combobox list={list} frameid={"f0001"} theme={'sky'}>sky</Combobox>
-        <Combobox list={list} frameid={"f0001"} theme={'primary'}>primary</Combobox>
-        <Combobox list={list} frameid={"f0001"} theme={'gray'}>gray</Combobox>
+        <Combobox className={"primary"} list={list} frameid={"f0001"} theme={'sky'}>sky</Combobox>
+        <Combobox className={"primary"} list={list} frameid={"f0001"} theme={'primary'}>primary</Combobox>
+        <Combobox className={"primary"} list={list} frameid={"f0001"} theme={'gray'}>gray</Combobox>
       </Linebox>
 
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
-        <Combobox list={list} frameid={"f0001"} theme={'dark'}>dark</Combobox>
-        <Combobox list={list} frameid={"f0001"} theme={'black'}>black</Combobox>
+        <Combobox className={"primary"} list={list} frameid={"f0001"} theme={'dark'}>dark</Combobox>
+        <Combobox className={"primary"} list={list} frameid={"f0001"} theme={'black'}>black</Combobox>
       </Linebox>
     </StyledObject>
   );

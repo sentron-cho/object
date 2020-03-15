@@ -63,3 +63,32 @@ export const object = () => {
 };
 
 object.story = { name: 'Base' };
+
+export const theme = () => {
+  const anim = boolean('animaion', false);
+  const [result, setResult] = useState(null);
+
+  const onClick = (eid, e) => {
+    setResult(`onClick(eid = ${eid}, e)`);
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Togglebox list={list} icon={false} anim={anim} onClick={onClick} theme={'sky'} />
+        <Togglebox list={list} icon={false} anim={anim} onClick={onClick} theme={'primary'}  />
+        <Togglebox list={list} icon={false} anim={anim} onClick={onClick} theme={'gray'} />
+        <Togglebox list={list} icon={false} anim={anim} onClick={onClick} theme={'dark'} />
+        <Togglebox list={list} icon={false} anim={anim} onClick={onClick} theme={'black'} />
+      </Linebox>
+
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Togglebox list={list} icon={true} anim={anim} onClick={onClick} theme={'sky'} />
+        <Togglebox list={list} icon={true} anim={anim} onClick={onClick} theme={'primary'}  />
+        <Togglebox list={list} icon={true} anim={anim} onClick={onClick} theme={'gray'} />
+        <Togglebox list={list} icon={true} anim={anim} onClick={onClick} theme={'dark'} />
+        <Togglebox list={list} icon={true} anim={anim} onClick={onClick} theme={'black'} />
+      </Linebox>      
+    </StyledObject>
+  );
+};

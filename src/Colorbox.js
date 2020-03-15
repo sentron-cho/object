@@ -93,6 +93,38 @@ const StyledObject = styled.div` {
       } 
       .btn-clear { .svg-path { ${cs.fill.lightgray} } }
     }
+
+    &.theme-sky { & > div > div:first-child { ${cs.bg.get(`${cs.color.sky} !important;`)} } }
+    &.theme-primary { 
+      & > div > div:first-child { ${cs.bg.get(`${cs.color.primary} !important;`)} } 
+      .label { ${cs.font.white} } 
+      input { ${cs.font.color(`${cs.color.white} !important`)} ${cs.bg.get(`${cs.color.primary} !important;`)}
+        & + span { ${cs.font.color(`${cs.color.lightgray} !important`)} } 
+      } 
+      .btn-clear { .svg-path { ${cs.fill.white} } }
+    }
+    &.theme-gray { & > div > div:first-child { ${cs.bg.get(`${cs.color.gray} !important;`)} } 
+      input { ${cs.font.color(`${cs.color.white} !important`)} ${cs.bg.get(`${cs.color.gray} !important;`)}
+        & + span { ${cs.font.color(`${cs.color.lightgray} !important`)} } 
+      }
+      .btn-clear { .svg-path { ${cs.fill.white} } }
+    }
+    &.theme-dark { 
+      & > div > div:first-child { ${cs.bg.get(`${cs.color.dark} !important;`)} } 
+      .label { ${cs.font.white} } 
+      input { ${cs.font.color(`${cs.color.white} !important`)} ${cs.bg.get(`${cs.color.dark} !important;`)}
+        & + span { ${cs.font.color(`${cs.color.lightgray} !important`)} } 
+      } 
+      .btn-clear { .svg-path { ${cs.fill.lightgray} } }
+    }
+    &.theme-black { 
+      & > div > div:first-child { ${cs.bg.get(`${cs.color.black} !important;`)} } 
+      .label { ${cs.font.white} } 
+      input { ${cs.font.color(`${cs.color.white} !important`)} ${cs.bg.get(`${cs.color.black} !important;`)} 
+        & + span { ${cs.font.color(`${cs.color.lightgray} !important`)} } 
+      } 
+      .btn-clear { .svg-path { ${cs.fill.lightgray} } }
+    }
     
     &.no-shadow {
       & > div > div:first-child { border: 1px solid #eaeaea; box-shadow: none; box-shadow: none !important; }
@@ -181,7 +213,7 @@ export default class Colorbox extends React.PureComponent {
     const { border, title } = props.options || {border: null, title: null};
 
     return (
-      <StyledObject className={cx('color-box', className, { theme }, {label} )} border={border} title={title} >
+      <StyledObject className={cx('color-box', className, { theme }, {label}, `theme-${theme}`)} border={border} title={title} >
         {label && <label className="label">{label}</label>}
         {type === "compact" && <CompactPicker className={"picker-box"} onChange={this.onChanged} color={state.value} />}
         {clear && <Svg className="btn-clear xs" onClick={this.onClear} eid={"clear"} icon={'clear'} />}

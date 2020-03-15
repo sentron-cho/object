@@ -84,6 +84,15 @@ const StyledObject = styled.div`{
       }
     }
 
+    &.sky {
+      .lbx-body { ${cs.bg.sky} ${cs.font.black}
+        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
+        .lbx-date { ${cs.bg.primary} ${cs.font.white} }
+        .lbx-li.selection:hover { ${cs.bg.lightgray} }
+        .lbx-icon { .svg-path { ${cs.fill.dark} } } 
+      }
+      .btn-new { ${cs.bg.sky} ${cs.font.dark} }
+    }
     &.primary {
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
@@ -103,6 +112,56 @@ const StyledObject = styled.div`{
     &.dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
+        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+    &.black {
+      .lbx-body { ${cs.bg.black} ${cs.font.white} 
+        .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
+        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+
+    &.theme-sky {
+      .lbx-body { ${cs.bg.sky} ${cs.font.black}
+        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
+        .lbx-date { ${cs.bg.primary} ${cs.font.white} }
+        .lbx-li.selection:hover { ${cs.bg.lightgray} }
+        .lbx-icon { .svg-path { ${cs.fill.dark} } } 
+      }
+      .btn-new { ${cs.bg.sky} ${cs.font.dark} }
+    }
+    &.theme-primary {
+      .lbx-body { ${cs.bg.primary} ${cs.font.white}
+        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
+        .lbx-date { ${cs.bg.blue} ${cs.font.white} }
+        .lbx-li.selection:hover { ${cs.bg.primaryhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
+    }
+    &.theme-gray {
+      .lbx-body { ${cs.bg.lightgray} 
+        .lbx-li.selection:hover { ${cs.bg.grayhover} }
+        .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
+    }
+    &.theme-dark {
+      .lbx-body { ${cs.bg.dark} ${cs.font.white} 
+        .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
+        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-icon { .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+    &.theme-black {
+      .lbx-body { ${cs.bg.black} ${cs.font.white} 
+        .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
         .lbx-li.selection:hover { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
@@ -130,7 +189,7 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, children = null, total = '',
+    divider, children = null, total = '', theme,
     title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
   const [list, setList] = useState(props.list);
@@ -198,7 +257,7 @@ const Listbox = (props) => {
   }, [list]);
 
   return (
-    <StyledObject className={cx("list-box", props.className, { disable })}
+    <StyledObject className={cx("list-box", props.className, { disable }, `theme-${theme}`)} 
       eid="select" style={styled} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 

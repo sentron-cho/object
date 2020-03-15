@@ -43,15 +43,17 @@ const StyledObject = styled.div`{
       ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
     }
 
-    &.primary {
-      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary}
-    }
-    &.gray {
-      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} 
-    }
-    &.dark {
-      ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark}  
-    }
+    &.sky { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.sky} }
+    &.primary { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary} }
+    &.gray { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} }
+    &.dark { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark} }
+    &.black { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.black} }
+
+    &.theme-sky { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.sky} }
+    &.theme-primary { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.primary} }
+    &.theme-gray { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.gray} }
+    &.theme-dark { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.dark} }
+    &.theme-black { ${cs.p.a10} ${cs.w.calc("100% - 20px")} ${cs.bg.black} }
 
     &.radius { ${cs.box.radius} }
     &.border { ${cs.box.line} }
@@ -154,7 +156,7 @@ export default class Formgroup extends React.PureComponent {
 
   render() {
     const { state, props } = this;
-    const { child, inline, children, flexwrap, disable } = props;
+    const { child, inline, children, flexwrap, disable, theme } = props;
     const { config = { child: null } } = props;
     const { list, selected, anim } = state;
 
@@ -198,7 +200,7 @@ export default class Formgroup extends React.PureComponent {
 
     const Child = child;
     return (
-      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable })}
+      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, `theme-${theme}`)} 
         {...props.options} {...props.style} border={props.border} bgcolor={props.bgcolor}
         anim={state.anim} onAnimationEnd={this.onAnimEnd}>
 

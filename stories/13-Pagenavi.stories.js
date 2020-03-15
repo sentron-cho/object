@@ -199,11 +199,11 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
-        <Pagenavi theme={'sky'} pos={1} max={20} />
-        <Pagenavi theme={'primary'} pos={1} max={20}  />
-        <Pagenavi theme={'gray'} pos={1} max={20} />
-        <Pagenavi theme={'dark'} pos={1} max={20} />
-        <Pagenavi theme={'black'} pos={1} max={20} />
+        <Pagenavi className={"primary"} theme={'sky'} pos={1} max={20} />
+        <Pagenavi className={"primary"} theme={'primary'} pos={1} max={20}  />
+        <Pagenavi className={"primary"} theme={'gray'} pos={1} max={20} />
+        <Pagenavi className={"primary"} theme={'dark'} pos={1} max={20} />
+        <Pagenavi className={"primary"} theme={'black'} pos={1} max={20} />
       </Linebox>
     </StyledObject>
   );

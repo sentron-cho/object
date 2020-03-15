@@ -9,7 +9,7 @@ const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
-    // .lb-box .lb-li > * { ${cs.m.b10} }
+    .lb-box .lb-li > * { ${cs.m.b10} }
 
     .t-child { ${cs.h.get(100)} & > p { ${cs.align.center} } }
 
@@ -168,27 +168,41 @@ export const animation = () => {
         <Formgroup className={'sm'} anim={{ type: 'slidein', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
-        <Formgroup className={'border'} anim={{ type: 'slideout', time: value }}
+        <Formgroup className={''} anim={{ type: 'slideout', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
       </Linebox>
 
       <Linebox title={"slideup/slidedown"} sample={samplecode('anim={{ type: "fadein", time: "0.3s" }} config={{ child: { className: "sm dark" } }}')} inline={true}>
-        <Formgroup className={'border'} anim={{ type: 'slideup', time: value }}
+        <Formgroup className={''} anim={{ type: 'slideup', time: value }}
           config={{ child: { className: "sm dark" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
-        <Formgroup className={'border'} anim={{ type: 'slidedown', time: value }}
+        <Formgroup className={''} anim={{ type: 'slidedown', time: value }}
           config={{ child: { className: "sm dark" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
       </Linebox>
 
       <Linebox title={"showin/showout"} sample={samplecode('anim={{ type: "showin", time: "0.3s" }} config={{ child: { className: "sm" } }}')} inline={true} >
-        <Formgroup className={'border'} anim={{ type: 'showin', time: value }}
+        <Formgroup className={''} anim={{ type: 'showin', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
-        <Formgroup className={'border'} anim={{ type: 'showout', time: value }}
+        <Formgroup className={''} anim={{ type: 'showout', time: value }}
           config={{ child: { className: "sm" } }}
           child={Widgetbox} flex={true} list={jsonlist(3)} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Formgroup className={'primary'} name={'widget'} theme={'sky'} child={Widgetbox} flex={true} list={jsonlist(3)} />
+        <Formgroup className={'primary'} name={'widget'} theme={'primary'} child={Widgetbox} flex={true} list={jsonlist(3)} />
+        <Formgroup className={'primary'} name={'widget'} theme={'gray'} child={Widgetbox} flex={true} list={jsonlist(3)} />
+        <Formgroup className={'primary'} name={'widget'} theme={'dark'} child={Widgetbox} flex={true} list={jsonlist(3)} />
+        <Formgroup className={'primary'} name={'widget'} theme={'black'} child={Widgetbox} flex={true} list={jsonlist(3)} />
       </Linebox>
     </StyledObject>
   );

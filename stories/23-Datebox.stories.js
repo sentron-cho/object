@@ -135,3 +135,17 @@ export const bgcolor = () => {
     </StyledObject>
   );
 };
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Datebox className={'primary'} label={"sky"} theme={'sky'} />
+        <Datebox className={'primary'} label={"primary"} theme={'primary'} />
+        <Datebox className={'primary'} label={"gray"} theme={'gray'} />
+        <Datebox className={'primary'} label={"dark"} theme={'dark'} />
+        <Datebox className={'primary'} label={"black"} theme={'black'} />
+      </Linebox>
+    </StyledObject>
+  );
+};

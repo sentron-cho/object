@@ -57,6 +57,22 @@ const StyledObject = styled.div`{
       .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
     }
 
+    &.theme-sky {
+      .pg-no { &.active { ${cs.bg.sky} ${cs.font.dark} } &:hover { ${cs.border.sky} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+    }
+    &.theme-primary {
+      .pg-no { &.active { ${cs.bg.primary} } &:hover { ${cs.border.primary} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+    }
+    &.theme-gray {
+      .pg-no { &.active { ${cs.bg.gray} } &:hover { ${cs.border.darkgray} } .svg-icon { .svg-path { ${cs.fill.gray} } } } 
+    }
+    &.theme-dark {
+      .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
+    }
+    &.theme-black {
+      .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
+    }
+
     &.border { .pgn-frame { ${cs.box.line} } }
     &.radius { .pgn-frame { ${cs.box.radius} } }
     
@@ -162,7 +178,7 @@ class Pagenavi extends React.Component {
       return null;
     } else {
       return (
-        <StyledObject className={cx('page-navi', (type), className, theme)} button={button} border={border} font={font} bgcolor={bgcolor} >
+        <StyledObject className={cx('page-navi', (type), className, `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
           <ul className={cx('pgn-frame')}>
             <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
               <Svg className="prev sm" name={"prev"} color={this.props.color} />

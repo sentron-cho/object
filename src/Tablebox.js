@@ -60,8 +60,8 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.gray}
-        .tb-row { .tb-col { ${cs.border.darkgray} } } 
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray}
+        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
 
       .selection {
@@ -91,9 +91,20 @@ const StyledObject = styled.div`{
       .tb-head { ${cs.font.xl} }
     }
 
-    
+    &.sky {
+      .tb-body { ${cs.bg.sky} ${cs.font.dark} 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+        .tb-row { .tb-col { ${cs.border.lightgray} } } 
+      }
+      .tb-head { ${cs.bg.lightgray} ${cs.font.dark} 
+        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
+      }
+      .selection:hover { ${cs.bg.darkwhite} }
+      .btn-new { ${cs.bg.sky} ${cs.font.dark} }
+    }
     &.primary {
       .tb-body { ${cs.bg.primary} ${cs.font.white} 
+      .tb-row { ${cs.border.lightgray} .tb-col { ${cs.border.lightgray} } } 
         .i-btn { .svg-path { ${cs.fill.lightgray} } }
       }
       .tb-head { ${cs.bg.blue} ${cs.font.white} }
@@ -102,20 +113,91 @@ const StyledObject = styled.div`{
     }
     &.gray {
       .tb-body { ${cs.bg.lightgray} 
-        .tb-border { ${cs.border.semiblack} } 
+        .tb-row { ${cs.border.lightwhite} .tb-col { ${cs.border.lightwhite} } } 
         .i-btn { .svg-path { ${cs.fill.dark} } }
+      }
+      .tb-head { ${cs.bg.gray} ${cs.font.black} 
+        .tb-row { ${cs.border.lightwhite} .tb-col { ${cs.border.lightwhite} } } 
       }
       .selection:hover { ${cs.bg.grayhover} }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
     }
     &.dark {
       .tb-body { ${cs.bg.dark} ${cs.font.white} 
-        .tb-border { ${cs.border.black} } 
+        .tb-row { ${cs.border.semiblack} .tb-col { ${cs.border.semiblack} } } 
         .i-btn { .svg-path { ${cs.fill.white} } }
       }
-      .tb-head { ${cs.bg.black} ${cs.font.white} }
+      .tb-head { ${cs.bg.black} ${cs.font.white} 
+        .tb-row { ${cs.border.semiblack} .tb-col { ${cs.border.semiblack} } } 
+      }
       .selection:hover { ${cs.bg.darkhover} }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+    &.black {
+      .tb-body { ${cs.bg.black} ${cs.font.white} 
+        .tb-row { ${cs.border.dark} .tb-col { ${cs.border.dark} } } 
+        .i-btn { .svg-path { ${cs.fill.white} } }
+      }
+      .tb-head { ${cs.bg.dark} ${cs.font.white} 
+        .tb-row { ${cs.border.black} .tb-col { ${cs.border.black} } } 
+      }
+      .selection:hover { ${cs.bg.darkhover} }
+      .btn-new { ${cs.bg.dark} ${cs.font.white} }
+    }
+
+    
+    &.theme-sky {
+      .tb-body { ${cs.bg.sky} ${cs.font.dark} 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+        .tb-row { .tb-col { ${cs.border.lightgray} } } 
+      }
+      .tb-head { ${cs.bg.lightgray} ${cs.font.dark} 
+        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
+      }
+      .selection:hover { ${cs.bg.darkwhite} }
+      .btn-new { ${cs.bg.sky} ${cs.font.dark} }
+    }
+    &.theme-primary {
+      .tb-body { ${cs.bg.primary} ${cs.font.white} 
+      .tb-row { ${cs.border.lightgray} .tb-col { ${cs.border.lightgray} } } 
+        .i-btn { .svg-path { ${cs.fill.lightgray} } }
+      }
+      .tb-head { ${cs.bg.blue} ${cs.font.white} }
+      .selection:hover { ${cs.bg.primaryhover} }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
+    }
+    &.theme-gray {
+      .tb-body { ${cs.bg.lightgray} 
+        .tb-row { ${cs.border.lightwhite} .tb-col { ${cs.border.lightwhite} } } 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+      }
+      .tb-head { ${cs.bg.gray} ${cs.font.black} 
+        .tb-row { ${cs.border.lightwhite} .tb-col { ${cs.border.lightwhite} } } 
+      }
+      .selection:hover { ${cs.bg.grayhover} }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
+    }
+    &.theme-dark {
+      .tb-body { ${cs.bg.dark} ${cs.font.white} 
+        .tb-row { ${cs.border.semiblack} .tb-col { ${cs.border.semiblack} } } 
+        .i-btn { .svg-path { ${cs.fill.white} } }
+      }
+      .tb-head { ${cs.bg.black} ${cs.font.white} 
+        .tb-row { ${cs.border.semiblack} .tb-col { ${cs.border.semiblack} } } 
+      }
+      .selection:hover { ${cs.bg.darkhover} }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+    &.theme-black {
+      .tb-body { ${cs.bg.black} ${cs.font.white} 
+        .tb-row { ${cs.border.dark} .tb-col { ${cs.border.dark} } } 
+        .i-btn { .svg-path { ${cs.fill.white} } }
+      }
+      .tb-head { ${cs.bg.dark} ${cs.font.white} 
+        .tb-row { ${cs.border.black} .tb-col { ${cs.border.black} } } 
+      }
+      .selection:hover { ${cs.bg.darkhover} }
+      .btn-new { ${cs.bg.dark} ${cs.font.white} }
     }
 
     ${({ border }) => border && `.tb-frame { ${cs.box.line} .tb-body .tb-row:last-child { ${cs.border.none} } }`}
@@ -154,7 +236,7 @@ const StyledObject = styled.div`{
 }`;
 
 const Tablebox = (props) => {
-  const { head = null, total = '', height = 30 } = props;
+  const { head = null, total = '', height = 30, theme } = props;
   const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
   const align = 'center';
   const style = { cursor, height, align };
@@ -266,7 +348,7 @@ const Tablebox = (props) => {
   }, [list]);
 
   return (
-    <StyledObject className={cx('table-box', props.className)} {...style}
+    <StyledObject className={cx('table-box', props.className, `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       
       <SearchFrame list={props.searchs} searchkey={props.searchkey}

@@ -47,6 +47,12 @@ const StyledObject = styled.div`{
       &.alphablack { ${cs.bg.alphablack} ${cs.font.white} }
       &.dark { ${cs.bg.dark} ${cs.font.white} }
       &.black { ${cs.bg.black} ${cs.font.white} }
+
+      &.theme-sky { ${cs.bg.sky} }
+      &.theme-primary { ${cs.bg.primary} }
+      &.theme-gray { ${cs.bg.gray} }
+      &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
+      &.theme-black { ${cs.bg.black} ${cs.font.white} }
     }
     
     
@@ -82,7 +88,7 @@ const StyledObject = styled.div`{
 const Cardbox = (props) => {
   const [anim, setAnim] = useState(props.anim);
 
-  const { eid, width = "100%", height = "100%", margin = "20px", mouse = "default", bgcolor = null } = props;
+  const { eid, width = "100%", height = "100%", margin = "20px", mouse = "default", bgcolor = null, theme } = props;
   const { border = { color: null, width: null, radius: null } } = props;
   const cursor = props.onClick ? "pointer" : mouse;
   const params = { width, height, margin, cursor };
@@ -110,7 +116,7 @@ const Cardbox = (props) => {
 
 
   return (
-    <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"), props.theme)}
+    <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"), `theme-${theme}`)}
       {...params} style={props.style} eid={props.eid} onClick={onClicked} anim={anim} bgcolor={bgcolor} border={border}
       onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart} onKeyPress={onKeyPress}>
       {props.children}

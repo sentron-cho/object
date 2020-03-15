@@ -31,7 +31,7 @@ const StyledObject = styled.span`{
 }`;
 
 const Togglebox = (props) => {
-  const { list, icon = null, anim = false } = props;
+  const { list, icon = null, anim = false, theme } = props;
 
   if (!list) {
     return <div style={{ color: `${cs.color.gray}` }}>no items</div>
@@ -57,21 +57,21 @@ const Togglebox = (props) => {
     const [item, setItem] = useState(select ? list.find(item => item.eid === select) : list[0]);
     const [next, setNext] = useState(nextItem(item.eid));
 
-    return <StyledObject className={cx("toggle-box", props.className, { anim })}>
+    return <StyledObject className={cx("toggle-box", props.className, { anim }, theme)}>
       <span className={"tgb-curr"}>
         {!icon &&
-          <Button className={cx("primary tgb-btn", props.className)} onClick={onClicked} title={item.title} eid={item.eid} />
+          <Button className={cx("primary tgb-btn", props.className)} theme={theme} onClick={onClicked} title={item.title} eid={item.eid} />
         }
         {icon &&
-          <Svg className={cx("icon md tgb-icon", icon, props.className)} onClick={onClicked} eid={item.eid} name={item.icon} color={props.color} />
+          <Svg className={cx("icon md tgb-icon", icon, props.className)} theme={theme} onClick={onClicked} eid={item.eid} name={item.icon} color={props.color} />
         }
       </span>
       {anim && <span className={"tgb-next"}>
         {!icon &&
-          <Button className={cx("primary tgb-btn", props.className)} onClick={onClicked} title={next.title} eid={next.eid} />
+          <Button className={cx("primary tgb-btn", props.className)} theme={theme} onClick={onClicked} title={next.title} eid={next.eid} />
         }
         {icon &&
-          <Svg className={cx("icon md tgb-icon", icon, props.className)} onClick={onClicked} eid={next.eid} name={next.icon} color={props.color} />
+          <Svg className={cx("icon md tgb-icon", icon, props.className)} theme={theme} onClick={onClicked} eid={next.eid} name={next.icon} color={props.color} />
         }
       </span>}
     </StyledObject>

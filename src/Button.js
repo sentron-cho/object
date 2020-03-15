@@ -38,14 +38,20 @@ const StyledObject = styled.span`{
     &.orange { ${cs.bg.orange} ${cs.font.white} }
     &.red { ${cs.bg.red} ${cs.font.white} }
     &.green { ${cs.bg.green} ${cs.font.white} }
+    &.gray { ${cs.bg.gray} ${cs.font.black} }
     &.dark { ${cs.bg.dark} ${cs.font.white} }
     &.black { ${cs.bg.black} ${cs.font.white} }
     &.lightgray { ${cs.bg.lightwhite} ${cs.font.black} }
-    &.gray { ${cs.bg.gray} ${cs.font.black} }
     &.white { ${cs.bg.white} ${cs.font.black} }
     &.primary-line { ${cs.bg.trans} ${cs.font.primary} ${cs.box.line} ${cs.border.primary} }
     &.gray-line { ${cs.bg.trans} ${cs.font.dark} ${cs.box.line} ${cs.border.gray} }
     &.gd-gray { background-image: linear-gradient(-180deg, ${cs.color.lightgray}, ${cs.color.lightwhite} 90%); ${cs.font.dark} ${cs.box.line} ${cs.border.lightgray} }
+
+    &.theme-sky { ${cs.bg.sky} ${cs.font.dark} }
+    &.theme-primary { ${cs.bg.primary} ${cs.font.white} }
+    &.theme-gray { ${cs.bg.gray} ${cs.font.black} }
+    &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
+    &.theme-black { ${cs.bg.black} ${cs.font.white} }
 
     &.disabled { ${cs.mouse.default} ${cs.font.darkgray} ${cs.opac.alpha}
       .btn-label { ${cs.mouse.default} }
@@ -70,10 +76,10 @@ const StyledObject = styled.span`{
       ${cs.font.center} ${cs.h.fit} ${cs.mouse.pointer}
     }
 
-    ${({border}) => border && cs.box.line}
-    ${({border}) => border && border.color && cs.border.color(border.color)}
-    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
-    ${({border}) => border && border.width && cs.border.width(border.width)}
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
   }
 }`;
 
@@ -85,12 +91,12 @@ const Button = (props) => {
   let disabled = (props.disabled === undefined) ? props.disable : props.disabled;
   const isrun = props.isrun ? props.isrun : false;
   if (isrun) disabled = true;
-  const { icon, type, iconcolor = cs.color.white, color } = props;
+  const { icon, type, iconcolor = cs.color.white, color, theme } = props;
   const isicon = icon || isrun ? 'icon' : '';
-  const { text , label } = props.options || {text: null, label: null};
+  const { text, label } = props.options || { text: null, label: null };
 
   return (
-    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon, props.theme)}
+    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon, `theme-${theme}`)}
       onClick={disabled ? () => null : onClicked} to={props.to} text={text} label={label} border={props.border}>
       {isrun && <img className={cx("btn-icon running")} src={IMG.LoadingRing} alt='r' />}
       {!isrun && icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}

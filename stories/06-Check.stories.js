@@ -196,11 +196,11 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")} inline={true}>
-        <Checkbox list={list} theme={'sky'}>sky</Checkbox>
-        <Checkbox list={list} theme={'primary'}>primary</Checkbox>
-        <Checkbox list={list} theme={'gray'}>gray</Checkbox>
-        <Checkbox list={list} theme={'dark'}>dark</Checkbox>
-        <Checkbox list={list} theme={'black'}>black</Checkbox>
+        <Checkbox className={"primary"} list={list} theme={'sky'}>sky</Checkbox>
+        <Checkbox className={"primary"} list={list} theme={'primary'}>primary</Checkbox>
+        <Checkbox className={"primary"} list={list} theme={'gray'}>gray</Checkbox>
+        <Checkbox className={"primary"} list={list} theme={'dark'}>dark</Checkbox>
+        <Checkbox className={"primary"} list={list} theme={'black'}>black</Checkbox>
       </Linebox>
     </StyledObject>
   );

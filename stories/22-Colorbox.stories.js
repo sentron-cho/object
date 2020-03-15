@@ -22,13 +22,6 @@ export default { title: 'object|Colorbox', component: Colorbox, decorators: [wit
 
 const samplecode = (value, classname = '') => `<Colorbox className={"${classname}"} ${value} />`;
 
-const list = [
-  { eid: 'card', title: 'card', icon: 'thead' },
-  { eid: 'list', title: 'list', icon: 'list' },
-  { eid: 'menu', title: 'menu', icon: 'menu' },
-  { eid: 'user', title: 'user', icon: 'user' },
-]
-
 export const object = () => {
   const size = options('size',
     { 'none': '', 'xs(x small)': 'xs', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'xl(x large)': 'xl' },
@@ -114,6 +107,21 @@ export const border = () => {
         <Colorbox label={"trans"}
           options={{ border: { radius: '20px', color: "black", width: '3px' }, title: { align: "center" } }}
         />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Colorbox className={'primary'} label={"sky"} theme={'sky'} />
+        <Colorbox className={'primary'} label={"primary"} theme={'primary'} />
+        <Colorbox className={'primary'} label={"gray"} theme={'gray'} />
+        <Colorbox className={'primary'} label={"dark"} theme={'dark'} />
+        <Colorbox className={'primary'} label={"black"} theme={'black'} />
       </Linebox>
     </StyledObject>
   );

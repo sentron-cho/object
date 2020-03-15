@@ -93,6 +93,12 @@ const StyledObject = styled.span`{
     &.gray { .sw-slider { ${cs.bg.lightgray} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
     &.dark { .sw-slider { ${cs.bg.dark} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
     &.black { .sw-slider { ${cs.bg.black} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+
+    &.theme-sky { .sw-slider { ${cs.bg.sky} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
+    &.theme-primary { .sw-slider { ${cs.bg.primary} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.theme-gray { .sw-slider { ${cs.bg.lightgray} ${cs.font.black} &::after { ${cs.font.gray} } &.checked::after { ${cs.font.dark} } } }
+    &.theme-dark { .sw-slider { ${cs.bg.dark} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
+    &.theme-black { .sw-slider { ${cs.bg.black} ${cs.font.white} &::after { ${cs.font.lightgray} } &.checked::after { ${cs.font.white} } } }
     
     &.disable {
       .sw-slider { ${cs.mouse.default} ${cs.opac.alpha} ${cs.font.dark}
@@ -140,7 +146,7 @@ export default class Switch extends React.PureComponent {
 
   render() {
     const { state, props } = this;
-    const { symbol, on = "ON", off = "OFF" } = props;
+    const { symbol, on = "ON", off = "OFF", theme } = props;
     const { checked } = state;
     const ton = symbol ? "✓" : on;
     const toff = symbol ? "✕" : off;
@@ -149,7 +155,7 @@ export default class Switch extends React.PureComponent {
 
     console.dir(border);
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol })}
+      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol }, `theme-${theme}`)} 
         onClick={disable ? () => null : this.onClicked} text={text} label={label} border={border} >
         {props.label ? <label className="sw-label">{props.label}</label> : null}
         <span className={cx("sw-slider", { checked })} data-checked={ton} data-unchecked={toff} />

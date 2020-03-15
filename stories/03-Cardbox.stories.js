@@ -267,11 +267,11 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")} inline={true}>
-        <Cardbox theme={'sky'}>sky</Cardbox>
-        <Cardbox theme={'primary'}>primary</Cardbox>
-        <Cardbox theme={'gray'}>gray</Cardbox>
-        <Cardbox theme={'dark'}>dark</Cardbox>
-        <Cardbox theme={'black'}>black</Cardbox>
+        <Cardbox className={'primary'} theme={'sky'}>sky</Cardbox>
+        <Cardbox className={'primary'} theme={'primary'}>primary</Cardbox>
+        <Cardbox className={'primary'} theme={'gray'}>gray</Cardbox>
+        <Cardbox className={'primary'} theme={'dark'}>dark</Cardbox>
+        <Cardbox className={'primary'} theme={'black'}>black</Cardbox>
       </Linebox>
     </StyledObject>
   );

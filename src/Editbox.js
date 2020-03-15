@@ -125,6 +125,12 @@ const StyledObject = styled.div` {
     &.dark { .input { ${cs.bg.dark} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
     &.black { .input { ${cs.bg.black} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
 
+    &.theme-sky { .input { ${cs.bg.sky} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
+    &.theme-primary { .input { ${cs.bg.primary} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.primaryhover} } } }
+    &.theme-gray { .input { ${cs.bg.lightgray} ${cs.font.black} &::placeholder { ${cs.font.darkgray} } &:focus { ${cs.bg.darkwhite} } } }
+    &.theme-dark { .input { ${cs.bg.dark} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
+    &.theme-black { .input { ${cs.bg.black} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
+
     &.scroll-t1 { .box > textarea.input { ${cs.scrollbar.t1} } }
     &.scroll-t2 { .box > textarea.input { ${cs.scrollbar.t2} } }
     &.scroll-t3 { .box > textarea.input { ${cs.scrollbar.t3} } }
@@ -342,7 +348,7 @@ class Editbox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { noti } = state;
-    const { disabled = false } = props;
+    const { disabled = false, theme } = props;
     const {
       disable = disabled, readonly, inline, multi,
       fontsize = '14px', height = '80px', minheight, maxheight,
@@ -350,7 +356,7 @@ class Editbox extends React.PureComponent {
     } = props;
 
     return (
-      <StyledObject className={cx('edit-box', props.className, { inline }, props.theme)}
+      <StyledObject className={cx('edit-box', props.className, { inline }, `theme-${theme}`)}
         height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight}
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}</label>}

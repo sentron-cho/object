@@ -134,17 +134,17 @@ export const size = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"small"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("sm")} pos={1} max={10} head={tags} list={jsonlist(5)} 
-        onClickDelete={()=>{}} onClickMove={()=>{}}/>
+        onClickDelete={()=>{}} />
       </Linebox>
 
       <Linebox title={"none size"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("")} pos={1} max={10} head={tags} list={jsonlist(5)} 
-        onClickDelete={()=>{}} onClickMove={()=>{}}/>
+        onClickDelete={()=>{}} />
       </Linebox>
 
       <Linebox title={"large"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("lg")} pos={1} max={10} head={tags} list={jsonlist(5)}
-        onClickDelete={()=>{}} onClickMove={()=>{}}/>
+        onClickDelete={()=>{}} />
       </Linebox>
     </StyledObject>
   );
@@ -155,27 +155,39 @@ export const color = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"no color"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("")} pos={1} max={10} head={tags} list={jsonlist(5)}
-          onClickDelete={()=>{}} onClickMove={()=>{}}
+          onClickDelete={()=>{}} 
+          onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"sky"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("sky")} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} 
           onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
 
       <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("primary")} pos={1} max={10} head={tags} list={jsonlist(5)}
-          onClickDelete={()=>{}} onClickMove={()=>{}}
+          onClickDelete={()=>{}} 
           onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
 
       <Linebox title={"gray"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("gray")} pos={1} max={10} head={tags} list={jsonlist(5)}
-          onClickDelete={()=>{}} onClickMove={()=>{}}
+          onClickDelete={()=>{}} 
           onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
 
       <Linebox title={"dark"} className={"nomargin"} sample={samplecode("", "")} box={false}>
         <Tablebox className={cx("dark")} pos={1} max={10} head={tags} list={jsonlist(5)}
-          onClickDelete={()=>{}} onClickMove={()=>{}}
+          onClickDelete={()=>{}} 
           onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
       </Linebox>
+
+      <Linebox title={"black"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("black")} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} 
+          onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>      
     </StyledObject>
   );
 };
@@ -318,3 +330,35 @@ export const dragdrop = () => {
     </StyledObject>
   );
 }
+
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"sky"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("primary")} theme={"sky"} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"primary"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("primary")} theme={"primary"} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"gray"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("primary")} theme={"gray"} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"dark"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("primary")} theme={"dark"} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>
+
+      <Linebox title={"black"} className={"nomargin"} sample={samplecode("", "")} box={false}>
+        <Tablebox className={cx("primary")} theme={"black"} pos={1} max={10} head={tags} list={jsonlist(5)}
+          onClickDelete={()=>{}} onClickSearch={()=>{}} onSelect={()=>{}} onClickNew={()=>{}} />
+      </Linebox>      
+    </StyledObject>
+  );
+};

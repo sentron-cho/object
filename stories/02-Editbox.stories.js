@@ -193,11 +193,11 @@ export const theme = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} sample={samplecode('bgcolor={""}')} top={option.top} width={option.width}>
-        <Editbox theme={'sky'} type={"text"} label={"sky"} guide={"sky"} />
-        <Editbox theme={'primary'} type={"text"} label={"primary"} guide={"primary"} />
-        <Editbox theme={'gray'} type={"text"} label={"gray"} guide={"gray"} />
-        <Editbox theme={'dark'} type={"text"} label={"dark"} guide={"dark"} />
-        <Editbox theme={'black'} type={"text"} label={"black"} guide={"black"} />
+        <Editbox className={'primary'} theme={'sky'} type={"text"} label={"sky"} guide={"sky"} />
+        <Editbox className={'primary'} theme={'primary'} type={"text"} label={"primary"} guide={"primary"} />
+        <Editbox className={'primary'} theme={'gray'} type={"text"} label={"gray"} guide={"gray"} />
+        <Editbox className={'primary'} theme={'dark'} type={"text"} label={"dark"} guide={"dark"} />
+        <Editbox className={'primary'} theme={'black'} type={"text"} label={"black"} guide={"black"} />
       </Linebox>
     </StyledObject>
   );

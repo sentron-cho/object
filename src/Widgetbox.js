@@ -101,9 +101,9 @@ const StyledObject = styled.div`{
     &.noborder { ${cs.border.trans} }
     
     &.sky {
-      ${cs.bg.sky} ${cs.font.dark} ${cs.border.gray}
+      ${cs.bg.sky} ${cs.font.dark} ${cs.border.lightgray}
       .icon .svg-path { ${cs.fill.dark} }
-      &.hover:hover { ${cs.bg.darkhover} }      
+      &.hover:hover { ${cs.bg.lightgray} }
     }
     &.primary {
       ${cs.bg.primary} ${cs.font.white} ${cs.border.primary}
@@ -113,14 +113,41 @@ const StyledObject = styled.div`{
     &.gray {
       ${cs.bg.lightgray} ${cs.font.dark} ${cs.border.gray}
       .icon .svg-path { ${cs.fill.dark} }
-      &.hover:hover { ${cs.bg.grayhover} }      
+      &.hover:hover { ${cs.bg.grayhover} }
     }
     &.dark {
       ${cs.bg.dark} ${cs.font.white} ${cs.border.black}
       .icon .svg-path { ${cs.fill.white} }
-      &.hover:hover { ${cs.bg.darkhover} }      
+      &.hover:hover { ${cs.bg.darkhover} }
     }
     &.black {
+      ${cs.bg.black} ${cs.font.white} ${cs.border.darkgray}
+      .icon .svg-path { ${cs.fill.white} }
+      &.hover:hover { ${cs.bg.darkhover} }
+    }
+
+    
+    &.theme-sky {
+      ${cs.bg.sky} ${cs.font.dark} ${cs.border.lightgray}
+      .icon .svg-path { ${cs.fill.dark} }
+      &.hover:hover { ${cs.bg.lightgray} }
+    }
+    &.theme-primary {
+      ${cs.bg.primary} ${cs.font.white} ${cs.border.primary}
+      .icon .svg-path { ${cs.fill.white} }
+      &.hover:hover { ${cs.bg.primaryhover} }
+    }
+    &.theme-gray {
+      ${cs.bg.lightgray} ${cs.font.dark} ${cs.border.gray}
+      .icon .svg-path { ${cs.fill.dark} }
+      &.hover:hover { ${cs.bg.grayhover} }
+    }
+    &.theme-dark {
+      ${cs.bg.dark} ${cs.font.white} ${cs.border.black}
+      .icon .svg-path { ${cs.fill.white} }
+      &.hover:hover { ${cs.bg.darkhover} }
+    }
+    &.theme-black {
       ${cs.bg.black} ${cs.font.white} ${cs.border.darkgray}
       .icon .svg-path { ${cs.fill.white} }
       &.hover:hover { ${cs.bg.darkhover} }
@@ -167,7 +194,7 @@ const Widgetbox = (props) => {
   const hover = onClick ? true : false;
   
   return (
-    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className, theme)}
+    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className, `theme-${theme}`)} 
       name={props.name} onClick={onClicked} {...props.style} labelcolor={props.labelcolor}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {type === "label" &&

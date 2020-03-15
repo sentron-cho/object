@@ -44,6 +44,12 @@ const StyledObject = styled.div`{
     &.dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } .cls-frame { ${cs.border.gray} } }
     &.black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } .cls-frame { ${cs.border.darkgray} } }
 
+    &.theme-sky { ${cs.bg.sky} .cls-title:hover { ${cs.bg.lightgray} } .cls-frame { ${cs.border.lightgray} } }
+    &.theme-primary { ${cs.bg.primary} ${cs.font.white} .cls-title:hover { ${cs.bg.blue} } .cls-frame { ${cs.border.lightgray} } }
+    &.theme-gray { ${cs.bg.lightgray} .cls-title:hover { ${cs.bg.gray} } .cls-frame { ${cs.border.white} } }
+    &.theme-dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } .cls-frame { ${cs.border.gray} } }
+    &.theme-black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } .cls-frame { ${cs.border.darkgray} } }
+
     ${({border}) => border && cs.box.line}
     ${({border}) => border && border.color && cs.border.color(border.color)}
     ${({border}) => border && border.radius && cs.border.radius(border.radius)}
@@ -64,7 +70,7 @@ const StyledObject = styled.div`{
 const Callopsebox = (props) => {
   const interval = '200ms';
   const [active, setActive] = useState(props.active || false);
-  const { label = "notitle", align = "left", minHeight = "100px", eid = null, rowid = null, border = null } = props;
+  const { label = "notitle", align = "left", minHeight = "100px", eid = null, rowid = null, border = null, theme } = props;
 
   useEffect(() => setActive(props.active), [props]);
 
@@ -75,7 +81,7 @@ const Callopsebox = (props) => {
   }
 
   return (
-    <StyledObject className={cx('callopse-box', props.className, { active }, props.theme)}
+    <StyledObject className={cx('callopse-box', props.className, { active }, `theme-${theme}`)}
       align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor} 
       border={border} >
       <div className="cls-title" onClick={onClick}>{label}</div>

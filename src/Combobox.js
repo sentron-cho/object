@@ -176,13 +176,13 @@ export default class Combobox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { list = null, noti, show, pos } = state;
-    const { disable, aling="center", labelalign="left" } = props;
+    const { disable, aling="center", labelalign="left", theme, className } = props;
     const selected = list ? list.length < pos ? list[pos] : list[0] : null;
     const title = selected ? selected.name.toString() : 'noitem';
     const { text, label } = props.options || {text: null, label: null};
 
     return (
-      <StyledObject className={cx('combo-box md', this.props.className, { disable })} text={text} label={label} border={props.border} >
+      <StyledObject className={cx('combo-box md', className, { disable }, theme)} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
         <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
           <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>

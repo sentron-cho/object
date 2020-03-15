@@ -100,6 +100,11 @@ const StyledObject = styled.div`{
     &.noradius { ${cs.border.radius(0)} }
     &.noborder { ${cs.border.trans} }
     
+    &.sky {
+      ${cs.bg.sky} ${cs.font.dark} ${cs.border.gray}
+      .icon .svg-path { ${cs.fill.dark} }
+      &.hover:hover { ${cs.bg.darkhover} }      
+    }
     &.primary {
       ${cs.bg.primary} ${cs.font.white} ${cs.border.primary}
       .icon .svg-path { ${cs.fill.white} }
@@ -114,6 +119,11 @@ const StyledObject = styled.div`{
       ${cs.bg.dark} ${cs.font.white} ${cs.border.black}
       .icon .svg-path { ${cs.fill.white} }
       &.hover:hover { ${cs.bg.darkhover} }      
+    }
+    &.black {
+      ${cs.bg.black} ${cs.font.white} ${cs.border.darkgray}
+      .icon .svg-path { ${cs.fill.white} }
+      &.hover:hover { ${cs.bg.darkhover} }
     }
 
     ${({ border }) => border && `${cs.box.line}`}
@@ -150,14 +160,14 @@ const Widgetbox = (props) => {
     onClick && onClick(name, e);
   };
 
-  const { className = null, type = 'label', flex = false, full = false, size = 'md', disable = false } = props;
+  const { className = null, type = 'label', flex = false, full = false, size = 'md', disable = false, theme } = props;
 
   const onClick = props.onClick || props.onClicked;
   const active = onClick && props.active ? props.active : false;
   const hover = onClick ? true : false;
   
   return (
-    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className)}
+    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className, theme)}
       name={props.name} onClick={onClicked} {...props.style} labelcolor={props.labelcolor}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {type === "label" &&

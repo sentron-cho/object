@@ -160,3 +160,19 @@ export const align = () => {
     </StyledObject>
   );
 };
+
+export const theme = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+  
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
+        <Callopsebox theme={'sky'}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox theme={'primary'}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox theme={'gray'}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox theme={'dark'}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+        <Callopsebox theme={'black'}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
+      </Linebox>
+    </StyledObject>
+  );
+};

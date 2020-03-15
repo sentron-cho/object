@@ -35,14 +35,14 @@ const StyledObject = styled.div`{
 
     &.trans { ${cs.bg.trans} .cls-title:hover { ${cs.bg.sky} } }
     &.white { ${cs.bg.get("white")} .cls-title:hover { ${cs.bg.sky} } }
-    &.sky { ${cs.bg.sky} .cls-title:hover { ${cs.bg.lightgray} } }
-    &.orange { ${cs.bg.orange} .cls-title:hover { ${cs.bg.orangehover} } }
-    &.green { ${cs.bg.green} .cls-title:hover { ${cs.bg.greenhover} } }
-    &.red { ${cs.bg.red} .cls-title:hover { ${cs.bg.redhover} } }
-    &.primary { ${cs.bg.primary} ${cs.font.white} .cls-title:hover { ${cs.bg.blue} } }
-    &.gray { ${cs.bg.lightgray} .cls-title:hover { ${cs.bg.gray} } }
-    &.dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } }
-    &.black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } }
+    &.sky { ${cs.bg.sky} .cls-title:hover { ${cs.bg.lightgray} } .cls-frame { ${cs.border.lightgray} } }
+    &.orange { ${cs.bg.orange} .cls-title:hover { ${cs.bg.orangehover} } .cls-frame { ${cs.border.lightgray} } }
+    &.green { ${cs.bg.green} .cls-title:hover { ${cs.bg.greenhover} } .cls-frame { ${cs.border.lightgray} } }
+    &.red { ${cs.bg.red} .cls-title:hover { ${cs.bg.redhover} } .cls-frame { ${cs.border.lightgray} } }
+    &.primary { ${cs.bg.primary} ${cs.font.white} .cls-title:hover { ${cs.bg.blue} } .cls-frame { ${cs.border.lightgray} } }
+    &.gray { ${cs.bg.lightgray} .cls-title:hover { ${cs.bg.gray} } .cls-frame { ${cs.border.white} } }
+    &.dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } .cls-frame { ${cs.border.gray} } }
+    &.black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } .cls-frame { ${cs.border.darkgray} } }
 
     ${({border}) => border && cs.box.line}
     ${({border}) => border && border.color && cs.border.color(border.color)}
@@ -75,7 +75,7 @@ const Callopsebox = (props) => {
   }
 
   return (
-    <StyledObject className={cx('callopse-box', props.className, { active })}
+    <StyledObject className={cx('callopse-box', props.className, { active }, props.theme)}
       align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor} 
       border={border} >
       <div className="cls-title" onClick={onClick}>{label}</div>

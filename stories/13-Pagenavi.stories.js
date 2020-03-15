@@ -192,3 +192,19 @@ export const rest = () => {
     </StyledObject>
   );
 };
+
+export const theme = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+  
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
+        <Pagenavi theme={'sky'} pos={1} max={20} />
+        <Pagenavi theme={'primary'} pos={1} max={20}  />
+        <Pagenavi theme={'gray'} pos={1} max={20} />
+        <Pagenavi theme={'dark'} pos={1} max={20} />
+        <Pagenavi theme={'black'} pos={1} max={20} />
+      </Linebox>
+    </StyledObject>
+  );
+};

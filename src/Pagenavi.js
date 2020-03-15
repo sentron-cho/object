@@ -32,6 +32,9 @@ const StyledObject = styled.div`{
     &.md { ${cs.h.get(50)} .pgn-frame { ${cs.h.get(34)} .pg-no { ${cs.w.get(28)} ${cs.m.h2} } } }
     &.lg { ${cs.h.get(68)} .pgn-frame { ${cs.h.get(48)} .pg-no { ${cs.w.get(40)} ${cs.m.h3} } } }
     
+    &.sky {
+      .pg-no { &.active { ${cs.bg.sky} ${cs.font.dark} } &:hover { ${cs.border.sky} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+    }
     &.green {
       .pg-no { &.active { ${cs.bg.green} } &:hover { ${cs.border.green} } .svg-icon { .svg-path { ${cs.fill.green} } } } 
     }
@@ -49,6 +52,9 @@ const StyledObject = styled.div`{
     }
     &.dark {
       .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
+    }
+    &.black {
+      .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
     }
 
     &.border { .pgn-frame { ${cs.box.line} } }
@@ -133,7 +139,7 @@ class Pagenavi extends React.Component {
   }
 
   render() {
-    const { className, max, border, font, bgcolor, button } = this.props;
+    const { className, max, border, font, bgcolor, button, theme } = this.props;
     const { pos } = this.state;
     const { type, scp } = this.state = { ...this.state, pos, max, scp: (this.state.type === "s-pc" ? 10 : 5) };
 
@@ -156,7 +162,7 @@ class Pagenavi extends React.Component {
       return null;
     } else {
       return (
-        <StyledObject className={cx('page-navi', (type), className)} button={button} border={border} font={font} bgcolor={bgcolor} >
+        <StyledObject className={cx('page-navi', (type), className, theme)} button={button} border={border} font={font} bgcolor={bgcolor} >
           <ul className={cx('pgn-frame')}>
             <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
               <Svg className="prev sm" name={"prev"} color={this.props.color} />

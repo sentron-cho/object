@@ -62,7 +62,7 @@ export const sobject = () => {
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"checkbox"} className={"align"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
+      <Linebox title={"Combobox"} className={"align"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
         sample={samplecode('label={"combo"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
         <Combobox className={cx(classname, bg, size, { disable }, halign, valign)} label={label} list={list} onClick={onClick} onChange={onChange} frameid={"f0001"} />
       </Linebox>
@@ -225,6 +225,25 @@ export const border = () => {
         <Combobox className={"primary"} label={"blue radius"} list={list} frameid={"f0001"} border={{ radius: '5px', color: "blue" }} />
         <Combobox className={"primary"} label={"red radius 2px"} list={list} frameid={"f0001"} border={{ radius: '10px', color: "red", width: "2px" }} />
         <Combobox className={"primary"} label={"black radius 3px"} list={list} frameid={"f0001"} border={{ radius: '15px', color: "black", width: "3px" }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const theme = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+  
+  return (
+    <StyledObject className={"t-main"} id={"f0001"}>
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
+        <Combobox list={list} frameid={"f0001"} theme={'sky'}>sky</Combobox>
+        <Combobox list={list} frameid={"f0001"} theme={'primary'}>primary</Combobox>
+        <Combobox list={list} frameid={"f0001"} theme={'gray'}>gray</Combobox>
+      </Linebox>
+
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
+        <Combobox list={list} frameid={"f0001"} theme={'dark'}>dark</Combobox>
+        <Combobox list={list} frameid={"f0001"} theme={'black'}>black</Combobox>
       </Linebox>
     </StyledObject>
   );

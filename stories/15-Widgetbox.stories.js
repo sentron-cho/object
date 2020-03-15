@@ -370,3 +370,20 @@ export const font = () => {
     </StyledObject>
   );
 };
+
+
+export const theme = () => {
+  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
+  
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
+        <Widgetbox type={"label"} value={"123"} icon={"user"} name={'widget'} theme={'sky'} />
+        <Widgetbox type={"label"} value={"123"} icon={"user"} name={'widget'} theme={'primary'}  />
+        <Widgetbox type={"label"} value={"123"} icon={"user"} name={'widget'} theme={'gray'} />
+        <Widgetbox type={"label"} value={"123"} icon={"user"} name={'widget'} theme={'dark'} />
+        <Widgetbox type={"label"} value={"123"} icon={"user"} name={'widget'} theme={'black'} />
+      </Linebox>
+    </StyledObject>
+  );
+};

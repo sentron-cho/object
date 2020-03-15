@@ -59,7 +59,6 @@ export const object = () => {
     setResult(`getValue() start = ${start}, end = ${end}`);
   }
 
-  // const get = {};
   const opt = {
     border: isborder ? { radius: radius, color: border, width: width } : null,
     title: istitle ? { align: titlealign, color: titlecolor } : null,
@@ -68,7 +67,8 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Datebox ref={(ref) => rObject = ref} className={cx(size, bg)} options={opt} label={'Datebox'} clear={true} onChange={onChange} />
+        <Datebox ref={(ref) => rObject = ref} className={cx(size, bg)} 
+          slabel={"start"} elabel={"end"} options={opt} onChange={onChange} />
         <Button className={'primary'} title={"getValue"} onClick={onClick} />
       </Linebox>
 
@@ -82,32 +82,24 @@ export const object = () => {
 
 object.story = { name: 'Base' };
 
-
-export const color = () => {
+export const align = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"color"} sample={samplecode('', 'sky')}>
-        <Datebox clear={true} className={"trans"} label={"trans"} />
-        <Datebox clear={true} className={"sky"} label={"sky"} />
-        <Datebox clear={true} className={"orange"} label={"orange"} />
-        <Datebox clear={true} className={"green"} label={"green"} />
-        <Datebox clear={true} className={"red"} label={"red"} />
-        <Datebox clear={true} className={"primary"} label={"primary"} />
-        <Datebox clear={true} className={"gray"} label={"gray"} />
-        <Datebox clear={true} className={"dark"} label={"dark"} />
-        <Datebox clear={true} className={"black"} label={"black"} />
+    <StyledObject className={"t-main"}>
+      <Linebox title={"align"} sample={samplecode('type={"left"}', 'left')} >
+        <Datebox className={'left'} guide={"left"} />
+        <Datebox className={'center'} guide={"center"} />
+        <Datebox className={'right'} guide={"right"} />
       </Linebox>
     </StyledObject>
   );
 };
 
-export const title = () => {
+export const size = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"title options"} sample={samplecode('', 'sky')}>
-        <Datebox label={"trans"} options={{ title: { align: "left", color: "red" } }} />
-        <Datebox label={"trans"} options={{ title: { align: "center", color: "blue" } }} />
-        <Datebox label={"trans"} options={{ title: { align: "right", color: "black" } }} />
+    <StyledObject className={"t-main"}>
+      <Linebox title={"size"} sample={samplecode('type={"left"}', 'left')} >
+        <Datebox className={'sm'} guide={"small"} />
+        <Datebox className={'lg'} guide={"large"} />
       </Linebox>
     </StyledObject>
   );
@@ -115,13 +107,25 @@ export const title = () => {
 
 export const border = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Datebox label={"trans"} options={{ border: { radius: '5px', color: "red", width: '1px' } }} />
-        <Datebox label={"trans"} options={{ border: { radius: '10px', color: "blue", width: '2px' } }} />
-        <Datebox label={"trans"}
-          options={{ border: { radius: '20px', color: "black", width: '3px' }, title: { align: "center" } }}
-        />
+    <StyledObject className={"t-main"}>
+      <Linebox title={"border"} sample={samplecode('bordercolor={""}', 'border')} >
+        <Datebox className={'border'} guide={"color none"} />
+        <Datebox className={'border'} guide={"black"} bordercolor={"black"} />
+        <Datebox className={'border'} guide={"red"} bordercolor={"red"} />
+        <Datebox className={'border'} guide={cs.color.primary} bordercolor={cs.color.primary} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const bgcolor = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"bgcolor & fontcolor"} sample={samplecode('bgcolor={""}')} >
+        <Datebox className={''} label={"bgcolor"} guide={"bgcolor none"} />
+        <Datebox className={''} label={"bgcolor"} value={'bgcolor={"black"} fontcolor={"white"}'} bgcolor={"black"} fontcolor={"white"} />
+        <Datebox className={''} label={"bgcolor"} value={'bgcolor={"red"} fontcolor={"black"}'} bgcolor={"red"} fontcolor={"black"} />
+        <Datebox className={''} label={"bgcolor"} value={`bgcolor={"${cs.color.primary}"} fontcolor={"${cs.color.red}"}`} bgcolor={cs.color.primary} fontcolor={cs.color.yellow} />
       </Linebox>
     </StyledObject>
   );

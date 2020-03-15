@@ -31,44 +31,44 @@ const list = [
 
 export const object = () => {
   const size = options('size',
-    { 'none': '', 'xs(x small)': 'xs', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'xl(x large)': 'xl' },
-    '', { display: 'inline-radio' }, 'Other');
-  const bg = options('background',
-    { none: '', primary: 'primary', orange: 'orange', green: 'green', red: 'red', gray: 'gray', dark: 'dark', black: 'black' },
+    { 'none': '', 'sm(small)': 'sm', 'lg(large)': 'lg' },
     '', { display: 'inline-radio' }, 'Other');
 
-  const istitle = boolean('title options', false);
-  const titlecolor = text('title color', '#353535');
-  const titlealign = options('title align', { 'left': 'left', 'center': 'center', 'right': 'right' },
+  const isbg = boolean('background option', false);
+  const bg = isbg ? text('background color', '#909090') : '';
+
+  const align = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
     '', { display: 'inline-radio' }, 'Other');
 
-  const isborder = boolean('border options', false);
+  const iscolor = boolean('label option', false);
+  const color = iscolor ? text('label color', '#353535') : '';
+
+  const isborder = boolean('border option', false);
   const border = isborder ? text('border color', '#909090') : '';
-  const radius = isborder ? text('border radius', '1px') : '';
-  const width = isborder ? text('border width', '1px') : '';
+
+  const radius = boolean('border radius', false);
+
+  const slabel = text('start label', '');
+  const elabel = text('end label', '');
 
   const [result, setResult] = useState(null);
-  
+
   let rObject;
   const onChange = (eid, value, e) => {
     setResult(`onChange(eid = ${eid}, value = ${value}, e)`);
   }
 
   const onClick = () => {
-    const {start, end} = rObject.getValue();
+    const { start, end } = rObject.getValue();
     setResult(`getValue() start = ${start}, end = ${end}`);
   }
-
-  const opt = {
-    border: isborder ? { radius: radius, color: border, width: width } : null,
-    title: istitle ? { align: titlealign, color: titlecolor } : null,
-  };
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Datebox ref={(ref) => rObject = ref} className={cx(size, bg)} 
-          slabel={"start"} elabel={"end"} options={opt} onChange={onChange} />
+        <Datebox ref={(ref) => rObject = ref} className={cx(size, align, isborder && 'border', {radius})}
+          bgcolor={bg} fontcolor={color} bordercolor={border}
+          slabel={slabel} elabel={elabel} onChange={onChange} />
         <Button className={'primary'} title={"getValue"} onClick={onClick} />
       </Linebox>
 
@@ -90,6 +90,10 @@ export const align = () => {
         <Datebox className={'center'} guide={"center"} />
         <Datebox className={'right'} guide={"right"} />
       </Linebox>
+
+      <Linebox title={"label"} sample={samplecode('type={"left"}', 'left')} >
+        <Datebox className={''} guide={"right"} slabel={'start'} elabel={'end'} />
+      </Linebox>
     </StyledObject>
   );
 };
@@ -99,6 +103,7 @@ export const size = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"size"} sample={samplecode('type={"left"}', 'left')} >
         <Datebox className={'sm'} guide={"small"} />
+        <Datebox className={''} guide={"no size"} />
         <Datebox className={'lg'} guide={"large"} />
       </Linebox>
     </StyledObject>

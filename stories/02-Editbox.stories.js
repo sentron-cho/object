@@ -40,11 +40,12 @@ export const object = () => {
   const border = bordercolor ? true : false;
   const fontcolor = text('fontcolor', '');
   const bgcolor = text('bgcolor', '');
+  const radius = boolean('border radius', false);
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Editbox className={cx('b-s', select, classname, { border })} type={type} label={label} helper={helper}
+        <Editbox className={cx('b-s', select, classname, { border }, { radius })} type={type} label={label} helper={helper}
           guide={guide} value={value} inline={inline} multi={multi} readonly={readonly} disabled={disabled}
           bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} />
       </Linebox>

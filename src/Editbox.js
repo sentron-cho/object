@@ -83,6 +83,7 @@ const StyledObject = styled.div` {
     &.left { .input { ${cs.font.left} } }
 
     &.border .input { ${cs.box.line} ${(props) => props.bordercolor && cs.border.color(props.bordercolor)}; }
+    &.radius .input { ${cs.box.radius} }
 
     &.transparent { 
       .box { ${cs.bg.trans}

@@ -147,10 +147,15 @@ class Header extends React.PureComponent {
     if (this.props.preview) {
       window.open(url);
     } else {
-      if (this.props.history.location.state) {
+      const { history } = this.props;
+      if (history && history.location && history.location.state) {
         this.props.history.push(url);
       } else {
-        window.location.href = url;
+        if (url && url.indexOf("http") === 0) {
+          window.open(url);
+        } else {
+          window.location.href = url;
+        }
       }
     }
   }

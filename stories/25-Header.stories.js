@@ -31,19 +31,25 @@ const StyledObject = styled.span`{
 export default { title: 'object|Header', component: Header, decorators: [withKnobs] };
 
 const samplecode = (value, classname = '') => `<Header className={"${classname}"} ${value} />`;
-const list = [{ id: 'daum', name: 'daum', url: 'daum.net' }, { id: 'naver', name: 'naver', url: 'naver.com' }, { id: 'google', name: 'google', url: 'google.com' }];
+const list = [
+  { id: 'widget', name: 'widget', url: '?path=/story/object-widgetbox--object' },
+  { id: 'daum', name: 'daum', url: 'http://www.daum.net' },
+  { id: 'google', name: 'google', url: 'http://www.google.com' }];
 
 export const object = () => {
-  const size = options('size',
-    { 'none': '', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'xl(x large)': 'xl' },
-    '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
     { none: '', sky: 'sky', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
 
   const isfont = boolean('font options', false);
-  const fontcolor = text('font color', '#353535');
-  const fontalign = options('font align', { 'left': 'left', 'center': 'center', 'right': 'right' },
+  const fontcolor = isfont ? text('font color', '#353535') : '';
+  const fontsize = isfont ? text('font size', '16px') : '';
+  const fonthover = isfont ? text('font hover color', '#35ff35') : '';
+
+  const istitle = boolean('font options', false);
+  const titlecolor = isfont ? text('title color', '#353535') : '';
+
+  const align = options('font align', { 'left': 'left', 'center': 'center', 'right': 'right' },
     '', { display: 'inline-radio' }, 'Other');
 
   const isborder = boolean('border options', false);
@@ -52,19 +58,19 @@ export const object = () => {
 
   const [result, setResult] = useState(null);
 
-  const onChange = (hex, rgb, e) => {
+  const onClick = (hex, rgb, e) => {
     setResult(`onChange(hex = ${hex}, rgb = ${rgb}, e)`);
   }
 
   const opt = {
     border: isborder ? { color: border, width: width } : null,
-    font: isfont ? { align: fontalign, color: fontcolor } : null,
+    font: isfont ? { size: fontsize, color: fontcolor, hover: fonthover, title: titlecolor } : null,
   };
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Header className={cx(size, bg)} options={opt} label={'Header'} clear={true} onChange={onChange} />
+        <Header className={cx(bg, align)} options={opt} title={"scroll(float)"} list={list} onClick={onClick} />
       </Linebox>
 
       <div className={"res-view"}>

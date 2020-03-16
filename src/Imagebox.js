@@ -6,50 +6,67 @@ import { Util, Loading, Svg, cs } from './index';
 import { ST, EID } from './Config';
 
 const StyledObject = styled.div`{
-  &.image-box { height: 100%; position: relative; width: ${(props) => props.width}; 
+  &.image-box { 
+    ${cs.noliststyle} ${cs.noselect} ${cs.h.full} ${cs.pos.relative} ${cs.over.hidden}
+    ${({ width }) => cs.w.get(width)} ${cs.box.inner} ${({ maxheight }) => cs.max.height(maxheight)}
 
-    &.right { position: absolute; right: 0; }
-    &.show-loading { .loading-box { opacity: 1; } }
-    &.border { border: 1px solid rgba(204, 204, 204, 0.4); border-radius: 5px; }
+    .ib-frame {
+      ${cs.pos.relative} ${cs.opac.hide} ${cs.size.full} 
+      ${cs.object.position('center center')}
+      ${({ fit }) => cs.object.fit(fit || 'contain')}
 
-    .cont-frame {
-      position: relative; opacity: 0.1; object-position: center center;
-      width: 100%; height: 100%; object-fit: ${(props) => props.fit ? props.fit : 'contain'}; 
+      &.loaded { ${cs.anim.show} ${cs.opac.visible} }
 
-      &.loaded { transition: opacity 150ms ease-in 0s; opacity: 1; }
+      &.no-image { 
+        ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
+        ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
+      }
     }
     
-    .btn-del { position: absolute; top: 10px; right: 10px; }
+    .ib-del { ${cs.align.rtop} ${cs.top(10)} ${cs.right(10)} }
     
-    .loading-box { top: 0; opacity: 0; }
+    .loading-box { ${cs.top(0)} ${cs.opac.invisible} }
 
-    .pointer { cursor: pointer; };
+    .pointer { ${cs.mouse.pointer} };
 
-    .guide-size { z-index: 1; position: absolute; bottom: 10px; left: 50%; color: rgba(250,250,250,0.8); text-align: center;
-      font-size: 12px; padding: 10px; transform: translateX(-50%); background: rgba(0,0,0,0.2); border-radius: 10px;
-      white-space: pre-wrap; width: fit-content; max-width: 90%;
-      // border: 1px solid rgba(255,255,255,0.2); 
-    }
-
-    .no-image { 
-      ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
-      ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
+    .guide-size { 
+      ${cs.z.front} ${cs.bottom(10)} ${cs.align.center} ${cs.font.white} ${cs.font.center} ${cs.p.a5}
+      ${cs.font.sm} ${cs.bg.alphablack} ${cs.box.radius} ${cs.font.prewrap} ${cs.size.fit} ${cs.max.w("90%")}
+      ${cs.opac.alpha}
     }
    
+    &.border { ${cs.box.line} ${cs.border.lightgray} }
+    &.radius { ${cs.box.radius} }
+    &.right { ${cs.align.right} ${cs.pos.relative} }
+    &.show-loading { .loading-box { ${cs.opac.show} } }
+
+    &.left { }
+    &.right { ${cs.align.right} ${cs.top(0)} }
+    &.center { ${cs.align.xcenter} ${cs.top(0)} }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
+
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
+
     @media screen and (max-width : 1280px) {
     }
   
     @media screen and (max-width : 1024px) {
-      .no-image { font-size: 30px; line-height: 40px; }
+      .ib-frame.no-image { font-size: 30px; line-height: 40px; }
     }
   
     @media screen and (max-width : 860px) {
-      .no-image { font-size: 20px; line-height: 30px; width: calc(100% - 10px); }
+      .ib-frame.no-image { font-size: 20px; line-height: 30px; width: calc(100% - 10px); }
       .guide-size { width: calc(100% - 10px); }
     }
 
     @media screen and (max-width : 600px) {
-      .no-image { font-size: 16px; line-height: 20px; }
+      .ib-frame.no-image { font-size: 16px; line-height: 20px; }
       .guide-size { font-size: 10px; line-height: 16px; bottom: 5px; padding: 5px; }
     }
   }
@@ -70,7 +87,7 @@ export default class Imagebox extends React.PureComponent {
   }
 
   getWidth = () => {
-    let { rate = "4:3", size } = this.props;
+    let { rate = "4:3", size, maxheight = null } = this.props;
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
@@ -86,8 +103,11 @@ export default class Imagebox extends React.PureComponent {
     const temps = rate.split(":");
     const x = temps[0];
     const y = temps[1];
-    const height = this.box.offsetHeight;
-    const width = height / y * x;
+    let height = this.box.offsetHeight;
+    if (maxheight && parseInt(height) > parseInt(maxheight)) {
+      height = parseInt(maxheight);
+    }
+    const width = Math.floor(height / y * x);
     return `${width}px`;
   }
 
@@ -129,24 +149,25 @@ export default class Imagebox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { loaded, error } = state;
-    const { fit = "contain" } = props;
+    const { fit = "contain", className, maxheight, edited } = props;
 
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const { width } = state;
     const styled = { ...props.style, width, fit };
-    const sizeguide = props.sizeguide ? props.sizeguide : `[100 X 100]`;
-    const isguide = (props.edited && noimage && sizeguide);
+    const sizeguide = props.sizeguide || `[100 X 100]`;
     const src = props.src || props.url;
     const noimage = !src || error;
+    const isguide = (edited && noimage);
+    const { border } = props.options || { border: null };
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", props.className, pointer)}
-        {...styled} eid={props.eid} onClick={this.onClicked}>
+      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer)}
+        {...styled} eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked}>
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
-        {noimage ? <span className={cx("cont-frame", 'no-image')} >{"No Image"}</span>
-          : <img alt="img" className={cx("cont-frame", { loaded }, props.opsbox)} src={src} onLoad={this.onLoad} onError={this.onError} />}
+        {noimage ? <span className={cx("ib-frame", 'no-image')} >{"No Image"}</span>
+          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} onLoad={this.onLoad} onError={this.onError} />}
         {props.children && props.children}
-        {props.onDelete && <Svg className="btn-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}
+        {props.onDelete && <Svg className="ib-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}
         {!loaded && <Loading type="ring" />}
       </StyledObject>
     )

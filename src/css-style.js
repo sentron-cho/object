@@ -54,11 +54,17 @@ const cs = {
   min: {
     width: (v) => Number.isInteger(v) ? `min-width: ${v}px;` : `min-width: ${v};`,
     height: (v) => Number.isInteger(v) ? `min-height: ${v}px;` : `min-height: ${v};`,
+
+    w: (v) => Number.isInteger(v) ? `min-width: ${v}px;` : `min-width: ${v};`,
+    h: (v) => Number.isInteger(v) ? `min-height: ${v}px;` : `min-height: ${v};`,
   },
 
   max: {
     width: (v) => Number.isInteger(v) ? `max-width: ${v}px;` : `max-width: ${v};`,
     height: (v) => Number.isInteger(v) ? `max-height: ${v}px;` : `max-height: ${v};`,
+
+    w: (v) => Number.isInteger(v) ? `max-width: ${v}px;` : `max-width: ${v};`,
+    h: (v) => Number.isInteger(v) ? `max-height: ${v}px;` : `max-height: ${v};`,
   },
 
   right: (v) => Number.isInteger(v) ? `left: unset; right: ${v}px;` : `left: unset; right: ${v};`,

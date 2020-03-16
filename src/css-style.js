@@ -394,7 +394,8 @@ const cs = {
     get: (v) => `background: ${v};`,
     size: (v) => `background-size: ${v};`,
     repeat: (v) => `background-repeat: ${v};`,
-    pos: (v) => `background-position: ${v};`
+    pos: (v) => `background-position: ${v};`,
+    image: (v) => `background-image: url(${v});`
   },
 
   icon: {

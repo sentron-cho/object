@@ -1,41 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
+import { cs } from './index';
 
 const StyledObject = styled.span`{
-  display: inline-block; opacity: 0.5; border: 1px transparent solid; position: relative; 
-  vertical-align: middle; background: no-repeat center center; background-size: 100% 100%;
-  font-size:16px; height:30px; width:40px; padding: 3px;
-  margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding}; 
-  background-image: url(${(props) => props.icon});
+  &.icon-box {
+    ${cs.disp.inblock} ${cs.opac.get(0.7)} ${cs.box.line} ${cs.border.trans} ${cs.box.inner}
+    ${cs.pos.relative} ${cs.p.a3} ${cs.font.md}
+    ${cs.bg.repeat("no-repeat")} ${cs.bg.size("100% 100%")} ${cs.bg.pos("center")}
 
-  &.border { border: 1px solid #aaa; border-radius: 3px; padding: 3px; }
-  &.button:hover { opacity: 0.9; cursor: pointer; }
+    ${({ margin }) => cs.m.get(margin)}
+    ${({ padding }) => cs.p.get(padding)}
+    ${({ src }) => cs.bg.image(src)}
 
-  &.xxl { font-size:30px; height:50px; width:60px; padding: 5px; }
-  &.xl { font-size:20px; height:40px; width:50px; padding: 4px; }
-  &.lg { font-size:16px; height:30px; width:40px; padding: 3px; }
-  &.sm { font-size:14px; height:24px; width:34px; padding: 2px; }
-  &.xs { font-size:12px; height:18px; width:28px; padding: 1px; }
+    &.border { ${cs.border.gray} ${cs.border.radius(3)} ${cs.p.a3} }
+    &.button:hover { ${cs.opac.show} ${cs.mouse.pointer} }
+    &.fill { ${cs.bg.size("100% 100%")} }
+    &.cover { ${cs.bg.size("cover")} }
 
-  &.disabled { cursor:default; border:none; background:#000; color:#fff; opacity: 0.2;
-    &:hover {  }
+    &.md { ${cs.font.md} ${cs.icon.md} ${cs.p.a3} }
+    &.xxl { ${cs.font.xxl} ${cs.icon.xxl} ${cs.p.a5} }
+    &.xl { ${cs.font.xl} ${cs.icon.xl} ${cs.p.a4} }
+    &.lg { ${cs.font.lg} ${cs.icon.lg} ${cs.p.a3} }
+    &.sm { ${cs.font.sm} ${cs.icon.sm} ${cs.p.a2} }
+    &.xs { ${cs.font.xs} ${cs.icon.xs} ${cs.p.a1} }
+
+    &.right { ${cs.align.right} }
+    &.center { ${cs.align.xcenter} }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
+
+    ${({border}) => border && cs.box.line}
+    ${({border}) => border && border.color && cs.border.color(border.color)}
+    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
+    ${({border}) => border && border.width && cs.border.width(border.width)}
+
+    &.disabled { ${cs.mouse.default} ${cs.border.none} ${cs.bg.black} ${cs.font.dark} ${cs.opac.get(0.2)}
+      &:hover {  }
+    }
   }
 }`;
 
 const Iconbox = (props) => {
   const onClicked = (e) => {
     if (props.onClick != null) {
-      props.onClick(props.eid, e);
+      props.onClick(props.eid || 'iconbox', e);
     }
   }
 
-  const disabled = props.disabled;
   const button = props.onClick ? 'button' : '';
+  const { icon, margin, padding, disable } = props;
+  const disabled = disable || props.disabled;
+  const src = icon || props.src;
+  const { border } = props.options || {border: null};
 
   return (
-    <StyledObject {...props} eid={props.eid} className={cx(props.className, { disabled }, { button })} onClick={disabled ? () => null : onClicked}>
+    <StyledObject className={cx('icon-box md', props.className, { disabled }, { button })}
+      icon={icon} margin={margin} padding={padding} src={src} border={border}
+      eid={props.eid} onClick={disabled ? () => null : onClicked}>
       {/* <span className="icon" /> */}
     </StyledObject>
   )

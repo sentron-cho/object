@@ -26,11 +26,11 @@ const StyledObject = styled.footer`{
     &.dark { ${cs.bg.dark} ${cs.font.white} }
     &.black { ${cs.bg.black} ${cs.font.white} }
 
-    &.theme-sky { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
-    &.theme-primary { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
-    &.theme-gray { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
-    &.theme-dark { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }
-    &.theme-black { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } }    
+    &.theme-sky { ${cs.bg.sky} ${cs.font.black} }
+    &.theme-primary { ${cs.bg.primary} ${cs.font.white} }
+    &.theme-gray { ${cs.bg.lightgray} ${cs.font.black} }
+    &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
+    &.theme-black { ${cs.bg.black} ${cs.font.white} }
     
     .ft-frame .ft-copyright {
       ${({ font }) => font && font.color && cs.font.color(font.color)}
@@ -39,7 +39,6 @@ const StyledObject = styled.footer`{
 
     ${({ border }) => border && cs.border.top}
     ${({ border }) => border && border.color && cs.border.color(border.color)}
-    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
     ${({ border }) => border && border.width && cs.border.width(border.width)}
 
     @media screen and (max-width : 860px) {

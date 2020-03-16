@@ -7,10 +7,10 @@ import { EID, SCREEN } from './Config';
 const StyledObject = styled.header`{
   &.header {
     ${cs.pos.relative} ${cs.w.full} ${cs.over.hidden} ${cs.z.header}
-    height: ${props => props.height};
+    ${({ height }) => cs.h.get(height)} ${cs.noliststyle} ${cs.noselect}
 
-    .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray}
-      height: ${props => props.height};
+    .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner}
+      ${({ height }) => cs.h.get(height)}
       
       &.float { ${cs.pos.fixed} ${cs.anim.show} ${cs.border.gray} }
 
@@ -53,6 +53,66 @@ const StyledObject = styled.header`{
       }
 
       .btn-side { ${cs.align.ycenter} ${cs.pos.relative} }
+      
+      .notitle, .nomenu { ${cs.font.lightgray} .li-nav:hover { ${cs.font.color(`${cs.color.gray} !important`)} } }
+    }
+
+    &.trans { .nav-frame { ${cs.bg.white} ${cs.font.black} } }
+    &.sky { .nav-frame { ${cs.bg.sky} ${cs.font.black} } }
+    &.primary {
+      .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
+      .nav-layer .ul-navi .li-nav {
+        ${cs.font.sky}
+        &:hover, &.active { ${cs.font.dark } }
+      }
+    }
+    &.gray {
+      .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
+        .nav-layer .ul-navi .li-nav {
+          ${cs.font.dark}
+          &:hover, &.active { ${cs.font.primary } }
+        }
+      }
+    }
+    &.dark { .nav-frame { ${cs.bg.dark} ${cs.font.white} } }
+    &.black { .nav-frame { ${cs.bg.black} ${cs.font.white} } }
+
+    &.theme-sky { .nav-frame { ${cs.bg.sky} ${cs.font.black} } }
+    &.theme-primary {
+      .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
+      .nav-layer .ul-navi .li-nav {
+        ${cs.font.sky}
+        &:hover, &.active { ${cs.font.dark } }
+      }
+    }
+    &.theme-gray {
+      .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
+        .nav-layer .ul-navi .li-nav {
+          ${cs.font.dark}
+          &:hover, &.active { ${cs.font.primary } }
+        }
+      }
+    }
+    &.theme-dark { .nav-frame { ${cs.bg.dark} ${cs.font.white} } }
+    &.theme-black { .nav-frame { ${cs.bg.black} ${cs.font.white} } }
+
+    .nav-frame {
+      .nav-layer .li-title {
+        ${({ font }) => font && font.title && cs.font.color(font.title)}
+      }
+
+      .nav-layer .ul-navi .li-nav {
+        ${({ font }) => font && font.color && cs.font.color(font.color)}
+        ${({ font }) => font && font.size && cs.font.size(font.size)}
+
+        &:hover, &.active { 
+          ${({ font }) => font && font.hover && cs.font.color(font.hover)}
+        }        
+      }
+
+      ${({ border }) => border && cs.border.bottom}
+      ${({ border }) => border && border.color && cs.border.color(border.color)}
+      ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
 
     @media screen and (max-width : 1280px) { }
@@ -78,7 +138,8 @@ class Header extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
-    this.state = { type: type, menus: EID.HIDE, float: false };
+    const { list, pos = 0, frameid = "body" } = props;
+    this.state = { type: type, menus: EID.HIDE, float: false, frameid: frameid };
   }
 
   onClickMenu = (e) => {
@@ -93,7 +154,7 @@ class Header extends React.PureComponent {
       }
     }
   }
-  
+
   onResize = (e) => {
     const { type } = Util.getScreenType();
     const a = Util.isSelfClick(e, (item) => {
@@ -114,14 +175,16 @@ class Header extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
-    document.getElementById('body').addEventListener('mouseup', this.onResize);
     window.addEventListener("scroll", this.onScroll);
+    const body = document.getElementById(this.state.frameid);
+    body && body.addEventListener('mouseup', this.onResize);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
-    document.getElementById('body').removeEventListener('mouseup', this.onResize);
     window.removeEventListener("scroll", this.onScroll);
+    const body = document.getElementById(this.state.frameid);
+    body && body.removeEventListener('mouseup', this.onResize);
   }
 
   hide = () => {
@@ -131,7 +194,7 @@ class Header extends React.PureComponent {
   render() {
     const { props, state } = this;
     // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
-    const { list, location, title, height = "60px", maxwidth="1024px" } = props;
+    const { list, location, title, height = "60px", maxwidth = "1024px", theme, className } = props;
     const { menus, type } = state;
 
     // const isroot = location === root;
@@ -145,41 +208,45 @@ class Header extends React.PureComponent {
 
     const { float } = this.state;
     const logouttitle = props.logouttitle || 'Logout';
-    
+
     const renderMobile = () => {
       if (show === EID.SHOW) {
-        return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => {}} color={cs.color.dark} />
+        return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => { }} color={cs.color.dark} />
       } else {
         return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => {
           e.stopPropagation();
           this.setState({ menus: show ? EID.HIDE : EID.SHOW });
-        }} color={cs.color.dark}  />
+        }} color={cs.color.dark} />
       }
     }
 
+    const { font, border } = props.options || { border: null, font: null };
+
     return (
-      <StyledObject className={cx("header")} height={height} maxwidth={maxwidth}>
-        <div className={cx('nav-frame', {float})}>
+      <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} maxwidth={maxwidth}
+        border={border} font={font}>
+        <div className={cx('nav-frame', { float })}>
           <div className={cx('nav-layer', align, type)}>
-            {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} /> }
+            {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
             {/* 타이틀 */}
-            <p className="li-title" onClick={props.onClick && props.onClick}>{title ? title : "TITLE"}</p>
-            
+            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick && props.onClick}>{title ? title.toUpperCase() : "NO TITLE"}</p>
+
             {/* 네비 메뉴 */}
-            {show && <ul className={cx("ul-navi", align, type)}>
+            {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
               {array.map((item, index) => {
                 const active = location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
                 return <li key={index} className={cx("li-nav", { active })}
-                  url={item.url} onClick={this.onClickMenu}>{item.name}
+                  url={item.url} onClick={this.onClickMenu}>{item.name && item.name.toUpperCase()}
                 </li>
               })}
+              {array.length < 1 && <li className={"li-nav"}>NO MENU</li>}
               {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}
-                </li>}
-            </ul>}            
+              </li>}
+            </ul>}
 
             {/* 모바일에서의 아이콘 */}
-            {type === SCREEN.ST.MOBILE && renderMobile() }
+            {type === SCREEN.ST.MOBILE && renderMobile()}
           </div>
         </div>
       </StyledObject>

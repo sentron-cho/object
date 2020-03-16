@@ -2,7 +2,7 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Util, Loading, Svg } from './index';
+import { Util, Loading, Svg, cs } from './index';
 import { ST, EID } from './Config';
 
 const StyledObject = styled.div`{
@@ -32,9 +32,8 @@ const StyledObject = styled.div`{
     }
 
     .no-image { 
-      position: absolute; top: 50%; left: 50%; color: rgba(250,250,250,0.8); font-size: 40px; 
-      transform: translate(-50%, -50%); line-height: 50px; opacity: 0.3;
-      max-height: 80%; max-width: 80%; height: fit-content; width: fit-content; 
+      ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
+      ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
     }
    
     @media screen and (max-width : 1280px) {
@@ -61,7 +60,8 @@ export default class Imagebox extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
-    this.state = { type: type, loaded: false, error: false, width: "auto" }
+    const src = props.src || props.url;
+    this.state = { type: type, loaded: !src ? true : false, error: false, width: "auto" }
   }
 
   onResize = () => {
@@ -131,20 +131,20 @@ export default class Imagebox extends React.PureComponent {
     const { loaded, error } = state;
     const { fit = "contain" } = props;
 
-    const noimage = error;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const { width } = state;
     const styled = { ...props.style, width, fit };
     const sizeguide = props.sizeguide ? props.sizeguide : `[100 X 100]`;
     const isguide = (props.edited && noimage && sizeguide);
+    const src = props.src || props.url;
+    const noimage = !src || error;
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", props.className, pointer)}
         {...styled} eid={props.eid} onClick={this.onClicked}>
-        {noimage && <span className={cx("cont-frame", 'no-image')} >{"No Image"}</span>}
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
-        {/* {error && <img alt="img" className={cx("cont-frame", 'no-image', { loaded }, props.opsbox)} src={IMG.NoimageBig} />} */}
-        {!error && <img alt="img" className={cx("cont-frame", { loaded }, props.opsbox)} src={props.url} onLoad={this.onLoad} onError={this.onError} />}
+        {noimage ? <span className={cx("cont-frame", 'no-image')} >{"No Image"}</span>
+          : <img alt="img" className={cx("cont-frame", { loaded }, props.opsbox)} src={src} onLoad={this.onLoad} onError={this.onError} />}
         {props.children && props.children}
         {props.onDelete && <Svg className="btn-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}
         {!loaded && <Loading type="ring" />}

@@ -171,7 +171,7 @@ const Thumblist = (props) => {
   }, [list]);
 
   return (
-    <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size, `theme-${theme}`)} cursor={cursor}
+    <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size, theme && `theme-${theme}`)} cursor={cursor}
       border={props.border} bgcolor={props.bgcolor} anim={anim}
       onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart}>
       {props.onClickNew && <Svg className="thb-new md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />}

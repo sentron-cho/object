@@ -194,7 +194,7 @@ const Widgetbox = (props) => {
   const hover = onClick ? true : false;
   
   return (
-    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className, `theme-${theme}`)} 
+    <StyledObject className={cx('widget-box', size, { hover }, { active }, { flex }, { full }, { disable }, className, theme && `theme-${theme}`)} 
       name={props.name} onClick={onClicked} {...props.style} labelcolor={props.labelcolor}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       {type === "label" &&

@@ -213,7 +213,7 @@ export default class Colorbox extends React.PureComponent {
     const { border, title } = props.options || {border: null, title: null};
 
     return (
-      <StyledObject className={cx('color-box', className, { theme }, {label}, `theme-${theme}`)} border={border} title={title} >
+      <StyledObject className={cx('color-box', className, { theme }, {label}, theme && `theme-${theme}`)} border={border} title={title} >
         {label && <label className="label">{label}</label>}
         {type === "compact" && <CompactPicker className={"picker-box"} onChange={this.onChanged} color={state.value} />}
         {clear && <Svg className="btn-clear xs" onClick={this.onClear} eid={"clear"} icon={'clear'} />}

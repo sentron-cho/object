@@ -96,7 +96,7 @@ const Button = (props) => {
   const { text, label } = props.options || { text: null, label: null };
 
   return (
-    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon, `theme-${theme}`)}
+    <StyledObject {...props} eid={props.eid} className={cx('button md', props.className, { disabled }, type, isicon, theme && `theme-${theme}`)}
       onClick={disabled ? () => null : onClicked} to={props.to} text={text} label={label} border={props.border}>
       {isrun && <img className={cx("btn-icon running")} src={IMG.LoadingRing} alt='r' />}
       {!isrun && icon && <Svg className={cx("btn-icon sm")} icon={icon} color={iconcolor} />}

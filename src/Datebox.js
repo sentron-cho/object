@@ -57,7 +57,7 @@ class Datebox extends React.PureComponent {
     } = props;
 
     return (
-      <StyledObject className={cx("date-box", className, `theme-${theme}`)}>
+      <StyledObject className={cx("date-box", className, theme && `theme-${theme}`)}>
         <Editbox className={className} value={sdate} name="start" type="date" inline={slabel}
           bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} theme={theme}
           guide={sguide} label={slabel} onChange={this.onChangeStart} />

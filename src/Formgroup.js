@@ -200,7 +200,7 @@ export default class Formgroup extends React.PureComponent {
 
     const Child = child;
     return (
-      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, `theme-${theme}`)} 
+      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, theme && `theme-${theme}`)} 
         {...props.options} {...props.style} border={props.border} bgcolor={props.bgcolor}
         anim={state.anim} onAnimationEnd={this.onAnimEnd}>
 

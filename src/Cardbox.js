@@ -116,7 +116,7 @@ const Cardbox = (props) => {
 
 
   return (
-    <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"), `theme-${theme}`)}
+    <StyledObject className={cx('card-box', props.type, props.className, (anim && "anim"), theme && `theme-${theme}`)}
       {...params} style={props.style} eid={props.eid} onClick={onClicked} anim={anim} bgcolor={bgcolor} border={border}
       onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart} onKeyPress={onKeyPress}>
       {props.children}

@@ -356,7 +356,7 @@ class Editbox extends React.PureComponent {
     } = props;
 
     return (
-      <StyledObject className={cx('edit-box', props.className, { inline }, `theme-${theme}`)}
+      <StyledObject className={cx('edit-box', props.className, { inline }, theme && `theme-${theme}`)}
         height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight}
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}</label>}

@@ -178,7 +178,7 @@ class Pagenavi extends React.Component {
       return null;
     } else {
       return (
-        <StyledObject className={cx('page-navi', (type), className, `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
+        <StyledObject className={cx('page-navi', (type), className, theme && `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
           <ul className={cx('pgn-frame')}>
             <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
               <Svg className="prev sm" name={"prev"} color={this.props.color} />

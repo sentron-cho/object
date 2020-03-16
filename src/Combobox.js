@@ -188,7 +188,7 @@ export default class Combobox extends React.PureComponent {
     const { text, label } = props.options || {text: null, label: null};
 
     return (
-      <StyledObject className={cx('combo-box md', className, { disable }, `theme-${theme}`)} text={text} label={label} border={props.border} >
+      <StyledObject className={cx('combo-box md', className, { disable }, theme && `theme-${theme}`)} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
         <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
           <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>

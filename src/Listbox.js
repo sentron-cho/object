@@ -257,7 +257,7 @@ const Listbox = (props) => {
   }, [list]);
 
   return (
-    <StyledObject className={cx("list-box", props.className, { disable }, `theme-${theme}`)} 
+    <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)} 
       eid="select" style={styled} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 

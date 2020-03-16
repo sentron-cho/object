@@ -148,7 +148,7 @@ export default class Checkbox extends React.PureComponent {
     const { radio, theme = '', type = '', border, bgcolor, className } = this.props;
 
     return (
-      <StyledObject className={cx('chk-box md', className, { radio }, { type }, `theme-${theme}`)} border={border} bgcolor={bgcolor} >
+      <StyledObject className={cx('chk-box md', className, { radio }, { type }, theme && `theme-${theme}`)} border={border} bgcolor={bgcolor} >
         {label && <div className="chk-label">{label}</div>}
         <ul className={'chk-group'}>
           {list ? list.map((item, index) => {

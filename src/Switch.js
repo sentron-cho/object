@@ -155,7 +155,7 @@ export default class Switch extends React.PureComponent {
 
     console.dir(border);
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol }, `theme-${theme}`)} 
+      <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol }, theme && `theme-${theme}`)} 
         onClick={disable ? () => null : this.onClicked} text={text} label={label} border={border} >
         {props.label ? <label className="sw-label">{props.label}</label> : null}
         <span className={cx("sw-slider", { checked })} data-checked={ton} data-unchecked={toff} />

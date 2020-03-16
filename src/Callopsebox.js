@@ -81,7 +81,7 @@ const Callopsebox = (props) => {
   }
 
   return (
-    <StyledObject className={cx('callopse-box', props.className, { active }, `theme-${theme}`)}
+    <StyledObject className={cx('callopse-box', props.className, { active }, theme && `theme-${theme}`)}
       align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor} 
       border={border} >
       <div className="cls-title" onClick={onClick}>{label}</div>

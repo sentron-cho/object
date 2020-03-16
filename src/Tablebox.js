@@ -348,7 +348,7 @@ const Tablebox = (props) => {
   }, [list]);
 
   return (
-    <StyledObject className={cx('table-box', props.className, `theme-${theme}`)} {...style}
+    <StyledObject className={cx('table-box', props.className, theme && `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       
       <SearchFrame list={props.searchs} searchkey={props.searchkey}

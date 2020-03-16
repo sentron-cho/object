@@ -264,7 +264,7 @@ const Callopselist = (props) => {
 
   const tlist = makeTableItem(data, tags && tags.map(item => item.key));
   return (
-    <StyledObject className={cx('callopse-list', props.className, `theme-${theme}`)} {...style}
+    <StyledObject className={cx('callopse-list', props.className, theme && `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       
       <SearchFrame list={props.searchs} searchkey={props.searchkey}

@@ -284,3 +284,34 @@ export const dragdrop = () => {
     </StyledObject>
   );
 }
+
+export const theme = () => {
+  const [result, setResult] = useState(null);
+  const [list, setList] = useState(jsonlist(10));
+
+  const onDragDrop = (eid, array) => {
+    setResult(`onDragDrop() eid = ${eid}, [array]`);
+    setList(array);
+  }
+
+  const onDraging = (eid, array) => {
+    setResult(`onDraging() eid = ${eid}, [array]`);
+  }
+
+  return (
+    <StyledObject className={"t-main"} id={"f0001"}>
+      <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
+        <Thumblist className={"primary"} theme={'sky'} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+        <Thumblist className={"primary"} theme={'primary'} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+        <Thumblist className={"primary"} theme={'gray'} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+        <Thumblist className={"primary"} theme={'dark'} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+        <Thumblist className={"primary"} theme={'black'} list={list} head={tags} rowid={"uuid"} size={'sm'}
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+      </Linebox>
+    </StyledObject>
+  );
+};

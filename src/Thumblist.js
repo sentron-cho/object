@@ -31,9 +31,17 @@ const StyledObject = styled.div`{
 
     &:hover { .thb-new { ${cs.opac.show} } }
 
+    &.sky { ${cs.box.line} ${cs.box.radius} ${cs.bg.sky} }
     &.primary { ${cs.box.line} ${cs.box.radius} ${cs.bg.primary} }
     &.gray { ${cs.box.line} ${cs.box.radius} ${cs.bg.gray} }
     &.dark { ${cs.box.line} ${cs.box.radius} ${cs.bg.dark} }
+    &.black { ${cs.box.line} ${cs.box.radius} ${cs.bg.black} }
+
+    &.theme-sky { ${cs.box.line} ${cs.box.radius} ${cs.bg.sky} }
+    &.theme-primary { ${cs.box.line} ${cs.box.radius} ${cs.bg.primary} }
+    &.theme-gray { ${cs.box.line} ${cs.box.radius} ${cs.bg.gray} }
+    &.theme-dark { ${cs.box.line} ${cs.box.radius} ${cs.bg.dark} }
+    &.theme-black { ${cs.box.line} ${cs.box.radius} ${cs.bg.black} }
 
     &.full { ${cs.size.full} .tmb-img { ${cs.object.contain} } }
     &.border { ${cs.box.line} }
@@ -71,7 +79,7 @@ const StyledObject = styled.div`{
 
 const Thumblist = (props) => {
   const cursor = props.onSelect && "pointer";
-  const { head, path = null, rowid = 'rowid', uuid = null, size = null } = props;
+  const { head, path = null, rowid = 'rowid', uuid = null, size = null, theme } = props;
   const { config = { child: null } } = props;
   const [anim, setAnim] = useState(props.anim);
   const [list, setList] = useState(props.list);
@@ -79,11 +87,6 @@ const Thumblist = (props) => {
   useEffect(() => {
     setAnim(props.anim);
   }, [props.anim]);
-
-  // useList(() => {
-  //   setAnim(props.anim);
-  //   console.log(props.anim);
-  // }, [props.anim])
 
   const onSelectItem = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
@@ -165,27 +168,10 @@ const Thumblist = (props) => {
     } else if (eid === 'drop') {
       props.onDragDrop && props.onDragDrop(eid, array);
     }
-
-    // if (eid === 'drag') {
-    //   const array = list.map(item => {
-    //     item["hover"] = (item.index === hoverIndex) ? true : false;
-    //     console.log(hoverIndex, item.index, item.hover);
-    //     return item;
-    //   });
-    //   console.log(array);
-    //   // setList(array);
-    //   // props.onDragDrop && props.onDragDrop(eid, null, dragIndex, hoverIndex);
-    // } else if (eid === 'drop') {
-    //   // setList(array);
-    //   // const dragitem = list[dragIndex];
-    //   // const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
-    //   // props.onDragDrop && props.onDragDrop(eid, array, startpos, hoverIndex);
-    // }
-    // }
   }, [list]);
 
   return (
-    <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size)} cursor={cursor}
+    <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size, `theme-${theme}`)} cursor={cursor}
       border={props.border} bgcolor={props.bgcolor} anim={anim}
       onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart}>
       {props.onClickNew && <Svg className="thb-new md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />}

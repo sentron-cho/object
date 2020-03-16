@@ -82,6 +82,14 @@ const StyledObject = styled.div`{
       }
     }
 
+    &.sky {
+      .csl-body { ${cs.bg.sky} ${cs.font.dark} 
+        .csl-border { ${cs.border.lightgray} } 
+        .cls-icon { .svg-path { ${cs.fill.gray} } } 
+        .cls-cont-btns { ${cs.bg.sky} .svg-icon .svg-path { ${cs.fill.dark} } } 
+      }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
+    }
     &.primary {
       .csl-body { ${cs.bg.primary} ${cs.font.white} 
         .csl-border { ${cs.border.semiblack} } 
@@ -91,15 +99,60 @@ const StyledObject = styled.div`{
       .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
-      .csl-body { ${cs.bg.lightgray} 
+      .csl-body { ${cs.bg.lightgray} ${cs.font.dark}
         .csl-border { ${cs.border.semiblack} } 
-        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.black} } } 
+        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.dark} } } 
       }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
     }
     &.dark {
       .csl-body { ${cs.bg.dark} ${cs.font.white} 
         .csl-border { ${cs.border.black} } 
+        .cls-cont-btns { ${cs.bg.dark} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.dark} ${cs.font.white} }
+    }
+    &.black {
+      .csl-body { ${cs.bg.black} ${cs.font.white} 
+        .csl-border { ${cs.border.dark} } 
+        .cls-cont-btns { ${cs.bg.black} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.black} ${cs.font.white} }
+    }
+
+    &.theme-sky {
+      .csl-body { ${cs.bg.sky} ${cs.font.dark} 
+        .csl-border { ${cs.border.lightgray} } 
+        .cls-icon { .svg-path { ${cs.fill.gray} } } 
+        .cls-cont-btns { ${cs.bg.sky} .svg-icon .svg-path { ${cs.fill.dark} } } 
+      }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
+    }
+    &.theme-primary {
+      .csl-body { ${cs.bg.primary} ${cs.font.white} 
+        .csl-border { ${cs.border.semiblack} } 
+        .cls-icon { .svg-path { ${cs.fill.lightgray} } } 
+        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.primary} ${cs.font.white} }
+    }
+    &.theme-gray {
+      .csl-body { ${cs.bg.lightgray} ${cs.font.dark}
+        .csl-border { ${cs.border.semiblack} } 
+        .cls-cont-btns { ${cs.bg.alphagray} .svg-icon .svg-path { ${cs.fill.dark} } } 
+      }
+      .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
+    }
+    &.theme-dark {
+      .csl-body { ${cs.bg.dark} ${cs.font.white} 
+        .csl-border { ${cs.border.black} } 
+        .cls-cont-btns { ${cs.bg.dark} .svg-icon .svg-path { ${cs.fill.white} } } 
+      }
+      .btn-new { ${cs.bg.dark} ${cs.font.white} }
+    }
+    &.theme-black {
+      .csl-body { ${cs.bg.black} ${cs.font.white} 
+        .csl-border { ${cs.border.dark} } 
         .cls-cont-btns { ${cs.bg.black} .svg-icon .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -139,7 +192,7 @@ const StyledObject = styled.div`{
 
 const Callopselist = (props) => {
   // const [select, setSelect] = useState(-1);  
-  const { height = 30, tags = null, list = null, datakey = "text", multi = false } = props;
+  const { height = 30, tags = null, list = null, datakey = "text", multi = false, theme } = props;
   const { inner } = props.options || { inner: null, label: null };
   const align = 'center';
   const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
@@ -211,7 +264,7 @@ const Callopselist = (props) => {
 
   const tlist = makeTableItem(data, tags && tags.map(item => item.key));
   return (
-    <StyledObject className={cx('callopse-list', props.className)} {...style}
+    <StyledObject className={cx('callopse-list', props.className, `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
       
       <SearchFrame list={props.searchs} searchkey={props.searchkey}

@@ -70,7 +70,7 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"toggle button"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Header className={cx(bg, align)} options={opt} title={"scroll(float)"} list={list} onClick={onClick} />
+        <Header className={cx(bg)} align={align} options={opt} title={"scroll(float)"} list={list} onClick={onClick} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -85,7 +85,7 @@ object.story = { name: 'Base' };
 
 export const color = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
+    <StyledObject className={"t-main"} >
       <Linebox title={"color"} sample={samplecode('', 'sky')}>
         <Header className={"trans"} title={"trans"} list={list} />
         <Header className={"sky"} title={"sky"} list={list} />
@@ -101,7 +101,7 @@ export const color = () => {
 
 export const title = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
+    <StyledObject className={"t-main"} >
       <Linebox title={"title options"} sample={samplecode('', 'sky')}>
         <Header title={"red"} list={list} options={{ font: { size: "14px", color: "black", hover: "blue", title: "red" } }} />
         <Header title={"blue"} list={list} options={{ font: { size: "18px", color: "green", hover: "red", title: "gray" } }} />
@@ -114,11 +114,23 @@ export const title = () => {
 
 export const border = () => {
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
+    <StyledObject className={"t-main"} >
       <Linebox title={"border options"} sample={samplecode('', 'sky')}>
         <Header title={"red"} list={list} options={{ border: { color: "red", width: '1px' } }} />
         <Header title={"blue"} list={list} options={{ border: { color: "blue", width: '2px' } }} />
         <Header title={"black"} list={list} options={{ border: { color: "black", width: '5px' } }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const align = () => {
+  return (
+    <StyledObject className={"t-main"} >
+      <Linebox title={"border options"} sample={samplecode('aligh={"left"}', '')}>
+        <Header title={"left"} align={"left"} list={list} />
+        <Header title={"center"} align={"center"} list={list} />
+        <Header title={"right"} align={"right"} list={list} />
       </Linebox>
     </StyledObject>
   );

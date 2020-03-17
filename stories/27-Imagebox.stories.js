@@ -8,7 +8,7 @@ import { IMG } from './sample/index';
 
 const StyledObject = styled.span`{
   &.t-main {
-    .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
+    // .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
 
     // .lb-box .lb-li > * { ${cs.m.b10} ${cs.h.get(400)} }
     .lb-box .lb-li { ${cs.h.get(200)} ${({ height }) => height && cs.h.get(height)} }
@@ -64,7 +64,7 @@ export const object = () => {
 
   return (
     <StyledObject className={"t-main"} height={height}>
-      <Linebox title={"toggle Imagebox"} className={"v-align nomargin"}
+      <Linebox title={"toggle Imagebox"} className={"nomargin"}
         desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={true}>
         {!refresh && <Imagebox className={cx(size, halign, valign, 'border')} fit={fit} options={opt} size={size}
           src={IMG.Image1} title={"scroll(float)"} onClick={onClick} eid={'Imagebox'} />}

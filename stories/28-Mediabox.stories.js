@@ -9,7 +9,7 @@ import { CONT_TYPE } from '../src/Mediabox';
 
 const StyledObject = styled.span`{
   &.t-main {
-    .lb-box { ${cs.w.get(1024)} ${cs.p.b30} }
+    .lb-box { ${cs.w.full} ${cs.p.b30} ${cs.max.width(1200)}}
 
     // .lb-box .lb-li > * { ${cs.m.b10} ${cs.h.get(400)} }
     .lb-box .lb-li { ${cs.h.fit} ${({ height }) => height && cs.h.get(height)} }
@@ -85,7 +85,7 @@ export const size = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"size normal(4:3)"} sample={samplecode("size={'normal'}", 'left')} >
-        <Mediabox src={null} className={'border'} size={'normal'} />
+        <Mediabox src={''} className={'border'} size={'normal'} />
       </Linebox>
 
       <Linebox title={"size wide(16:9)"} sample={samplecode("size={'wide'}", 'left')} >

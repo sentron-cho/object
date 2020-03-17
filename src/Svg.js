@@ -86,10 +86,10 @@ const StyledObject = styled.span` {
       &.box { ${cs.border.color('#3476c1')} ${cs.bg.get('#3476c1')} }
     }
 
-    svg { ${cs.top(0)} ${cs.left(0)} ${cs.pos.absolute} }
+    svg { ${cs.top(0)} ${cs.left(0)} ${cs.pos.relative} }
 
     &.active { ${cs.opac.show} .svg-path { ${cs.icon.fill(cs.color.green)} } }
-    &.box { ${cs.border.get('2px solid rgba(250, 250, 250, 0.95)')} ${cs.p.get('4px')} ${cs.border.radius(5)} }
+    &.box { ${cs.box.line} ${cs.border.lightgray} ${cs.p.get('4px')} ${cs.border.radius(5)} svg { ${cs.top(-3)} } }
     &.bg { ${cs.bg.get('rgba(0, 0, 0, 0.5)')} }
     &.radius { ${cs.border.radius('50%')} }
     

@@ -23,32 +23,31 @@ const StyledObject = styled.div`{
     ${({ height }) => cs.h.get(height || "fit-content")};
 
     .cont-frame {
-      position: relative; height: 100%;
-      width: 100%; max-height: 562px; object-fit: cover; object-position: center center; transition: opacity 500ms ease 0s; 
+      ${cs.pos.relative} ${cs.size.full} ${cs.max.h(562)} ${cs.object.fit('cover')} ${cs.object.center}
+      ${cs.anim.in(500)}
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; }
     }
 
+    .loading-img { ${cs.pos.absolute} ${cs.pos.ltop} ${cs.h.get(562)} ${cs.w.full} }
 
-    .loading-img { position: absolute; top: 0; left: 0; height: 562px; width: 100%; }
-
-    .btn-down { position: absolute; float: right; bottom: 20px; right: 20px; }
+    .btn-down { ${cs.align.rbottom} }
     .btn-media-edit {
-      position: absolute; float: right; bottom: 10px; left: 10px; border: 1px solid #aaa; z-index: 999; opacity: 0.3;
-      svg { padding: 4px; opacity: 0.7; }
+      ${cs.align.lbottom} ${cs.opac.alpha} ${cs.z.get(999)}
+      svg { ${cs.opac.show} ${cs.p.t3} ${cs.p.l1} .svg-path { ${cs.fill.lightgray} } }
     }
 
-    &:hover { .btn-media-edit { opacity: 0.95; background: #4a92e4; } }
+    &:hover { .btn-media-edit { ${cs.opac.show} ${cs.bg.primary} } }
 
-    &.vstyle { width: fit-content; height: 100%; .cont-frame { width: auto; height: 100%; max-width: 600px; } }
+    &.vstyle { ${cs.w.fit} ${cs.h.full} .cont-frame { ${cs.w.auto} ${cs.h.full} ${cs.max.width(600)} } }
 
-    .pointer { cursor: pointer; };
+    .pointer { ${cs.mouse.pointer} };
 
-    &.lg { .image { max-height: 675px; } }
-    &.md { .image { max-height: 562px; } }
-    &.sm { .image { max-height: 450px; } }
+    &.lg { .image { ${cs.max.h(675)} } }
+    &.md { .image { ${cs.max.h(562)} } }
+    &.sm { .image { ${cs.max.h(450)} } }
 
-    .noimage { border: 1px solid rgba(255, 255, 255, 0.1); }
+    .noimage { ${cs.box.border} ${cs.border.lightgray} }
 
     
     &.border { ${cs.box.line} ${cs.border.lightgray} }
@@ -190,7 +189,7 @@ export default class Mediabox extends React.PureComponent {
         {pointer && <Svg className="btn-down xxl box radius" onClick={this.onClicked} eid={EID.DOWM} name={"down"} color={'black'} />}
         {props.edited &&
           // <Button className="btn-media-edit primary md" title={ST.EDIT} onClick={() => this.box.click()} eid={EID.EDIT} />
-          <Svg className="btn-media-edit xxl box radius" onClick={() => this.box.click()} eid={EID.EDIT} name={"media"} color={'white'} />
+          <Svg className="btn-media-edit xxl box radius" onClick={() => this.box.click()} eid={EID.EDIT} name={"media"} />
         }
       </StyledObject>
     )

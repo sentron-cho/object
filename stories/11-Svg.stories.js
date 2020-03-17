@@ -51,6 +51,26 @@ export const object = () => {
         <Svg className="xxl" icon={icon} eid={'svg'} onClick={onClick} />
       </Linebox>
 
+      <Linebox title={"size"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}
+        top={option.top} sample={samplecode('icon={"edit"}', 'sm')} box={true}>
+        <Svg className="xs box" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="sm box" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="md box" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="lg box" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="xl box" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="xxl box" icon={'user'} eid={'svg'} onClick={onClick} />
+      </Linebox>
+
+      <Linebox title={"size"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}
+        top={option.top} sample={samplecode('icon={"edit"}', 'sm')} box={true}>
+        <Svg className="xs box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="sm box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="md box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="lg box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="xl box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+        <Svg className="xxl box radius" icon={'user'} eid={'svg'} onClick={onClick} />
+      </Linebox>      
+
       <Linebox title={"position"} className={'align v-align'}
         top={option.top} sample={samplecode('icon={"edit"}', 'left middle')} box={true}>
         <Svg className="left top" icon={icon} eid={'left top'} onClick={onClick} />

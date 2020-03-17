@@ -46,18 +46,19 @@ const StyledObject = styled.ul`{
 class Menu extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { show: false };
+    const { frameid = "body" } = props;
+    this.state = { show: false, frameid: frameid };
   }
 
   componentWillMount() {
-    const body = document.getElementById('body');
-    body.addEventListener('mouseup', this.onClickBody);
+    const body = document.getElementById(this.state.frameid);
+    body && body.addEventListener('mouseup', this.onClickBody);
     window.addEventListener('resize', this.onClickBody);
   }
 
   componentWillUnmount() {
-    const body = document.getElementById('body');
-    body.removeEventListener('mouseup', this.onClickBody);
+    const body = document.getElementById(this.state.frameid);
+    body && body.removeEventListener('mouseup', this.onResize);
     window.removeEventListener('resize', this.onClickBody);
   }
 
@@ -79,6 +80,11 @@ class Menu extends React.PureComponent {
   render() {
     const {props, state} = this;
     const { menus, width, padding, size = "md", theme = "" } = props;
+
+    if(!menus) {
+      return <span>noitem</span>
+    }
+
     const length = menus.length;
 
     return <StyledObject className={cx('pop-menu', props.className)} width={width} padding={padding} left={(msize[size].w - 20) * -1} top={msize[size].h * -1 * length}>

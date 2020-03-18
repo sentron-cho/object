@@ -42,17 +42,11 @@ export const sobject = () => {
     { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
   const title = text('title', 'Nodata');
-  const disable = boolean('disable', false);
 
   const [result, setResult] = useState(null);
-  const [change, setChange] = useState(null);
 
-  const onClick = (eid, e, list) => {
-    setResult(`eid = ${eid}, ${JSON.stringify(list)}`);
-  }
-
-  const onChange = (eid, e, list) => {
-    setChange(`eid = ${eid}, ${JSON.stringify(list)}`);
+  const onClick = (eid, e) => {
+    setResult(`eid = ${eid}, e`);
   }
 
   return (
@@ -65,11 +59,6 @@ export const sobject = () => {
       <div className={"res-view"}>
         <p>onClick</p>
         <p>{result}</p>
-      </div>
-
-      <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
       </div>
     </StyledObject>
   );

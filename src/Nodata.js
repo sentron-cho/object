@@ -62,30 +62,28 @@ const StyledFrame = styled.div`{
     &.theme-black { ${cs.bg.black} ${cs.font.white} }
 
     .nd-title {
-      ${({font}) => font && font.color && cs.font.color(font.color)}
-      ${({font}) => font && font.align && cs.font.size(font.size)}
+      ${({ font }) => font && font.color && cs.font.color(font.color)}
+      ${({ font }) => font && font.align && cs.font.size(font.size)}
     }
 
-    ${({border}) => border && cs.box.line}
-    ${({border}) => border && border.color && cs.border.color(border.color)}
-    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
-    ${({border}) => border && border.width && cs.border.width(border.width)}
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
   }
 }`;
 
 const Nodata = (props) => {
   const onClicked = (e) => {
-    if (props.onClick != null) {
-      props.onClick(props.eid, e);
-    }
+    props.onClick && props.onClick(props.eid || 'nodata', e);
   }
 
   const isChildren = Boolean(props.children);
   const pointer = Boolean(props.onClick);
-  const {className, font, theme, border} = props;
+  const { className, font, theme, border } = props;
 
   return (
-    <StyledFrame className={cx('nodata-box', { pointer }, className, theme && `theme-${theme}`)} 
+    <StyledFrame className={cx('nodata-box', { pointer }, className, theme && `theme-${theme}`)}
       onClick={onClicked} font={font} border={border} >
       {isChildren ? props.children : <div className="nd-title">{props.title ? props.title : 'No Data!'}</div>}
     </StyledFrame>

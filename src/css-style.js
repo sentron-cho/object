@@ -74,6 +74,7 @@ const cs = {
 
   noselect: 'user-select: none;',
   noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
+  nolist: 'list-style: none; margin: 0; padding: 0;',
 
   content: {
     none: `content: "";`,

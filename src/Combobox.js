@@ -26,7 +26,8 @@ const StyledObject = styled.div` {
         &:hover { ${cs.opac.get(0.9)} }
       }
 
-      .cb-ul { ${cs.bg.white} ${cs.min.width("100px")} ${cs.w.get("calc(100% - 20px)")} ${cs.max.width("calc(100% - 20px)")} 
+      .cb-ul { ${cs.bg.white} ${cs.min.width("100px")} 
+        ${cs.w.get("max-content")} ${cs.max.width("max-content")} 
         ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t15}
         ${cs.box.radius} ${cs.border.lightgray} ${cs.box.shadow}
         .cb-li { ${cs.p.get("5px 10px")}

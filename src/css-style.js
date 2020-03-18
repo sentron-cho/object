@@ -525,6 +525,7 @@ const cs = {
     alphablack: `border-color: ${color.alphablack};`,
     darkgray: `border-color: ${color.darkgray};`,
     lightgray: `border-color: ${color.lightgray};`,
+    alphagray: `border-color: ${color.alphagray};`,
     semiblack: `border-color: ${color.semiblack};`,
 
     shadow: (v) => v ? `box-shadow: ${v};` : 'box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);',

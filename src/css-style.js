@@ -341,6 +341,7 @@ const cs = {
   },
 
   align: {
+    unset:  'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
     top: 'position: absolute; bottom: unset; top: 0;',
     bottom: 'position: absolute; top: unset; bottom: 0;',
     left: 'position: absolute; right: unset; left: 0;',

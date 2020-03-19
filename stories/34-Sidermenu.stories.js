@@ -34,9 +34,7 @@ const list = [
 ];
 
 export const object = () => {
-  const title = text('title', null);
-  const label = text('label', 'label');
-  const message = text('message', '');
+  const title = text('title', 'nuriweb');
   const [menu, setMenu] = useState(null);
   const [result, setResult] = useState(null);
 
@@ -47,7 +45,6 @@ export const object = () => {
       // children: MenuChild,
       list: list,
       className: `${eid}`,
-      data: { label: label, message: message },
       onOk: (data) => {
         setResult(`${JSON.stringify(data)}`);
       },
@@ -65,7 +62,6 @@ export const object = () => {
       list: list,
       className: `${eid}`,
       size: eid,
-      data: { label: label, message: message },
       onOk: (data) => {
         setResult(`${JSON.stringify(data)}`);
       },
@@ -82,7 +78,6 @@ export const object = () => {
       // children: MenuChild,
       list: list,
       theme: eid,
-      data: { label: label, message: message },
       onOk: (data) => {
         setResult(`${JSON.stringify(data)}`);
       },

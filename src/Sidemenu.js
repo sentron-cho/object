@@ -8,13 +8,14 @@ import { Button, Svg, cs } from './index';
 const StyledObject = styled.div`{
   &.side-menu {
     ${cs.h.full} ${cs.pos.fixed} ${cs.disp.block} ${cs.top(0)} ${cs.z.top} 
-    ${({width}) => cs.w.get(width || '240px')} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
+    ${({ width }) => cs.w.get(width || '240px')} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
     ${cs.border.right} ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect}
 
     .sm-head {
-      ${ cs.h.get(59)}
+      ${ cs.h.get(59)} ${cs.pos.relative}
 
       .btn-cancel { ${cs.pos.absolute} ${cs.top(15)} ${cs.right(10)} }
+      .sm-title { ${cs.font.left} ${cs.align.ycenter} ${cs.p.l20} ${cs.font.xxl} ${cs.font.weight(600)} }
     }
     // .svg-icon { ${cs.opac.get(0.5)}  }
     
@@ -35,14 +36,14 @@ const StyledObject = styled.div`{
 
     .sm-foot { }
 
-    &.show { ${({fade}) => cs.anim.slidein(fade)} };
-    &.hide { ${({fade}) => cs.anim.slideout(fade)} };
+    &.show { ${({ fade }) => cs.anim.slidein(fade)} };
+    &.hide { ${({ fade }) => cs.anim.slideout(fade)} };
 
-    &.md { ${({width}) => cs.w.get(width || 240)} .sm-body .sm-ul .sm-li { ${cs.font.line(40)} ${cs.font.lg} } }
-    &.xs { ${({width}) => cs.w.get(width || 180)} .sm-body .sm-ul .sm-li { ${cs.font.line(28)} ${cs.font.sm} } }
-    &.sm { ${({width}) => cs.w.get(width || 200)} .sm-body .sm-ul .sm-li { ${cs.font.line(34)} ${cs.font.md} } }
-    &.lg { ${({width}) => cs.w.get(width || 260)} .sm-body .sm-ul .sm-li { ${cs.font.line(48)} ${cs.font.xl} } }
-    &.xl { ${({width}) => cs.w.get(width || 380)} .sm-body .sm-ul .sm-li { ${cs.font.line(54)} ${cs.font.xxl} } }
+    &.md { ${({ width }) => cs.w.get(width || 240)} .sm-head .sm-title { ${cs.font.xxl} } .sm-body .sm-ul .sm-li { ${cs.font.line(40)} ${cs.font.lg} } }
+    &.xs { ${({ width }) => cs.w.get(width || 180)} .sm-head .sm-title { ${cs.font.lg} ${cs.font.weight(550)} } .sm-body .sm-ul .sm-li { ${cs.font.line(28)} ${cs.font.sm} } }
+    &.sm { ${({ width }) => cs.w.get(width || 200)} .sm-head .sm-title { ${cs.font.xl} } .sm-body .sm-ul .sm-li { ${cs.font.line(34)} ${cs.font.md} } }
+    &.lg { ${({ width }) => cs.w.get(width || 260)} .sm-head .sm-title { ${cs.font.t1} ${cs.font.weight(550)} } .sm-body .sm-ul .sm-li { ${cs.font.line(48)} ${cs.font.xl} } }
+    &.xl { ${({ width }) => cs.w.get(width || 380)} .sm-head .sm-title { ${cs.font.t2} ${cs.font.weight(600)} } .sm-body .sm-ul .sm-li { ${cs.font.line(54)} ${cs.font.xxl} } }
 
     &.white { ${cs.bg.white} ${cs.font.dark} 
       .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.semiblack)} ${cs.font.white} } }
@@ -107,7 +108,7 @@ class Sidemenu extends React.PureComponent {
 
   render() {
     const { state } = this;
-    const { show, width = null, fade = '0.2s', theme = 'white', children = null, list = null, className } = state;
+    const { show, width = null, fade = '0.2s', theme = 'white', children = null, list = null, className, title } = state;
     // const { title, list, root } = props;
     const color = theme === 'dark' ? 'white' : 'dark';
 
@@ -115,6 +116,7 @@ class Sidemenu extends React.PureComponent {
       show &&
       <StyledObject className={cx("side-menu", show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
         <div className="sm-head">
+          <p className={'sm-title'}>{title ? title.toUpperCase() : ''}</p>
           <Svg className="btn-cancel md" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={color} />
         </div>
         <div className="sm-body scrollbar-4">
@@ -124,14 +126,14 @@ class Sidemenu extends React.PureComponent {
             {list.map((item, index) => {
               const path = window.location.pathname;
               const active = path ? path.toLowerCase() === item.url.toLowerCase() : (index === 0);
-              const {divider} = item;
-              if(divider) {
+              const { divider } = item;
+              if (divider) {
                 return <React.Fragment><div className={"sm-div"} /><li className={cx("sm-li", { active })} url={item.url} onClick={this.onClickMenu}>{item.name} </li></React.Fragment>
               } else {
                 return <li className={cx("sm-li", { active })} url={item.url} onClick={this.onClickMenu}>{item.name} </li>
               }
             })}
-            </ul>
+          </ul>
           }
         </div>
       </StyledObject >

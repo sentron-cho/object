@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Button, Svg, cs } from './index';
+import { Button, Svg, cs, CloseButton } from './index';
 
 const StyledObject = styled.div`{
   &.option-bar {
-    ${cs.h.get('100vh')} ${cs.pos.fixed} ${cs.pos.rtop} ${cs.z.top}
-    // ${cs.opac.invisible}
+    ${cs.h.get('100vh')} ${cs.pos.fixed} ${cs.pos.rtop} ${cs.z.top} 
+    ${cs.border.left} ${cs.border.lightgray}
 
     .ob-box {
       ${({ width }) => cs.w.get(width)} ${cs.p.a2} display: none;
@@ -16,17 +16,16 @@ const StyledObject = styled.div`{
 
       .ob-frame {
         ${cs.over.auto} ${cs.w.full} ${cs.h.get('100vh')} ${cs.p.b40}
-      }
-
-      .ob-body { 
-        min-height: 200px; ${cs.p.h10} 
-        .no-child { ${cs.opac.alpha} ${cs.align.center} ${cs.w.full} ${cs.font.center} }
-      }
-      .ob-footer { 
-        ${cs.align.bottom} ${cs.min.height(60)} ${cs.p.r20} 
-        ${cs.p.t10} ${cs.w.full} ${cs.font.right}
-
-        .button { ${cs.m.r20} }
+        .ob-body { 
+          min-height: 200px; ${cs.p.h10} 
+          .no-child { ${cs.opac.alpha} ${cs.align.center} ${cs.w.full} ${cs.font.center} }
+        }
+        .ob-footer { 
+          ${cs.align.bottom} ${cs.min.height(60)} ${cs.p.r20} 
+          ${cs.p.t10} ${cs.w.full} ${cs.font.right}
+  
+          .button { ${cs.m.r20} }
+        }        
       }
     }
     
@@ -75,7 +74,7 @@ export default class Optionbar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.interval = '200ms';
-    this.object = null;
+    this.object = {};
     this.state = { modefied: false, children: props.children, show: props.show || false };
   }
 
@@ -96,8 +95,10 @@ export default class Optionbar extends React.PureComponent {
   }
 
   onClickButton = (eid, e) => {
-    this.setState({ show: !this.state.show, modefied: false });
-    this.props.onClick && this.props.onClick('close', null, e);
+    const { show } = this.state;
+    this.props.onClick && this.props.onClick(!show ? 'open' : 'close', null, e);
+    this.setState({ show: !show, modefied: false });
+    // this.props.onClick && this.props.onClick('close', null, e);
   }
 
   onAnimEnd = (e) => {
@@ -120,7 +121,7 @@ export default class Optionbar extends React.PureComponent {
     return (
       <StyledObject className={cx("option-bar white", className, theme && `theme-${theme}`, show ? 'slidein' : 'slideout')}
         {...fade} width={width} font={title} onAnimationEnd={this.onAnimEnd}>
-        <CloseButton onClick={this.onClickButton} show={show} />
+        <CloseButton className={className} theme={theme} onClick={this.onClickButton} show={show} />
         {<div className={'ob-box'}>
           <div className="ob-header">
             <span className="opt-tl">{props.title || "Option Bar"}</span>
@@ -128,7 +129,7 @@ export default class Optionbar extends React.PureComponent {
 
           <div className="ob-frame scrollbar-3">
             <div className="ob-body">
-              {Component && <Component ref={ref => this.object = ref} {...props} onChange={this.onChange} />}
+              {Component && <Component refs={this.object} {...props} onChange={this.onChange} />}
               {!Component && <p className="no-child">The child component does not exist.</p>}
             </div>
 
@@ -141,34 +142,4 @@ export default class Optionbar extends React.PureComponent {
       </StyledObject >
     )
   };
-};
-
-const StyledButton = styled.div`{
-  &.close-btn { 
-    ${cs.bg.alphablack} ${cs.border.radius('5px 0 0 5px')} ${cs.box.line} ${cs.box.inner}
-    ${cs.w.get(10)} ${cs.left(-10)}
-
-    .svg-icon { ${cs.opac.show} ${cs.w.get(6)} }
-
-    &.left { ${cs.align.ycenter} ${cs.h.get(60)} }
-    &.right { }
-    &.top { } 
-    &.bottom { }
-
-    &:hover { ${cs.w.get(30)} ${cs.left(-30)} .svg-icon { ${cs.opac.show} ${cs.w.get(20)} } }
-  }
-}`;
-
-const CloseButton = (props) => {
-  const onClicked = (eid, e) => {
-    props.onClick && props.onClick(eid, e);
-  }
-
-  const { className, theme, align = 'left', show = false } = props;
-
-  return (
-    <StyledButton className={cx("close-btn", className, align, theme && `theme-${theme}`)}>
-      <Svg className="md center middle" name={show ? "right" : "left"} onClick={onClicked} eid={'cancel'} color={'white'} />
-    </StyledButton>
-  );
 };

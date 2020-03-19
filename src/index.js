@@ -67,3 +67,4 @@ export { default as Sidemenu } from "./Sidemenu";
 export { default as Guidebox } from "./Guidebox";
 export { default as Dragable } from "./Dragable";
 export { default as Datebox } from "./Datebox";
+export { default as CloseButton } from "./CloseButton";

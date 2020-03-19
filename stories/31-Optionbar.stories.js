@@ -34,7 +34,7 @@ export const sobject = () => {
     { 'none': '', 'lg(large)': 'lg', 'md(middle)': 'md', 'sm(small)': 'sm' },
     '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
-    { none: '', white: 'white', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
+    { none: '', white: 'white', sky: 'sky', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
   const theme = options('theme',
     { none: '', sky: 'sky', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
@@ -51,8 +51,8 @@ export const sobject = () => {
   const [result, setResult] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  const onClick = (eid, e) => {
-    setResult(`eid = ${eid}, e`);
+  const onClick = (eid, value, e) => {
+    setResult(`eid = ${eid}, value = ${JSON.stringify(value)}, e`);
   }
 
   
@@ -103,17 +103,19 @@ const OptionChild = (props) => {
   var refs = {};
 
   // 팝업의 ok이 버튼일 클릭되면 여기에서 return할 데이터를 만들어 return한다.
-  // props.act.getData = (checkValidate) => {
-  //   // validate 체크하여 통과하지 못하면 false를 리턴(창이 닫히지 않는다.)
-  //   const isvalidate = Object.keys(refs).every((key) => refs[key].isValidate());
-  //   if (!isvalidate) return false;
+  if(props.refs) {
+  props.refs.getData = (checkValidate) => {
+    // validate 체크하여 통과하지 못하면 false를 리턴(창이 닫히지 않는다.)
+    const isvalidate = Object.keys(refs).every((key) => refs[key].isValidate());
+    if (!isvalidate) return false;
 
-  //   const { state } = props;
-  //   let datas = {};
-  //   Object.keys(refs).map(key => datas[key] = refs[key].getValue());
+    const { state } = props;
+    let datas = {};
+    Object.keys(refs).map(key => datas[key] = refs[key].getValue());
 
-  //   return { 'state': state, ...datas };
-  // }
+    return { 'state': state, ...datas };
+  }
+}
 
   const onChange = (value, e) => {
     props.onChange && props.onChange(value, e);

@@ -536,6 +536,7 @@ const cs = {
     get: (v) => `border: ${v};`,
     radius: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
     outline: (v) => `outline: ${v};`,
+    set: (v) => `${v};`,
   },
 
   m: {

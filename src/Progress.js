@@ -1,47 +1,76 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
-import Svg from './Svg';
+import { Svg, cs } from './index';
 
 const StyledObject = styled.div`{
   &.prog-box {
-    width: ${(props) => props.width};
-    height: ${(props) => props.height}; display: block; position: relative; border-radius: 4px;
-    background: #f1f1f1; float: right; margin: 0;
+    ${({ width }) => cs.w.get(width)} ${({ height }) => cs.h.get(height)}
+    ${cs.disp.block} ${cs.bg.sky} ${cs.over.hidden}
+    ${cs.m.a0} ${cs.box.line} ${cs.box.inner} ${cs.border.trans}
+    ${cs.pos.relative} ${cs.font.gray}
 
-    .bar-txt {
-      position: absolute; color: #a4a4a4; font-size: 10px; line-height: 10px;
-      z-index: 1; top: 50%; transform: translateY(-50%); right: 4px;
+    .pb-label { ${cs.pos.absolute} ${cs.z.front} ${cs.font.dark} ${cs.font.xs} ${cs.bottom(0)} ${cs.left(3)} }
+    .pb-txt {
+      ${cs.pos.absolute} ${cs.font.xs} ${cs.font.right} ${cs.align.rbottom} ${cs.bottom(0)}
     }
 
-    .bar { background: #63c2de; height: 100%; width: 0; display: inline-block; 
-      border: 1px solid transparent; margin-bottom: 1px; float: left; border-radius: 4px 0 0 4px;
-      
-      &.primary { background: #63c2de; }
+    .pb-bar { 
+      ${cs.h.calc("100%")} ${cs.w.get(0)} ${cs.bg.green} ${cs.disp.inblock} ${cs.max.w('100%')}
+      ${cs.float.left} ${cs.border.right} ${cs.border.primary} ${cs.pos.relative}
 
-      &.norm { background: #2aaa64; }
-      &.warn { background: #ff8400; }
-      &.err { background: #f86c6b; }
-
-      // &.level1 { background: #2aaa64; }
-      // &.level2 { background: #ff8400; }
-      // &.level3 { background: #f86c6b; }
-
+      &.norm { ${cs.bg.get("#ffbf30c0")} }
+      &.warn { ${cs.bg.get("#ff8d17c0")} }
+      &.err { ${cs.bg.get("#ff5413c0")} }
       &.full { border-radius: 4px; }
     }
 
-    .pg-icon { width: 16px; height: 16px; z-index: 10; opacity: 0.9; position: absolute; left: -6px; top: -6px; 
-      border: 1px solid rgba(250, 250, 250, 0.95); padding: 2px; border-radius: 20px; background: #fff677;
+    .pb-icon { 
+      ${cs.icon.get(12)} ${cs.z.icon} ${cs.opac.show} ${cs.pos.relative}
+      ${cs.left(-7)} ${cs.top(-4)}
     }
 
     &.nobg { background: transparent; border: 1px solid #515b65; }
-    &.dark { background: #515b65; .bar-txt {color: #fff; } }
+
+    &.border { ${cs.border.lightgray} }
+    &.radius { ${cs.box.radius} .pb-bar { ${cs.border.radius("4px")} } }
+
+    &.md { ${cs.h.get(16)} .pb-label { ${cs.font.xs} } .pb-icon { ${cs.icon.get(12)} ${cs.left(-7)} ${cs.top(-4)} } }
+    &.xl { ${cs.h.get(28)} .pb-label { ${cs.font.md} } .pb-icon { ${cs.icon.sm} ${cs.left(-10)} ${cs.top(4)} } }
+    &.lg { ${cs.h.get(22)} .pb-label { ${cs.font.sm} } .pb-icon { ${cs.icon.sm} ${cs.left(-12)} ${cs.top(1)} } }
+    &.sm { ${cs.h.get(14)} .pb-label { ${cs.font.xs} } .pb-icon { ${cs.icon.get(10)} ${cs.left(-6)} ${cs.top(-6)} } }
+    &.xs { ${cs.h.get(10)} .pb-label { ${cs.font.xs} } .pb-icon { ${cs.icon.get(8)} ${cs.left(-6)} ${cs.top(-9)} } }
+
+    &.sky { ${cs.bg.sky} ${cs.font.gray} }
+    &.green { ${cs.bg.green} ${cs.font.white} .pb-label { ${cs.font.white} } }
+    &.orange { ${cs.bg.orange} ${cs.font.white} .pb-label { ${cs.font.white} } }
+    &.red { ${cs.bg.red} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.primary { ${cs.bg.primary} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.blue { ${cs.bg.blue} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.gray { ${cs.bg.gray} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.dark { ${cs.bg.dark} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.black { ${cs.bg.black} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+
+    &.theme-sky { ${cs.bg.sky} ${cs.font.gray} }
+    &.theme-primary { ${cs.bg.primary} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.theme-gray { ${cs.bg.gray} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.theme-dark { ${cs.bg.dark} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.theme-black { ${cs.bg.black} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+
+    ${({ border }) => border && `${cs.box.line}`}
+    ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
+    ${({ border }) => border && border.radius && `${cs.border.radius(border.radius)}`}
+    ${({ border }) => border && border.width && `${cs.border.width(border.width)}`}
   }
 }`;
 
 const Progress = (props) => {
 
-  const { max = 100, min = 0, value = 0, limit=70, unit='' } = props;
+  const { 
+    max = 100, min = 0, value = 0, limit = 70, unit = '', 
+    width = '100%', height = '16px', label = null, 
+    border, theme    
+  } = props;
   let rate = props.rate;
   if (max > 0 && value > 0) {
     rate = Math.floor(value / (max - min) * 100);
@@ -63,11 +92,11 @@ const Progress = (props) => {
   const full = (rate >= 100);
 
   return (
-    <StyledObject className={cx("prog-box", props.className, (full))} width={(props.width != null ? props.width : '100%')}
-      height={(props.height != null ? props.height : '16px')}>
-      {rate > 0 && <span className="bar-txt">{`${rate} ${unit ? unit : ''}`}</span>}
-      {rate > 0 && <span className={cx("bar", bar_style)} style={prog}></span>}
-      {alarm && <Svg className="pg-icon md" icon={alarm === "warn" ? 'warning' : 'alarm'} color={"#d50000"} />}
+    <StyledObject className={cx("prog-box", props.className, (full), theme && `theme-${theme}`)} width={width} height={height} border={border}>
+      {label && <span className={"pb-label"}>{label}</span>}
+      {rate > 0 && <span className="pb-txt">{`${rate} ${unit ? unit : ''}`}</span>}
+      {rate > 0 && <span className={cx("pb-bar", bar_style)} style={prog}></span>}
+      {alarm && <Svg className="pb-icon md" icon={alarm === "warn" ? 'warning' : 'alarm'} color={"#d50000"} />}
     </StyledObject>
   )
 }

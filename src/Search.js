@@ -6,15 +6,58 @@ import { EID, ST } from './Config';
 
 const StyledObject = styled.div` {
   &.search-box {
-    ${cs.pos.relative} ${cs.w.full} ${cs.disp.inblock} ${cs.max.height(40)} ${cs.p.get("2px 10px")} ${cs.bg.white} ${cs.box.radius}
+    ${cs.pos.relative} ${cs.w.calc('100% - 20px')} ${cs.disp.inblock} ${cs.p.get("0 10px")} 
+    ${cs.bg.white} ${cs.box.radius} ${cs.bg.sky}
 
-    .sc-in { ${cs.disp.inblock} ${cs.w.get("calc(100% - 155px)")} ${cs.m.l30} }
+    .sc-in { }
     .sc-btn { ${cs.align.ycenter} }
-    .sc-combo { ${cs.align.ycenter} ${cs.right(0)} ${cs.w.get(120)} ${cs.right(-1)}
-      .cb-sel { ${cs.border.radius("0 5px 5px 0")} } 
+    .sc-combo { 
+      ${cs.align.ycenter} ${cs.right(0)} ${cs.right(0)}
+      .cb-sel { ${cs.border.radius("0 5px 5px 0")} ${cs.p.a0} ${cs.font.center} } 
     }
 
-    &.box { ${cs.box.line} }
+    &.box, &.border { ${cs.box.line} }
+    &.radius { ${cs.border.radius} }
+
+    &.md { ${cs.h.md} 
+      .sc-combo, .sc-combo .cb-sel { ${cs.w.get(140)} } 
+      .sc-in { ${cs.m.l30} ${cs.m.top(4)} &.combo { ${cs.w.calc('100% - 170px')} } } 
+    }
+    &.xs { ${cs.h.xs} 
+      .sc-combo, .sc-combo .cb-sel { ${cs.w.get(100)} } 
+      .sc-in { ${cs.m.l15} ${cs.m.top(-4)} &.combo { ${cs.w.calc('100% - 110px')} }  } .sc-btn { ${cs.m.left(-4)} ${cs.m.top(-3)} } 
+    }
+    &.sm { ${cs.h.sm} 
+      .sc-combo, .sc-combo .cb-sel { ${cs.w.get(120)} } 
+      .sc-in { ${cs.m.l25} ${cs.m.top(2)} &.combo { ${cs.w.calc('100% - 140px')} } }
+    }
+    &.lg { ${cs.h.lg} 
+      .sc-combo, .sc-combo .cb-sel { ${cs.w.get(160)} } 
+      .sc-in { ${cs.m.l40} ${cs.m.top(1)} &.combo { ${cs.w.calc('100% - 200px')} } }
+    }
+    &.xl { ${cs.h.xl} 
+      .sc-combo, .sc-combo .cb-sel { ${cs.w.get(200)} } 
+      .sc-in { ${cs.m.get(50)} ${cs.m.top(3)} &.combo { ${cs.w.calc('100% - 250px')} } }
+    }
+    
+    &.left { }
+    &.right {  }
+    &.center {  }
+
+    &.sky { ${cs.bg.sky} .sc-btn .svg-path { ${cs.fill.dark} } .sc-combo .cb-sel { ${cs.border.lightgray} ${cs.bg.sky} } }
+    &.orange { ${cs.bg.orange} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.orange} ${cs.bg.orangehover} } }
+    &.green { ${cs.bg.green} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.green} ${cs.bg.greenhover} } }
+    &.red { ${cs.bg.red} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.red} ${cs.bg.redhover} } }
+    &.primary { ${cs.bg.primary} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.primary} ${cs.bg.primaryhover} } }
+    &.gray { ${cs.bg.lightgray} .sc-btn .svg-path { ${cs.fill.dark} } .sc-combo .cb-sel { ${cs.border.darkgray} ${cs.bg.grayhover} } }
+    &.dark { ${cs.bg.dark} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.dark} ${cs.bg.darkhover} } }
+    &.black { ${cs.bg.black} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.black} ${cs.bg.dark} } }
+
+    &.theme-sky { ${cs.bg.sky} .sc-btn .svg-path { ${cs.fill.dark} } .sc-combo .cb-sel { ${cs.border.lightgray} ${cs.bg.sky} } }
+    &.theme-primary { ${cs.bg.primary} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.primary} ${cs.bg.primaryhover} } }
+    &.theme-gray { ${cs.bg.lightgray} .sc-btn .svg-path { ${cs.fill.dark} } .sc-combo .cb-sel { ${cs.border.darkgray} ${cs.bg.grayhover} } }
+    &.theme-dark { ${cs.bg.dark} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.dark} ${cs.bg.darkhover} } }
+    &.theme-black { ${cs.bg.black} .sc-btn .svg-path { ${cs.fill.white} } .sc-combo .cb-sel { ${cs.border.black} ${cs.bg.dark} } }
   }
 }`;
 
@@ -46,16 +89,21 @@ export default class Search extends React.PureComponent {
 
   render() {
     const { state, props } = this;
+    const { frameid = 'body', className, theme } = props;
     const { list } = state;
-    const style = list ? { width: 'calc(100% - 155px)' } : { width: 'calc(100% - 35px)' };
+    // const combo = 120;
+    // const edit = list ? `calc(100% - ${combo + 25}px)` : 'calc(100% - 35px)';
     const pos = list ? list.findIndex(item => item.id === state.key) : 0;
+    const innercs = className.replace('border', '');
 
     return (
-      <StyledObject className={cx("search-box", props.className)}>
-        <Svg className="sc-btn sm" color={'black'} onClick={this.onClicked} icon={'find'} />
-        <Editbox type="text" className="sc-in transparent" guide={props.guide} value={state.value}
-          onEnter={this.onEnter} onChange={this.onChange} style={style} />
-        {list && <Combobox className="sc-combo dark lg" pos={pos}
+      <StyledObject className={cx("search-box md", className, theme && `theme-${theme}`)} >
+        <Svg className={cx("sc-btn", innercs)} color={'black'} onClick={this.onClicked} icon={'find'} />
+        <Editbox type="text" className={cx("sc-in", innercs, list && 'combo')} 
+          guide={props.guide} value={state.value} theme={theme}
+          onEnter={this.onEnter} onChange={this.onChange} />
+        {list && <Combobox className={cx("sc-combo sky md", innercs)} 
+          pos={pos} frameid={frameid} theme={theme}
           list={list} onClick={this.onClickCombo} inline={true} />
         }
       </StyledObject>

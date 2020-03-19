@@ -112,8 +112,10 @@ const StyledObject = styled.div` {
       }
     }
 
+    &.xs .box .input { ${cs.h.get(16)} ${cs.min.height(16)} ${cs.p.get('0 0px')} ${cs.font.line(14)} ${cs.font.xs} }
     &.sm .box .input { ${cs.h.get(20)} ${cs.min.height(20)} ${cs.p.get('0 5px')} ${cs.font.line(18)} ${cs.font.sm} }
     &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get('0 10px')} ${cs.font.line(32)} ${cs.font.lg} }
+    &.xl .box .input { ${cs.h.get(40)} ${cs.min.height(40)} ${cs.p.get('0 16px')} ${cs.font.line(40)} ${cs.font.xl} }
 
     &.trans { .input { ${cs.bg.white} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
     &.sky { .input { ${cs.bg.sky} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }

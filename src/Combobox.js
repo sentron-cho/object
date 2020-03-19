@@ -100,6 +100,32 @@ const StyledObject = styled.div` {
   }
 }`;
 
+// &.md { }
+// &.xs { }
+// &.sm { }
+// &.lg { }
+// &.xl { }
+
+// &.left { }
+// &.right {  }
+// &.center {  }
+
+// &.trans { }
+// &.sky { }
+// &.orange { }
+// &.green { }
+// &.red { }
+// &.primary { }
+// &.gray { }
+// &.dark { }
+// &.black { }
+
+// &.theme-sky { }
+// &.theme-primary { }
+// &.theme-gray { }
+// &.theme-dark { }
+// &.theme-black { }
+
 export default class Combobox extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -184,7 +210,7 @@ export default class Combobox extends React.PureComponent {
     const { props, state } = this;
     const { list = null, noti, show, pos } = state;
     const { disable, aling="center", labelalign="left", theme, className } = props;
-    const selected = list ? list.length < pos ? list[pos] : list[0] : null;
+    const selected = list ? pos < list.length ? list[pos] : list[0] : null;
     const title = selected ? selected.name.toString() : 'noitem';
     const { text, label } = props.options || {text: null, label: null};
 

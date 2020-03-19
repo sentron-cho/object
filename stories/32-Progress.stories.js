@@ -26,18 +26,13 @@ export default {
 const samplecode = (value, classname = '') => `<Progress  className={"${classname}"} ${value} />`;
 export const sobject = () => {
 
-  const classname = text('classname', '');
   const size = options('size',
     { 'md(middle)': 'md', 'xl(xlarge)': 'xl', 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs' },
-    '', { display: 'inline-radio' }, 'Other');
-  const halign = options('horizontal', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const valign = options('vertical', { 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' },
     '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
     { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
-  const title = text('title', 'Progress');
+  const label = text('label', '');
 
   const max = number('max value', 100);
   const min = number('min value', 0);
@@ -54,7 +49,7 @@ export const sobject = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"Progress"} className={""} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
         sample={samplecode('title={"Progress"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
-        <Progress className={cx(classname, bg, size, halign, valign)} title={title} onClick={onClick} 
+        <Progress className={cx(bg, size)} label={label} onClick={onClick} 
           max={max} min={min} value={current} limit={limit} />
       </Linebox>
 

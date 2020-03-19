@@ -71,6 +71,8 @@ const StyledObject = styled.span`{
     &.ltype { ${cs.border.radius("2px 0 0 2px")} ${cs.box.line} ${cs.border.gray} border-right: 0px; }
     &.ctype { ${cs.border.radius("0")} ${cs.box.line} ${cs.border.gray} border-right: 0px; border-left: 0px; }
 
+    &.border { ${cs.box.line} }
+
     &.full { ${cs.w.full} ${cs.p.h0} }
 
     .btn-label {

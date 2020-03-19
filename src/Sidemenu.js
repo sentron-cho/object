@@ -8,8 +8,8 @@ import { Button, Svg, cs } from './index';
 const StyledObject = styled.div`{
   &.side-menu {
     ${cs.h.full} ${cs.pos.fixed} ${cs.disp.block} ${cs.top(0)} ${cs.z.top} 
-    ${props => cs.w.get(props.width)} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
-    ${cs.border.right} ${cs.border.lightwhite}
+    ${({width}) => cs.w.get(width || '240px')} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
+    ${cs.border.right} ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect}
 
     .sm-head {
       ${ cs.h.get(59)}
@@ -33,35 +33,41 @@ const StyledObject = styled.div`{
       }
     }
 
-    .sm-foot { 
+    .sm-foot { }
 
+    &.show { ${({fade}) => cs.anim.slidein(fade)} };
+    &.hide { ${({fade}) => cs.anim.slideout(fade)} };
+
+    &.md { ${({width}) => cs.w.get(width || 240)} .sm-body .sm-ul .sm-li { ${cs.font.line(40)} ${cs.font.lg} } }
+    &.xs { ${({width}) => cs.w.get(width || 180)} .sm-body .sm-ul .sm-li { ${cs.font.line(28)} ${cs.font.sm} } }
+    &.sm { ${({width}) => cs.w.get(width || 200)} .sm-body .sm-ul .sm-li { ${cs.font.line(34)} ${cs.font.md} } }
+    &.lg { ${({width}) => cs.w.get(width || 260)} .sm-body .sm-ul .sm-li { ${cs.font.line(48)} ${cs.font.xl} } }
+    &.xl { ${({width}) => cs.w.get(width || 380)} .sm-body .sm-ul .sm-li { ${cs.font.line(54)} ${cs.font.xxl} } }
+
+    &.white { ${cs.bg.white} ${cs.font.dark} 
+      .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.semiblack)} ${cs.font.white} } }
+    }
+    &.sky { ${cs.bg.sky}  ${cs.font.dark} 
+      .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.primary)} ${cs.font.white} } }
+    }
+    &.primary { ${cs.bg.primary} ${cs.font.white} .svg-icon { ${cs.fill.white} } 
+      .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.primaryhover)} ${cs.font.white} } }
+    }
+    &.gray { ${cs.bg.lightgray} ${cs.font.dark} 
+      .sm-body { ${cs.border.gray} }
+    }
+    &.dark { ${cs.bg.dark} ${cs.font.white} .svg-icon { ${cs.fill.white} } 
+      .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.darkhover)} ${cs.font.white} } }
+    }
+    &.black { ${cs.bg.black} ${cs.font.white} .svg-icon { ${cs.fill.white} } 
+      .sm-ul .sm-li { &:hover, &.active { ${cs.bg.get(cs.color.blackhover)} ${cs.font.white} } }
     }
 
-    &.show { animation: slide-in linear 1 forwards ${ props => props.fade}s; };
-    &.hide { animation: slide-out linear 1 forwards ${ props => props.fade}s; };
+    @media screen and (max-width : 1280px) { }
 
-    &.white { ${cs.bg.white} ${cs.font.dark} }
-    &.dark { ${cs.bg.dark}  ${cs.font.white} }
-    &.gray { ${cs.bg.lightgray} ${cs.font.dark} .sm-body { ${cs.border.gray} } }
+    @media screen and (max-width : 1080px) { }
 
-    @media screen and (max-width : 1280px) {
-    }
-
-    @media screen and (max-width : 1080px) {
-    }
-
-    @media screen and (max-width : 860px) {
-    }
-
-    @keyframes slide-in {
-      from { opacity: 0.5; transform: translate3d(-${props => props.width}, 0, 0); }
-      to { opacity: 1; display: block; transform: translate3d(0px, 0, 0); } 
-    }
-
-    @keyframes slide-out {
-      from { opacity: 1; transform: translate3d(0px, 0, 0); }
-      to { opacity: 0.5; display: none; transform: translate3d(-${props => props.width}, 0, 0); } 
-    }
+    @media screen and (max-width : 860px) { }
   }
 }`;
 
@@ -101,13 +107,13 @@ class Sidemenu extends React.PureComponent {
 
   render() {
     const { state } = this;
-    const { show, width = '240px', fade = 0.2, theme = 'white', children = null, list = null } = state;
+    const { show, width = null, fade = '0.2s', theme = 'white', children = null, list = null, className } = state;
     // const { title, list, root } = props;
     const color = theme === 'dark' ? 'white' : 'dark';
 
     return (
       show &&
-      <StyledObject className={cx("side-menu", show ? 'show' : 'hide', theme)} fade={fade} width={width}>
+      <StyledObject className={cx("side-menu", show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
         <div className="sm-head">
           <Svg className="btn-cancel md" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={color} />
         </div>

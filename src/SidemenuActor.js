@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { openSidemenu } from '../actor/Reducer';
+import { openSidemenu } from './actor/Reducer';
 import { ST, STAT } from './Config';
 
 class SidemenuActor extends React.PureComponent {

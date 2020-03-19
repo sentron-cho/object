@@ -36,12 +36,6 @@ export const sobject = () => {
   const bg = options('background',
     { none: '', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
-  const label = text('label', '');
-
-  const max = number('max value', 100);
-  const min = number('min value', 0);
-  const current = number('current value', 50);
-  const limit = number('limit value(alert limit)', 80);
 
   const [result, setResult] = useState(null);
   const [change, setChange] = useState(null);
@@ -58,7 +52,7 @@ export const sobject = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"Search"} className={""} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
         sample={samplecode('title={"Search"} onClick={onClick} onChange={onChange}', 'primary')} box={false}>
-        <Search className={cx(bg, size)} label={label} onClick={onClick} onChange={onChange} list={list} frameid={'f0001'} />
+        <Search className={cx(bg, size)} onClick={onClick} onChange={onChange} list={list} frameid={'f0001'} />
       </Linebox>
 
       <div className={"res-view"}>

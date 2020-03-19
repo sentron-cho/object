@@ -53,8 +53,10 @@ const StyledObject = styled.span`{
     &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
     &.theme-black { ${cs.bg.black} ${cs.font.white} }
 
-    &.disabled { ${cs.mouse.default} ${cs.font.darkgray} ${cs.opac.alpha}
+    &.disabled { ${cs.mouse.default} ${cs.opac.get(0.7)}
+      ${cs.bg.disable} ${cs.font.lightgray} ${cs.box.line} ${cs.border.gray}
       .btn-label { ${cs.mouse.default} }
+      // &.primary, &.orange, &.red, &.green, &.dark, &.black, &.gray { ${cs.font.white} }
       &.trans:hover { &:hover { ${cs.font.noneline} } }
     }
 

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, array, select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { optionsKnob as options, withKnobs, text, boolean, button, array, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Optionbar } from '../src';
+import { cs, Optionbar, Editbox } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -32,28 +31,47 @@ export const sobject = () => {
 
   const classname = text('classname', '');
   const size = options('size',
-    { 'md(middle)': 'md', 'xl(xlarge)': 'xl', 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs' },
-    '', { display: 'inline-radio' }, 'Other');
-  const halign = options('horizontal', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const valign = options('vertical', { 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' },
+    { 'none': '', 'lg(large)': 'lg', 'md(middle)': 'md', 'sm(small)': 'sm' },
     '', { display: 'inline-radio' }, 'Other');
   const bg = options('background',
-    { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
+    { none: '', white: 'white', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
     '', { display: 'inline-radio' }, 'Other');
+  const theme = options('theme',
+    { none: '', sky: 'sky', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
+    '', { display: 'inline-radio' }, 'Other');    
   const title = text('title', 'Optionbar');
+  const ischild = boolean('child component', true);
+  button('refresh(child component 변경후 버튼을 클릭하세요)', () => onRefresh());
+  
+  const titlesize = text('title size', '14px');
+  const titlecolor = text('title color', '#353535');
+  const titlealign = options('title align', { 'left': 'left', 'center': 'center', 'right': 'right' },
+    '', { display: 'inline-radio' }, 'Other');
 
   const [result, setResult] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
   const onClick = (eid, e) => {
     setResult(`eid = ${eid}, e`);
   }
 
+  
+  const onRefresh = (e) => {
+    setRefresh(true);
+    setTimeout(() => setRefresh(false), 200);
+  }
+
+  const opt = {
+    title: { color: titlecolor, size: titlesize, align: titlealign },
+  };
+
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"Optionbar"} className={"v-align"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
         sample={samplecode('title={"Optionbar"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
-        <Optionbar className={cx(classname, bg, size, halign, valign)} title={title}  onClick={onClick} />
+        {!refresh && <Optionbar className={cx(classname, bg, size)} options={opt}
+          theme={theme} title={title} onClick={onClick} children={ischild && OptionChild} /> }
+        {/* title={ST.ADMIN.OPTIONS.TITLE} onClick={onClickOptions} children={LayerOptions} rowid={state.rowid} data={state.data} state={state.state} */}
       </Linebox>
 
       <div className={"res-view"}>
@@ -73,131 +91,42 @@ const option = {
   top: "20px",
 }
 
-const show = true;
+const StyledOptions = styled.span`{
+  &.m-opt {
+    .edit-box { ${cs.m.v10} ${cs.w.calc('100%')} }
+  }
+}`;
+/*******************************************************************
+  팝업
+*******************************************************************/
+const OptionChild = (props) => {
+  var refs = {};
 
-export const size = () => {
+  // 팝업의 ok이 버튼일 클릭되면 여기에서 return할 데이터를 만들어 return한다.
+  // props.act.getData = (checkValidate) => {
+  //   // validate 체크하여 통과하지 못하면 false를 리턴(창이 닫히지 않는다.)
+  //   const isvalidate = Object.keys(refs).every((key) => refs[key].isValidate());
+  //   if (!isvalidate) return false;
+
+  //   const { state } = props;
+  //   let datas = {};
+  //   Object.keys(refs).map(key => datas[key] = refs[key].getValue());
+
+  //   return { 'state': state, ...datas };
+  // }
+
+  const onChange = (value, e) => {
+    props.onChange && props.onChange(value, e);
+  }
+
+  const { data, state } = props;
+
   return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"size"} sample={samplecode('title={"Optionbar"}', 'primary')}>
-        <Optionbar className={"xs border radius"} title={"No Data(xsmall)"} />
-        <Optionbar className={"sm border radius"} title={"No Data(small)"} />
-        <Optionbar className={"md border radius"} title={"No Data(middle)"} />
-        <Optionbar className={"lg border radius"} title={"No Data(large)"} />
-        <Optionbar className={"xl border radius"} title={"No Data(xlarge)"} />
-      </Linebox>
-    </StyledObject>
+    <StyledOptions className="m-opt">
+      <Editbox ref={ref => { refs.label = ref }} className={'border radius md'} onChange={onChange}
+        label={'label'} guide={'label'} name="label" type="text" validate={true} focus={true} />
+      <Editbox ref={ref => { refs.message = ref }} className={'border radius md'} onChange={onChange}
+        label={'message'} guide={'message'} name="message" type="text" validate={true} />
+    </StyledOptions>
   );
-};
-
-export const align = () => {
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"horizontal align"} className={"align"} sample={samplecode('title={"Optionbar"}', '')} box={true}>
-        <Optionbar className={"border left"} title={"No Data(left)"} />
-        <Optionbar className={"border right"} title={"No Data(right)"} />
-        <Optionbar className={"border center"} title={"No Data(center)"} />
-      </Linebox>
-
-      <Linebox title={"vertical align"} className={"align"} sample={samplecode('title={"Optionbar"}', '')} box={true}>
-        <Optionbar className={"border top"} title={"No Data(top)"} />
-        <Optionbar className={"border middle"} title={"No Data(middle)"} />
-        <Optionbar className={"border bottom"} title={"No Data(bottom)"} />
-      </Linebox>
-
-      <Linebox title={"align"} className={"align"} mple={samplecode('title={"Optionbar"}', '')} box={true}>
-        <Optionbar className={"border left top"} title={"No Data(left top)"} />
-        <Optionbar className={"border center top"} title={"No Data(center top)"} />
-        <Optionbar className={"border right top"} title={"No Data(right top)"} />
-
-        <Optionbar className={"border left middle"} title={"No Data(left middle)"} />
-        <Optionbar className={"border center middle"} title={"No Data(center middle)"} />
-        <Optionbar className={"border right middle"} title={"No Data(right middle)"} />
-
-        <Optionbar className={"border left bottom"} title={"No Data(left bottom)"} />
-        <Optionbar className={"border center bottom"} title={"No Data(center bottom)"} />
-        <Optionbar className={"border right bottom"} title={"No Data(right bottom)"} />
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const color = () => {
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"color"} sample={samplecode('title={"Optionbar"}', 'sky')}>
-        <Optionbar className={"trans"} title={"trans"} />
-        <Optionbar className={"sky"} title={"sky"} />
-        <Optionbar className={"orange"} title={"orange"} />
-      </Linebox>
-
-      <Linebox title={""} sample={samplecode('title={"Optionbar"}', 'primary')}>
-        <Optionbar className={"green"} title={"green"} />
-        <Optionbar className={"red"} title={"red"} />
-        <Optionbar className={"primary"} title={"primary"} />
-      </Linebox>
-
-      <Linebox title={""} sample={samplecode('title={"Optionbar"}', 'dark')}>
-        <Optionbar className={"gray"} title={"gray"} />
-        <Optionbar className={"dark"} title={"dark"} />
-        <Optionbar className={"black"} title={"black"} />
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const font = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"no options"} className={""} sample={samplecode("", "")} box={false}>
-        <Optionbar className={"primary"} title={"blue radius"} />
-      </Linebox>
-
-      <Linebox title={"font options(contents left)"} className={""}
-        sample={samplecode("font={{ color: 'red', size: '12px' }}", "primary")} box={false}>
-        <Optionbar className={"primary"} title={"blue radius"}  frameid={"f0001"}
-          font={{ color: 'red', size: '12px'}} />
-      </Linebox>
-
-      <Linebox title={"font options(contents center)"} className={""}
-        sample={samplecode("font={{ color: 'blue', size: '16px' }}", "primary")} box={false}>
-        <Optionbar className={"primary"} title={"blue radius"}  frameid={"f0001"}
-          font={{ color: 'blue', size: '16px'}} />
-      </Linebox>
-
-      <Linebox title={"font options(contents right)"} className={""}
-        sample={samplecode("font={{ color: '#123456', size: '18px' }}", "primary")} box={false}>
-        <Optionbar className={"primary"} title={"blue radius"}  frameid={"f0001"}
-          font={{ color: '#123456', size: '18px'}} />
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const border = () => {
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"border options"} sample={samplecode('title={"Optionbar"}', 'border')}>
-        <Optionbar className={"primary"} title={"blue radius"}  border={{ radius: '5px', color: "blue" }} />
-        <Optionbar className={"primary"} title={"red radius 2px"}  border={{ radius: '10px', color: "red", width: "2px" }} />
-        <Optionbar className={"primary"} title={"black radius 3px"}  border={{ radius: '15px', color: "black", width: "3px" }} />
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const theme = () => {
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
-        <Optionbar className={"primary"} theme={'sky'} />
-        <Optionbar className={"primary"} theme={'primary'} />
-        <Optionbar className={"primary"} theme={'gray'} />
-      </Linebox>
-
-      <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
-        <Optionbar className={"primary"} theme={'dark'} />
-        <Optionbar className={"primary"} theme={'black'} />
-      </Linebox>
-    </StyledObject>
-  );
-};
+}

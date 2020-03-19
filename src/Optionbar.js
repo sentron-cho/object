@@ -5,7 +5,7 @@ import { Button, Svg, cs } from './index';
 
 const StyledObject = styled.div`{
   &.option-bar {
-    ${cs.h.get('100vh')} ${cs.pos.fixed} ${cs.pos.rtop} ${cs.bg.dark} ${cs.z.top}
+    ${cs.h.get('100vh')} ${cs.pos.fixed} ${cs.pos.rtop} ${cs.z.top}
     // ${cs.opac.invisible}
 
     .ob-box {
@@ -15,15 +15,49 @@ const StyledObject = styled.div`{
       }
 
       .ob-frame {
-        overflow: auto; width: 100%; height: 100vh; padding-bottom: 40px;
+        ${cs.over.auto} ${cs.w.full} ${cs.h.get('100vh')} ${cs.p.b40}
       }
 
-      .ob-body { min-height: 200px; }
-      .ob-footer { min-height: 100px; padding-right: 20px; padding-top: 10px; }
+      .ob-body { 
+        min-height: 200px; ${cs.p.h10} 
+        .no-child { ${cs.opac.alpha} ${cs.align.center} ${cs.w.full} ${cs.font.center} }
+      }
+      .ob-footer { 
+        ${cs.align.bottom} ${cs.min.height(60)} ${cs.p.r20} 
+        ${cs.p.t10} ${cs.w.full} ${cs.font.right}
+
+        .button { ${cs.m.r20} }
+      }
     }
     
-    &.slidein { ${ ({time}) => cs.anim.slidein(time, '100%', '0')}; .ob-box { display: block; } };
-    &.slideout { ${ ({time}) => cs.anim.slideout(time, '0', '100%')}; };
+    &.slidein { ${ ({ time }) => cs.anim.slidein(time, '100%', '0')}; .ob-box { display: block; } };
+    &.slideout { ${ ({ time }) => cs.anim.slideout(time, '0', '100%')}; };
+    
+    &.md { .ob-box { ${cs.w.get(600)} } }
+    &.lg { .ob-box { ${cs.w.get(800)} } }
+    &.sm { .ob-box { ${cs.w.get(300)} } }
+
+    &.white { ${cs.bg.get('#fdfdfd')} ${cs.font.dark} }
+    &.sky { ${cs.bg.sky} ${cs.font.dark} }
+    &.orange { ${cs.bg.orange} ${cs.font.white} .ob-header { ${cs.border.lightgray} } }
+    &.green { ${cs.bg.green} ${cs.font.white} .ob-header { ${cs.border.lightgray} } }
+    &.red { ${cs.bg.red} ${cs.font.white} .ob-header { ${cs.border.lightgray} } }
+    &.gray { ${cs.bg.gray} ${cs.font.dark} .ob-header { ${cs.border.lightgray} } }
+    &.primary { ${cs.bg.primary} ${cs.font.white} .ob-header { ${cs.border.lightgray} } }
+    &.dark { ${cs.bg.dark} ${cs.font.white} }
+    &.black { ${cs.bg.black} ${cs.font.white} }
+
+    &.theme-sky { ${cs.bg.sky} ${cs.font.dark} }
+    &.theme-gray { ${cs.bg.gray} ${cs.font.dark} .ob-header { ${cs.border.lightgray} } }
+    &.theme-primary { ${cs.bg.primary} ${cs.font.white} .ob-header { ${cs.border.lightgray} } }
+    &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
+    &.theme-black { ${cs.bg.black} ${cs.font.white} }
+    
+    .ob-box .ob-header .opt-tl {
+      ${({ font }) => font && font.color && cs.font.color(font.color)}
+      ${({ font }) => font && font.align && cs.font.align(font.align)}
+      ${({ font }) => font && font.size && cs.font.size(font.size)}
+    }
 
     @media screen and (max-width : 1280px) {
     }
@@ -35,16 +69,6 @@ const StyledObject = styled.div`{
       width: 100%;
     }
   }
-
-  // @keyframes open-in {
-  //   from { opacity: 0.5; transform: translateX(100%); }
-  //   to { opacity: 1; display: block; transform: translateX(0%); } 
-  // }
-
-  // @keyframes open-out {
-  //   from { opacity: 1; transform: transform: translateX(0%); }
-  //   to { opacity: 0.5; display: none; transform: translateX(100%); }
-  // }
 }`;
 
 export default class Optionbar extends React.PureComponent {
@@ -55,18 +79,24 @@ export default class Optionbar extends React.PureComponent {
     this.state = { modefied: false, children: props.children, show: props.show || false };
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    // this.setState({modefied : false});
+  }
+
   onClicked = (eid, e) => {
-    const value = this.object.getData();
+    const { object } = this;
+    const value = object ? object.getData && object.getData() : null;
+    this.setState({ show: !this.state.show, modefied: false });
     this.props.onClick && this.props.onClick(eid, value, e);
   }
 
-  onChanged = (eid, e) => {
+  onChange = (eid, e) => {
     this.setState({ modefied: true });
-    this.props.onChanged && this.props.onChanged();
+    this.props.onChange && this.props.onChange();
   }
 
   onClickButton = (eid, e) => {
-    this.setState({ show: !this.state.show });
+    this.setState({ show: !this.state.show, modefied: false });
     this.props.onClick && this.props.onClick('close', null, e);
   }
 
@@ -79,32 +109,32 @@ export default class Optionbar extends React.PureComponent {
   render() {
     const { state, props, interval } = this;
     const { onClicked } = this;
-    const { width = 600, theme, className, title = "Option Bar" } = props;
+    const { width = 600, theme, className } = props;
     const { modefied, show } = state;
     const fade = { time: interval };
     const Component = state.children;
-    const { border, label } = props.options || { border: null, label: null };
+    const { title, label } = props.options || { title: null, label: null };
     const cancel = (label && label.cancel) || 'cancel';
     const save = (label && label.save) || 'save';
 
     return (
-      <StyledObject className={cx("option-bar", className, theme && `theme-${theme}`, show ? 'slidein' : 'slideout')}
-        {...fade} width={width} border={border} label={label} onAnimationEnd={this.onAnimEnd}>
+      <StyledObject className={cx("option-bar white", className, theme && `theme-${theme}`, show ? 'slidein' : 'slideout')}
+        {...fade} width={width} font={title} onAnimationEnd={this.onAnimEnd}>
         <CloseButton onClick={this.onClickButton} show={show} />
         {<div className={'ob-box'}>
           <div className="ob-header">
-            <span className="opt-tl">{title}</span>
+            <span className="opt-tl">{props.title || "Option Bar"}</span>
           </div>
 
           <div className="ob-frame scrollbar-3">
             <div className="ob-body">
-              {Component && <Component ref={ref => this.object = ref} {...props} onChanged={this.onChanged} />}
+              {Component && <Component ref={ref => this.object = ref} {...props} onChange={this.onChange} />}
               {!Component && <p className="no-child">The child component does not exist.</p>}
             </div>
 
             <div className="ob-footer">
-              <Button className={cx("gray right")} onClick={onClicked} title={cancel} eid={'cancel'} />
-              <Button className={cx("save-next mR20 red right")} onClick={onClicked} title={save} eid={'save'} disabled={!modefied} />
+              <Button className={cx("ob-save gd-gray")} onClick={onClicked} title={save} eid={'save'} disabled={!modefied} />
+              <Button className={cx("ob-cancel gd-gray")} onClick={onClicked} title={cancel} eid={'cancel'} />
             </div>
           </div>
         </div>}

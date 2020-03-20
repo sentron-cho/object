@@ -9,7 +9,7 @@ const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.get(800)} ${cs.p.b30} }
     .lb-box .lb-li { ${cs.min.height(100)} overflow: initial; }
-    .lb-box .lb-li > * { ${cs.m.right(100)} ${cs.m.b20} }
+    .lb-box .lb-li > * { ${cs.m.right(100)} ${cs.m.b10} }
     .res-view { 
       ${cs.h.get(100)} ${cs.w.get(800)} ${cs.bg.lightgray} 
       p { ${cs.m.a5} }
@@ -74,20 +74,10 @@ export const size = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"size"} sample={samplecode('', 'xs border radius')}>
-        <Slider className={"xs border radius"} max={100} min={0} value={10} limit={80} label={"No Data(xsmall)"} />
         <Slider className={"sm border radius"} max={100} min={0} value={30} limit={80} label={"No Data(small)"} />
         <Slider className={"md border radius"} max={100} min={0} value={50} limit={80} label={"No Data(middle)"} />
         <Slider className={"lg border radius"} max={100} min={0} value={70} limit={80} label={"No Data(large)"} />
-        <Slider className={"xl border radius"} max={100} min={0} value={90} limit={95} label={"No Data(xlarge)"} />
       </Linebox>
-
-      <Linebox title={"size"} sample={samplecode('', 'xs border radius')}>
-        <Slider className={"xs border radius"} max={100} min={0} value={10} limit={10} label={"No Data(xsmall)"} />
-        <Slider className={"sm border radius"} max={100} min={0} value={30} limit={10} label={"No Data(small)"} />
-        <Slider className={"md border radius"} max={100} min={0} value={50} limit={10} label={"No Data(middle)"} />
-        <Slider className={"lg border radius"} max={100} min={0} value={70} limit={10} label={"No Data(large)"} />
-        <Slider className={"xl border radius"} max={100} min={0} value={90} limit={10} label={"No Data(xlarge)"} />
-      </Linebox>      
     </StyledObject>
   );
 };
@@ -105,31 +95,7 @@ export const color = () => {
         <Slider className={"gray"} max={100} min={0} value={50} limit={80} label={"gray"} />
         <Slider className={"dark"} max={100} min={0} value={50} limit={80} label={"dark"} />
         <Slider className={"black"} max={100} min={0} value={50} limit={80} label={"black"} />
-      </Linebox>
-
-      <Linebox title={"color"} sample={samplecode('title={"Slider"}', 'sky')}>
-        <Slider className={"trans"} max={100} min={0} value={90} limit={80} label={"trans"} />
-        <Slider className={"sky"} max={100} min={0} value={90} limit={80} label={"sky"} />
-        <Slider className={"orange"} max={100} min={0} value={90} limit={80} label={"orange"} />
-        <Slider className={"green"} max={100} min={0} value={90} limit={80} label={"green"} />
-        <Slider className={"red"} max={100} min={0} value={90} limit={80} label={"red"} />
-        <Slider className={"primary"} max={100} min={0} value={90} limit={80} label={"primary"} />
-        <Slider className={"gray"} max={100} min={0} value={90} limit={80} label={"gray"} />
-        <Slider className={"dark"} max={100} min={0} value={90} limit={80} label={"dark"} />
-        <Slider className={"black"} max={100} min={0} value={90} limit={80} label={"black"} />
-      </Linebox>      
-    </StyledObject>
-  );
-};
-
-export const border = () => {
-  return (
-    <StyledObject className={"t-main"} id={"f0001"}>
-      <Linebox title={"border options"} sample={samplecode('title={"Slider"}', 'border')}>
-        <Slider className={"primary"} max={100} min={0} value={10} limit={80} border={{ radius: '5px', color: "blue" }} />
-        <Slider className={"primary"} max={100} min={0} value={10} limit={80} border={{ radius: '10px', color: "red", width: "2px" }} />
-        <Slider className={"primary"} max={100} min={0} value={10} limit={80} border={{ radius: '15px', color: "black", width: "3px" }} />
-      </Linebox>
+      </Linebox> 
     </StyledObject>
   );
 };

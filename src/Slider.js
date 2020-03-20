@@ -69,7 +69,7 @@ const StyledObject = styled.span`{
       }
       
       .sld-min, .sld-max { 
-        ${cs.z.get(9)} ${cs.font.center} ${cs.font.xs} ${cs.bg.sky} ${cs.h.get(16)} ${cs.mouse.pointer}
+        ${cs.z.get(9)} ${cs.font.center} ${cs.font.xs} ${cs.bg.sky} ${cs.h.get(16)} ${cs.font.line(14)} ${cs.mouse.pointer}
         ${cs.align.top} ${cs.w.full} ${cs.w.get(40)} ${cs.align.ycenter} ${cs.pos.relative}
       }
       .sld-min { ${cs.disp.inblock} ${cs.radius.right(50)} ${cs.align.left} }
@@ -78,6 +78,94 @@ const StyledObject = styled.span`{
       ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primary} }`}
       ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primary} }`}
     }
+
+    &.sm { 
+      .sld-value { ${cs.bottom(-1)} ${cs.font.xs} }
+      .sld-layer { 
+        .sld-frame { 
+          ${cs.w.calc('100% - 76px')} ${cs.m.get('0 38px')}
+          .sldf-line { ${cs.h.get(6)} } 
+          .sldf-pos { ${cs.bottom(17)} }
+        } 
+      } 
+      .sld-min, .sld-max { ${cs.h.get(16)} ${cs.font.line(14)} ${cs.font.xs} ${cs.w.get(40)} }
+    }
+    &.md { 
+      .sld-value { ${cs.bottom(-2)} ${cs.font.xs} }
+      .sld-layer { 
+        .sld-frame { 
+          ${cs.w.calc('100% - 92px')} ${cs.m.get('0 46px')}
+          .sldf-line { ${cs.h.get(8)} } 
+          .sldf-pos { ${cs.bottom(19)} }
+        } 
+      } 
+      .sld-min, .sld-max { ${cs.h.get(18)} ${cs.font.line(16)} ${cs.font.xs} ${cs.w.get(48)} }
+    }
+    &.lg { 
+      .sld-value { ${cs.bottom(-3)} ${cs.font.sm} }
+      .sld-layer { 
+        .sld-frame { 
+          ${cs.w.calc('100% - 104px')} ${cs.m.get('0 52px')}
+          .sldf-line { ${cs.h.get(10)} } 
+          .sldf-pos { ${cs.bottom(21)} }
+        } 
+      } 
+      .sld-min, .sld-max { ${cs.h.get(22)} ${cs.font.line(20)} ${cs.font.sm} ${cs.w.get(54)} }
+    }
+
+    &.sky { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.sky}  ${cs.font.dark} .sldf-line-bar { ${cs.bg.primary} } } 
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primary} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primary} }`}
+    }
+    &.green { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.green} .sldf-line-bar { ${cs.bg.greenhover} } } 
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.greenhover} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.greenhover} }`}
+    }
+    &.orange { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.orange} .sldf-line-bar { ${cs.bg.orangehover} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.orangehover} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.orangehover} }`}
+    }
+    &.red { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.red} .sldf-line-bar { ${cs.bg.redhover} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.redhover} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.redhover} }`}
+    }
+    &.primary { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.primary} ${cs.font.white} .sldf-line-bar { ${cs.bg.primaryhover} ${cs.font.white} } } 
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primaryhover} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primaryhover} }`}
+    }
+    &.gray { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.lightgray} ${cs.font.white} .sldf-line-bar { ${cs.bg.darkgray} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.darkgray} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.darkgray} }`}
+    }
+    &.dark { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.gray} ${cs.font.white} .sldf-line-bar { ${cs.bg.dark} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.dark} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.dark} }`}
+    }
+    &.black { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.darkgray} ${cs.font.white} .sldf-line-bar { ${cs.bg.black} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.black} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.black} }`}
+    }
+
+    &.theme-sky { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.sky} ${cs.font.dark} .sldf-line-bar { ${cs.bg.primary} } } 
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primary} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primary} }`}
+    }
+    &.theme-primary { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.primary} ${cs.font.white} .sldf-line-bar { ${cs.bg.primaryhover} ${cs.font.white} } } 
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primaryhover} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primaryhover} }`}
+    }
+    &.theme-gray { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.lightgray} ${cs.font.white} .sldf-line-bar { ${cs.bg.darkgray} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.darkgray} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.darkgray} }`}
+    }
+    &.theme-dark { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.gray} ${cs.font.white} .sldf-line-bar { ${cs.bg.dark} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.dark} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.dark} }`}
+    }
+    &.theme-black { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.darkgray} ${cs.font.white} .sldf-line-bar { ${cs.bg.black} ${cs.font.white} } }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.black} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.black} }`}
+    }    
   }
 }`;
 
@@ -212,11 +300,11 @@ export default class Slider extends React.PureComponent {
   render() {
     const { state, props, object } = this;
     const { editor, pos, min, max, value } = state;
-    const { disabled } = props;
+    const { disabled, theme } = props;
     console.log('pos => ', pos);
 
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled })} pos={pos} >
+      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled }, theme && `theme-${theme}`)} pos={pos} >
         {props.label && <div className="sld-header">
           <label className={"sld-label"}>{props.label}</label>
           <div className="sldh-infos">
@@ -224,7 +312,7 @@ export default class Slider extends React.PureComponent {
           </div>
         </div>}
 
-        <span className={'sld-value'} onClick={this.onClickEditor}>{state.value}</span>
+        <span className={'sld-value sld-color'} onClick={this.onClickEditor}>{state.value}</span>
         {editor && <div className={'sld-editor'} >
           <div className={"slde-bg"} onClick={this.onCloseEditor} />
           <Editbox className="slde-box md center border radius"
@@ -233,11 +321,11 @@ export default class Slider extends React.PureComponent {
         </div>}
 
         <div className={"sld-layer"}>
-          <span className="sld-min" onClick={this.onClicked} eid={'min'}>{min}</span>
-          <span className="sld-max" onClick={this.onClicked} eid={'max'}>{max}</span>
+          <span className="sld-min sld-color" onClick={this.onClicked} eid={'min'}>{min}</span>
+          <span className="sld-max sld-color" onClick={this.onClicked} eid={'max'}>{max}</span>
           <span className="sld-frame" onClick={this.onClicked} eid={"bar"}
             onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
-            <div className="sldf-line" ref={ref => object.slidebar = ref}>
+            <div className="sldf-line sld-color" ref={ref => object.slidebar = ref}>
               <div className="sldf-line-bar" />
             </div>
             <span className="sldf-pos">{value}</span>

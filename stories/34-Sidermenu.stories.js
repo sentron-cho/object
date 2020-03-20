@@ -45,11 +45,11 @@ export const object = () => {
       // children: MenuChild,
       list: list,
       className: `${eid}`,
-      onOk: (data) => {
-        setResult(`${JSON.stringify(data)}`);
+      onClicked: (eid) => {
+        setResult(`onClick(eid, e) eid = ${eid}`);
       },
-      onCancel: () => {
-        setResult(`cancel`);
+      onClickMenu: () => {
+        setResult(`onClickMenu(eid, e) eid = ${eid}`);
       },
     });
   }
@@ -62,13 +62,13 @@ export const object = () => {
       list: list,
       className: `${eid}`,
       size: eid,
-      onOk: (data) => {
-        setResult(`${JSON.stringify(data)}`);
+      onClicked: (eid) => {
+        setResult(`onClick(eid, e) eid = ${eid}`);
       },
-      onCancel: () => {
-        setResult(`cancel`);
+      onClickMenu: () => {
+        setResult(`onClickMenu(eid, e) eid = ${eid}`);
       },
-    }); 
+    });
   }
 
   const onClickTheme = (eid, e) => {
@@ -78,11 +78,11 @@ export const object = () => {
       // children: MenuChild,
       list: list,
       theme: eid,
-      onOk: (data) => {
-        setResult(`${JSON.stringify(data)}`);
+      onClicked: (eid) => {
+        setResult(`onClick(eid, e) eid = ${eid}`);
       },
-      onCancel: () => {
-        setResult(`cancel`);
+      onClickMenu: () => {
+        setResult(`onClickMenu(eid, e) eid = ${eid}`);
       },
     });
   }
@@ -109,13 +109,13 @@ export const object = () => {
         </Linebox>
 
         <Linebox title={"theme"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
-          <Button className={"white border"} title={"white"} onClick={onClickTheme} eid={"white"}/>
-          <Button className={"sky border"} title={"sky"} onClick={onClickTheme} eid={"sky"}/>
-          <Button className={"primary"} title={"primary"} onClick={onClickTheme} eid={"primary"}/>
-          <Button className={"gray"} title={"gray"} onClick={onClickTheme} eid={"gray"}/>
+          <Button className={"white border"} title={"white"} onClick={onClickTheme} eid={"white"} />
+          <Button className={"sky border"} title={"sky"} onClick={onClickTheme} eid={"sky"} />
+          <Button className={"primary"} title={"primary"} onClick={onClickTheme} eid={"primary"} />
+          <Button className={"gray"} title={"gray"} onClick={onClickTheme} eid={"gray"} />
           <Button className={"dark"} title={"dark"} onClick={onClickTheme} eid={"dark"} />
           <Button className={"black"} title={"black"} onClick={onClickTheme} eid={"black"} />
-        </Linebox>  
+        </Linebox>
 
         <div className={"res-view"}>
           {result}
@@ -129,39 +129,90 @@ export const object = () => {
 };
 
 
+export const custom = () => {
+  const [result, setResult] = useState(null);
+  const [menu, setMenu] = useState(null);
+
+  const onClick = (eid, e) => {
+    setMenu({
+      show: true,
+      title: 'custom menu',
+      children: MenuChild,
+      className: `${eid}`,
+      onClicked: (eid) => {
+        setResult(`onClick(eid, e) eid = ${eid}`);
+      },
+      onClickMenu: () => {
+        setResult(`onClickMenu(eid, e) eid = ${eid}`);
+      },
+    });
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Provider store={store} >
+        <Linebox title={"size"} id={"f0001"} className={'padding'} sample={samplecode('', 'xs border radius')}>
+          <Button className={"primary"} title={"custom child"} onClick={onClick} eid={"custom"} />
+        </Linebox>
+        
+        <SidemenuActor {...menu} />
+        <Sidemenu />
+      </Provider>
+
+      <div className={"res-view"}>
+        {result}
+      </div>
+    </StyledObject>
+  );
+};
+
+
+export const align = () => {
+  const [result, setResult] = useState(null);
+  const [menu, setMenu] = useState(null);
+
+  const onClick = (eid, e) => {
+    setMenu({
+      show: true,
+      title: 'custom menu',
+      children: MenuChild,
+      className: `${eid}`,
+      onClicked: (eid) => {
+        setResult(`onClick(eid, e) eid = ${eid}`);
+      },
+      onClickMenu: () => {
+        setResult(`onClickMenu(eid, e) eid = ${eid}`);
+      },
+    });
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"size"} id={"f0001"} className={'padding'} sample={samplecode('', 'xs border radius')}>
+        <Button className={"primary"} title={"left"} onClick={onClick} eid={"left"} />
+        <Button className={"primary"} title={"right"} onClick={onClick} eid={"right"} />
+      </Linebox>
+
+      <div className={"res-view"}>
+        {result}
+      </div>
+    </StyledObject>
+  );
+};
+
+
 const StyledMenu = styled.span`{
   &.m-body {
     .edit-box { ${cs.m.b10} }
   }
 }`;
 
+
 /*******************************************************************
   팝업
 *******************************************************************/
 const MenuChild = (props) => {
   var refs = {};
-
-  // 팝업의 ok이 버튼일 클릭되면 여기에서 return할 데이터를 만들어 return한다.
-  props.act.getData = (checkValidate) => {
-    // validate 체크하여 통과하지 못하면 false를 리턴(창이 닫히지 않는다.)
-    const isvalidate = Object.keys(refs).every((key) => refs[key].isValidate());
-    if (!isvalidate) return false;
-
-    // modified 될 경우 체크(수정사항이 발생하지 않으면 null 리턴하면 cancel과 동일시 된다.)
-    // const modified = Object.keys(refs).filter((key) => refs[key].isModified()).length;
-    // if (modified <= 0) return null;
-
-    // 아래의 방법을 통해서도 체크가 가능하다...
-    // const datas = checkValidate(refs);
-    // if (datas === 'modified') return null;
-    // if (datas === 'notvalid') return false;
-
-    const { state } = props;
-    let datas = {};
-    Object.keys(refs).map(key => datas[key] = refs[key].getValue());
-
-    return { 'state': state, ...datas };
-  }
 
   const { data, state } = props;
   const { label = '', message = '' } = data;

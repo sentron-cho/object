@@ -8,16 +8,9 @@ const StyledObject = styled.span`{
   &.slider { 
     ${cs.disp.block} ${cs.pos.relative} ${cs.w.full} ${cs.noselect}
 
-    .sld-header {
-      .sldh-label { 
-        ${cs.w.auto} ${cs.h.get(16)} ${cs.disp.inblock} ${cs.p.a0} ${cs.m.r10}
-        ${cs.font.sm} ${cs.font.left} 
-      }
-
-      .sldh-infos { ${cs.disp.inline}
-        .sldh-label { opacity: 0.6; font-size: 14px; font-weight: 400; }
-        .center { transform: translateX(-50%); left: 50%; }
-      }
+    .sld-header { ${cs.pos.relative} ${cs.font.sm} ${cs.font.left} ${cs.m.b5} ${cs.h.get(16)} ${cs.w.full}
+      .sldh-label { ${cs.w.auto} ${cs.disp.inblock} ${cs.p.a0} ${cs.m.r5} ${cs.h.full} }
+      .sldh-unit { ${cs.disp.inblock} ${cs.w.auto} ${cs.h.full} ${cs.opac.get(0.6)} ${cs.font.xs} ${cs.bottom(-1)} }
     }
 
     .sld-value { 
@@ -165,7 +158,23 @@ const StyledObject = styled.span`{
     &.theme-black { .sld-color, .sld-layer .sld-frame .sldf-line { ${cs.bg.darkgray} ${cs.font.white} .sldf-line-bar { ${cs.bg.black} ${cs.font.white} } }
       ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.black} }`}
       ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.black} }`}
-    }    
+    }
+
+    .sld-header {
+      .sldh-label {
+        ${({ label }) => label && label.align && cs.align[label.align]}
+        ${({ label }) => label && label.color && cs.font.color(label.color)}
+      }
+
+      .sldh-unit {
+        ${({ unit }) => unit && unit.align && cs.align[unit.align]}
+        ${({ unit }) => unit && unit.color && cs.font.color(unit.color)}
+      }
+
+      ${({ head }) => head && head.align && `.sldh-unit, .sldh-label { ${cs.align.unset} } ${cs.font.align(head.align)}`}
+      ${({ head }) => head && head.size && `.sldh-unit, .sldh-label { ${cs.font.size(head.size)} } ${cs.h.fit} `}
+      ${({ head }) => head && head.color && `.sldh-unit, .sldh-label { ${cs.font.color(head.color)} } `}
+    }
   }
 }`;
 
@@ -175,14 +184,11 @@ export default class Slider extends React.PureComponent {
 
     this.object = {};
 
-    // const unit = props.unit ? props.unit : '';
     const max = props.max ? Number.parseInt(props.max) : 100;
     const min = props.min ? Number.parseInt(props.min) : 0;
     const value = props.value ? Number.parseInt(props.value) : min;
     const step = props.step ? Number.parseInt(props.step) : 1;
-    // const pos = value;
     const pos = this.toPos(value, min, max);
-    console.log(max, min, value, pos);
 
     this.state = { modified: false, move: false, from: min, to: min, pos: pos, value, min, max, step, editor: false };
   }
@@ -230,11 +236,9 @@ export default class Slider extends React.PureComponent {
     const { value } = this.state;
     this.state.modified = true;
     this.props.onChange && this.props.onChange(value, e);
-    // console.log('onChanged = %s', value);
   }
 
   onInputChanged = (value, e) => {
-    // console.log('onInputChanged = %s', value);
   }
 
   onClicked = (e) => {
@@ -301,15 +305,14 @@ export default class Slider extends React.PureComponent {
     const { state, props, object } = this;
     const { editor, pos, min, max, value } = state;
     const { disabled, theme } = props;
-    console.log('pos => ', pos);
+    const { unit, label, head } = props.options || { unit: null, label: null, head: null };
 
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled }, theme && `theme-${theme}`)} pos={pos} >
-        {props.label && <div className="sld-header">
-          <label className={"sld-label"}>{props.label}</label>
-          <div className="sldh-infos">
-            <label className="sldh-label">{props.unit}</label>
-          </div>
+      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled }, theme && `theme-${theme}`)}
+        pos={pos} label={label} unit={unit} head={head}>
+        {(props.label || props.unit) && <div className="sld-header">
+          {props.label && <label className={"sldh-label"}>{props.label}</label>}
+          {props.unit && <label className={"sldh-unit"}>{props.unit}</label>}
         </div>}
 
         <span className={'sld-value sld-color'} onClick={this.onClickEditor}>{state.value}</span>

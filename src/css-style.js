@@ -98,7 +98,7 @@ const cs = {
   },
 
   pointer: {
-    eventnone: 'pointer-events: none',
+    eventnone: 'pointer-events: none;',
   },
 
   mouse: {

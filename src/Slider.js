@@ -39,11 +39,32 @@ const StyledObject = styled.span`{
     .sld-layer { 
       ${cs.h.get(40)} ${cs.disp.block} ${cs.pos.relative} ${cs.w.full}
 
-      .sld-frame { ${cs.h.fit} ${cs.w.calc('100% - 68px')} ${cs.disp.block} ${cs.pos.relative} ${cs.z.get(2)} ${cs.m.get('0 34px')}
-        ${cs.align.ycenter}
+      .sld-frame { ${cs.h.fit} ${cs.w.calc('100% - 76px')} ${cs.disp.block} ${cs.pos.relative} ${cs.z.get(90)} ${cs.m.get('0 38px')}
+        ${cs.align.ycenter} ${cs.p.get('10px 0')} ${cs.mouse.pointer} 
         .sldf-line { 
-          ${cs.h.get(6)}${cs.pos.relative} ${cs.disp.flex} ${cs.bg.sky} 
-          ${cs.box.line} ${cs.box.inner} ${cs.border.darkwhite}
+          ${cs.h.get(6)} ${cs.pos.relative} ${cs.disp.block} ${cs.bg.sky} ${cs.mouse.pointer} 
+          // ${cs.box.line} ${cs.box.inner} ${cs.border.darkwhite} ${cs.box.left('none')} ${cs.box.right('none')}
+
+          .sldf-line-bar {
+            ${cs.h.full} ${({ pos }) => cs.w.get(pos)} ${cs.bg.primary}
+          }
+        }
+
+        .sldf-pos { 
+          ${cs.pos.absolute} ${cs.font.xs} ${cs.font.line(16)}
+          ${cs.mouse.move} ${cs.disp.none} ${cs.box.radius}
+          ${cs.z.over} ${cs.min.w(24)} ${cs.font.center}
+          ${cs.disp.inblock} ${({ pos }) => cs.left(pos)}
+          ${cs.bg.orange} ${cs.font.white} ${cs.align.bottom} ${cs.bottom(17)}
+          ${cs.align.x("-50%")} ${cs.pointer.eventnone}
+  
+          &::after { 
+            ${cs.pos.absolute} ${cs.disp.block} ${cs.content.none} ${cs.bottom(-6)} ${cs.left('50%')} ${cs.w.none}
+            ${cs.h.none} ${cs.m.left(-3)} ${cs.over.hidden} ${cs.border.get('3px solid transparent')}
+            ${cs.border.top(cs.color.orange)}
+          }
+
+          // &:hover { ${cs.mouse.move} }
         }
       }
       
@@ -54,25 +75,8 @@ const StyledObject = styled.span`{
       .sld-min { ${cs.disp.inblock} ${cs.radius.right(50)} ${cs.align.left} }
       .sld-max { ${cs.disp.inblock} ${cs.radius.left(50)} ${cs.align.right} }
 
-      .sld-pos { 
-        ${cs.pos.absolute} ${cs.font.xs} ${cs.font.line(16)}
-        ${cs.mouse.move} ${cs.disp.none} ${cs.box.radius}
-        ${cs.z.over} ${cs.min.w(24)} ${cs.font.center}
-        ${cs.disp.inblock} ${({ pos }) => cs.left(pos)}
-        ${cs.bg.orange} ${cs.font.white} ${cs.align.bottom} ${cs.bottom(10)}
-        ${cs.align.x("-50%")}
-
-        &::after { 
-          ${cs.pos.absolute} ${cs.disp.block} ${cs.content.none} ${cs.bottom(-6)} ${cs.left('50%')} ${cs.w.none}
-          ${cs.h.none} ${cs.m.left(-3)} ${cs.over.hidden} ${cs.border.get('3px solid transparent')}
-          ${cs.border.top(cs.color.orange)}
-        }
-      }
-
-      .sld-guide { 
-        height: 6px; position: absolute; top: 0px; ${cs.z.over} background: #d60b00; width: 4px;
-        display: block; float: left; left: ${(props) => `${props.bar}px`};
-      }
+      ${({ pos }) => Number.parseInt(pos) > 0 && `.sld-min { ${cs.bg.primary} }`}
+      ${({ pos }) => Number.parseInt(pos) >= 100 && `.sld-max { ${cs.bg.primary} }`}
     }
   }
 }`;
@@ -92,7 +96,7 @@ export default class Slider extends React.PureComponent {
     const pos = this.toPos(value, min, max);
     console.log(max, min, value, pos);
 
-    this.state = { modified: false, move: false, from: min, to: min, pos: pos, value, min, max, step, bar: value, editor: false };
+    this.state = { modified: false, move: false, from: min, to: min, pos: pos, value, min, max, step, editor: false };
   }
 
   componentDidMount() {
@@ -104,7 +108,7 @@ export default class Slider extends React.PureComponent {
     const { value } = state;
 
     const pos = this.toPos(value);
-    this.setState({ pos: pos, bar: value });
+    this.setState({ pos: pos });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -146,9 +150,18 @@ export default class Slider extends React.PureComponent {
   }
 
   onClicked = (e) => {
-    this.onMouseDown(e);
-    this.onMouseMove(e);
-    this.onMouseUp(e);
+    const eid = e.currentTarget.getAttribute('eid');
+    if (eid === 'min') {
+      this.setState({ value: this.state.min });
+      this.createLineBar();
+    } else if (eid === 'max') {
+      this.setState({ value: this.state.max });
+      this.createLineBar();
+    } else {
+      this.onMouseDown(e);
+      this.onMouseMove(e);
+      this.onMouseUp(e);
+    }
   }
 
   onClickEditor = (e) => {
@@ -180,30 +193,14 @@ export default class Slider extends React.PureComponent {
 
       // 최소단위 라벨 바의 위치
       const minpos = slidebar.offsetLeft;
-      // 최대단위 라벨 바의 위치 
-      const maxpos = max.offsetLeft;
       // 포인터의 이동 거리
       const gap = (slidebar.offsetWidth + minpos) / ((state.max - state.min));
       // 이동거리별 값
       let value = Number((offsetX / gap).toFixed(0)) + state.min;
 
-      // pos바의 위치를 계산하자..
-      // let pos = offsetX - minpos;
-      // let bar = pos;
-      // if (pos <= 0) {
-      //   value = state.min;
-      //   bar = pos = 0;
-      // } else if (pos > maxpos) {
-      //   value = state.max;
-      //   pos = maxpos;
-      //   bar = slidebar.offsetWidth - object.bar.offsetWidth / 2;
-      // } else {
-      // }
-      const bar = value;
       const pos = this.toPos(value);
 
-        console.log('value ============> ', value);
-      this.setState({ value, pos, bar });
+      this.setState({ value, pos });
     }
   }
 
@@ -214,13 +211,12 @@ export default class Slider extends React.PureComponent {
 
   render() {
     const { state, props, object } = this;
-    const { editor, pos, bar, min, max, value } = state;
+    const { editor, pos, min, max, value } = state;
     const { disabled } = props;
     console.log('pos => ', pos);
 
     return (
-      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled })}
-        pos={pos} bar={bar} >
+      <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled })} pos={pos} >
         {props.label && <div className="sld-header">
           <label className={"sld-label"}>{props.label}</label>
           <div className="sldh-infos">
@@ -237,17 +233,15 @@ export default class Slider extends React.PureComponent {
         </div>}
 
         <div className={"sld-layer"}>
-          <span className="sld-min" ref={ref => object.min = ref}>{min}</span>
-          <span className="sld-max" ref={ref => object.max = ref}>{max}</span>
-          <span className="sld-frame" ref={ref => object.frame = ref}
-            onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp} onClick={this.onClicked}>
+          <span className="sld-min" onClick={this.onClicked} eid={'min'}>{min}</span>
+          <span className="sld-max" onClick={this.onClicked} eid={'max'}>{max}</span>
+          <span className="sld-frame" onClick={this.onClicked} eid={"bar"}
+            onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
             <div className="sldf-line" ref={ref => object.slidebar = ref}>
-              <span className="sld-pos">{value}</span>
+              <div className="sldf-line-bar" />
             </div>
+            <span className="sldf-pos">{value}</span>
           </span>
-
-
-          <span className={"sld-bar"}></span>
         </div>
       </StyledObject>
     )

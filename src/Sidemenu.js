@@ -4,6 +4,7 @@ import cx from 'classnames/bind';
 import { connect } from 'react-redux';
 import { EID, ST } from './Config';
 import { Svg, cs } from './index';
+import { Util } from './Utils';
 
 const StyledObject = styled.div`{
   &.side-menu {
@@ -36,12 +37,15 @@ const StyledObject = styled.div`{
 
     .sm-foot { }
 
-    &.left { ${cs.border.right} 
+    &.left { ${cs.border.right} ${cs.left(0)}
       &.show { ${({ fade }) => cs.anim.slidein(fade)} };
       &.hide { ${({ fade }) => cs.anim.slideout(fade)} };
-    }
+    };
 
-    &.right {}
+    &.right { ${cs.border.left} ${cs.right(0)}
+      &.show { ${({ fade }) => cs.anim.slidein(fade, '100%', '0', 'rightin')} };
+      &.hide { ${({ fade }) => cs.anim.slideout(fade, '0', '100%', 'rightout')} };
+    };
 
     &.md { ${({ width }) => cs.w.get(width || 240)} .sm-head .sm-title { ${cs.font.xxl} } .sm-body .sm-ul .sm-li { ${cs.font.line(40)} ${cs.font.lg} } }
     &.xs { ${({ width }) => cs.w.get(width || 180)} .sm-head .sm-title { ${cs.font.lg} ${cs.font.weight(550)} } .sm-body .sm-ul .sm-li { ${cs.font.line(28)} ${cs.font.sm} } }
@@ -79,69 +83,96 @@ const StyledObject = styled.div`{
 class Sidemenu extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { show: false, ok: 'OK', cancel: null, className: '', isok: false, list: null };
+    const { frameid = "body" } = props;
+    this.state = { show: false, ok: 'OK', cancel: null, className: '', isok: false, list: null, frameid: frameid };
     this.interval = 0.2;
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const data = nextProps.sidemenu;
-    this.setState({ ...this.state, ...data });
+    this.setState({ ...this.state, ...data, frameid: data.frameid });
+  }
+
+  onResize = (e) => {
+    const { type } = Util.getScreenType();
+    const a = Util.isSelfClick(e, (item) => {
+      return item.indexOf("sm-li") >= 0;
+    });
+    if (a) return;
+
+    this.setState({ show: false });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+    const body = document.getElementById(this.state.frameid);
+    body && body.addEventListener('mouseup', this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    const body = document.getElementById(this.state.frameid);
+    body && body.removeEventListener('mouseup', this.onResize);
   }
 
   onClicked = (eid) => {
     this.setState({ show: false });
     const { onClicked } = this.props.sidemenu;
-    onClicked && onClicked(eid === EID.OK ? true : false);
+    onClicked && onClicked(eid);
+  }
+
+  onClose = () => {
+    this.setState({ show: false });
+    const { onClicked } = this.props.sidemenu;
+    onClicked && onClicked('close');
   }
 
   onClickMenu = (e) => {
     const { onClickMenu } = this.props.sidemenu;
     const eid = e.currentTarget.getAttribute("eid");
+    const url = e.currentTarget.getAttribute("url");
 
     if (onClickMenu) {
-      onClickMenu(eid, e);
+      onClickMenu(eid || null, url || null, e);
     } else {
-      const url = e.currentTarget.getAttribute("url");
-      window.location.href = url;
+      if (url && url.indexOf("http") === 0) {
+        window.open(url);
+      } else {
+        window.location.href = url;
+      }
     }
 
-    // const path = window.location.pathname;
-    // if (this.props.preview) {
-    //   window.open(url);
-    // } else {
-    //   if (this.props.history.location.state) {
-    //     this.props.history.push(url);
-    //   } else {
-    //     window.location.href = url;
-    //   }
-    // }
+    this.setState({ show: false });
   }
 
   render() {
     const { state } = this;
-    const { show, width = null, fade = '0.2s', theme = 'white', children = null, list = null, className, title } = state;
+    const { show, width = null, fade = '0.2s', theme = 'white', align = 'left', children = null, list = null, className, title } = state;
     // const { title, list, root } = props;
     const color = theme === 'dark' ? 'white' : 'dark';
 
     if (!show) return null;
 
+    const Component = children;
     return (
-      <StyledObject className={cx("side-menu left", show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
+      <StyledObject className={cx("side-menu", align, show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
         <div className="sm-head">
           <p className={'sm-title'}>{title ? title.toUpperCase() : ''}</p>
           <Svg className="btn-cancel md" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={color} />
         </div>
         <div className="sm-body scrollbar-4">
-          {children ? children : <ul className={"sm-ul"}>
-            {list && list.map((item, index) => {
-              const path = window.location.pathname;
-              const active = path ? path.toLowerCase() === item.url.toLowerCase() : (index === 0);
-              return <React.Fragment>
-                {item.divider && <div className={"sm-div"} />}
-                <li className={cx("sm-li", { active })} url={item.url} eid={item.id} onClick={this.onClickMenu}>{item.name}</li>
-              </React.Fragment>
-            })}
-          </ul>
+          {Component ?
+            <Component onClose={this.onClose} onClickMenu={this.onClickMenu} /> :
+            <ul className={"sm-ul"}>
+              {list && list.map((item, index) => {
+                const path = window.location.pathname;
+                const active = path ? path.toLowerCase() === item.url.toLowerCase() : (index === 0);
+                return <React.Fragment>
+                  {item.divider && <div className={"sm-div"} />}
+                  <li className={cx("sm-li", { active })} url={item.url} eid={item.id} onClick={this.onClickMenu}>{item.name}</li>
+                </React.Fragment>
+              })}
+            </ul>
           }
         </div>
       </StyledObject >

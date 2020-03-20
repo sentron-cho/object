@@ -1,24 +1,14 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showAlert } from './actor/Reducer';
-import { ST, CODE } from './Config';
+import { ST , CODE} from './Config';
 
-class AlertActor extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const AlertActor = (props) => {
+  useEffect(() => {
+    showAlert(props);
+  }, [props]);
 
-    if (props.show) {
-      this.showAlert(props.data);
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.show) {
-      this.showAlert(nextProps.data || nextProps);
-    }
-  }
-
-  showAlert = (data) => {
+  const showAlert = (data) => {
     let msg = ST.NOTI.SUCCESS, type = 'info';
     if (data == null || data.code === CODE.SUCCESS) {
       msg = ST.NOTI.SUCCESS;
@@ -34,15 +24,13 @@ class AlertActor extends React.PureComponent {
       type = data.type ? data.type : 'warn';
     }
 
-    this.props.showAlert({
-      msg: msg, type: type, size: data.size || '', ...data, 
+    props.show && props.showAlert({
+      msg: msg, type: type, size: data.size || '', ...data,
       onClose: (data == null || data.onClose == null) ? () => console.log('fire at closing event') : data.onClose,
     });
   }
 
-  render() {
-    return null;
-  }
+  return null;
 }
 
 export default connect(null, (dispatch) => ({ showAlert: (obj) => dispatch(showAlert(obj)) }))(AlertActor);

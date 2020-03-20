@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { connect } from 'react-redux';
-import { EID, KEY, ST } from './Config';
-import { Button, Svg, cs } from './index';
+import { EID, ST } from './Config';
+import { Svg, cs } from './index';
 
 const StyledObject = styled.div`{
   &.side-menu {
     ${cs.h.full} ${cs.pos.fixed} ${cs.disp.block} ${cs.top(0)} ${cs.z.top} 
     ${({ width }) => cs.w.get(width || '240px')} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
-    ${cs.border.right} ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect}
+    ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect}
 
     .sm-head {
       ${ cs.h.get(59)} ${cs.pos.relative}
@@ -36,8 +36,12 @@ const StyledObject = styled.div`{
 
     .sm-foot { }
 
-    &.show { ${({ fade }) => cs.anim.slidein(fade)} };
-    &.hide { ${({ fade }) => cs.anim.slideout(fade)} };
+    &.left { ${cs.border.right} 
+      &.show { ${({ fade }) => cs.anim.slidein(fade)} };
+      &.hide { ${({ fade }) => cs.anim.slideout(fade)} };
+    }
+
+    &.right {}
 
     &.md { ${({ width }) => cs.w.get(width || 240)} .sm-head .sm-title { ${cs.font.xxl} } .sm-body .sm-ul .sm-li { ${cs.font.line(40)} ${cs.font.lg} } }
     &.xs { ${({ width }) => cs.w.get(width || 180)} .sm-head .sm-title { ${cs.font.lg} ${cs.font.weight(550)} } .sm-body .sm-ul .sm-li { ${cs.font.line(28)} ${cs.font.sm} } }
@@ -91,8 +95,15 @@ class Sidemenu extends React.PureComponent {
   }
 
   onClickMenu = (e) => {
-    const url = e.currentTarget.getAttribute("url");
-    window.location.href = url;
+    const { onClickMenu } = this.props.sidemenu;
+    const eid = e.currentTarget.getAttribute("eid");
+
+    if (onClickMenu) {
+      onClickMenu(eid, e);
+    } else {
+      const url = e.currentTarget.getAttribute("url");
+      window.location.href = url;
+    }
 
     // const path = window.location.pathname;
     // if (this.props.preview) {
@@ -112,26 +123,23 @@ class Sidemenu extends React.PureComponent {
     // const { title, list, root } = props;
     const color = theme === 'dark' ? 'white' : 'dark';
 
+    if (!show) return null;
+
     return (
-      show &&
-      <StyledObject className={cx("side-menu", show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
+      <StyledObject className={cx("side-menu left", show ? 'show' : 'hide', className, theme)} fade={fade} width={width}>
         <div className="sm-head">
           <p className={'sm-title'}>{title ? title.toUpperCase() : ''}</p>
           <Svg className="btn-cancel md" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={color} />
         </div>
         <div className="sm-body scrollbar-4">
-          {children && this.state.children}
-          {/* {!children && <p className="no-child">The child component does not exist.</p>} */}
-          {list && <ul className={"sm-ul"}>
-            {list.map((item, index) => {
+          {children ? children : <ul className={"sm-ul"}>
+            {list && list.map((item, index) => {
               const path = window.location.pathname;
               const active = path ? path.toLowerCase() === item.url.toLowerCase() : (index === 0);
-              const { divider } = item;
-              if (divider) {
-                return <React.Fragment><div className={"sm-div"} /><li className={cx("sm-li", { active })} url={item.url} onClick={this.onClickMenu}>{item.name} </li></React.Fragment>
-              } else {
-                return <li className={cx("sm-li", { active })} url={item.url} onClick={this.onClickMenu}>{item.name} </li>
-              }
+              return <React.Fragment>
+                {item.divider && <div className={"sm-div"} />}
+                <li className={cx("sm-li", { active })} url={item.url} eid={item.id} onClick={this.onClickMenu}>{item.name}</li>
+              </React.Fragment>
             })}
           </ul>
           }

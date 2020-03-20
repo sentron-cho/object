@@ -1,45 +1,25 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { openSidemenu } from './actor/Reducer';
-import { ST, STAT } from './Config';
+import { ST } from './Config';
 
-class SidemenuActor extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const SidemenuActor = (props) => {
+  useEffect(() => {
+    openSidemenu(props);
+  }, [props]);
 
-    if (props.show) {
-      this.openSidemenu(props);
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.show) {
-      this.openSidemenu(nextProps);
-    } else {
-
-    }
-  }
-
-  openSidemenu = (value) => {
+  const openSidemenu = (value) => {
     let data = { ...value };
-    data.show = true;
+    data.show = data.show || false;
     data.className = value.className == null ? '' : value.className;
     data.title = value.title == null ? '' : value.title;
     data.children = value.children == null ? null : value.children;
     data.ok = value.ok == null ? ST.OK : value.ok;
     data.cancel = value.cancel == null ? ST.CANCEL : value.cancel;
-    this.props.openSidemenu(data);
+    props.openSidemenu(data);
   }
 
-  render() {
-    return null;
-  }
+  return null;
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    openSidemenu: (obj) => dispatch(openSidemenu(obj)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SidemenuActor);
+export default connect(null, (dispatch) => ({ openSidemenu: (obj) => dispatch(openSidemenu(obj)) }))(SidemenuActor);

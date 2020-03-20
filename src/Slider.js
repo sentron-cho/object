@@ -44,12 +44,6 @@ const StyledObject = styled.span`{
         .sldf-line { 
           ${cs.h.get(6)}${cs.pos.relative} ${cs.disp.flex} ${cs.bg.sky} 
           ${cs.box.line} ${cs.box.inner} ${cs.border.darkwhite}
-          // ${cs.align.ycenter}  ${cs.align.y('50%')}
-
-          div { height: 100%; display: inline-block; position: relative; }
-          .sldf-line-l {width: ${props => props.lineL}; background: transparent; };
-          .sldf-line-m {width: ${props => props.lineM}; background: rgba(255,255,255,0.8); };
-          .sldf-line-r {width: ${props => props.lineR}; background: transparent; };
         }
       }
       
@@ -60,16 +54,13 @@ const StyledObject = styled.span`{
       .sld-min { ${cs.disp.inblock} ${cs.radius.right(50)} ${cs.align.left} }
       .sld-max { ${cs.disp.inblock} ${cs.radius.left(50)} ${cs.align.right} }
 
-      // .sld-bar { height: 6px; top: 25px; background: #20a8d8; 
-      //   left: 0.451857%; width: 25.3246%;
-      // }
-
       .sld-pos { 
         ${cs.pos.absolute} ${cs.font.xs} ${cs.font.line(16)}
         ${cs.mouse.move} ${cs.disp.none} ${cs.box.radius}
         ${cs.z.over} ${cs.min.w(24)} ${cs.font.center}
         ${cs.disp.inblock} ${({ pos }) => cs.left(pos)}
         ${cs.bg.orange} ${cs.font.white} ${cs.align.bottom} ${cs.bottom(10)}
+        ${cs.align.x("-50%")}
 
         &::after { 
           ${cs.pos.absolute} ${cs.disp.block} ${cs.content.none} ${cs.bottom(-6)} ${cs.left('50%')} ${cs.w.none}
@@ -97,9 +88,11 @@ export default class Slider extends React.PureComponent {
     const min = props.min ? Number.parseInt(props.min) : 0;
     const value = props.value ? Number.parseInt(props.value) : min;
     const step = props.step ? Number.parseInt(props.step) : 1;
-    const pos = value;
+    // const pos = value;
+    const pos = this.toPos(value, min, max);
+    console.log(max, min, value, pos);
 
-    this.state = { modified: false, move: false, from: min, to: min, pos, value, min, max, step, linebar: null, bar: pos, editor: false };
+    this.state = { modified: false, move: false, from: min, to: min, pos: pos, value, min, max, step, bar: value, editor: false };
   }
 
   componentDidMount() {
@@ -108,16 +101,10 @@ export default class Slider extends React.PureComponent {
 
   createLineBar = () => {
     const { state, object } = this;
-    const { frame, min, max } = object;
-    const lineL = min.offsetWidth / 2;
-    const lineR = max.offsetWidth / 2;
-    const lineM = frame.offsetWidth - lineL - lineR;
+    const { value } = state;
 
-    const pos = this.toPos(lineM, state.value);
-    // const gap = lineM / ((state.max - state.min));
-    // const pos = state.value * gap;
-
-    this.setState({ linebar: { lineL: `${lineL}px`, lineM: `${lineM}px`, lineR: `${lineR}px` }, pos: pos, bar: pos });
+    const pos = this.toPos(value);
+    this.setState({ pos: pos, bar: value });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -126,12 +113,16 @@ export default class Slider extends React.PureComponent {
     // this.setState({ value: nextProps.value, pos: pos, bar: pos });
   }
 
-  toPos = (lineWidth, value) => {
-    const { state } = this;
-    const gap = lineWidth / ((state.max - state.min));
-    const real = value > state.max ? state.max : value < state.min ? state.min : value;
-    return (real - state.min) * gap;
+  toPos = (value, min = this.state.min, max = this.state.max) => {
+    return ((max - min) / 100 * value) + "%";
   }
+
+  // toPos = (lineWidth, value) => {
+  //   const { state } = this;
+  //   const gap = lineWidth / ((state.max - state.min));
+  //   const real = value > state.max ? state.max : value < state.min ? state.min : value;
+  //   return (real - state.min) * gap;
+  // }
 
   isValidate = () => (true);
 
@@ -179,13 +170,6 @@ export default class Slider extends React.PureComponent {
 
   onMouseDown = (e) => {
     this.state.move = true;
-
-    // const { object, state } = this;
-    // const { min, max, frame, slidebar } = object;
-    // console.log(min.offsetWidth, max.offsetWidth, frame.offsetWidth, slidebar.offsetWidth);
-
-    // this.state.gap = slidebar.offsetWidth / ((state.max - state.min + 1)); //((max - min) / 100).toFixed(3); 
-    // this.state.barwidth = slidebar.offsetWidth;
   }
 
   onMouseMove = (e) => {
@@ -204,18 +188,21 @@ export default class Slider extends React.PureComponent {
       let value = Number((offsetX / gap).toFixed(0)) + state.min;
 
       // pos바의 위치를 계산하자..
-      let pos = offsetX - minpos;
-      let bar = pos;
-      if (pos <= 0) {
-        value = state.min;
-        bar = pos = 0;
-      } else if (pos > maxpos) {
-        value = state.max;
-        pos = maxpos;
-        bar = slidebar.offsetWidth - object.bar.offsetWidth / 2;
-      } else {
-      }
+      // let pos = offsetX - minpos;
+      // let bar = pos;
+      // if (pos <= 0) {
+      //   value = state.min;
+      //   bar = pos = 0;
+      // } else if (pos > maxpos) {
+      //   value = state.max;
+      //   pos = maxpos;
+      //   bar = slidebar.offsetWidth - object.bar.offsetWidth / 2;
+      // } else {
+      // }
+      const bar = value;
+      const pos = this.toPos(value);
 
+        console.log('value ============> ', value);
       this.setState({ value, pos, bar });
     }
   }
@@ -227,12 +214,13 @@ export default class Slider extends React.PureComponent {
 
   render() {
     const { state, props, object } = this;
-    const { editor, pos, bar, min, max, value, linebar } = state;
+    const { editor, pos, bar, min, max, value } = state;
     const { disabled } = props;
+    console.log('pos => ', pos);
 
     return (
       <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled })}
-        pos={pos} {...linebar} bar={bar} >
+        pos={pos} bar={bar} >
         {props.label && <div className="sld-header">
           <label className={"sld-label"}>{props.label}</label>
           <div className="sldh-infos">
@@ -254,13 +242,6 @@ export default class Slider extends React.PureComponent {
           <span className="sld-frame" ref={ref => object.frame = ref}
             onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp} onClick={this.onClicked}>
             <div className="sldf-line" ref={ref => object.slidebar = ref}>
-
-              {/* <div className="sldf-line-l" />
-              <div className="sldf-line-m" ref={ref => this.object.slidebar = ref} >
-                <span className='sldf-guide' ref={ref => this.object.bar = ref}></span>
-              </div>
-              <div className="sldf-line-r" /> */}
-
               <span className="sld-pos">{value}</span>
             </div>
           </span>

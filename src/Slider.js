@@ -2,68 +2,85 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Editbox, Util } from './index';
+import { Editbox, cs } from './index';
 
 const StyledObject = styled.span`{
-  &.slider { display: block; position: relative; width: 100%;
-    .header {
-      .label { height: 16px; width: auto; display: inline-block; padding: 0; margin-right: 10px;
-        font-size: 12px; text-align: left; border: 0; font-weight: 500; 
+  &.slider { 
+    ${cs.disp.block} ${cs.pos.relative} ${cs.w.full} ${cs.noselect}
+
+    .sld-header {
+      .sldh-label { 
+        ${cs.w.auto} ${cs.h.get(16)} ${cs.disp.inblock} ${cs.p.a0} ${cs.m.r10}
+        ${cs.font.sm} ${cs.font.left} 
       }
-      .infos { display: inline;
-        .in-value { width: 60px; display: inline-block; margin-right: 2px;
-          // .box { opacity: 0.2; }
-          .box {
-            .input { color: white; background: #dcdcdc1a; }
-          }
-        }
-        .in-label { opacity: 0.6; font-size: 14px; font-weight: 400; }
+
+      .sldh-infos { ${cs.disp.inline}
+        .sldh-label { opacity: 0.6; font-size: 14px; font-weight: 400; }
         .center { transform: translateX(-50%); left: 50%; }
       }
     }
 
-    .sli-layer { 
-      height: 60px; display: block; position: relative; width: 100%; 
+    .sld-value { 
+      ${cs.w.get(60)} ${cs.h.get(18)} ${cs.disp.inblock} ${cs.m.right(2)} ${cs.align.cbottom} ${cs.box.inner}
+      ${cs.bottom(-1)} ${cs.mouse.pointer} ${cs.z.over} ${cs.font.xs} ${cs.box.line} ${cs.border.lightgray}
+      ${cs.font.dark} ${cs.bg.sky} ${cs.font.center} ${cs.radius.bottom(10)} ${cs.border.top('transparent')}
+    }
 
-      .sli-frame { height: 100%; width: 100%; position: relative; display: block; z-index: 3;
-        .sli-line { height: 6px; top: 25px; position: relative; display: flex; outline: none; background: transparent;
+    .sld-editor {
+      ${cs.size.full} ${cs.pos.absolute} ${cs.pos.ltop} ${cs.z.over}
+      .slde-bg { 
+        ${cs.bg.alphablack} ${cs.size.full} ${cs.pos.absolute} ${cs.pos.ltop}
+      }
+      .slde-box {
+        ${cs.pos.absolute} ${cs.align.center} ${cs.max.w(400)}
+      }
+    }
+
+    .sld-layer { 
+      ${cs.h.get(40)} ${cs.disp.block} ${cs.pos.relative} ${cs.w.full}
+
+      .sld-frame { ${cs.h.fit} ${cs.w.calc('100% - 68px')} ${cs.disp.block} ${cs.pos.relative} ${cs.z.get(2)} ${cs.m.get('0 34px')}
+        ${cs.align.ycenter}
+        .sldf-line { 
+          ${cs.h.get(6)}${cs.pos.relative} ${cs.disp.flex} ${cs.bg.sky} 
+          ${cs.box.line} ${cs.box.inner} ${cs.border.darkwhite}
+          // ${cs.align.ycenter}  ${cs.align.y('50%')}
 
           div { height: 100%; display: inline-block; position: relative; }
-          .sli-line-l {width: ${props => props.lineL}; background: transparent; };
-          .sli-line-m {width: ${props => props.lineM}; background: rgba(255,255,255,0.8); };
-          .sli-line-r {width: ${props => props.lineR}; background: transparent; };
+          .sldf-line-l {width: ${props => props.lineL}; background: transparent; };
+          .sldf-line-m {width: ${props => props.lineM}; background: rgba(255,255,255,0.8); };
+          .sldf-line-r {width: ${props => props.lineR}; background: transparent; };
         }
       }
-
-      .sli-label { position: absolute; color: #73818f; font-size: 10px; line-height: 1.333; text-shadow: none;
-        top: 0; padding: 2px 5px; background: #e4e7ea; border-radius: .25rem; cursor: default; display: none;
-
-        &::after { position: absolute; display: block; content: ""; bottom: -6px; left: 50%; width: 0;
-          height: 0; margin-left: -3px; overflow: hidden; border: 3px solid transparent; border-top-color: #e4e7ea;
-        }
-
-        &.sli-min { left: 0; display: block; }
-        &.sli-max { right: 0; display: block; }
-        &.sli-pos { display: block; left: ${(props) => `${props.pos}px`}; z-index: 2; background: rgba(255, 143, 0, 0.9); color: white;
-          &::after { border-top-color: rgba(255, 143, 0, 0.9); }
-        }
-
+      
+      .sld-min, .sld-max { 
+        ${cs.z.get(9)} ${cs.font.center} ${cs.font.xs} ${cs.bg.sky} ${cs.h.get(16)} ${cs.mouse.pointer}
+        ${cs.align.top} ${cs.w.full} ${cs.w.get(40)} ${cs.align.ycenter} ${cs.pos.relative}
       }
-      .sli-guide { 
-        height: 6px; position: absolute; top: 0px; z-index: 10; background: #d60b00; width: 4px;
-        display: block; float: left; left: ${(props) => `${props.bar}px`};
-      }
+      .sld-min { ${cs.disp.inblock} ${cs.radius.right(50)} ${cs.align.left} }
+      .sld-max { ${cs.disp.inblock} ${cs.radius.left(50)} ${cs.align.right} }
 
-      // .infos { display: inline-block; float: right; position: absolute; left: ${props => props.lineL}; bottom: 2px; z-index: 10; 
-      //   .in-value { width: 50px; display: inline-block; margin-right: 2px;
-      //     .box { opacity: 0.7; }
-      //   }
-      //   .in-label { opacity: 0.6; font-size: 14px; font-weight: 400; }
-      //   .center { transform: translateX(-50%); left: 50%; }
+      // .sld-bar { height: 6px; top: 25px; background: #20a8d8; 
+      //   left: 0.451857%; width: 25.3246%;
       // }
 
-      .sli-bar { height: 6px; top: 25px; background: #20a8d8; 
-        left: 0.451857%; width: 25.3246%;
+      .sld-pos { 
+        ${cs.pos.absolute} ${cs.font.xs} ${cs.font.line(16)}
+        ${cs.mouse.move} ${cs.disp.none} ${cs.box.radius}
+        ${cs.z.over} ${cs.min.w(24)} ${cs.font.center}
+        ${cs.disp.inblock} ${({ pos }) => cs.left(pos)}
+        ${cs.bg.orange} ${cs.font.white} ${cs.align.bottom} ${cs.bottom(10)}
+
+        &::after { 
+          ${cs.pos.absolute} ${cs.disp.block} ${cs.content.none} ${cs.bottom(-6)} ${cs.left('50%')} ${cs.w.none}
+          ${cs.h.none} ${cs.m.left(-3)} ${cs.over.hidden} ${cs.border.get('3px solid transparent')}
+          ${cs.border.top(cs.color.orange)}
+        }
+      }
+
+      .sld-guide { 
+        height: 6px; position: absolute; top: 0px; ${cs.z.over} background: #d60b00; width: 4px;
+        display: block; float: left; left: ${(props) => `${props.bar}px`};
       }
     }
   }
@@ -76,13 +93,13 @@ export default class Slider extends React.PureComponent {
     this.object = {};
 
     // const unit = props.unit ? props.unit : '';
-    const max = props.max ? Number(props.max) : 100;
-    const min = props.min ? Number(props.min) : 0;
-    const value = props.value ? Number(Util.replaceAll(props.value, "px")) : min;
-    const step = props.step ? Number(props.step) : 1;
+    const max = props.max ? Number.parseInt(props.max) : 100;
+    const min = props.min ? Number.parseInt(props.min) : 0;
+    const value = props.value ? Number.parseInt(props.value) : min;
+    const step = props.step ? Number.parseInt(props.step) : 1;
     const pos = value;
 
-    this.state = { modified: false, move: false, from: min, to: min, pos: pos, value: value, min: min, max: max, step: step, linebar: null, bar: pos };
+    this.state = { modified: false, move: false, from: min, to: min, pos, value, min, max, step, linebar: null, bar: pos, editor: false };
   }
 
   componentDidMount() {
@@ -143,6 +160,23 @@ export default class Slider extends React.PureComponent {
     this.onMouseUp(e);
   }
 
+  onClickEditor = (e) => {
+    this.setState({ editor: true });
+  }
+
+  onCloseEditor = () => {
+    this.setState({ editor: false });
+  }
+
+  onEnterEditor = (eid, e, value) => {
+    const { min, max } = this.state;
+    if (value < min) value = min;
+    if (value > max) value = max;
+
+    this.setState({ editor: false, value, modified: true });
+    this.createLineBar();
+  }
+
   onMouseDown = (e) => {
     this.state.move = true;
 
@@ -182,8 +216,7 @@ export default class Slider extends React.PureComponent {
       } else {
       }
 
-      this.setState({ value: value, pos: pos, bar: bar });
-      // console.log('onMouseMove offset = %s, pos = %s, value = %s, gap = %s', offsetX, pos, value, gap, bar);
+      this.setState({ value, pos, bar });
     }
   }
 
@@ -193,48 +226,47 @@ export default class Slider extends React.PureComponent {
   }
 
   render() {
-    const { state, props } = this;
+    const { state, props, object } = this;
+    const { editor, pos, bar, min, max, value, linebar } = state;
     const { disabled } = props;
-    // const linebar = { lineL: "10px", lineM: "1500px", lineR: "10px" };
 
     return (
       <StyledObject {...props} eid={props.eid} className={cx('slider', props.className, { disabled })}
-        onChange={this.onChanged} pos={state.pos} {...state.linebar} bar={state.bar} >
-        {props.label && <div className="header">
-          <label className={"label"}>{props.label}</label>
-          <div className="infos">
-            <Editbox className="in-value sm" value={state.value} name="value" type="number" maxLength="10" onChange={this.onChanged} />
-            <label className="in-label">{props.unit}</label>
+        pos={pos} {...linebar} bar={bar} >
+        {props.label && <div className="sld-header">
+          <label className={"sld-label"}>{props.label}</label>
+          <div className="sldh-infos">
+            <label className="sldh-label">{props.unit}</label>
           </div>
         </div>}
-        <div className={"sli-layer"}>
-          <span className="sli-frame" ref={ref => this.object.frame = ref}
+
+        <span className={'sld-value'} onClick={this.onClickEditor}>{state.value}</span>
+        {editor && <div className={'sld-editor'} >
+          <div className={"slde-bg"} onClick={this.onCloseEditor} />
+          <Editbox className="slde-box md center border radius"
+            value={state.value} name="value" type="number" maxLength="10"
+            onEnter={this.onEnterEditor} focus={true} />
+        </div>}
+
+        <div className={"sld-layer"}>
+          <span className="sld-min" ref={ref => object.min = ref}>{min}</span>
+          <span className="sld-max" ref={ref => object.max = ref}>{max}</span>
+          <span className="sld-frame" ref={ref => object.frame = ref}
             onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp} onClick={this.onClicked}>
-            <div className="sli-line">
-              <div className="sli-line-l" />
-              <div className="sli-line-m" ref={ref => this.object.slidebar = ref} >
-                <span className='sli-guide' ref={ref => this.object.bar = ref}></span>
+            <div className="sldf-line" ref={ref => object.slidebar = ref}>
+
+              {/* <div className="sldf-line-l" />
+              <div className="sldf-line-m" ref={ref => this.object.slidebar = ref} >
+                <span className='sldf-guide' ref={ref => this.object.bar = ref}></span>
               </div>
-              <div className="sli-line-r" />
+              <div className="sldf-line-r" /> */}
+
+              <span className="sld-pos">{value}</span>
             </div>
           </span>
 
-          <span>
-            <span className="sli-label sli-min" ref={ref => this.object.min = ref}>{state.min}</span>
-            <span className="sli-label sli-max" ref={ref => this.object.max = ref}>{state.max}</span>
-            {/* <span className="sli-label sli-from">{state.from}</span>
-            <span className="sli-label sli-to">{state.to}</span> */}
-          </span>
 
-          <span className="sli-label sli-pos">{state.value}</span>
-          {/* <span className='sli-guide'>{state.value}<span className="bar"></span></span> */}
-
-          {/* <div className="infos">
-            <Editbox className="in-value sm" value={state.value} name="value" type="number" maxLength="10" onChange={this.onChanged} />
-            <label className="in-label">px</label>
-          </div> */}
-
-          {/* <span className="sli-bar"></span> */}
+          <span className={"sld-bar"}></span>
         </div>
       </StyledObject>
     )

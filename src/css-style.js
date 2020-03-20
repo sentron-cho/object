@@ -530,6 +530,11 @@ const cs = {
     alphagray: `border-color: ${color.alphagray};`,
     semiblack: `border-color: ${color.semiblack};`,
 
+    top: (v) => `border-top-color: ${v};`,
+    bottom: (v) => `border-bottom-color: ${v};`,
+    left: (v) => `border-left-color: ${v};`,
+    right: (v) => `border-right-color: ${v};`,
+
     shadow: (v) => v ? `box-shadow: ${v};` : 'box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);',
     color: (v) => `border-color: ${v};`,
     width: (v) => Number.isInteger(v) ? `border-width: ${v}px;` : `border-width: ${v};`,
@@ -537,6 +542,19 @@ const cs = {
     radius: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
     outline: (v) => `outline: ${v};`,
     set: (v) => `${v};`,
+  },
+
+  radius: {
+    all: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
+    right: (v) => Number.isInteger(v) ? `border-radius: 0 ${v}px ${v}px 0;` : `border-radius: 0 ${v} ${v} 0;`,
+    left: (v) => Number.isInteger(v) ? `border-radius: ${v}px 0 0 ${v}px;` : `border-radius: ${v} 0 0 ${v};`,
+    top: (v) => Number.isInteger(v) ? `border-radius: ${v}px ${v}px 0 0;` : `border-radius: ${v} ${v} 0 0;`,
+    bottom: (v) => Number.isInteger(v) ? `border-radius: 0 0 ${v}px ${v}px;` : `border-radius: 0 0 ${v} ${v};`,
+
+    ltop: (v) => Number.isInteger(v) ? `border-radius: ${v}px 0 0 0;` : `border-radius: ${v} 0 0 0;`,
+    rtop: (v) => Number.isInteger(v) ? `border-radius: 0 ${v}px 0 0;` : `border-radius: 0 ${v} 0 0;`,
+    rbottom: (v) => Number.isInteger(v) ? `border-radius: 0 0 ${v}px 0;` : `border-radius: 0 0 ${v} 0;`,
+    lbottom: (v) => Number.isInteger(v) ? `border-radius: 0 0 0 ${v}px;` : `border-radius: 0 0 0 ${v};`,
   },
 
   m: {

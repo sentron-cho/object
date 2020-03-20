@@ -30,7 +30,7 @@ const StyledObject = styled.div` {
           &:focus { ${cs.border.gray} }
         }
 
-        &:focus + .underline { ${cs.opac.show} ${cs.w.full} ${cs.anim.get('width 180ms ease-out, opacity 120ms ease-in')} }
+        &:focus + .underline { ${cs.opac.show} ${cs.w.calc("100% - 10px")} ${cs.m.l5} ${cs.m.b2} ${cs.anim.get('width 180ms ease-out, opacity 120ms ease-in')} }
 
         &.readonly { ${cs.mouse.default} ${cs.border.none} ${cs.bg.alphagray}
           &:hover, &:active, &:focus { ${cs.bg.alphagray} }
@@ -215,7 +215,7 @@ class Editbox extends React.PureComponent {
   onKeyPressed = (e) => {
     if (e.key === 'Enter') {
       if (this.props.onEnter != null)
-        this.props.onEnter('ok', e);
+        this.props.onEnter('ok', e, this.input.value);
     }
   }
 

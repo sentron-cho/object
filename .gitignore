@@ -9,3 +9,4 @@ src/server/setting
 build/
 debug.log
 debug.log
+storybook-staic/

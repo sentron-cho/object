@@ -7,73 +7,84 @@ import { Button, Svg, Editbox, Mediabox, cs, Util } from './index';
 
 const StyledObject = styled.div`{
   &.uploader {
-    display: inline-block; width: 100%; height: 180px; position: relative; 
-    
-    .txt-title { display: inline-block; padding: 0; font-size: 12px; text-align: left; border: 0; font-weight: 500; margin-bottom: 5px;
-    }
+    ${cs.disp.inblock} ${cs.w.full} ${cs.pos.relative} ${({ height }) => cs.h.get(height)}
+    .up-title { ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.m.b5} }
 
-    .up-frame { height: calc(100% - 20px); width: 100%; cursor: pointer; position: relative;
-      .in-value { height: 65px; width: 100%; background: #eaeaea; padding: 5px 10px; resize: none;
-        color: rgba(0, 0, 0, 0.8); padding-right: 10px; border: 0;
-        &.noti { color: rgba(255, 0, 0, 0.8); background: #feffb3; }
-        &:focus, &:active { background: #d0d0d0; outline: none; box-shadow: none; }
-        &:hover { background: #e0e0e0; }
+    .up-frame { 
+      ${cs.h.calc('100% - 20px')} ${cs.w.full} ${cs.mouse.pointer} ${cs.pos.relative}
+
+      .upf-value { 
+        ${cs.h.get(65)} ${cs.w.full} ${cs.bg.lightgray} ${cs.p.get('5px 10px')} ${cs.resize.none}
+        ${cs.font.lightwhite} ${cs.p.r10} ${cs.border.none}
+
+        &.upv-noti { ${cs.font.red} ${cs.bg.alphablack} ${cs.box.radius} ${cs.p.h10} }
+        &:focus, &:active { ${cs.bg.lightgray} ${cs.border.outline('none')} ${cs.border.shadow('none')} }
+        &:hover { ${cs.bg.lightgray} }
       }
 
-      .in-text { border: none; position: absolute; float: left; top: 0; left: 80px; height: 24px; width: calc(100% - 80px); }
-      .sel-file { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); ${cs.opac.hide}
-        border-radius: 50px; padding: 8px; background: #6d6d6d; ${cs.anim.show}
-        &.svg-icon { width: 50px; height: 50px; }
-      }
-
-      .tab-grp { display: inline-block; padding: 3px; top: 5px; left: 5px;
-        position: absolute; z-index: 100; border-radius: 5px; ${cs.opac.hide} ${cs.bg.alphablack}
-        .tab-btn { margin: 0 3px; display: none;
-          &.active { display: inline-block; }
+      .upf-tabs { 
+        ${cs.disp.inblock} ${cs.p.a3} ${cs.top(5)} ${cs.left(5)} ${cs.bg.alphablack}
+        ${cs.pos.absolute} ${cs.z.over} ${cs.border.radius(5)} ${cs.opac.hide} 
+        .upt-btn { ${cs.m.get('0 3px')} ${cs.disp.none}
+          &.active { ${cs.disp.inblock} }
         }
+      }
+
+      .upf-preview { 
+        ${cs.h.get(80)} ${cs.pos.relative}
+
+        .upv-file {
+          ${cs.pos.absolute} ${cs.align.center} ${cs.border.radius(50)} ${cs.p.get(8)} ${cs.bg.dark}
+          ${cs.opac.hide} ${cs.anim.show}
+          &.svg-icon { ${cs.size.get(50)} }
+        }
+
+        .upv-img { ${cs.size.full} ${cs.p.a2} ${cs.object.fit} ${cs.border.radius(5)} ${cs.bg.lightgray} 
+          .btn-media-edit { ${cs.disp.none} }
+        }
+        .upv-delete { 
+          ${cs.float.right} ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.icon} ${cs.font.weight(600)} ${cs.font.center} ${cs.p.a0}
+          ${cs.border.radius(3)} ${cs.icon.md} ${cs.box.lightgray} ${cs.opac.get(0.7)} ${cs.m.a3}
+        }
+        .noimage { ${cs.object.contain} ${cs.opac.visible} }
       }
 
       &:hover {
-        .sel-file { background: #4a92e4; ${cs.opac.show} } 
-        .tab-grp { ${cs.opac.show} ${cs.anim.show}
-          .tab-btn { display: inline-block; } 
+        .upf-preview { .upv-file { ${cs.bg.darkhover} ${cs.opac.show} } }
+        .upf-tabs { ${cs.opac.show} ${cs.anim.show}
+          .upt-btn { ${cs.disp.inblock} } 
         }
 
-        .info-box { ${cs.opac.show} ${cs.anim.show} }
+        .upf-info { ${cs.opac.show} ${cs.anim.show} }
 
         ${cs.anim.show}
       }
       
-      .in-image { display: none; }
+      .upf-image { ${cs.disp.none} }
       
-      .in-link { display: block; z-index: 999; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      .upf-link { 
+        display: block; z-index: 999; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
         width: 100%; height: 100%; max-width: 400px; max-height: 200px; z-index: 99; resize: none; ${cs.opac.show}
         border: 1px solid #b9b9b9; border-radius: 5px; color: black;
 
-        .link-btn { position: absolute; bottom: 5px; right: 5px; };
+        .upl-btn { position: absolute; bottom: 5px; right: 5px; };
+        
         .edit-box { height: 100%;
           .box { height: 100%;
             textarea { width: 100%; height: 100%; resize: none; border: none; border-radius: 5px; max-height: 100%; }
           }
         }
       }
-
-      .preview-box { height: 80px; position: relative;
-        .img-box { width: 100%; height: 100%; padding: 2px; object-fit: contain; border-radius: 5px; ${cs.bg.lightgray} }
-        .btn-delete { float: right; right: 0; top: 0; position: absolute; z-index: 10; font-weight: 600; text-align: center; padding: 0px;
-          background: rgba(256, 256, 256, 1); border-radius: 3px; height: 24px; width: 24px; border: 1px solid rgba(0, 0, 0, 0.2); opacity: 0.7;
-        }
-        // .noimage { background-image: url(${IMG.Nofile}); background-size: contain; background-repeat: no-repeat; display: block; background-position: center; }
-      }
     }
 
-    &.thumb { min-height: 140px; min-width: 120px; width: 100%; height: 100%; 
-      .up-frame { 
-        .preview-box { position: absolute; width: 100%; height: 100%; border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;
-          .img-box { object-fit: contain; }
+    &.thumb { 
+      .up-frame { ${cs.min.h(120)} ${cs.min.w(120)} ${cs.size.full}
+        .upf-preview { 
+          position: absolute; width: 100%; height: 100%; border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;
+          .upv-img { ${cs.object.contain} }
         }
       }
-      .txt-title, .in-value, in-image { display: none }
+      .up-title, .upf-value, upf-image { display: none }
     }
     
     .info-box {
@@ -115,7 +126,7 @@ class Uploadbox extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { files, bufs, type, link='' } = this.createData(props);
+    const { files, bufs, type, link = '' } = this.createData(props);
 
     // base64경우 용량이 크면 딜레이가 발생하므로 화면 표시 이후에 로딩하자..
     // const load = bufs && bufs[0].indexOf('base64') > 0 ? false : true;
@@ -124,23 +135,22 @@ class Uploadbox extends React.PureComponent {
       maxSize: 100 * MAGA,   //100M
       imageExt: '.jpg, .jpeg, .png', videoExt: '.mp3, .mp4, .mov, .avi', pdfExt: '.pdf',
       files: files, bufs: bufs, type: type, noti: '', modified: false, //load: load,
-      textbox: false, link: link,
+      textbox: false, link: link, refresh: false,
     };
 
     this.start = new Date();
-    // console.log("start time = ", this.start);
   }
 
   createData = (props) => {
-    const value = props.value && props.value.indexOf('base64') > 0 ? "base64 raw data!!" : props.value;
-    const files = !props.value ? [{ 'name': NONE }] : [{ 'name': `${value}` }];
+    const { value, path } = props;
+    const data = value && value.indexOf('base64') > 0 ? "base64 raw data!!" : value;
+    const files = !value ? [{ 'name': NONE }] : [{ 'name': `${data}` }];
     const type = Util.isEmpty(props.type) ? 'image' : props.type;
-    // const bufs = !props.value ? [] : [`${props.path ? props.path : ""}${props.value}`];
-    let bufs = !props.value ? [] : [`${props.path ? props.path : ""}${props.value}`];
+    let bufs = !value ? [] : [`${path ? path : ""}${value}`];
 
     //http로 시작하거나 base64 데이터면 그냥 데이터를 넣자...
-    if (props.value.indexOf("http") === 0 || props.value.indexOf('base64') > 0) {
-      bufs = [props.value]
+    if (value && (value.indexOf("http") === 0 || value.indexOf('base64') > 0)) {
+      bufs = [value];
     }
 
     return { files, bufs, type };
@@ -200,14 +210,14 @@ class Uploadbox extends React.PureComponent {
   isEmpty = () => (this.state.bufs == null || this.state.bufs.length < 1 ? true : false)
 
   onClickClear = (e) => {
-    // this.refImage.src = '';
     const { props } = this;
 
     const files = props.value === NONE || Util.isEmpty(props.value) ? [{ 'name': NONE }] : [{ 'name': `${props.value}` }];
     const bufs = props.value === NONE || Util.isEmpty(props.value) ? [] : [`${props.value}`];
-    // const type = Util.isEmpty(props.type) ? 'image' : props.type;
 
-    this.setState({ 'files': files, 'bufs': bufs, 'type': this.state.type, 'modified': false });
+    this.setState({ 'files': files, 'bufs': bufs, 'type': this.state.type, 'modified': false, refresh: true });
+
+    setTimeout(() => this.setState({ refresh: false }), 200);
   }
 
   onClicked = (eid, e) => {
@@ -216,7 +226,6 @@ class Uploadbox extends React.PureComponent {
     switch (type) {
       case CONT_TYPE.YOUTUBE:
       case CONT_TYPE.LINK:
-        // console.dir("youtube");
         this.setState({ textbox: true });
         setTimeout(() => (this.refLink.focus()), 300)
         break;
@@ -233,7 +242,7 @@ class Uploadbox extends React.PureComponent {
     e.currentTarget.setAttribute('name', props.name);
     const target = e.currentTarget;
 
-    this.setState({ 'files': [{name: result}], 'bufs': [result], 'modified': true });
+    this.setState({ 'files': [{ name: result }], 'bufs': [result], 'modified': true });
     (props.onChange != null) && props.onChange(result, target, result, this.state.type);
   }
 
@@ -286,8 +295,6 @@ class Uploadbox extends React.PureComponent {
         }
       }
     }
-
-    // console.log("onLoadImage = ", new Date().getTime() - this.start.getTime());
   }
 
 
@@ -298,11 +305,11 @@ class Uploadbox extends React.PureComponent {
     const icolor = "white";
 
     if (enable) {
-      return <div className={"tab-grp"}>
-        <Svg className={cx("tab-btn md")} onClick={onClickTag} eid={CT.LINK} name={CT.LINK} color={icolor} active={type}/>
-        <Svg className={cx("tab-btn md")} onClick={onClickTag} eid={CT.YOUTUBE} name={CT.YOUTUBE} color={icolor} active={type}/>
-        <Svg className={cx("tab-btn md")} onClick={onClickTag} eid={CT.VIDEO} name={CT.VIDEO} color={icolor} active={type}/>
-        <Svg className={cx("tab-btn md")} onClick={onClickTag} eid={CT.IMAGE} name={CT.IMAGE} color={icolor} active={type}/>
+      return <div className={"upf-tabs"}>
+        <Svg className={cx("upt-btn md")} onClick={onClickTag} eid={CT.LINK} name={CT.LINK} color={icolor} active={type} />
+        <Svg className={cx("upt-btn md")} onClick={onClickTag} eid={CT.YOUTUBE} name={CT.YOUTUBE} color={icolor} active={type} />
+        <Svg className={cx("upt-btn md")} onClick={onClickTag} eid={CT.VIDEO} name={CT.VIDEO} color={icolor} active={type} />
+        <Svg className={cx("upt-btn md")} onClick={onClickTag} eid={CT.IMAGE} name={CT.IMAGE} color={icolor} active={type} />
       </div>
     } else {
       return null;
@@ -324,8 +331,8 @@ class Uploadbox extends React.PureComponent {
           size = '';
         }
 
-        return <div className={"info-box"} onClick={this.onClicked}>
-          <p className={"i-name"}>{`${name}${size}`}</p>
+        return <div className={"upf-info"} onClick={this.onClicked}>
+          <p className={"upi-name"}>{`${name}${size}`}</p>
           {/* <p className={"i-type"}>{`${type}${size}`}</p> */}
         </div>
       } else {
@@ -337,46 +344,46 @@ class Uploadbox extends React.PureComponent {
   render() {
     const { props } = this;
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
+    const { height = 180, theme, className, name, label, inline = false, thumbnail = true } = props;
 
-    const { noti, type, modified, bufs, files, imageExt, videoExt, textbox, link } = this.state;
+    const { noti, type, modified, bufs, files, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
     const fileExt = isMedia(type) ? videoExt : imageExt; //isPdf(type) ? pdfExt : imageExt;
     const isAlert = !Util.isEmpty(noti) ? true : false;
     const filename = isAlert ? noti : files[0].name;
     const isMultiMidia = props.onSelectedMedia ? true : false;
-    const oneline = props.inline === undefined || props.inline ? true : false;
-    const thumb = props.thumbnail ? props.thumbnail : false;
+    const oneline = inline;
+    const thumb = thumbnail;
+    const fit = thumb ? 'contain' : 'cover';
     // const itype = type === CT.YOUTUBE ? 'text' : "file";
 
     return (
-      <StyledObject className={cx("uploader", props.className, { oneline }, { thumb })} name={props.name} >
-        {!thumb && <span className="txt-title">{props.label}</span>}
+      <StyledObject className={cx("uploader", className, { oneline }, { thumb }, theme && `theme-${theme}`)}
+        name={name} height={height}>
+        {!thumb && <span className="up-title">{label}</span>}
+
         <div className="up-frame">
           {/* 데이터 업로드용 input */}
-          <input className={cx("in-image")} ref={ref => { this.refInput = ref }} type={"file"} accept={fileExt} name="" onChange={onChange} />
-          <textarea className={cx("in-value", { noti })} onClick={onClicked} value={filename} readOnly={true} />
+          {!refresh && <input className={cx("upf-image")} ref={ref => { this.refInput = ref }} type={"file"} accept={fileExt} name="" onChange={onChange} />}
+          {/* <textarea className={cx("upf-value", { noti })} onClick={onClicked} value={filename} readOnly={true} /> */}
 
           {/* 미리보기(썸네일) 화면*/}
-          <div className={cx("preview-box")}>
-            <Svg className={cx("btn-delete sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"close"} eid={EID.DELETE} color={'black'} />
-            {/* {!loaded && <Loading className={"img-box"}/>} */}
-            <Mediabox className={cx("img-box", type)} ref={ref => { this.refImage = ref }} link={link} type={type} url={buf} size={"full"}
-              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} controls={false}/>
-            {/* {buf && <img alt="img" ref={ref => { this.refImage = ref }} className={cx("img-box", type)} src={buf} onClick={onClicked} onLoad={onLoadImage} />}
-            {!buf && <div className="img-box noimage" onClick={onClicked} />} */}
-            {/* <Button className="primary sel-file xs" title={ST.SELECT_FILE} onClick={onClicked} eid={EID.OK} /> */}
-            <Svg className={cx("sel-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
+          <div className={cx("upf-preview")}>
+            <Svg className={cx("upv-delete sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.DELETE} color={'dark'} />
+            <Mediabox className={cx("upv-img", type)} ref={ref => { this.refImage = ref }} fit={fit} link={link} type={type} url={buf} size={"full"}
+              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} controls={false} edited={true} />
+            <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
+            {noti && <span className={'upv-noti'}></span>}
             {this.renderTabs(isMultiMidia)}
             {this.renderInfos()}
           </div>
 
           {/* url link용 태그 */}
-          {textbox && <div className={cx("in-link")}>
-            <Editbox ref={ref => { this.refLink = ref }} className={"link-area"} value={""} name="" type="text"
+          {textbox && <div className={cx("upf-link")}>
+            <Editbox ref={ref => { this.refLink = ref }} className={"upl-area"} value={""} name="" type="text"
               guide={""} validate={false} multi={true} />
-            {/* <textarea ref={ref => { this.refLink = ref }} className={"link-area"}></textarea> */}
-            <Button className="link-btn primary sm" title={ST.OK} onClick={onClickLinkOk} eid={EID.OK} />
+            <Button className="upl-btn primary sm" title={ST.OK} onClick={onClickLinkOk} eid={EID.OK} />
           </div>}
 
         </div>

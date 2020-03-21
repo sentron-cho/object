@@ -154,7 +154,7 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "contain", edited } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", edited } = props;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const src = props.src || props.url;
     const noimage = !src || error;
@@ -168,7 +168,7 @@ export default class Mediabox extends React.PureComponent {
         return (
           <React.Fragment>
             {type === CONT_TYPE.IMAGE && <img alt="img" className={cx("cont-frame", type, pointer)}
-              src={src} onLoad={this.onLoad} onError={this.onError} />}
+              src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit }} />}
             {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)}
               style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
             {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)}
@@ -184,7 +184,7 @@ export default class Mediabox extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("media-box", props.className)}
-        style={props.style} onClick={this.onClickEdit} height={height} border={border} >
+        style={props.style} onClick={this.onClickEdit} height={height} border={border}>
         {renderContents()}
         {pointer && <Svg className="btn-down xxl box radius" onClick={this.onClicked} eid={EID.DOWM} name={"down"} color={'black'} />}
         {props.edited &&

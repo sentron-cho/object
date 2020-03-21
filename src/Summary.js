@@ -6,16 +6,15 @@ import cs from './css-style';
 
 const StyledObject = styled.div`{
   &.head-summary {
-    ${cs.bg.dark}
+    ${cs.bg.sky} ${cs.font.dark}
     
     .hs-frame { ${cs.h.full} ${cs.p.a0} ${cs.font.sm}
-
       .t-title {
-        ${cs.font.xxl} ${cs.font.white} ${cs.font.thickbold} ${cs.bg.alphablack}
+        ${cs.font.xxl}${cs.font.thickbold} ${cs.bg.lightwhite}
         ${cs.border.bottom} ${cs.border.black} ${cs.m.b5} ${cs.p.a5} ${cs.font.center}
       }
 
-      .t-div { ${cs.pos.relative} ${cs.m.v5} ${cs.font.white} 
+      .t-div { ${cs.pos.relative} ${cs.m.v5} 
         max-width: ${props => props.maxwidth}; ${cs.align.xcenter} ${cs.pos.relative}
         .li-itm {
           ${cs.border.left} width: ${props => props.width}; ${cs.disp.inblock}
@@ -29,11 +28,8 @@ const StyledObject = styled.div`{
         }
       }
 
-      .b-div { ${cs.pos.relative} ${cs.bg.alphablack} ${cs.font.gray} ${cs.font.center} height: calc(30px);
-
-        .grp { ${cs.disp.block} ${cs.h.full} position: relative; 
-        
-        //float: right; right: 20px; max-width: ${props => props.maxwidth};
+      .b-div { ${cs.pos.relative} ${cs.bg.lightwhite} ${cs.font.darkgray} ${cs.font.center} height: calc(30px);
+        .grp { ${cs.disp.block} ${cs.h.full} position: relative;         
           .li-itm {
             ${cs.border.left} ${cs.align.ycenter} 
             ${cs.disp.inblock} padding: 0 15px; ${cs.pos.relative}
@@ -50,6 +46,47 @@ const StyledObject = styled.div`{
 
       .li-itm:first-child { border-left: transparent !important; }
 
+      .noitem { ${cs.font.lightgray} ${cs.font.center} }
+    }
+
+    &.sky { 
+      .hs-frame { 
+          .t-title { ${cs.bg.alphablack} } 
+          .b-div { ${cs.bg.alphablack} ${cs.font.gray} } 
+        }
+      }
+    }
+
+    &.primary { 
+      .hs-frame { 
+          .t-title { ${cs.bg.alphablack} } 
+          .b-div { ${cs.bg.alphablack} ${cs.font.gray} } 
+        }
+      }
+    }
+
+    &.gray { 
+      .hs-frame { 
+          .t-title { ${cs.bg.alphablack} } 
+          .b-div { ${cs.bg.alphablack} ${cs.font.gray} } 
+        }
+      }
+    }
+
+    &.dark { 
+      .hs-frame { 
+          .t-title { ${cs.bg.alphablack} } 
+          .b-div { ${cs.bg.alphablack} ${cs.font.gray} } 
+        }
+      }
+    }
+
+    &.black { 
+      .hs-frame { 
+          .t-title { ${cs.bg.alphablack} } 
+          .b-div { ${cs.bg.alphablack} ${cs.font.gray} } 
+        }
+      }
     }
 
     @media screen and (max-width : 860px) {
@@ -65,35 +102,35 @@ const StyledObject = styled.div`{
 /*******************************************************************
  Profile
 *******************************************************************/
-const SummaryBox = (props) => {
-  const { data, label, title = '', maxwidth = '1280px' } = props;
+const Summarybox = (props) => {
+  const { data, label, title = '', maxwidth = '1280px', className, theme } = props;
   const width = data ? `${100 / data.length}%` : `100%`;
 
   return (
-    <StyledObject className={cx("head-summary")} type={props.type} width={width} maxwidth={maxwidth}>
-      <Cardbox className={cx("hs-frame no-box", props.className)} type="full">
+    <StyledObject className={cx("head-summary", className)} type={props.type} width={width} maxwidth={maxwidth}>
+      <Cardbox className={cx("hs-frame no-box", className)} type="full">
         {title && <p className={'t-title'}>{title}</p>}
-        <div className="t-div">
+        {data ? <div className="t-div">
           {data.map((item, index) => {
             return <span key={index} className="li-itm">
               <span className="li-tl">{item.title}</span>
               <span className="li-txt">{item.value}</span>
             </span>
           })}
-        </div>
+        </div> : <div className={"noitem"}>Noitem</div>}
         <div className="b-div">
-          <div className="grp">
+          {label ? <div className="grp">
             {label.map((item, index) => {
               return <span key={index} className="li-itm">
                 <span className="li-tl">{item.title}</span>
                 <span className="li-txt">{item.value}</span>
               </span>
             })}
-          </div>
+          </div> : <div className={"noitem"}>Noitem</div>}
         </div>
       </Cardbox>
     </StyledObject>
   );
 }
 
-export default SummaryBox;
+export default Summarybox;

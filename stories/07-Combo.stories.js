@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { optionsKnob as options, withKnobs, text, boolean} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs, Combobox } from '../src';
 
 const StyledObject = styled.span`{
@@ -30,18 +30,10 @@ export default {
 const samplecode = (value, classname = '') => `<Combobox list={list} className={"${classname}"} ${value} />`;
 
 export const sobject = () => {
-
-  const classname = text('classname', '');
-  const size = options('size',
-    { 'md(middle)': 'md', 'xl(xlarge)': 'xl', 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs', 'full': 'full' },
-    '', { display: 'inline-radio' }, 'Other');
-  const halign = options('horizontal', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const valign = options('vertical', { 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' },
-    '', { display: 'inline-radio' }, 'Other');
-  const bg = options('background',
-    { trans: 'trans', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black', 'primary-line': 'primary-line' },
-    '', { display: 'inline-radio' }, 'Other');
+  const bg = options('background', op.color('f'), '', op.radio(), 'Other');
+  const size = options('size', op.size('n', {'full': 'full'}), '', op.radio(), 'Other');
+  const halign = options('horizantal align', op.halign(), '', op.radio(), 'Other');
+  const valign = options('vertical align', op.valign(), '', op.radio(), 'Other');
   const label = text('label', 'combo');
   const disable = boolean('disable', false);
 
@@ -64,7 +56,7 @@ export const sobject = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"Combobox"} className={"align"} id={"f0001"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top}
         sample={samplecode('label={"combo"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
-        <Combobox className={cx(classname, bg, size, { disable }, halign, valign)} label={label} list={list} onClick={onClick} onChange={onChange} frameid={"f0001"} />
+        <Combobox className={cx(bg, size, { disable }, halign, valign)} label={label} list={list} onClick={onClick} onChange={onChange} frameid={"f0001"} />
       </Linebox>
 
       <div className={"res-view"}>

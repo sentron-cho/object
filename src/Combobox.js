@@ -55,6 +55,7 @@ const StyledObject = styled.div` {
 
     &.trans { .cb-sel, .cb-ul { ${cs.bg.white} ${cs.font.black} .cb-li:hover { ${cs.bg.lightgray} } } .cb-sel { ${cs.bg.trans} ${cs.border.color('transparent')} } }
     &.sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
+    &.yellow { .cb-sel, .cb-ul { ${cs.bg.yellow} ${cs.font.dark} .cb-li:hover { ${cs.bg.orange} } } }
     &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} .cb-li:hover { ${cs.bg.orangehover} } } }
     &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} .cb-li:hover { ${cs.bg.greenhover} } } }
     &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.redhover} } } }

@@ -119,5 +119,14 @@ export const op = {
 
   theme: (value = {}) => {
     return { 'none': '', 'sky': 'sky', 'primary': 'primary', 'gray': 'gray', 'dark': 'dark', 'black': 'black', ...value }
+  },
+
+  animation : (value = {}) => {
+    return {
+      slidein: 'slidein', slideout: 'slideout',
+      fadein: 'fadein', fadeout: 'fadeout',
+      slidedown: 'slidedown', slideup: 'slideup', 
+      ...value
+    }
   }
 }

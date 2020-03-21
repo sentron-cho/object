@@ -4,7 +4,7 @@ import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/add
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs, Cardbox } from '../src';
 
 const StyledObject = styled.span`{
@@ -29,36 +29,29 @@ export default {
 const samplecode = (value, classname = '') => `<Cardbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
-  const classname = text('classname', '');
+  const bg = options('background', op.color('f', { 'alphagray': 'alphagray', 'alphablack': 'alphablack' }), 'sky', op.radio(), 'Other');
+  const halign = options('horizantal align', op.halign(), '', op.radio(), 'Other');
+  const valign = options('vertical align', op.valign(), '', op.radio(), 'Other');
+  const size = options('size',
+    { 'w50(1/2)': 'w50', 'w33(1/3)': 'w33', 'w25(1/4)': 'w25', 'w20(1/5)': 'w20', 'w10(1/10)': 'w10', 'full': 'full', half: 'half' }, '',
+    op.radio(), 'Other');
+  const box = boolean('border', false);
+  const border = box ? options('border', op.color('f', { 'alphablack': 'alphablack' }), '', op.radio(), 'Other') : '';
+
   const animtime = text('animtime', "1.5s");
   const radius = boolean('radius', false);
   const round = boolean('round', false);
   const shadow = boolean('shadow', false);
   const invisible = boolean('child invisible', false);
-  const border = { color: null, width: null, radius: null };
-  const bgcolor = text('bgcolor', '');
-  const box = boolean('border', true);
   const width = text('width', '140px');
   const height = text('height', '100px');
-  const align = options('align',
-    { center: 'center', ycenter: 'ycenter', middle: 'middle' }, '',
-    { display: 'inline-radio' }, 'Other');
-  const animtype = options('animation',
-    {
-      slidein: 'slidein', slideout: 'slideout',
-      fadein: 'fadein', fadeout: 'fadeout',
-      slidedown: 'slidedown', slideup: 'slideup'
-    }, '',
-    { display: 'inline-radio' }, 'Other');
-  const size = options('size',
-    { 'w50(1/2)': 'w50', 'w33(1/3)': 'w33', 'w25(1/4)': 'w25', 'w20(1/5)': 'w20', 'w10(1/10)': 'w10', 'full': 'full', half: 'half' }, '',
-    { display: 'inline-radio' }, 'Other');
+  const animtype = options('animation', op.animation(), '', op.radio(), 'Other');
 
   return (
     <StyledObject className={"t-main"}>
-      <Linebox className={"align"} title={"sample"} box={true} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Cardbox className={cx('b-s', classname, align, size, box && 'border', { radius }, { round }, { shadow }, { invisible })}
-          bgcolor={bgcolor} border={border} width={width} height={height} anim={{ type: animtype, time: animtime }}>
+      <Linebox className={"v-align nomargin"} title={"sample"} box={true} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
+        <Cardbox className={cx('b-s', bg, size, box && 'border', (border), { radius }, { round }, { shadow }, { invisible }, halign, valign)}
+          width={width} height={height} anim={{ type: animtype, time: animtime }}>
           <div>child</div>
         </Cardbox>
       </Linebox>
@@ -145,7 +138,7 @@ export const border = () => {
 
       <Linebox title={""} top={option.top} sample={samplecode("", "border gray")} inline={true}>
         <Cardbox className={'border'} border={{ color: cs.color.alphagray }}>gray</Cardbox>
-        <Cardbox className={'border'} border={{ width: "2px" }}>alphablack</Cardbox>
+        <Cardbox className={'border'} border={{ width: "3px" }}>alphablack</Cardbox>
         <Cardbox className={'border'} border={{ radius: "20px" }}>dark</Cardbox>
         <Cardbox className={'border'} border={{ color: cs.color.alphagray, width: "2px", radius: "20px" }}>black</Cardbox>
       </Linebox>

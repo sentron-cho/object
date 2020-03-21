@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { Linebox } from './00-Frame';
+import cx from 'classnames/bind';
+import { Linebox, op } from './00-Frame';
 import { cs, Checkbox } from '../src';
 
 const StyledObject = styled.span`{
@@ -26,6 +27,15 @@ export default {
 const samplecode = (value, classname = '') => `<Checkbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
+  const title = text('title', 'Button');
+  const bg = options('background', op.color('f'), '', op.radio(), 'Other');
+  const size = options('size', op.size('n'), '', op.radio(), 'Other');
+  const isborder = boolean('border', false);
+  const border = isborder ? text('border color', '#909090') : '';
+  const radius = isborder ? text('border radius', '1px') : '';
+  const width = isborder ? text('border width', '1px') : '';
+  const opt = isborder ? { color: border, radius: radius, width: width } : null;
+  
   const [result, setResult] = useState(null);
   const [change, setChange] = useState(null);
 
@@ -42,8 +52,7 @@ export const object = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"checkbox"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
-        <Checkbox className={"primary"} onClick={onClick} onChange={onChange} />
-        <Checkbox className={"primary"} label={"title : "} list={list} onClick={onClick} onChange={onChange} />
+        <Checkbox className={cx(bg, size)} label={title} list={list} border={opt} onClick={onClick} onChange={onChange} />
       </Linebox>
 
       <div className={"res-view"}>

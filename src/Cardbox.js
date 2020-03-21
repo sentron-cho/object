@@ -6,7 +6,7 @@ import cs from './css-style';
 // 카드박스 오브젝트
 const StyledObject = styled.div`{
   &.card-box {
-    cursor: ${(props) => props.cursor}; ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}
+    ${({ cursor }) => cs.mouse.get(cursor)} ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}
     ${cs.disp.inblock} ${cs.bg.trans} ${cs.align.vertical("top")} ${cs.box.inner}
 
     width: ${(props) => props.width};
@@ -22,6 +22,8 @@ const StyledObject = styled.div`{
 
       &.yellow { ${cs.border.yellow} }
       &.sky { ${cs.border.sky} }
+      &.green { ${cs.border.green} }
+      &.orange { ${cs.border.orange} }
       &.red { ${cs.border.red} }
       &.primary { ${cs.border.primary} }
       &.gray { ${cs.border.gray} }
@@ -29,9 +31,9 @@ const StyledObject = styled.div`{
       &.dark { ${cs.border.dark} }
       &.black { ${cs.border.black} }
 
-      ${props => props.border.color && cs.border.color(props.border.color)}
-      ${props => props.border.radius && cs.border.radius(props.border.radius)}
-      ${props => props.border.width && cs.border.width(props.border.width)}
+      ${({ border }) => border && border.color && cs.border.color(border.color)}
+      ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+      ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
 
     &:not(.border) {
@@ -55,10 +57,16 @@ const StyledObject = styled.div`{
       &.theme-black { ${cs.bg.black} ${cs.font.white} }
     }
     
-    
+    &.right { ${cs.align.right} }
     &.center { ${cs.align.xcenter} }
-    &.ycenter { ${cs.align.ycenter} }
-    &.middle { ${cs.align.center} }
+    &.top { ${cs.align.top} }
+    &.middle { ${cs.align.ycenter} }
+    &.bottom { ${cs.align.bottom} }
+    &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
+
+    // &.center { ${cs.align.xcenter} }
+    // &.ycenter { ${cs.align.ycenter} }
+    // &.middle { ${cs.align.center} }
 
     &.w50 { ${cs.w.r50} }
     &.w33 { ${cs.w.r33} }
@@ -77,7 +85,11 @@ const StyledObject = styled.div`{
       ${(props) => (props.anim && props.anim.type) && cs.anim[props.anim.type](props.anim.time || "0.2s")}
     }
 
-    ${props => props.bgcolor && cs.bg.get(props.bgcolor)}
+    ${({ bgcolor }) => bgcolor && cs.bg.get(bgcolor)}
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
 
     @media screen and (max-width : 1280px) { }
 
@@ -89,7 +101,7 @@ const Cardbox = (props) => {
   const [anim, setAnim] = useState(props.anim);
 
   const { eid, width = "100%", height = "100%", margin = "20px", mouse = "default", bgcolor = null, theme } = props;
-  const { border = { color: null, width: null, radius: null } } = props;
+  const { border } = props;
   const cursor = props.onClick ? "pointer" : mouse;
   const params = { width, height, margin, cursor };
 

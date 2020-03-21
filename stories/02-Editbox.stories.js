@@ -1,11 +1,12 @@
-import React from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from 'react';
 import Editbox from '../src/Editbox';
 import { optionsKnob as options, withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox, op } from './00-Frame';
-import { cs } from '../src';
+import { cs, Button } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -13,6 +14,11 @@ const StyledObject = styled.span`{
 
     .lb-box.type .lb-li > * { ${cs.m.a0} }
     .lb-box.size .lb-li { ${cs.h.get(48)} }
+
+    .res-view { 
+      ${cs.h.get(100)} ${cs.w.get(800)} ${cs.bg.lightgray} 
+      p { ${cs.m.a5} }
+    }
   }
 }`;
 
@@ -42,14 +48,27 @@ export const object = () => {
   const fontcolor = text('fontcolor', '');
   const radius = boolean('border radius', false);
 
+  const [result, setResult] = useState(null);
+
+  let rObject;
+  const onClick = (eid, e) => {
+    const value = rObject.getValue() || 'null';
+    setResult(`${value}`);
+  }
+
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Editbox className={cx('b-s', { border }, { radius }, bg, size)} 
-          type={type} label={label} helper={helper}
+        <Editbox className={cx('b-s', { border }, { radius }, bg, size)}
+          ref={(ref) => rObject = ref} type={type} label={label} helper={helper}
           guide={guide} value={value} inline={inline} multi={multi} readonly={readonly} disabled={disabled}
           bordercolor={bordercolor} fontcolor={fontcolor} />
+        <Button className={'primary'} title={"getValue"} onClick={onClick} />
       </Linebox>
+
+      <div className={"res-view"}>
+        <p>{result}</p>
+      </div>
     </StyledObject>
   );
 };
@@ -75,13 +94,31 @@ export const normal = () => {
 };
 
 export const event = () => {
+  const [result, setResult] = useState(null);
+
+  const onEnter = (isok, e, value) => {
+    setResult(`onEnter() isok = ${isok}, value = ${value}, e`);
+  }
+
+  const onClear = (value, e) => {
+    setResult(`onClear() value = ${value}, e`);
+  }
+
+  const onChange = (value, e) => {
+    setResult(`onChange() value = ${value}, e`);
+  }
+
   return (
     <StyledObject className={"t-main"} >
       <Linebox title={"clear && event"} top={option.top} sample={samplecode(`onClear={} onEnter={} onChange={}`)}>
-        <Editbox className={''} type={"text"} label={"onClear"} guide={"onClear"} onClear={action('onClear')} />
-        <Editbox className={''} type={"text"} label={"onEnter"} guide={"onEnter"} onEnter={action('onEnter')} />
-        <Editbox className={''} type={"text"} label={"onChange"} guide={"onChange"} onChange={action('onClear')} />
+        <Editbox className={''} type={"text"} label={"onClear"} guide={"onClear"} onClear={onClear} />
+        <Editbox className={''} type={"text"} label={"onEnter"} guide={"onEnter"} onEnter={onEnter} />
+        <Editbox className={''} type={"text"} label={"onChange"} guide={"onChange"} onChange={onChange} />
       </Linebox>
+
+      <div className={"res-view"}>
+        <p>{result}</p>
+      </div>
     </StyledObject>
   );
 };

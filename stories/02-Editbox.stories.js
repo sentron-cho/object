@@ -1,10 +1,10 @@
 import React from 'react';
 import Editbox from '../src/Editbox';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs } from '../src';
 
 const StyledObject = styled.span`{
@@ -25,7 +25,9 @@ export default {
 const samplecode = (value, classname = '') => `<Editbox type={"text"} className={"${classname}"} label={"readonly"} guide={"readonly"} value={"readonly"} readonly={true} ${value} />`;
 
 export const object = () => {
-  const classname = text('classname', 'primary');
+  const bg = options('background', op.color('f'), '', op.radio(), 'Other');
+  const size = options('size', op.size('n'), '', op.radio(), 'Other');
+
   const label = text('label', 'Editbox');
   const guide = text('guide', 'Editbox');
   const value = text('value', '');
@@ -34,20 +36,19 @@ export const object = () => {
   const inline = boolean('inline', false);
   const readonly = boolean('readonly', false);
   const disabled = boolean('disabled', false);
-  const select = radios('size', { lg: 'lg', sm: 'sm' }, '', 'Other');
   const type = radios('type', { text: 'text', date: 'date', number: 'number' }, 'text', 'Other');
   const bordercolor = text('bordercolor', '');
   const border = bordercolor ? true : false;
   const fontcolor = text('fontcolor', '');
-  const bgcolor = text('bgcolor', '');
   const radius = boolean('border radius', false);
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"sample"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
-        <Editbox className={cx('b-s', select, classname, { border }, { radius })} type={type} label={label} helper={helper}
+        <Editbox className={cx('b-s', { border }, { radius }, bg, size)} 
+          type={type} label={label} helper={helper}
           guide={guide} value={value} inline={inline} multi={multi} readonly={readonly} disabled={disabled}
-          bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} />
+          bordercolor={bordercolor} fontcolor={fontcolor} />
       </Linebox>
     </StyledObject>
   );

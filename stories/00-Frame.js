@@ -114,6 +114,10 @@ export const op = {
   },
 
   valign: (value = {}) => {
-    return { 'none': '', 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' };
+    return { 'none': '', 'top': 'top', 'middle': 'middle', 'bottom': 'bottom', ...value };
+  },
+
+  theme: (value = {}) => {
+    return { 'none': '', 'sky': 'sky', 'primary': 'primary', 'gray': 'gray', 'dark': 'dark', 'black': 'black', ...value }
   }
 }

@@ -117,9 +117,11 @@ const StyledObject = styled.div` {
     &.lg .box .input { ${cs.h.get(36)} ${cs.min.height(36)} ${cs.p.get('0 10px')} ${cs.font.line(32)} ${cs.font.lg} }
     &.xl .box .input { ${cs.h.get(40)} ${cs.min.height(40)} ${cs.p.get('0 16px')} ${cs.font.line(40)} ${cs.font.xl} }
 
-    &.trans { .input { ${cs.bg.white} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
+    &.trans { .input { ${cs.bg.trans} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
+    &.white { .input { ${cs.bg.white} ${cs.font.black} &::placeholder { ${cs.font.dark} } &:focus { ${cs.bg.get('#fffbcf')} } } }
     &.sky { .input { ${cs.bg.sky} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
     &.orange { .input { ${cs.bg.orange} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.orangehover} } } }
+    &.yellow { .input { ${cs.bg.yellow} ${cs.font.dark} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.yellowhover} } } }
     &.green { .input { ${cs.bg.green} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.greenhover} } } }
     &.red { .input { ${cs.bg.red} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.redhover} } } }
     &.primary { .input { ${cs.bg.primary} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.primaryhover} } } }

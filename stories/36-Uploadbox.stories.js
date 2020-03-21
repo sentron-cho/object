@@ -277,3 +277,39 @@ export const theme = () => {
     </StyledObject>
   );
 };
+
+export const select = () => {
+  const [result, setResult] = useState(null);
+
+  const onSelect = (eid, e) => {
+    setResult(`eid = ${eid}, e`);
+  }
+
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"sky"} sample={samplecode("", 'sky')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'sky'} onSelectedMedia={onSelect}/>
+      </Linebox>
+
+      <Linebox title={"primary"} sample={samplecode("", 'primary')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'primary'} onSelectedMedia={onSelect}/>
+      </Linebox>
+
+      <Linebox title={"gray"} sample={samplecode("", 'gray')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'gray'} onSelectedMedia={onSelect}/>
+      </Linebox>
+
+      <Linebox title={"dark"} sample={samplecode("", 'dark')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'dark'} onSelectedMedia={onSelect}/>
+      </Linebox>
+
+      <Linebox title={"black"} sample={samplecode("", 'black')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'black'} onSelectedMedia={onSelect}/>
+      </Linebox>
+      
+      <div className={"res-view"}>
+        <p>{result}</p>
+      </div>
+    </StyledObject>
+  );
+};

@@ -18,6 +18,26 @@
   "bugs": {
     "url": "https://github.com/sentron-cho/stroybook/issues"
   },
+  "engines": {
+    "node": ">=10.14.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "max-len": "off",
+      "object-curly-spacing": "off",
+      "space-before-function-paren": "off",
+      "comma-dangle": "off",
+      "default-case": "warn",
+      "react/no-direct-mutation-state": "warn",
+      "jsx-a11y/anchor-is-valid": "warn",
+      "array-callback-return": "warn"
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    }
+  },
   "homepage": "https://github.com/sentron-cho/stroybook#readme",
   "dependencies": {
     "axios": "^0.19.2",

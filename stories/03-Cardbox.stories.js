@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, array, select } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Cardbox, Button, Editbox } from '../src';
+import { cs, Cardbox } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -222,7 +222,7 @@ export const animation = () => {
   const value = text('time', '3s');
 
   // const [value, setValue] = useState("3s");
-  const [animtag, setAnimtag] = useState("");
+  const [, setAnimtag] = useState("");
 
   const onAnimation = (eid, e) => {
     if (eid === "start") {

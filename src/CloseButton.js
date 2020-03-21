@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Button, Svg, cs } from './index';
+import { Svg, cs } from './index';
 
 const StyledObject = styled.div`{
   &.close-btn { 

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { useDrag, useDrop } from 'react-dnd';

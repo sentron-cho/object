@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../src/Button';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
+import { withKnobs, text, radios } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import cx from 'classnames/bind'

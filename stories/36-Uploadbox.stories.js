@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean, button } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -25,7 +26,7 @@ export default { title: 'object|Uploadbox', component: Uploadbox, decorators: [w
 const samplecode = (value, classname = '') => `<Uploadbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
-  button('refresh(옵션을 변경 후 버튼을 클릭하세요)', () => onRefresh());
+  button('refresh(옵션을 변경 후 버튼을 클릭하세요)', () => {});
   const size = options('size',
     { 'none': '', 'full(100%)': 'full', 'normal(4:3)': 'normal', 'wide(16:9)': 'wide', 'xwide(21:9)': 'xwide', 'fwide(28:9)': 'fwide' },
     '', { display: 'inline-radio' }, 'Other');

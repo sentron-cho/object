@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Widgetbox, Util } from '../src';
+import { cs, Widgetbox } from '../src';
 import { IMG } from '../src/Icons';
 
 const StyledObject = styled.span`{
@@ -25,15 +26,6 @@ export default { title: 'object|Widgetbox', component: Widgetbox, decorators: [w
 
 const samplecode = (value, classname = '') => `<Widgetbox className={"${classname}"} ${value} />`;
 
-const jsonlist = (count = 5) => {
-  let data = [];
-  for (let i = 0; i < count; i++) {
-    data.push({ id: i + 1, name: `label-${i}`, value: i + 1, icon: 'user' });
-  }
-
-  return data;
-};
-
 export const object = () => {
   const size = options('size',
     { 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'none': '' },
@@ -53,7 +45,6 @@ export const object = () => {
   const labelalign = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
     '', { display: 'inline-radio' }, 'Other');
 
-  const bgcolor = text('border color', '#ffffff');
   const [result, setResult] = useState(null);
 
   const onClick = (eid, rowid, e) => {
@@ -298,7 +289,7 @@ export const font = () => {
         <Widgetbox className={cx("")} name={'widget'} value={"123"} icon={"user"} onClick={() => { }} />
         <Widgetbox className={cx("")} type={"icon"} name={'widget'} value={"123"} icon={"user"} onClick={() => { }} />
         <Widgetbox className={cx("")} type={"image"} name={'widget'}
-          value={"123"} icon={"user"} value={"123"} cont={"123\ngood image"} src={IMG.Sample} onClick={() => { }} />
+          value={"123"} icon={"user"} cont={"123\ngood image"} src={IMG.Sample} onClick={() => { }} />
       </Linebox>
 
       <Linebox title={"font options"} className={""} sample={samplecode("", "")} box={false}>

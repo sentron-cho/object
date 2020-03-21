@@ -198,7 +198,7 @@ export default class Slider extends React.PureComponent {
   }
 
   createLineBar = () => {
-    const { state, object } = this;
+    const { state } = this;
     const { value } = state;
 
     const pos = this.toPos(value);
@@ -281,7 +281,7 @@ export default class Slider extends React.PureComponent {
     if (this.state.move) {
       const { offsetX } = e.nativeEvent;
       const { state, object } = this;
-      const { slidebar, max } = object;
+      const { slidebar } = object;
 
       // 최소단위 라벨 바의 위치
       const minpos = slidebar.offsetLeft;

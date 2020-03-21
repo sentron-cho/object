@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -34,7 +34,6 @@ export const object = () => {
     '', { display: 'inline-radio' }, 'Other');
 
   const [result, setResult] = useState(null);
-  const [change, setChange] = useState(null);
 
   const onClick = (eid, title, active, e) => {
     setResult(`eid = ${eid}, title = ${title}, show = ${active}`);
@@ -105,7 +104,7 @@ export const size = () => {
 
 export const color = () => {
   const [active, setactive] = useState(null);
-  const [time, settime] = useState(null);
+  const [, settime] = useState(null);
 
   const onClickClose = (eid, e) => {
     setactive(false);
@@ -162,8 +161,6 @@ export const align = () => {
 };
 
 export const theme = () => {
-  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
-  
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>

@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { SearchFrame, Pagenavi, Nodata, Util, Svg, cs, Guidebox, Dragable } from './index';
-import { EID, ST } from './Config';
+import { ST } from './Config';
 
 const StyledObject = styled.div`{
   &.list-box {
@@ -254,7 +254,7 @@ const Listbox = (props) => {
     } else if (eid === 'drop') {
       props.onDragDrop && props.onDragDrop(eid, array);
     }
-  }, [list]);
+  }, [list, props]);
 
   return (
     <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)} 

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Formgroup, Widgetbox, Util } from '../src';
+import { cs, Formgroup, Widgetbox } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -159,7 +160,6 @@ export const border = () => {
 };
 
 export const animation = () => {
-  const refresh = button('refresh', () => { });
   const value = text('time', '3s');
 
   return (

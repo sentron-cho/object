@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, button, array, select } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean, button } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -120,8 +121,6 @@ const OptionChild = (props) => {
   const onChange = (value, e) => {
     props.onChange && props.onChange(value, e);
   }
-
-  const { data, state } = props;
 
   return (
     <StyledOptions className="m-opt">

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Togglebox, Util } from '../src';
+import { cs, Togglebox } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -66,7 +67,7 @@ object.story = { name: 'Base' };
 
 export const theme = () => {
   const anim = boolean('animaion', false);
-  const [result, setResult] = useState(null);
+  const [, setResult] = useState(null);
 
   const onClick = (eid, e) => {
     setResult(`onClick(eid = ${eid}, e)`);

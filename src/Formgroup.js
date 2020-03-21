@@ -117,8 +117,12 @@ export default class Formgroup extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.anim != null) {
-      // this.state.isanim = this.state.anim = nextProps.anim;
       this.setState({ anim: nextProps.anim });
+    }
+
+    if (nextProps.list) {
+      this.setState({ selected: nextProps.selected, list: nextProps.list });
+      (Util.isEmpty(nextProps.selected) || nextProps.selected < 1) && this.setState({ anim: nextProps.anim });
     }
   }
 
@@ -146,13 +150,13 @@ export default class Formgroup extends React.PureComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.list) {
-      this.setState({ selected: nextProps.selected, list: nextProps.list });
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   if (nextProps.list) {
+  //     this.setState({ selected: nextProps.selected, list: nextProps.list });
 
-      (Util.isEmpty(nextProps.selected) || nextProps.selected < 1) && this.setState({ anim: nextProps.anim });
-    }
-  }
+  //     (Util.isEmpty(nextProps.selected) || nextProps.selected < 1) && this.setState({ anim: nextProps.anim });
+  //   }
+  // }
 
   render() {
     const { state, props } = this;

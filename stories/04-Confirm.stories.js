@@ -1,10 +1,8 @@
 
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from 'react';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { withKnobs, text, radios } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
 import { cs, ConfirmActor, Button, Confirm } from '../src';
 
@@ -28,29 +26,14 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-const samplecode = (value, classname = '') => `<Confirm className={"${classname}"} ${value} />`;
-
 export const object = () => {
-  const classname = text('classname', null);
   const title = text('title', null);
   const msg = text('message', null);
   const textalign = radios('textalign', { left: 'left', center: 'center', right: 'right' }, '', 'Other');
   const size = radios('size', { large: 'lg', small: 'sm', xsmall: 'xs' }, '', 'Other');
 
   const [confirm, setConfirm] = useState(null);
-  const [message, setMessage] = useState('confirm box.');
-
-  const get = (eid, value, classname) => {
-    return {
-      show: true,
-      title: title|| eid,
-      msg: msg || message,
-      type: eid,
-      className: `${textalign} ${size} ${classname}`,
-      ...value,
-      onClicked: (isOk) => { },
-    }
-  }
+  const [message, ] = useState('confirm box.');
 
   const onClick = (eid, e) => {
     setConfirm({
@@ -137,7 +120,3 @@ export const object = () => {
 object.story = {
   name: 'Base'
 };
-
-const option = {
-  top: "20px",
-}

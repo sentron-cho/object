@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, SidemenuActor, Button, Sidemenu, Editbox, Svg } from '../src';
+import { cs, SidemenuActor, Button, Sidemenu, Svg } from '../src';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -133,7 +133,7 @@ export const object = () => {
 
 
 export const custom = () => {
-  const [result, setResult] = useState(null);
+  const [result, ] = useState(null);
   const [click, setClick] = useState(null);
   const [menu, setMenu] = useState(null);
 
@@ -175,7 +175,7 @@ export const custom = () => {
 
 export const align = () => {
   const [result, setResult] = useState(null);
-  const [click, setClick] = useState(null);
+  const [click, ] = useState(null);
   const [menu, setMenu] = useState(null);
 
   const onClick = (eid, e) => {

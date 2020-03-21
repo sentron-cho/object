@@ -52,7 +52,7 @@ const StyledObject = styled.div`{
 const Thumbbox = (props) => {
   const [anim, setAnim] = useState(props.anim);
 
-  const { thumb, odr, src, border } = props;
+  const { odr, border } = props;
   const image = props.thumb || props.src;
 
   useEffect(() => {

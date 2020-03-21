@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { connect } from 'react-redux';
-import { EID, ST } from './Config';
+import { EID } from './Config';
 import { Svg, cs } from './index';
 import { Util } from './Utils';
 
@@ -94,7 +94,6 @@ class Sidemenu extends React.PureComponent {
   }
 
   onResize = (e) => {
-    const { type } = Util.getScreenType();
     const a = Util.isSelfClick(e, (item) => {
       return item.indexOf("sm-li") >= 0;
     });

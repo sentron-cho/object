@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
-import { SearchFrame, Pagenavi, Nodata, Util, Svg, Button, cs, Guidebox, Dragable } from './index';
+import { SearchFrame, Pagenavi, Util, Svg, cs, Guidebox, Dragable } from './index';
 import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
@@ -345,7 +345,7 @@ const Tablebox = (props) => {
     } else if (eid === 'drop') {
       props.onDragDrop && props.onDragDrop(eid, array);
     }
-  }, [list]);
+  }, [list, props]);
 
   return (
     <StyledObject className={cx('table-box', props.className, theme && `theme-${theme}`)} {...style}
@@ -383,8 +383,6 @@ const Tablebox = (props) => {
               const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
               const active = Number(props.sel) === Number(index);
               const color = props.activeColor ? props.activeColor : '';
-              // const rid = item[rowid] || index;
-              const odr = item.odr || item.no || index + 1;
 
               return (
                 <Dragable key={rowid} id={rowid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >

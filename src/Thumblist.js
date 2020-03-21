@@ -6,8 +6,6 @@ import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
 
-const DT = { CARD: 'card' };
-
 const StyledObject = styled.div`{
   &.thumb-list { 
     ${cs.pos.relative} ${cs.m.t5} ${cs.box.line} ${cs.border.lightgray} 
@@ -168,7 +166,7 @@ const Thumblist = (props) => {
     } else if (eid === 'drop') {
       props.onDragDrop && props.onDragDrop(eid, array);
     }
-  }, [list]);
+  }, [list, props]);
 
   return (
     <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size, theme && `theme-${theme}`)} cursor={cursor}

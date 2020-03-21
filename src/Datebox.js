@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { Editbox, cs } from './index';

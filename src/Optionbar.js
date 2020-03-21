@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Button, Svg, cs, CloseButton } from './index';
+import { Button, cs, CloseButton } from './index';
 
 const StyledObject = styled.div`{
   &.option-bar {

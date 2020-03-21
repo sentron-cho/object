@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { openModal } from './actor/Reducer';

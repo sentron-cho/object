@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { EID } from './Config';
-import { Svg, cs, Button } from './index';
+import { cs, Button } from './index';
 
 const StyledFrame = styled.div`{
   &.title-box { 

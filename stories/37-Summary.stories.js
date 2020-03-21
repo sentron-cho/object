@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean, button } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Summarybox, Button } from '../src';
-import { IMG } from './sample/index';
+import { cs, Summarybox } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -33,7 +33,7 @@ const jsonlist = (count = 5, title = 'title') => {
 };
 
 export const object = () => {
-  button('refresh(옵션을 변경 후 버튼을 클릭하세요)', () => onRefresh());
+  button('refresh(옵션을 변경 후 버튼을 클릭하세요)', () => {});
   const size = options('size', { 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg' },
     '', { display: 'inline-radio' }, 'Other');
   const width = text('width size', 'full');
@@ -43,7 +43,7 @@ export const object = () => {
   const radius = isborder ? text('border radius', '5px') : '';
   const borderwidth = isborder ? text('border width', '1px') : '';
 
-  const [result, setResult] = useState(null);
+  const [result, ] = useState(null);
 
   const opt = {
     border: isborder ? { color: border, width: borderwidth, radius: radius } : null,

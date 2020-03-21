@@ -4,7 +4,7 @@ import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/add
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Header, Util } from '../src';
+import { cs, Header } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -47,7 +47,6 @@ export const object = () => {
   const fontsize = isfont ? text('font size', '16px') : '';
   const fonthover = isfont ? text('font hover color', '#35ff35') : '';
 
-  const istitle = boolean('font options', false);
   const titlecolor = isfont ? text('title color', '#353535') : '';
 
   const align = options('font align', { 'left': 'left', 'center': 'center', 'right': 'right' },

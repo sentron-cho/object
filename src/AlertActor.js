@@ -6,6 +6,7 @@ import { ST , CODE} from './Config';
 const AlertActor = (props) => {
   useEffect(() => {
     showAlert(props);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   const showAlert = (data) => {

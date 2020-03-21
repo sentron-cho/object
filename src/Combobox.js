@@ -209,7 +209,7 @@ export default class Combobox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { list = null, noti, show, pos } = state;
-    const { disable, aling="center", labelalign="left", theme, className } = props;
+    const { disable, theme, className } = props;
     const selected = list ? pos < list.length ? list[pos] : list[0] : null;
     const title = selected ? selected.name.toString() : 'noitem';
     const { text, label } = props.options || {text: null, label: null};

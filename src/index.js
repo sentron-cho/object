@@ -24,7 +24,7 @@ export { default as Alert } from "./Alert";
 export { default as Sidebar } from "./Sidebar";
 export { default as Tablebox } from "./Tablebox";
 export { default as Search } from "./Search";
-export { SearchFrame as SearchFrame } from "./Search";
+export { SearchFrame } from "./Search";
 export { default as Layout } from "./Layout";
 export { default as Modal } from "./Modal";
 export { default as Uploadbox } from "./Uploadbox";

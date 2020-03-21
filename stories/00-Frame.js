@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { cs, Button, Util } from '../src';
+import { cs, Button } from '../src';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const StyledBox = styled.div`{

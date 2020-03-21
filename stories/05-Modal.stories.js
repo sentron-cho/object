@@ -1,8 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
 import { cs, ModalActor, Button, Modal, Editbox } from '../src';
 
@@ -89,7 +88,7 @@ export const object = () => {
   return (
     <Provider store={store} >
       <StyledObject className={"t-main"}>
-        <Linebox title={"modal type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."}>
+        <Linebox title={"modal type"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode()}>
           <Button className={"primary"} title={"n/a"} onClick={onClick} eid={"none"} />
           <Button className={"primary"} title={"dark"} onClick={onClick} eid={"dark"} />
           <Button className={"primary"} title={"white"} onClick={onClick} eid={"white"} />
@@ -157,7 +156,7 @@ const ModalChild = (props) => {
     return { 'state': state, ...datas };
   }
 
-  const { data, state } = props;
+  const { data } = props;
   const { label = '', message = '' } = data;
 
   return (
@@ -171,7 +170,3 @@ const ModalChild = (props) => {
 object.story = {
   name: 'Base'
 };
-
-const option = {
-  top: "20px",
-}

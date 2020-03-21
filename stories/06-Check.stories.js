@@ -1,8 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { withKnobs } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
 import { cs, Checkbox } from '../src';
 
@@ -27,10 +26,6 @@ export default {
 const samplecode = (value, classname = '') => `<Checkbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
-  const title = text('title', null);
-  const label = text('label', 'label');
-  const message = text('message', '');
-  const [modal, setModal] = useState(null);
   const [result, setResult] = useState(null);
   const [change, setChange] = useState(null);
 
@@ -42,14 +37,13 @@ export const object = () => {
     setChange(`${JSON.stringify(value)}`);
   }
 
-  const list1 = [{ id: 1, name: 'check 1', check: true }, { id: 2, name: 'check 2', check: false }];
-  const list2 = [{ id: 1, name: 'check 1', check: true }, { id: 2, name: 'check 2', check: true }];
+  const list = [{ id: 1, name: 'check 1', check: true }, { id: 2, name: 'check 2', check: true }];
 
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"checkbox"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} top={option.top} sample={samplecode('label={"label"} list={list} radio={true}', '')}>
         <Checkbox className={"primary"} onClick={onClick} onChange={onChange} />
-        <Checkbox className={"primary"} label={"title : "} list={list2} onClick={onClick} onChange={onChange} />
+        <Checkbox className={"primary"} label={"title : "} list={list} onClick={onClick} onChange={onChange} />
       </Linebox>
 
       <div className={"res-view"}>

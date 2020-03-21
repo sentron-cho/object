@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -42,7 +43,6 @@ const jsonlist = (count = 5, lines = 10) => {
 };
 
 export const object = () => {
-  const multi = boolean('multi', false);
   const size = options('size',
     { 'sm(small)': 'sm', 'lg(large)': 'lg', 'none': '' },
     '', { display: 'inline-radio' }, 'Other');
@@ -57,7 +57,6 @@ export const object = () => {
   const radius = text('border radius', '0px');
   const width = text('border width', '1px');
 
-  const bgcolor = text('border color', '#ffffff');
   const perpage = 10; // 페이지당 표시 개수
   const alldata = jsonlist(50);
   const [result, setResult] = useState(null);
@@ -113,10 +112,6 @@ export const object = () => {
         <p>{result}</p>
       </div>
 
-      {/* <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
-      </div> */}
     </StyledObject>
   );
 };
@@ -124,10 +119,6 @@ export const object = () => {
 object.story = {
   name: 'Base'
 };
-
-const option = {
-  top: "20px",
-}
 
 export const size = () => {
   return (

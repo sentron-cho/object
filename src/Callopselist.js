@@ -1,13 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { SearchFrame, Pagenavi, Nodata, Util, Svg, Button, Guidebox, cs } from './index';
-import { EID, ST } from './Config';
+import { SearchFrame, Pagenavi, Nodata, Util, Svg, Guidebox, cs } from './index';
+import { EID } from './Config';
 import { Svgbox } from './Svg';
-
-const style = {
-  border: '1px solid rgba(180, 180, 180, 0.2)',
-};
 
 const StyledObject = styled.div`{
   &.callopse-list { ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle}

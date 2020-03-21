@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, array, select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { optionsKnob as options, withKnobs, text, boolean} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -107,7 +107,7 @@ export const align = () => {
   return (
     <StyledObject className={"t-main"} id={"f0001"}>
       <Linebox title={"horizontal align"} className={"align"} sample={samplecode('label={"menu"}', '')} box={true}>
-        <Menu show={show} className={"left"} label={"left"} list={list} frameid={"f0001"} show={true} />
+        <Menu show={show} className={"left"} label={"left"} list={list} frameid={"f0001"}/>
         <Menu show={show} className={"right"} label={"right"} list={list} frameid={"f0001"} />
         <Menu show={show} className={"center"} label={"center"} list={list} frameid={"f0001"} />
       </Linebox>

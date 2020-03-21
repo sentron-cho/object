@@ -155,11 +155,9 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "cover", edited, maxHeight = '562px' } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '562px' } = props;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const src = props.src || props.url;
-    const noimage = !src || error;
-    const isguide = (edited && noimage);
     const { border } = props.options || { border: null };
 
     const renderContents = () => {

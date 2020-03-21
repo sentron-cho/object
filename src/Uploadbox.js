@@ -2,7 +2,6 @@ import * as React from "react";
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { EID, CONT_TYPE, ST } from './Config';
-import { IMG } from "./Icons";
 import { Button, Svg, Editbox, Mediabox, cs, Util } from './index';
 
 const StyledObject = styled.div`{
@@ -414,11 +413,9 @@ class Uploadbox extends React.PureComponent {
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
     const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null } = props;
 
-    const { noti, type, modified, bufs, files, imageExt, videoExt, textbox, link, refresh } = this.state;
+    const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
     const fileExt = isMedia(type) ? videoExt : imageExt; //isPdf(type) ? pdfExt : imageExt;
-    const isAlert = !Util.isEmpty(noti) ? true : false;
-    const filename = isAlert ? noti : files[0].name;
     const isMultiMidia = props.onSelectedMedia ? true : false;
     const oneline = inline;
     const thumb = thumbnail;

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useRef } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Datebox, Util, Button } from '../src';
+import { cs, Datebox, Button } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -22,13 +22,6 @@ const StyledObject = styled.span`{
 export default { title: 'object|Datebox', component: Datebox, decorators: [withKnobs] };
 
 const samplecode = (value, classname = '') => `<Datebox className={"${classname}"} ${value} />`;
-
-const list = [
-  { eid: 'card', title: 'card', icon: 'thead' },
-  { eid: 'list', title: 'list', icon: 'list' },
-  { eid: 'menu', title: 'menu', icon: 'menu' },
-  { eid: 'user', title: 'user', icon: 'user' },
-]
 
 export const object = () => {
   const size = options('size',

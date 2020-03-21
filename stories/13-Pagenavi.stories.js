@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Pagenavi, Util } from '../src';
+import { cs, Pagenavi } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -194,8 +195,6 @@ export const rest = () => {
 };
 
 export const theme = () => {
-  const list = [{ id: 1, name: 'com1', check: false }, { id: 2, name: 'com2', check: true }];
-  
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>

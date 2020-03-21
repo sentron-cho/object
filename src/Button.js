@@ -95,7 +95,7 @@ const Button = (props) => {
   let disabled = (props.disabled === undefined) ? props.disable : props.disabled;
   const isrun = props.isrun ? props.isrun : false;
   if (isrun) disabled = true;
-  const { icon, type, iconcolor = cs.color.white, color, theme } = props;
+  const { icon, type, iconcolor = cs.color.white, theme } = props;
   const isicon = icon || isrun ? 'icon' : '';
   const { text, label } = props.options || { text: null, label: null };
 

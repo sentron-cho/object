@@ -151,7 +151,7 @@ class Alert extends React.PureComponent {
 
   render() {
     const { state } = this;
-    const { list, align, interval, className, size='' } = state;
+    const { list, align, interval, className } = state;
 
     return (<StyledObject className={cx("alert-box", align, className)} time={interval} >
       <ul className="alb-list">

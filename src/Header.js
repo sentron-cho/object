@@ -138,7 +138,7 @@ class Header extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
-    const { list, pos = 0, frameid = "body" } = props;
+    const { frameid = "body" } = props;
     this.state = { type: type, menus: EID.HIDE, float: false, frameid: frameid };
   }
 

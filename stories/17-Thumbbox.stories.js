@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Thumbbox, Util } from '../src';
+import { cs, Thumbbox } from '../src';
 import { IMG } from '../src/Icons';
 
 const StyledObject = styled.span`{
@@ -48,7 +49,7 @@ export const object = () => {
   const [result, setResult] = useState(null);
 
   const onClick = (eid, e) => {
-    setResult(`onClick(eid = ${eid}, rowid = ${rowid}, e)`);
+    setResult(`onClick(eid = ${eid}, e)`);
   }
 
   return (
@@ -130,7 +131,6 @@ export const border = () => {
 
 
 export const animation = () => {
-  const refresh = button('refresh', () => { });
   const value = text('time', '3s');
 
   return (

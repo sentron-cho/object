@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
@@ -30,8 +31,6 @@ const Guidebox = (props) => {
   const [show, setShow] = useState(false);
 
   console.error(text);
-  const help = "There is a problem using the component.\nCheck the console for details.";
-
   const onClick = () => {
     setShow(!show);
   }

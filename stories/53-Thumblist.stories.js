@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios, number, button } from '@storybook/addon-knobs';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from 'react';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
@@ -49,23 +50,12 @@ export const object = () => {
   const bg = options('background',
     { none: '', primary: 'primary', gray: 'gray', dark: 'dark' },
     '', { display: 'inline-radio' }, 'Other');
-  // const bgcolor = text('background color', '#ffffff');
-  const animtime = text('animation time', '1s');
-  const animtype = options('animation',
-    {
-      none: '', slidein: 'slidein', slideout: 'slideout',
-      fadein: 'fadein', fadeout: 'fadeout',
-      slidedown: 'slidedown', slideup: 'slideup',
-    }, '',
-    { display: 'inline-radio' }, 'Other');
-  const isdelete = boolean('delete icon and event', false);
   const isborder = boolean('border', false);
   const fontsize = text('fontsize', '14px');
   const fontcolor = text('fontcolor', '#353535');
   const border = isborder ? text('border color', '#909090') : '';
   const radius = isborder ? text('border radius', '1px') : '';
   const width = isborder ? text('border width', '1px') : '';
-  const padding = isborder ? text('border padding', '5px') : '';
   const [result, setResult] = useState(null);
   const [list, setList] = useState(jsonlist(10));
 
@@ -94,7 +84,6 @@ export const object = () => {
     // }
   }
 
-  const lborder = !width || width === 0 || width === "0px" ? null : { color: border, radius: radius, width: width };
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
@@ -209,19 +198,11 @@ export const size = () => {
 };
 
 export const animation = () => {
-  const refresh = button('refresh', () => { });
   const value = text('time', '3s');
   const list = jsonlist(10);
-  // const [animtag, setAnimtag] = useState("");
 
   const onAnimation = (eid, e) => {
     console.log(eid);
-    // if (eid === "start") {
-    //   setAnimtag(eid);
-    // } else {  //end
-    //   // setValue(time || '200ms');
-    //   setTimeout(() => setAnimtag(eid), 500);
-    // }
   }
 
   return (
@@ -286,7 +267,7 @@ export const dragdrop = () => {
 }
 
 export const theme = () => {
-  const [result, setResult] = useState(null);
+  const [, setResult] = useState(null);
   const [list, setList] = useState(jsonlist(10));
 
   const onDragDrop = (eid, array) => {

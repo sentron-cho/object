@@ -60,7 +60,7 @@ const Thumbbox = (props) => {
   }, [props.anim])
 
   const onClicked = (e) => {
-    props.onClick && props.onClick(eid, e);
+    props.onClick && props.onClick('click', e);
   }
 
   const onAnimStart = (e) => {

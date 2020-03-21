@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text, boolean, radios } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
 import { Linebox } from './00-Frame';
-import { cs, Callopselist, Tablebox, Button, Util } from '../src';
+import { cs, Callopselist, Util } from '../src';
 
 const StyledObject = styled.span`{
   &.t-main {
@@ -62,8 +62,6 @@ export const object = () => {
   const border = text('border color', '#909090');
   const radius = text('border radius', '0px');
   const width = text('border width', '1px');
-
-  const bgcolor = text('border color', '#ffffff');
   const perpage = 10; // 페이지당 표시 개수
   const alldata = jsonlist(50);
   const [result, setResult] = useState(null);
@@ -116,10 +114,6 @@ export const object = () => {
 object.story = {
   name: 'Base'
 };
-
-const option = {
-  top: "20px",
-}
 
 export const size = () => {
     return (

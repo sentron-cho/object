@@ -77,3 +77,43 @@ export const Linebox = (props) => {
 }
 
 // export const standard = () => <Button name="Storybook" />;
+export const op = {
+  radio: () => {
+    return { display: 'inline-radio' };
+  },
+
+  size: (type = 's', value = {}) => {
+    let res = {};
+    if (type === 's') {
+      res = { 'none': '', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg' }
+    } else if (type === 'n') {
+      res = { 'none': '', 'xs(x small)': 'xs', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'xl(x large)': 'xl' }
+    } else {
+      res = { 'none': '', 'xs(x small)': 'xs', 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'xl(x large)': 'xl', 'xxl(xx large)': 'xxl' }
+    }
+
+    return { ...res, ...value };
+  },
+
+  color: (type = 's', value = {}) => {
+    
+    let res = { 'none': '', 'sky': 'sky', 'primary': 'primary', 'gray': 'gray', 'dark': 'dark', 'black': 'black' }
+    if (type === 's') {
+      res = { ...res };
+    } else if (type === 'n') {
+      res = { ...res, 'orange' : 'orange', 'yellow': 'yellow', 'red': 'red', 'green': 'green' }
+    } else {
+      res = { ...res, 'orange' : 'orange', 'yellow': 'yellow', 'red': 'red', 'green': 'green', 'white': 'white' }
+    }
+
+    return { ...res, ...value };
+  },
+
+  halign: (value = {}) => {
+    return { 'none': '', 'left': 'left', 'center': 'center', 'right': 'right', ...value }
+  },
+
+  valign: (value = {}) => {
+    return { 'none': '', 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' };
+  }
+}

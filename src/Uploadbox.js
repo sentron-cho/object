@@ -78,7 +78,7 @@ const StyledObject = styled.div`{
     }
 
     &.thumb { 
-      .up-frame { ${cs.min.h(120)} ${cs.min.w(120)} ${cs.size.full}
+      .up-frame { ${cs.size.full}
         .upf-preview { 
           position: absolute; width: 100%; height: 100%; border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;
           .upv-img { ${cs.object.contain} }
@@ -87,14 +87,31 @@ const StyledObject = styled.div`{
       .up-title, .upf-value, upf-image { display: none }
     }
     
-    .info-box {
-      position: absolute; bottom: 0; left: 0; width: 100%; padding: 5px 10px; font-size: 12px; text-align: left; 
-      color: #d6d6d6; line-height: 14px; ${cs.opac.hide} ${cs.anim.show} ${cs.bg.alphablack}
+    // .info-box {
+    //   position: absolute; bottom: 0; left: 0; width: 100%; padding: 5px 10px; font-size: 12px; text-align: left; 
+    //   color: #d6d6d6; line-height: 14px; ${cs.opac.hide} ${cs.anim.show} ${cs.bg.alphablack}
 
-      // &:hover { ${cs.opac.show} ${cs.anim.show} }
+    //   // &:hover { ${cs.opac.show} ${cs.anim.show} }
 
-      p { overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    //   p { overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    // }
+
+    &.sm { 
+      ${cs.size.normal(320)}
+      &.wide { ${cs.size.wide(320)} }
+      &.xwide { ${cs.size.xwide(320)} }
     }
+    &.md { 
+      ${cs.size.normal(480)}
+      &.wide { ${cs.size.wide(480)} }
+      &.xwide { ${cs.size.xwide(320)} }
+    }
+    &.lg { 
+      ${cs.size.normal(640)}
+      &.wide { ${cs.size.wide(640)} }
+      &.xwide { ${cs.size.xwide(640)} }
+    }
+    &.full { ${cs.h.full}  }
 
     @media screen and (max-width : 860px) {
       padding: 0; font-size: 12px;

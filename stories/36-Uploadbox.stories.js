@@ -10,7 +10,8 @@ const StyledObject = styled.span`{
   &.t-main {
     .lb-box { ${cs.w.full} ${cs.max.width(800)} }
 
-    .lb-box .lb-li { ${cs.h.fit} ${cs.h.get(800)} ${({ height }) => height && cs.h.get(height)} }
+    .lb-box .lb-li { ${cs.h.fit} }
+    .lb-box .lb-li .full { ${cs.h.get(400)} }
     .v-align .lb-li { ${cs.h.get(800)} } 
 
     .res-view { ${cs.over.yauto} ${cs.scrollbar.t2}
@@ -78,24 +79,70 @@ object.story = { name: 'Base' };
 export const size = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"size normal(4:3)"} sample={samplecode("size={'normal'}", 'left')} >
-        <Uploadbox src={''} className={'border'} size={'normal'} />
+      <Linebox title={"small normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} />
       </Linebox>
 
-      <Linebox title={"size wide(16:9)"} sample={samplecode("size={'wide'}", 'left')} >
-        <Uploadbox src={IMG.Image3} className={'border'} size={'wide'} />
+      <Linebox title={"middle normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image2} className={'md'} />
       </Linebox>
 
-      <Linebox title={"size xwide(21:9)"} sample={samplecode("size={'xwide'}", 'left')} >
-        <Uploadbox src={IMG.Image1} className={'border'} size={'xwide'} />
+      <Linebox title={"large normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'lg'} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const widesize = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"small wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+        <Uploadbox value={IMG.Image1} className={'sm wide'} />
       </Linebox>
 
-      <Linebox title={"size fwide(28:9)"} sample={samplecode("size={'fwide'}", 'left')} >
-        <Uploadbox src={IMG.Image4} className={'border'} size={'fwide'} />
+      <Linebox title={"middle wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+        <Uploadbox value={IMG.Image2} className={'md wide'} />
       </Linebox>
 
-      <Linebox title={"size full(w:100%)"} sample={samplecode("size={'full'}", 'left')} >
-        <Uploadbox src={IMG.Image2} className={'border'} size={'full'} />
+      <Linebox title={"large wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'lg wide'} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const xwidesize = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"small xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+        <Uploadbox value={IMG.Image1} className={'sm xwide'} />
+      </Linebox>
+
+      <Linebox title={"middle xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+        <Uploadbox value={IMG.Image2} className={'md xwide'} />
+      </Linebox>
+
+      <Linebox title={"large xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'lg xwide'} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const fullsize = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"small full"} sample={samplecode("size={'full'}", '')} >
+        <Uploadbox value={IMG.Image1} className={'sm full'} />
+      </Linebox>
+
+      <Linebox title={"middle full"} sample={samplecode("size={'full'}", '')} >
+        <Uploadbox value={IMG.Image2} className={'md full'} />
+      </Linebox>
+
+      <Linebox title={"large full"} sample={samplecode("size={'full'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'lg full'} />
       </Linebox>
     </StyledObject>
   );
@@ -169,7 +216,7 @@ export const edited = () => {
   return (
     <StyledObject className={"t-main"} >
       <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Uploadbox className={"border"} src={''} size={'wide'} edited={true}/>
+        <Uploadbox className={"border"} src={''} size={'wide'} edited={true} />
       </Linebox>
     </StyledObject>
   );

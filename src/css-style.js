@@ -166,6 +166,11 @@ const cs = {
     wmin: 'height: 100%; width: min-content;',
     hmin: 'width: 100%; height: min-content;',
 
+    normal: (w = 320) => `width: ${w}px;; height ${(w / 4) * 3}px;`,  //4:3
+    wide: (w = 320) => `width: ${w}px;; height ${(w / 16) * 9}px;`,  //16:9
+    xwide: (w = 320) => `width: ${w}px;; height ${(w / 21) * 9}px;`,  //21:9
+    fwide: (w = 320) => `width: ${w}px;; height ${(w / 28) * 9}px;`,  //28:9
+
     get: (v) => Number.isInteger(v) ? `width: ${v}px; height: ${v}px;` : `width: ${v}; height: ${v};`,
   },
 

@@ -7,7 +7,9 @@ import { Button, Svg, Editbox, Mediabox, cs, Util } from './index';
 
 const StyledObject = styled.div`{
   &.uploader {
-    ${cs.disp.inblock} ${cs.w.full} ${cs.pos.relative} ${({ height }) => cs.h.get(height)}
+    ${cs.disp.inblock} ${cs.w.full} ${cs.pos.relative} ${({ height }) => cs.h.get(height)} ${cs.box.inner}
+    ${cs.noliststyle} ${cs.noselect} ${cs.over.hidden}
+
     .up-title { ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.m.b5} }
 
     .up-frame { 
@@ -96,22 +98,71 @@ const StyledObject = styled.div`{
     //   p { overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; }
     // }
 
-    &.sm { 
-      ${cs.size.normal(320)}
-      &.wide { ${cs.size.wide(320)} }
-      &.xwide { ${cs.size.xwide(320)} }
+    &:not(.full) {
+      &.xs { 
+        ${cs.size.normal(240)}
+        &.wide { ${cs.size.wide(240)} }
+        &.xwide { ${cs.size.xwide(240)} }
+      }
+      &.sm { 
+        ${cs.size.normal(320)}
+        &.wide { ${cs.size.wide(320)} }
+        &.xwide { ${cs.size.xwide(320)} }
+      }
+      &.md { 
+        ${cs.size.normal(480)}
+        &.wide { ${cs.size.wide(480)} }
+        &.xwide { ${cs.size.xwide(480)} }
+      }
+      &.lg { 
+        ${cs.size.normal(640)}
+        &.wide { ${cs.size.wide(640)} }
+        &.xwide { ${cs.size.xwide(640)} }
+      }
+      &.xl { 
+        ${cs.size.normal(800)}
+        &.wide { ${cs.size.wide(800)} }
+        &.xwide { ${cs.size.xwide(800)} }
+      }
+      &.xxl { 
+        ${cs.size.normal(1024)}
+        &.wide { ${cs.size.wide(1024)} }
+        &.xwide { ${cs.size.xwide(1024)} }
+      }
+      &.wl { 
+        ${cs.size.normal(1280)}
+        &.wide { ${cs.size.wide(1280)} }
+        &.xwide { ${cs.size.xwide(1280)} }
+      }
     }
-    &.md { 
-      ${cs.size.normal(480)}
-      &.wide { ${cs.size.wide(480)} }
-      &.xwide { ${cs.size.xwide(320)} }
+
+    &.full { ${cs.w.full}
+      &.xs { ${cs.h.get(240)} }
+      &.sm { ${cs.h.get(320)} }
+      &.md { ${cs.h.get(480)} }
+      &.lg { ${cs.h.get(640)} }
+      &.xl { ${cs.h.get(800)} }
     }
-    &.lg { 
-      ${cs.size.normal(640)}
-      &.wide { ${cs.size.wide(640)} }
-      &.xwide { ${cs.size.xwide(640)} }
-    }
-    &.full { ${cs.h.full}  }
+
+    &.border { ${cs.box.line} }
+    &.radius { ${cs.box.radius} }
+
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
+
+    &.sky { .up-frame .upf-preview .upv-img { ${cs.bg.sky} } }
+    &.primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+
+    &.theme-sky { .up-frame .upf-preview .upv-img { ${cs.bg.sky} } }
+    &.theme-primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.theme-gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.theme-dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.theme-black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-delete { .svg-path { ${cs.fill.white} } } }
 
     @media screen and (max-width : 860px) {
       padding: 0; font-size: 12px;
@@ -361,7 +412,7 @@ class Uploadbox extends React.PureComponent {
   render() {
     const { props } = this;
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
-    const { height = 180, theme, className, name, label, inline = false, thumbnail = true } = props;
+    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null } = props;
 
     const { noti, type, modified, bufs, files, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
@@ -376,7 +427,7 @@ class Uploadbox extends React.PureComponent {
 
     return (
       <StyledObject className={cx("uploader", className, { oneline }, { thumb }, theme && `theme-${theme}`)}
-        name={name} height={height}>
+        name={name} height={height} border={border}>
         {!thumb && <span className="up-title">{label}</span>}
 
         <div className="up-frame">
@@ -387,8 +438,9 @@ class Uploadbox extends React.PureComponent {
           {/* 미리보기(썸네일) 화면*/}
           <div className={cx("upf-preview")}>
             <Svg className={cx("upv-delete sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.DELETE} color={'dark'} />
-            <Mediabox className={cx("upv-img", type)} ref={ref => { this.refImage = ref }} fit={fit} link={link} type={type} url={buf} size={"full"}
-              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} controls={false} edited={true} />
+            <Mediabox className={cx("upv-img", type)} ref={ref => { this.refImage = ref }} fit={fit}
+              link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
+              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
             {noti && <span className={'upv-noti'}></span>}

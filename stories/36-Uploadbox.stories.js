@@ -8,10 +8,9 @@ import { IMG } from './sample/index';
 
 const StyledObject = styled.span`{
   &.t-main {
-    .lb-box { ${cs.w.full} ${cs.max.width(800)} }
+    .lb-box { ${cs.w.full} }
 
     .lb-box .lb-li { ${cs.h.fit} }
-    .lb-box .lb-li .full { ${cs.h.get(400)} }
     .v-align .lb-li { ${cs.h.get(800)} } 
 
     .res-view { ${cs.over.yauto} ${cs.scrollbar.t2}
@@ -79,16 +78,32 @@ object.story = { name: 'Base' };
 export const size = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"small normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+      <Linebox title={"xsmall normal(4:3) w:240px"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image1} className={'xs'} />
+      </Linebox>
+
+      <Linebox title={"small normal(4:3) w:320px"} sample={samplecode("size={'normal'}", '')} >
         <Uploadbox value={IMG.Image1} className={'sm'} />
       </Linebox>
 
-      <Linebox title={"middle normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+      <Linebox title={"middle normal(4:3) w:480px"} sample={samplecode("size={'normal'}", '')} >
         <Uploadbox value={IMG.Image2} className={'md'} />
       </Linebox>
 
-      <Linebox title={"large normal(4:3)"} sample={samplecode("size={'normal'}", '')} >
+      <Linebox title={"large normal(4:3) w:640px"} sample={samplecode("size={'normal'}", '')} >
         <Uploadbox value={IMG.Image3} className={'lg'} />
+      </Linebox>
+
+      <Linebox title={"xlarge normal(4:3) w:800px"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'xl'} />
+      </Linebox>
+
+      <Linebox title={"xlarge normal(4:3) w:1024px"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'xxl'} />
+      </Linebox>
+
+      <Linebox title={"wide large normal(4:3) w:1280px"} sample={samplecode("size={'normal'}", '')} >
+        <Uploadbox value={IMG.Image3} className={'wl'} />
       </Linebox>
     </StyledObject>
   );
@@ -97,16 +112,32 @@ export const size = () => {
 export const widesize = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"small wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+      <Linebox title={"xsmall wide(16:9) w:240px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image1} className={'xs wide'} />
+      </Linebox>
+
+      <Linebox title={"small wide(16:9) w:320px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image1} className={'sm wide'} />
       </Linebox>
 
-      <Linebox title={"middle wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+      <Linebox title={"middle wide(16:9) w:480px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image2} className={'md wide'} />
       </Linebox>
 
-      <Linebox title={"large wide(16:9)"} sample={samplecode("size={'wide'}", '')} >
+      <Linebox title={"large wide(16:9) w:640px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image3} className={'lg wide'} />
+      </Linebox>
+
+      <Linebox title={"xlarge wide(16:9) w:800px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'xl wide'} />
+      </Linebox>
+
+      <Linebox title={"xxlarge wide(16:9) w:1024px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'xxl wide'} />
+      </Linebox>
+
+      <Linebox title={"widelarge wide(16:9) w:1280px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'wl wide'} />
       </Linebox>
     </StyledObject>
   );
@@ -115,16 +146,32 @@ export const widesize = () => {
 export const xwidesize = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"small xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+      <Linebox title={"xsmall xwide(21:9) w:240px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image1} className={'xs xwide'} />
+      </Linebox>
+
+      <Linebox title={"small xwide(21:9) w:320px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image1} className={'sm xwide'} />
       </Linebox>
 
-      <Linebox title={"middle xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+      <Linebox title={"middle xwide(21:9) w:480px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image2} className={'md xwide'} />
       </Linebox>
 
-      <Linebox title={"large xwide(21:9)"} sample={samplecode("size={'xwide'}", '')} >
+      <Linebox title={"large xwide(21:9) w:640px"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image3} className={'lg xwide'} />
+      </Linebox>
+
+      <Linebox title={"xlarge xwide(21:9) w:800px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'xl xwide'} />
+      </Linebox>
+
+      <Linebox title={"xxlarge xwide(21:9) w:1024px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'xxl xwide'} />
+      </Linebox>
+
+      <Linebox title={"wide large xwide(21:9) w:1280px"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'wl xwide'} />
       </Linebox>
     </StyledObject>
   );
@@ -132,63 +179,25 @@ export const xwidesize = () => {
 
 export const fullsize = () => {
   return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"small full"} sample={samplecode("size={'full'}", '')} >
+    <StyledObject className={"t-main"} desc={'full은 부모 width를 100%로 맞춥니다.'}>
+      <Linebox title={"xsmall full"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image1} className={'xs full'} />
+      </Linebox>
+
+      <Linebox title={"small full"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image1} className={'sm full'} />
       </Linebox>
 
-      <Linebox title={"middle full"} sample={samplecode("size={'full'}", '')} >
+      <Linebox title={"middle full"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image2} className={'md full'} />
       </Linebox>
 
-      <Linebox title={"large full"} sample={samplecode("size={'full'}", '')} >
+      <Linebox title={"large full"} sample={samplecode("", '')} >
         <Uploadbox value={IMG.Image3} className={'lg full'} />
       </Linebox>
-    </StyledObject>
-  );
-};
 
-export const box = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"border"} sample={samplecode("size={'wide'}", 'border')} >
-        <Uploadbox src={IMG.Image1} className={'border'} size={'wide'} />
-      </Linebox>
-
-      <Linebox title={"border radius"} sample={samplecode("size={'wide'}", 'border radius')} >
-        <Uploadbox src={IMG.Image1} className={'border radius'} size={'wide'} />
-      </Linebox>
-    </StyledObject>
-  );
-};
-
-export const align = () => {
-  return (
-    <StyledObject className={"t-main"}>
-      <Linebox title={"horizontal align"} className={"align"} sample={samplecode()} box={true}>
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"left"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"center"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"right"} />
-      </Linebox>
-
-      <Linebox title={"vertical align"} className={"align v-align"} sample={samplecode()} box={true}>
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"top"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"middle"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"bottom"} />
-      </Linebox>
-
-      <Linebox title={"align"} className={"align v-align"} sample={samplecode()} box={true}>
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"left top"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"center top"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"right top"} />
-
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"left middle"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"center middle"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"right middle"} />
-
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"left bottom"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"center bottom"} />
-        <Uploadbox src={IMG.Image1} size={'wide'} maxheight={"100px"} className={"right bottom"} />
+      <Linebox title={"xlarge full"} sample={samplecode("", '')} >
+        <Uploadbox value={IMG.Image3} className={'xl full'} />
       </Linebox>
     </StyledObject>
   );
@@ -196,28 +205,75 @@ export const align = () => {
 
 export const border = () => {
   return (
-    <StyledObject className={"t-main"} >
-      <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Uploadbox className={"cover lg"} src={IMG.Image1} size={'wide'} options={{ border: { color: "red", width: '1px', radius: "5px" } }} />
+    <StyledObject className={"t-main"}>
+      <Linebox title={"border radius"} sample={samplecode("", 'border')} >
+        <Uploadbox value={IMG.Image1} className={'border radius sm'} />
       </Linebox>
 
-      <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Uploadbox className={"cover lg"} src={IMG.Image1} size={'wide'} options={{ border: { color: "blue", width: '2px', radius: "10px" } }} />
+      <Linebox title={"border option"} sample={samplecode("", 'border')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} border={{ radius: '5px', color: "blue", width: '1px' }} />
       </Linebox>
 
-      <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Uploadbox className={"cover lg"} src={IMG.Image1} size={'wide'} options={{ border: { color: "black", width: '5px', radius: "20px" } }} />
+      <Linebox title={"border option"} sample={samplecode("", 'border radius')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} border={{ radius: '10px', color: "red", width: '2px' }} />
+      </Linebox>
+
+      <Linebox title={"border option"} sample={samplecode("", 'border radius')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} border={{ radius: '20px', color: "black", width: '5px' }} />
       </Linebox>
     </StyledObject>
   );
 };
 
-export const edited = () => {
+
+export const color = () => {
   return (
-    <StyledObject className={"t-main"} >
-      <Linebox title={"border options"} sample={samplecode('', 'sky')}>
-        <Uploadbox className={"border"} src={''} size={'wide'} edited={true} />
+    <StyledObject className={"t-main"}>
+      <Linebox title={"sky"} sample={samplecode("", 'sky')} >
+        <Uploadbox value={IMG.Image1} className={'sm sky'} />
       </Linebox>
+
+      <Linebox title={"gray"} sample={samplecode("", 'gray')} >
+        <Uploadbox value={IMG.Image1} className={'sm gray'} />
+      </Linebox>
+
+      <Linebox title={"primary"} sample={samplecode("", 'gray')} >
+        <Uploadbox value={IMG.Image1} className={'sm primary'} />
+      </Linebox>
+
+      <Linebox title={"dark"} sample={samplecode("", 'dark')} >
+        <Uploadbox value={IMG.Image1} className={'sm dark'} />
+      </Linebox>
+
+      <Linebox title={"black"} sample={samplecode("", 'black')} >
+        <Uploadbox value={IMG.Image1} className={'sm black'} />
+      </Linebox>      
+    </StyledObject>
+  );
+};
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"sky"} sample={samplecode("", 'sky')} >
+        <Uploadbox value={IMG.Image1} className={'sm primary'} theme={'sky'}/>
+      </Linebox>
+
+      <Linebox title={"gray"} sample={samplecode("", 'gray')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'gray'}/>
+      </Linebox>
+
+      <Linebox title={"primary"} sample={samplecode("", 'gray')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'primary'}/>
+      </Linebox>
+
+      <Linebox title={"dark"} sample={samplecode("", 'dark')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'dark'}/>
+      </Linebox>
+
+      <Linebox title={"black"} sample={samplecode("", 'black')} >
+        <Uploadbox value={IMG.Image1} className={'sm'} theme={'black'}/>
+      </Linebox>      
     </StyledObject>
   );
 };

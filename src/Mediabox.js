@@ -23,8 +23,9 @@ const StyledObject = styled.div`{
     ${({ height }) => cs.h.get(height || "fit-content")};
 
     .cont-frame {
-      ${cs.pos.relative} ${cs.size.full} ${cs.max.h(562)} ${cs.object.fit('cover')} ${cs.object.center}
-      ${cs.anim.in(500)}
+      ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
+      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative} 
+      //${cs.max.h(562)} 
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; }
     }
@@ -154,7 +155,7 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "cover", edited } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", edited, maxHeight = '562px' } = props;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const src = props.src || props.url;
     const noimage = !src || error;
@@ -168,7 +169,7 @@ export default class Mediabox extends React.PureComponent {
         return (
           <React.Fragment>
             {type === CONT_TYPE.IMAGE && <img alt="img" className={cx("cont-frame", type, pointer)}
-              src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit }} />}
+              src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit, maxHeight }} />}
             {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)}
               style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
             {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)}

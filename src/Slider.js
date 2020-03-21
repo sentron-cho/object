@@ -16,7 +16,7 @@ const StyledObject = styled.span`{
     .sld-value { 
       ${cs.w.get(60)} ${cs.h.get(18)} ${cs.disp.inblock} ${cs.m.right(2)} ${cs.align.cbottom} ${cs.box.inner}
       ${cs.bottom(-1)} ${cs.mouse.pointer} ${cs.z.over} ${cs.font.xs} ${cs.box.line} ${cs.border.lightgray}
-      ${cs.font.dark} ${cs.bg.sky} ${cs.font.center} ${cs.radius.bottom(10)} ${cs.border.top('transparent')}
+      ${cs.font.dark} ${cs.bg.sky} ${cs.font.center} ${cs.radius.bottom(10)} ${cs.border.topcolor('transparent')}
     }
 
     .sld-editor {
@@ -54,7 +54,7 @@ const StyledObject = styled.span`{
           &::after { 
             ${cs.pos.absolute} ${cs.disp.block} ${cs.content.none} ${cs.bottom(-6)} ${cs.left('50%')} ${cs.w.none}
             ${cs.h.none} ${cs.m.left(-3)} ${cs.over.hidden} ${cs.border.get('3px solid transparent')}
-            ${cs.border.top(cs.color.orange)}
+            ${cs.border.topcolor(cs.color.orange)}
           }
 
           // &:hover { ${cs.mouse.move} }

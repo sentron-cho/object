@@ -545,10 +545,10 @@ const cs = {
     alphagray: `border-color: ${color.alphagray};`,
     semiblack: `border-color: ${color.semiblack};`,
 
-    top: (v) => `border-top-color: ${v};`,
-    bottom: (v) => `border-bottom-color: ${v};`,
-    left: (v) => `border-left-color: ${v};`,
-    right: (v) => `border-right-color: ${v};`,
+    topcolor: (v) => `border-top-color: ${v};`,
+    bottomcolor: (v) => `border-bottom-color: ${v};`,
+    leftcolor: (v) => `border-left-color: ${v};`,
+    rightcolor: (v) => `border-right-color: ${v};`,
 
     shadow: (v) => v ? `box-shadow: ${v};` : 'box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);',
     color: (v) => `border-color: ${v};`,

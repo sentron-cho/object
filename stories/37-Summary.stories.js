@@ -26,7 +26,7 @@ const samplecode = (value, classname = '') => `<Summarybox className={"${classna
 const jsonlist = (count = 5, title = 'title') => {
   let data = [];
   for (let i = 0; i < count; i++) {
-    data.push({ title: 'title' + i, value: i * 1000 });
+    data.push({ title: title + i, value: i * 1000 });
   }
 
   return data;
@@ -34,19 +34,9 @@ const jsonlist = (count = 5, title = 'title') => {
 
 export const object = () => {
   button('refresh(옵션을 변경 후 버튼을 클릭하세요)', () => onRefresh());
-  const size = options('size',
-    { 'none': '', 'full(100%)': 'full', 'normal(4:3)': 'normal', 'wide(16:9)': 'wide', 'xwide(21:9)': 'xwide', 'fwide(28:9)': 'fwide' },
+  const size = options('size', { 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg' },
     '', { display: 'inline-radio' }, 'Other');
   const width = text('width size', 'full');
-
-  const fit = options('object fit', { 'none': '', 'contain': 'contain', 'cover': 'cover', 'scale-down': 'scale-down', 'fill': 'fill' },
-    '', { display: 'inline-radio' }, 'Other');
-
-  const halign = options('horizantal align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const valign = options('vertical align', { 'top': 'top', 'middle': 'middle', 'bottom': 'bottom' },
-    '', { display: 'inline-radio' }, 'Other');
-
 
   const isborder = boolean('border options', false);
   const border = isborder ? text('border color', '#909090') : '';
@@ -54,12 +44,6 @@ export const object = () => {
   const borderwidth = isborder ? text('border width', '1px') : '';
 
   const [result, setResult] = useState(null);
-
-  let rObject;
-  const onClick = (eid, e) => {
-    const value = rObject.getValue();
-    setResult(`${value}`);
-  }
 
   const opt = {
     border: isborder ? { color: border, width: borderwidth, radius: radius } : null,
@@ -69,8 +53,7 @@ export const object = () => {
     <StyledObject className={"t-main"} width={width}>
       <Linebox title={"toggle Summarybox"} className={"nomargin"}
         desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} sample={samplecode("", "")} box={false}>
-        <Summarybox className={cx(size, halign, valign, 'border')} fit={fit} options={opt} size={size}
-          src={IMG.Image1} title={"Summary"} onClick={onClick} eid={'Summarybox'} />
+        <Summarybox className={cx(size)} options={opt} title={"Summary"} data={jsonlist()} label={jsonlist(5, 'label')} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -82,17 +65,73 @@ export const object = () => {
 
 object.story = { name: 'Base' };
 
-
-
 export const color = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"type"} className={"nomargin"} sample={samplecode()}>
-        <Summarybox className={"sky"} title={"sky"} />
-        <Summarybox className={"primary"} title={"primary"} />
-        <Summarybox className={"gray"} title={"gray"} />
-        <Summarybox className={"dark"} title={"dark"} />
-        <Summarybox className={"black"} title={"black"} />
+        <Summarybox className={""} title={"none"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"sky"} title={"sky"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"primary"} title={"primary"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"gray"} title={"gray"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"dark"} title={"dark"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"black"} title={"black"} data={jsonlist()} label={jsonlist(5, 'label')} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const size = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"type"} className={"nomargin"} sample={samplecode()}>
+        <Summarybox className={""} title={"none"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"sm"} title={"small"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"md"} title={"middle"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={"lg"} title={"large"} data={jsonlist()} label={jsonlist(5, 'label')} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const border = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"border radius"} sample={samplecode("", 'border')} >
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          border={{ radius: '5px', color: "blue", width: '1px' }} />
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          border={{ radius: '10px', color: "red", width: '2px' }} />
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          border={{ radius: '20px', color: "black", width: '5px' }} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const font = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"border radius"} sample={samplecode("", '')} >
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          fontcolor={'red'} />
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          fontcolor={'blue'} />
+        <Summarybox className={""} title={"border option"} data={jsonlist()} label={jsonlist(5, 'label')}
+          fontcolor={'#123456'} />
+      </Linebox>
+    </StyledObject>
+  );
+};
+
+export const theme = () => {
+  return (
+    <StyledObject className={"t-main"}>
+      <Linebox title={"type"} className={"nomargin"} sample={samplecode()}>
+        <Summarybox className={""} theme={"sky"} title={"sky"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={""} theme={"primary"} title={"primary"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={""} theme={"gray"} title={"gray"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={""} theme={"dark"} title={"dark"} data={jsonlist()} label={jsonlist(5, 'label')} />
+        <Summarybox className={""} theme={"black"} title={"black"} data={jsonlist()} label={jsonlist(5, 'label')} />
       </Linebox>
     </StyledObject>
   );

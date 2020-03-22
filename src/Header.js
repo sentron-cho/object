@@ -245,7 +245,7 @@ class Header extends React.PureComponent {
                   url={item.url} onClick={this.onClickMenu}>{item.name && item.name.toUpperCase()}
                 </li>
               })}
-              {array.length < 1 && <li className={"li-nav"}>NO MENU</li>}
+              {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
               {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}
               </li>}
             </ul>}

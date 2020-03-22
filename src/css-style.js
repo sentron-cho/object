@@ -2,7 +2,8 @@
 const color = {
   hover: '#e2f1ff',
   active: '#e2f1ff',
-  white: '#fafafa',
+  white: '#ffffff',
+  alpha:  '#ffffff10',
   lightwhite: '#ecf0f2',
   darkwhite: '#eaeaea',
   trans: 'transparent',
@@ -790,6 +791,12 @@ const cs = {
     ::-webkit-scrollbar { width: 12px; height: 12px; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px ${color.alphagray}; }
     ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
+    `,
+
+    get: (v = color.gray, bar = color.dark ) => `
+    ::-webkit-scrollbar { width: 10px; height: 10px; background-color: ${v}; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: ${v}; }
+    ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: ${bar}; }
     `,
   },
 };

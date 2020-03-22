@@ -90,7 +90,7 @@ const StyledObject = styled.span` {
     svg { ${cs.top(0)} ${cs.left(0)} ${cs.pos.relative} }
 
     &.active { ${cs.opac.show} .svg-path { ${cs.icon.fill(cs.color.green)} } }
-    &.box { ${cs.box.line} ${cs.border.lightgray} ${cs.p.get('4px')} ${cs.border.radius(5)} svg { ${cs.top(-3)} } }
+    &.box { ${cs.box.line} ${cs.border.lightgray} ${cs.p.get('4px')} ${cs.border.radius(5)} }
     &.bg { ${cs.bg.get('rgba(0, 0, 0, 0.5)')} }
     &.radius { ${cs.border.radius('50%')} }
     
@@ -118,7 +118,7 @@ const StyledObject = styled.span` {
     &.xl { ${cs.icon.xl} &.box { ${cs.p.get('7px')} } }
     &.lg { ${cs.icon.lg} &.box { ${cs.p.get('5px')} } }
     &.sm { ${cs.icon.sm} &.box { ${cs.p.get('4px')} } }
-    &.xs { ${cs.icon.xs} &.box { ${cs.p.get('3px')} } }
+    &.xs { ${cs.icon.xs} &.box { ${cs.p.get('3px')} svg { ${cs.top(-3)} } } }
 
     &.disabled { ${cs.opac.hide} }
   }

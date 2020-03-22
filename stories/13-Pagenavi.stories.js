@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs, Pagenavi } from '../src';
 
 const StyledObject = styled.span`{
@@ -25,21 +25,22 @@ export default { title: 'object|Pagenavi', component: Pagenavi, decorators: [wit
 const samplecode = (value, classname = '') => `<Pagenavi className={"${classname}"} ${value}></Pagenavi>`;
 
 export const object = () => {
-  const size = options('size',
-    { 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'none': '' },
-    '', { display: 'inline-radio' }, 'Other');
-  const bg = options('background',
-    { primary: 'primary', gray: 'gray', dark: 'dark', none: '' },
-    '', { display: 'inline-radio' }, 'Other');
-  const fontcolor = text('fontcolor', '#353535');
-  const fontsize = text('fontsize', '12px');
-  const bgcolor = text('bgcolor', '#ffffff');
-  const border = text('border color', '#909090');
-  const radius = text('border radius', '0px');
-  const width = text('border width', '0px');
-  const bcolor = text('button color', '');
-  const bhover = text('button hover color', '#4a92e4');
-  const bactive = text('button select color', '#4a92e4');
+  const size = options('size', op.size('s'), '', op.radio(), 'Other');
+  const bg = options('color', op.color('n'), '', op.radio(), 'Other');
+  const align = options('align', op.halign(), '', op.radio(), 'Other');
+
+  const isborder = boolean('border', false);
+  const border = isborder ? text('border color', '#909090') : '';
+  const radius = isborder ? text('border radius', '5px') : '';
+  const width = isborder ? text('border width', '1px') : '';
+
+  const option = boolean('options', false);
+  const fontcolor = option ? text('fontcolor', '#353535') : '';
+  const fontsize = option ? text('fontsize', '12px') : '';
+  const bcolor = option ? text('button color', '') : '';
+  const bhover = option ? text('button hover color', '#4a92e4') : '';
+  const bactive = option ? text('button select color', '#4a92e4') : '';
+  const bgcolor = option ? text('background', '#aaaaaa') : '';
 
   const [result, setResult] = useState(null);
   const [pos, setPos] = useState(1);
@@ -54,14 +55,13 @@ export const object = () => {
       <Linebox title={"Pagenavi"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", '')}>
         <Pagenavi className={cx(size, align, bg)} pos={pos} max={20} onClick={onClickPage}
-          border={{ color: border, radius: radius, width: width }}
+          border={isborder ? { color: border, radius: radius, width: width } : null}
           font={{ color: fontcolor, size: fontsize }} bgcolor={bgcolor}
           button={{ color: bcolor, hover: bhover, active: bactive }}
         />
       </Linebox>
 
       <div className={"res-view"}>
-        <p>onClick</p>
         <p>{result}</p>
       </div>
     </StyledObject>
@@ -199,7 +199,7 @@ export const theme = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
         <Pagenavi className={"primary"} theme={'sky'} pos={1} max={20} />
-        <Pagenavi className={"primary"} theme={'primary'} pos={1} max={20}  />
+        <Pagenavi className={"primary"} theme={'primary'} pos={1} max={20} />
         <Pagenavi className={"primary"} theme={'gray'} pos={1} max={20} />
         <Pagenavi className={"primary"} theme={'dark'} pos={1} max={20} />
         <Pagenavi className={"primary"} theme={'black'} pos={1} max={20} />

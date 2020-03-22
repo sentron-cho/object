@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
+import { optionsKnob as options, withKnobs, text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs, Widgetbox } from '../src';
 import { IMG } from '../src/Icons';
 
@@ -27,23 +27,21 @@ export default { title: 'object|Widgetbox', component: Widgetbox, decorators: [w
 const samplecode = (value, classname = '') => `<Widgetbox className={"${classname}"} ${value} />`;
 
 export const object = () => {
-  const size = options('size',
-    { 'sm(small)': 'sm', 'md(middle)': 'md', 'lg(large)': 'lg', 'none': '' },
-    '', { display: 'inline-radio' }, 'Other');
-  const bg = options('background',
-    { primary: 'primary', gray: 'gray', dark: 'dark', none: '' },
-    '', { display: 'inline-radio' }, 'Other');
-  const fontsize = text('fontsize', '');
-  const fontcolor = text('fontcolor', '');
-  const align = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const border = text('border color', '#909090');
-  const radius = text('border radius', '0px');
-  const width = text('border width', '1px');
-  const labelsize = text('fontsize', '14px');
-  const labelcolor = text('fontcolor', '#353535');
-  const labelalign = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
+  const size = options('size', op.size('s'), '', op.radio(), 'Other');
+  const bg = options('color', op.color('s'), '', op.radio(), 'Other');
+  const align = options('align', op.halign(), '', op.radio(), 'Other');
+
+  const option = boolean('font option', false);
+  const fontcolor = option ? text('font color', '#353535') : '';
+  const fontsize = option ? text('font size', '12px') : '';
+
+  const isborder = boolean('border', false);
+  const border = isborder ? text('border color', '#909090') : '';
+  const radius = isborder ? text('border radius', '5px') : '';
+  const width = isborder ? text('border width', '1px') : '';
+
+  const islabel = boolean('label option', false);
+  const labelcolor = islabel ? text('label color', '#353535') : '';
 
   const [result, setResult] = useState(null);
 
@@ -58,23 +56,23 @@ export const object = () => {
           name={'widget'} value={"123"} icon={"user"} type={"label"}
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize, align: align }}
-          label={{ color: labelcolor, size: labelsize, align: labelalign }}
+          labelcolor={labelcolor}
           onClick={onClick} />
-        
+
         <Widgetbox className={cx(size, align, bg)}
           name={'widget'} value={"123"} icon={"user"} type={"icon"}
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize, align: align }}
-          label={{ color: labelcolor, size: labelsize, align: labelalign }}
+          labelcolor={labelcolor}
           onClick={onClick} />
-        
+
         <Widgetbox className={cx(size, align, bg)}
           name={'widget'} value={"123"} icon={"user"} type={"image"}
           border={{ color: border, radius: radius, width: width }}
           font={{ color: fontcolor, size: fontsize, align: align }}
-          label={{ color: labelcolor, size: labelsize, align: labelalign }}
+          labelcolor={labelcolor}
           cont={"123\ngood image"} src={IMG.Sample}
-          onClick={onClick} />        
+          onClick={onClick} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -200,7 +198,7 @@ export const color = () => {
           bgcolor={"#fff252"} value={"123"} icon={"user"} onClick={() => { }} />
         <Widgetbox className={cx("")} type={"image"} name={'widget'}
           bgcolor={"#fff252"} value={"123"} cont={"123\ngood image"} src={IMG.Sample} onClick={() => { }} />
-      </Linebox>      
+      </Linebox>
     </StyledObject>
   );
 };
@@ -265,18 +263,15 @@ export const align = () => {
   return (
     <StyledObject className={"t-main"}>
       <Linebox title={"left"} className={""} sample={samplecode("", "")} box={false}>
-        <Widgetbox className={cx("left")} name={'widget'} value={"123"} icon={"user"}
-          titlealign={"left"} datealign={"right"} countalign={"right"} />
+        <Widgetbox className={cx("left")} name={'widget'} value={"123"} icon={"user"} />
       </Linebox>
 
       <Linebox title={"center"} className={""} sample={samplecode("", "")} box={false}>
-        <Widgetbox className={cx("center")} name={'widget'} value={"123"} icon={"user"}
-          titlealign={"left"} datealign={"center"} countalign={"center"} />
+        <Widgetbox className={cx("center")} name={'widget'} value={"123"} icon={"user"} />
       </Linebox>
 
       <Linebox title={"right"} className={""} sample={samplecode("", "")} box={false}>
-        <Widgetbox className={cx("right")} name={'widget'} value={"123"} icon={"user"}
-          titlealign={"left"} datealign={"left"} countalign={"left"} />
+        <Widgetbox className={cx("right")} name={'widget'} value={"123"} icon={"user"} />
       </Linebox>
     </StyledObject>
   );
@@ -368,7 +363,7 @@ export const theme = () => {
     <StyledObject className={"t-main"}>
       <Linebox title={"theme"} top={option.top} sample={samplecode("theme={'sky'}", "sky")}>
         <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'sky'} />
-        <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'primary'}  />
+        <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'primary'} />
         <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'gray'} />
         <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'dark'} />
         <Widgetbox className={"primary"} type={"label"} value={"123"} icon={"user"} name={'widget'} onClick={() => { }} theme={'black'} />

@@ -23,8 +23,8 @@ const StyledObject = styled.div`{
       }
     }
 
-    &.xs { ${cs.font.xs} .cls-title { ${cs.p.v5} } }
-    &.sm { ${cs.font.md} .cls-title { ${cs.p.v5} } }
+    &.sm { ${cs.font.xs} .cls-title { ${cs.p.v5} } }
+    &.md { ${cs.font.md} .cls-title { ${cs.p.v5} } }
     &.lg { ${cs.font.xl} .cls-title { ${cs.p.v10} } }
 
     &.left { ${cs.font.left} }
@@ -36,6 +36,7 @@ const StyledObject = styled.div`{
     &.trans { ${cs.bg.trans} .cls-title:hover { ${cs.bg.sky} } }
     &.white { ${cs.bg.get("white")} .cls-title:hover { ${cs.bg.sky} } }
     &.sky { ${cs.bg.sky} .cls-title:hover { ${cs.bg.lightgray} } .cls-frame { ${cs.border.lightgray} } }
+    &.yellow { ${cs.bg.yellow} .cls-title:hover { ${cs.bg.orange} } .cls-frame { ${cs.border.lightgray} } }
     &.orange { ${cs.bg.orange} .cls-title:hover { ${cs.bg.orangehover} } .cls-frame { ${cs.border.lightgray} } }
     &.green { ${cs.bg.green} .cls-title:hover { ${cs.bg.greenhover} } .cls-frame { ${cs.border.lightgray} } }
     &.red { ${cs.bg.red} .cls-title:hover { ${cs.bg.redhover} } .cls-frame { ${cs.border.lightgray} } }
@@ -72,7 +73,7 @@ const Callopsebox = (props) => {
   const [active, setActive] = useState(props.active || false);
   const { label = "notitle", align = "left", minHeight = "100px", eid = null, rowid = null, border = null, theme } = props;
 
-  useEffect(() => setActive(props.active), [props]);
+  useEffect(() => setActive(props.active), [props.active]);
 
   const onClick = (e) => {
     // const rowid = e.currentTarget.getAttribute("rowid");

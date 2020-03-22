@@ -153,6 +153,16 @@ const StyledObject = styled.div`{
       &.hover:hover { ${cs.bg.darkhover} }
     }
 
+    &.left {
+      .st-font { ${cs.p.h5} ${cs.w.get("calc(100% - 10px) !important")} ${cs.font.align('left !important')} }
+    }
+    &.center {
+      .st-font { ${cs.p.h5} ${cs.w.get("calc(100% - 10px) !important")} ${cs.font.align('center !important')} }
+    }
+    &.right {
+      .st-font { ${cs.p.h5} ${cs.w.get("calc(100% - 10px) !important")} ${cs.font.align('right !important')} }
+    }
+
     ${({ border }) => border && `${cs.box.line}`}
     ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
     ${({ border }) => border && border.radius && `${cs.border.radius(border.radius)}`}

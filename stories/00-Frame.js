@@ -101,12 +101,16 @@ export const op = {
     if (type === 's') {
       res = { ...res };
     } else if (type === 'n') {
-      res = { ...res, 'orange' : 'orange', 'yellow': 'yellow', 'red': 'red', 'green': 'green' }
+      res = { ...res, 'orange' : 'orange', 'red': 'red', 'green': 'green' }
     } else {
-      res = { ...res, 'orange' : 'orange', 'yellow': 'yellow', 'red': 'red', 'green': 'green', 'white': 'white' }
+      res = { ...res, 'orange' : 'orange', 'red': 'red', 'green': 'green', 'yellow': 'yellow', 'white': 'white' }
     }
 
     return { ...res, ...value };
+  },
+
+  align: (value = {}) => {
+    return { 'none': '', 'left': 'left', 'center': 'center', 'right': 'right', ...value }
   },
 
   halign: (value = {}) => {

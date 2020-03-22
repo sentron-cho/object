@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { optionsKnob as options, withKnobs, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import cx from 'classnames/bind'
-import { Linebox } from './00-Frame';
+import { Linebox, op } from './00-Frame';
 import { cs, Callopsebox, Button } from '../src';
 
 const StyledObject = styled.span`{
@@ -21,27 +21,17 @@ export default { title: 'object|Callopse', component: Callopsebox, decorators: [
 const samplecode = (value, classname = '') => `<Callopsebox className={"${classname}"} ${value}><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>`;
 
 export const object = () => {
-  // const classname = text('classname', null);
   const title = text('title', "callopse");
   const eid = text('eid', "12345");
-  const size = options('size',
-    { 'lg(large)': 'lg', 'sm(small)': 'sm', 'xs(xsmall)': 'xs' },
-    '', { display: 'inline-radio' }, 'Other');
-  const align = options('align', { 'left': 'left', 'center': 'center', 'right': 'right' },
-    '', { display: 'inline-radio' }, 'Other');
-  const bg = options('background',
-    { trans: 'trans', white: 'white', sky: 'sky', orange: 'orange', green: 'green', red: 'red', primary: 'primary', gray: 'gray', dark: 'dark', black: 'black' },
-    '', { display: 'inline-radio' }, 'Other');
+  const bg = options('background', op.color('f'), '', op.radio(), 'Other');
+  const size = options('size', op.size('s'), '', op.radio(), 'Other');
+  const align = options('align', op.halign(), '', op.radio(), 'Other');
 
   const [result, setResult] = useState(null);
 
   const onClick = (eid, title, active, e) => {
     setResult(`eid = ${eid}, title = ${title}, show = ${active}`);
   }
-
-  // const onChange = (eid, e, list) => {
-  //   setChange(`eid = ${eid}, ${JSON.stringify(list)}`);
-  // }
 
   return (
     <StyledObject className={"t-main"}>
@@ -55,11 +45,6 @@ export const object = () => {
         <p>onClick</p>
         <p>{result}</p>
       </div>
-
-      {/* <div className={"res-view"}>
-        <p>onChange</p>
-        <p>{change}</p>
-      </div> */}
     </StyledObject>
   );
 };
@@ -75,25 +60,25 @@ const option = {
 export const size = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")}>
-        <Callopsebox className={"xs"} label={"x small"} eid={"xs"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopsebox>
-      </Linebox>
-
-      <Linebox title={"small"} className={"nomargin"} sample={samplecode('eid={"sm"}', "xs")}>
-        <Callopsebox className={"sm"} label={"small"} eid={"sm"} >
-          <div className={"t-child"}><p>{"child component"}</p></div>
-        </Callopsebox>
-      </Linebox>
-
-      <Linebox title={"no size"} className={"nomargin"} sample={samplecode('eid={"lg"}', "xs")}>
+      <Linebox title={"no size"} className={"nomargin"} sample={samplecode('', "")}>
         <Callopsebox className={""} label={"no size"} eid={"none"} >
           <div className={"t-child"}><p>{"child component"}</p></div>
         </Callopsebox>
       </Linebox>
 
-      <Linebox title={"large"} className={"nomargin"} sample={samplecode('eid={"lg"}', "xs")}>
+      <Linebox title={"small"} className={"nomargin"} sample={samplecode('', "sm")}>
+        <Callopsebox className={"sm"} label={"small"} eid={"sm"} >
+          <div className={"t-child"}><p>{"child component"}</p></div>
+        </Callopsebox>
+      </Linebox>
+
+      <Linebox title={"middle"} className={"nomargin"} sample={samplecode('', "md")}>
+        <Callopsebox className={"md"} label={"middle"} eid={"md"} >
+          <div className={"t-child"}><p>{"child component"}</p></div>
+        </Callopsebox>
+      </Linebox>
+
+      <Linebox title={"large"} className={"nomargin"} sample={samplecode('', "lg")}>
         <Callopsebox className={"lg"} label={"large"} eid={"lg"} >
           <div className={"t-child"}><p>{"child component"}</p></div>
         </Callopsebox>
@@ -120,7 +105,7 @@ export const color = () => {
     <StyledObject className={"t-main"} >
       <Button className={"primary"} title={"close all"} onClick={onClickClose} eid={"info"}/>
       <Button className={"primary"} title={"open all"} onClick={onClickOpen} eid={"info"}/>
-      <Linebox title={"x small"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} >
+      <Linebox title={"color"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")} >
         <Callopsebox className={"trans"} label={"transparent"} active={active} eid={"trans"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={"white"} label={"white"} active={active} eid={"white"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={"sky"} label={"sky"} active={active} eid={"sky"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
@@ -139,7 +124,7 @@ export const color = () => {
 export const border = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"align"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")}>
+      <Linebox title={"align"} className={"nomargin"} sample={samplecode('label={"{radius: "5px", color: "blue"}"} eid={"radius"}', "")}>
         <Callopsebox className={""} label={'{radius: "5px", color: "blue"}'} eid={"radius"} border={{ radius: '5px', color: "blue" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={""} label={'{radius: "10px", color: "red", width: "2px"}'} eid={"color"} border={{ radius: "10px", color: "red", width: "2px" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={""} label={'{radius: "15px", color: "black", width: "3px"}'} eid={"width"} border={{ radius: "15px", color: "black", width: "3px" }} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
@@ -151,7 +136,7 @@ export const border = () => {
 export const align = () => {
   return (
     <StyledObject className={"t-main"}>
-      <Linebox title={"align"} className={"nomargin"} sample={samplecode('eid={"xs"}', "xs")}>
+      <Linebox title={"align"} className={"nomargin"} sample={samplecode('', "left")}>
         <Callopsebox className={"left"} label={"left"} eid={"left"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={"center"} label={"center"} eid={"center"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>
         <Callopsebox className={"right"} label={"right"} eid={"right"} ><div className={"t-child"}><p>{"child component"}</p></div></Callopsebox>

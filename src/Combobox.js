@@ -212,7 +212,7 @@ export default class Combobox extends React.PureComponent {
     const { list = null, noti, show, pos } = state;
     const { disable, theme, className } = props;
     const selected = list ? pos < list.length ? list[pos] : list[0] : null;
-    const title = selected ? selected.name.toString() : 'noitem';
+    const title = selected && selected.name ? selected.name.toString() : 'noitem';
     const { text, label } = props.options || {text: null, label: null};
 
     return (
@@ -225,7 +225,7 @@ export default class Combobox extends React.PureComponent {
             <ul className="cb-ul" name="selector">
               {list.map((item, index) => {
                 const active = index === pos;
-                return <li key={index} className={cx('cb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name}</li>
+                return <li key={index} className={cx('cb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name || 'noname'}</li>
               })
               }
             </ul>

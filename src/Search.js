@@ -7,7 +7,7 @@ import { EID, ST } from './Config';
 const StyledObject = styled.div` {
   &.search-box {
     ${cs.pos.relative} ${cs.w.calc('100% - 20px')} ${cs.disp.inblock} ${cs.p.get("0 10px")} 
-    ${cs.bg.white} ${cs.box.radius} ${cs.bg.sky}
+    ${cs.bg.white} ${cs.box.radius} ${cs.bg.sky} ${cs.box.inner} //${cs.over.hidden}
 
     .sc-in { }
     .sc-btn { ${cs.align.ycenter} }
@@ -16,24 +16,24 @@ const StyledObject = styled.div` {
       .cb-sel { ${cs.border.radius("0 5px 5px 0")} ${cs.p.a0} ${cs.font.center} } 
     }
 
-    &.box, &.border { ${cs.box.line} }
+    &.box, &.border { ${cs.box.line} .sc-combo, .sc-combo .cb-sel { ${cs.h.calc('100%')} } }
     &.radius { ${cs.border.radius} }
 
     &.md { ${cs.h.md} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(140)} } 
-      .sc-in { ${cs.m.l30} ${cs.m.top(4)} &.combo { ${cs.w.calc('100% - 170px')} } } 
+      .sc-in { ${cs.m.l30} ${cs.m.top(2)} &.combo { ${cs.w.calc('100% - 170px')} } } 
     }
     &.xs { ${cs.h.xs} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(100)} } 
-      .sc-in { ${cs.m.l15} ${cs.m.top(-4)} &.combo { ${cs.w.calc('100% - 110px')} }  } .sc-btn { ${cs.m.left(-4)} ${cs.m.top(-3)} } 
+      .sc-in { ${cs.m.l15} ${cs.m.top(-5)} &.combo { ${cs.w.calc('100% - 110px')} }  } .sc-btn { ${cs.m.left(-4)} ${cs.m.top(-3)} } 
     }
     &.sm { ${cs.h.sm} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(120)} } 
-      .sc-in { ${cs.m.l25} ${cs.m.top(2)} &.combo { ${cs.w.calc('100% - 140px')} } }
+      .sc-in { ${cs.m.l25} ${cs.m.top(0)} &.combo { ${cs.w.calc('100% - 140px')} } }
     }
     &.lg { ${cs.h.lg} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(160)} } 
-      .sc-in { ${cs.m.l40} ${cs.m.top(1)} &.combo { ${cs.w.calc('100% - 200px')} } }
+      .sc-in { ${cs.m.l40} .box .input { ${cs.h.get(32)} ${cs.min.h(32)} } ${cs.m.top(0)} &.combo { ${cs.w.calc('100% - 200px')} } }
     }
     &.xl { ${cs.h.xl} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(200)} } 
@@ -89,7 +89,7 @@ export default class Search extends React.PureComponent {
 
   render() {
     const { state, props } = this;
-    const { frameid = 'body', className, theme } = props;
+    const { frameid = 'body', className, theme, color } = props;
     const { list } = state;
     // const combo = 120;
     // const edit = list ? `calc(100% - ${combo + 25}px)` : 'calc(100% - 35px)';
@@ -97,7 +97,7 @@ export default class Search extends React.PureComponent {
     const innercs = className.replace('border', '');
 
     return (
-      <StyledObject className={cx("search-box md", className, theme && `theme-${theme}`)} >
+      <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
         <Svg className={cx("sc-btn", innercs)} color={'black'} onClick={this.onClicked} icon={'find'} />
         <Editbox type="text" className={cx("sc-in", innercs, list && 'combo')} 
           guide={props.guide} value={state.value} theme={theme}
@@ -131,8 +131,8 @@ export const SearchFrame = (props) => {
   if (!props.onClickNew && !props.onClickSearch) {
     return null;
   } else {
-    return <StyledFrame className={"search-frame"}>
-      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className="search box" list={props.searchs} searchkey={props.searchkey} />}
+    return <StyledFrame className={cx("search-frame", props.className)}>
+      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className={cx("search", props.className)} list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew && <Button className={"btn-new green md"} title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
     </StyledFrame>
   }

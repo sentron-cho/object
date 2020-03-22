@@ -207,7 +207,8 @@ const StyledObject = styled.div` {
 export default class Menu extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { list, pos = 0, frameid = "body", show = false } = props;
+    const { pos = 0, frameid = "body", show = false } = props;
+    const list = props.list || props.menus;
     this.state = { list: list, pos: pos, modified: false, show: show, frameid: frameid };
   }
 
@@ -273,14 +274,15 @@ export default class Menu extends React.PureComponent {
       console.dir("none");
     } else {
       const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
-      if (index === this.state.pos) {
-        this.setState({ show: false });
-        return;
-      } else {
-        this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
-        this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
+      // if (index === this.state.pos) {
+      //   this.setState({ show: false });
+      //   return;
+      // } else {
+        const item = this.getSelected(index);
+        this.props.onClick && this.props.onClick(item ? item.id : EID.SELECT, e, item);
+        this.props.onChange && this.props.onChange(item ? item.id : EID.SELECT, e, item);
         this.setState({ pos: index, show: false, modified: true });
-      }
+      // }
     }
   }
 
@@ -289,7 +291,7 @@ export default class Menu extends React.PureComponent {
     const { list = null, noti, show, pos } = state;
     const { disable, theme, className } = props;
     const selected = list ? list.length < pos ? list[pos] : list[0] : null;
-    const title = selected ? selected.name.toString() : 'noitem';
+    const title = selected && selected.name ? selected.name.toString() : 'noitem';
 
     return (
       <StyledObject className={cx('menu-box md', className, { disable }, theme && `theme-${theme}`)} font={props.font} border={props.border} >
@@ -299,7 +301,7 @@ export default class Menu extends React.PureComponent {
             {!list && <span className={cx("mb-li", title === 'noitem' && 'noitem')}>{title}</span>}
             {list && list.map((item, index) => {
               const active = index === pos;
-              return <li key={index} className={cx('mb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name}</li>
+              return <li key={index} className={cx('mb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name && item.name}</li>
             })
             }
           </ul>

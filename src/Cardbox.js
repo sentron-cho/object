@@ -7,7 +7,7 @@ import cs from './css-style';
 const StyledObject = styled.div`{
   &.card-box {
     ${({ cursor }) => cs.mouse.get(cursor)} ${cs.over.hidden} ${cs.pos.relative} ${cs.font.left}
-    ${cs.disp.inblock} ${cs.bg.trans} ${cs.align.vertical("top")} ${cs.box.inner}
+    ${cs.disp.inblock} ${cs.align.vertical("top")} ${cs.box.inner} ${cs.bg.white}
 
     width: ${(props) => props.width};
     height: ${(props) => props.height};
@@ -36,7 +36,7 @@ const StyledObject = styled.div`{
       ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
 
-    &:not(.border) {
+    // &:not(.border) {
       &.sky { ${cs.bg.sky} }
       &.yellow { ${cs.bg.yellow} }
       &.green { ${cs.bg.green} }
@@ -55,7 +55,7 @@ const StyledObject = styled.div`{
       &.theme-gray { ${cs.bg.gray} }
       &.theme-dark { ${cs.bg.dark} ${cs.font.white} }
       &.theme-black { ${cs.bg.black} ${cs.font.white} }
-    }
+    // }
     
     &.right { ${cs.align.right} }
     &.center { ${cs.align.xcenter} }

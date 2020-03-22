@@ -44,7 +44,6 @@ export const StyledObject = styled.div`{
     &.md { .md-frame { ${cs.w.dsmd} } }
     &.sm { .md-frame { ${cs.w.dssm} } }
     &.xs { .md-frame { ${cs.w.dsxs} } }
-
     
     &.sky { .cf-head, .cf-frame { ${cs.bg.sky} ${cs.font.dark} 
       .md-head { ${cs.border.sky} }

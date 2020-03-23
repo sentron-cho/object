@@ -12,7 +12,7 @@ const StyledObject = styled.div` {
 
       .chk-itm { 
         ${cs.max.width('100%')} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
-        .chk-icon { ${cs.float.left} ${cs.m.h5} }
+        .chk-icon { ${cs.float.left} ${cs.m.r5} }
 
         &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
       }

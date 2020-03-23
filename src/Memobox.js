@@ -88,6 +88,8 @@ const StyledObject = styled.div`{
       ${({ border }) => border && border.width && `${cs.border.width(border.width)}`}
     }
 
+    .mb-type {}
+
     .mb-btn { 
       ${({ border }) => border && border.color && cs.border.color(border.color)}
       ${({ border }) => border && border.width && `${cs.m.top(`-${border.width}`)} ${cs.border.width(border.width)} ${cs.box.top(0)}`} 
@@ -121,8 +123,8 @@ const Memobox = (props) => {
 
   if (show) {
     return <StyledObject className={cx("memo-box", className, theme && `theme-${theme}`)} font={font} border={border}>
-      <div className={"mb-frame"}>
-        <p className={"mb-txt"}>{item && item.value}</p>
+      <div className={cx("mb-frame")}>
+        {props.children ? props.children : <p className={"mb-txt"}>{item && item.value}</p>}
       </div>
       <Svg className={"mb-cancel radius md"} icon={EID.CANCEL} color={cs.color.black} onClick={onCancel} eid={EID.CANCEL} />
       <Svgbox className={cx('mb-btn')} size={"sm"} list={[{ icon: EID.EDIT }, { icon: EID.ADD }]} color={cs.color.white} onClick={onClick} />

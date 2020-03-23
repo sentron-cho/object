@@ -71,7 +71,7 @@ const StyledObject = styled.div`{
       // .mb-frame .mb-txt { ${cs.scrollbar.get(cs.color.darkhover, cs.color.black)} } 
     }
     &.black { 
-      .mb-btn .svg-path { ${cs.fill.white} } .mb-frame, .mb-btn { ${cs.bg.black} ${cs.font.white} }
+      &.memo-box .mb-btn .svg-path { ${cs.fill.white} } .mb-frame, .mb-btn { ${cs.bg.black} ${cs.font.white} }
       // .mb-frame .mb-txt { ${cs.scrollbar.get(cs.color.dark, cs.color.darkhover)} } 
     }
 

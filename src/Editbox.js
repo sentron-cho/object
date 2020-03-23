@@ -222,6 +222,8 @@ class Editbox extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if(this.props.noupdate) return;
+    
     this.state.value = nextProps.value != null ? nextProps.value : '';
   }
 

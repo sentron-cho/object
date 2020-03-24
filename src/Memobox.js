@@ -116,7 +116,7 @@ const Memobox = (props) => {
 
   const onCancel = (e) => {
     setShow(false);
-    props.onClick && props.onClick(EID.CANCEL, null, e);
+    props.onCancel && props.onCancel(EID.CANCEL, null, e);
   }
 
   const { value = null, className, theme, font, border } = props;
@@ -127,7 +127,7 @@ const Memobox = (props) => {
         {props.children ? props.children : <p className={"mb-txt"}>{value}</p>}
       </div>
       <Svg className={"mb-cancel radius md"} icon={EID.CANCEL} color={cs.color.black} onClick={onCancel} eid={EID.CANCEL} />
-      <Svgbox className={cx('mb-btn')} size={"sm"} list={[{ icon: EID.EDIT }, { icon: EID.ADD }]} color={cs.color.white} onClick={onClick} />
+      {props.onClick && <Svgbox className={cx('mb-btn')} size={"sm"} list={[{ icon: EID.EDIT }, { icon: EID.ADD }]} color={cs.color.white} onClick={onClick} />}
     </StyledObject>
   } else {
     return null;

@@ -111,7 +111,7 @@ const Memobox = (props) => {
 
   const onClick = (eid, e) => {
     setShow(false);
-    props.onClick && props.onClick(eid, props.item, e);
+    props.onClick && props.onClick(eid, props.value, e);
   }
 
   const onCancel = (e) => {
@@ -119,12 +119,12 @@ const Memobox = (props) => {
     props.onClick && props.onClick(EID.CANCEL, null, e);
   }
 
-  const { item = null, className, theme, font, border } = props;
+  const { value = null, className, theme, font, border } = props;
 
   if (show) {
     return <StyledObject className={cx("memo-box", className, theme && `theme-${theme}`)} font={font} border={border}>
       <div className={cx("mb-frame")}>
-        {props.children ? props.children : <p className={"mb-txt"}>{item && item.value}</p>}
+        {props.children ? props.children : <p className={"mb-txt"}>{value}</p>}
       </div>
       <Svg className={"mb-cancel radius md"} icon={EID.CANCEL} color={cs.color.black} onClick={onCancel} eid={EID.CANCEL} />
       <Svgbox className={cx('mb-btn')} size={"sm"} list={[{ icon: EID.EDIT }, { icon: EID.ADD }]} color={cs.color.white} onClick={onClick} />

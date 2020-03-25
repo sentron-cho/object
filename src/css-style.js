@@ -117,6 +117,7 @@ const cs = {
     block: 'display: block;',
     inblock: 'display: inline-block;',
     inline: 'display: inline;',
+    autoflex: 'display: flex;',
 
     visible: 'visibility: visible;',
     invisible: 'visibility: hidden;',

@@ -37,6 +37,8 @@ const StyledObject = styled.div` {
     }
 
     .cb-label { ${cs.disp.block} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.weight(500)} }
+
+    &.inline { .cb-label { ${cs.align.ltop} ${cs.font.xs} ${cs.font.lightgray} ${cs.z.front} ${cs.top(3)} ${cs.left(3)} } }
     
     &.md { .cb-sel { ${cs.h.md} ${cs.p.h50} } ${cs.font.md} }
     &.xs { .cb-sel { ${cs.h.xs} ${cs.p.h30} } ${cs.font.xs} .cb-ul { ${cs.m.t10} } }
@@ -54,15 +56,15 @@ const StyledObject = styled.div` {
     &.center.middle { ${cs.pos.absolute} ${cs.top("50%")} ${cs.left("50%")} ${cs.align.get("translate(-50%, -50%)")} }
 
     &.trans { .cb-sel, .cb-ul { ${cs.bg.white} ${cs.font.black} .cb-li:hover { ${cs.bg.lightgray} } } .cb-sel { ${cs.bg.trans} ${cs.border.color('transparent')} } }
-    &.sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
+    &.sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } &.inline { .cb-label { ${cs.font.gray} } } }
     &.yellow { .cb-sel, .cb-ul { ${cs.bg.yellow} ${cs.font.dark} .cb-li:hover { ${cs.bg.orange} } } }
     &.orange { .cb-sel, .cb-ul { ${cs.bg.orange} ${cs.font.white} .cb-li:hover { ${cs.bg.orangehover} } } }
     &.green { .cb-sel, .cb-ul { ${cs.bg.green} ${cs.font.white} .cb-li:hover { ${cs.bg.greenhover} } } }
     &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.redhover} } } }
     &.primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
-    &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } }
-    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } }
-    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } }
+    &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } &.inline { .cb-label { ${cs.font.dark} } } }
+    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } .cb-icon .svg-path { ${cs.fill.white} } }
+    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } .cb-icon .svg-path { ${cs.fill.white} } }
 
     &.theme-sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
     &.theme-primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
@@ -79,24 +81,24 @@ const StyledObject = styled.div` {
     }
 
     // &.right.disable { .cb-li { ${cs.font.line(34)} ${cs.font.right} ${cs.p.r10} } }
-    &.radius { ${cs.box.radius} }
+    &.radius { .cb-sel { ${cs.box.radius} } }
 
     .cb-label {
-      ${({label}) => label && label.align && cs.font.align(label.align)}
-      ${({label}) => label && label.color && cs.font.color(label.color)}
+      ${({ label }) => label && label.align && cs.font.align(label.align)}
+      ${({ label }) => label && label.color && cs.font.color(label.color)}
     }
 
     .cb-sel {
-      ${({text}) => text && text.color && cs.font.color(text.color)}
-      ${({text}) => text && text.align && cs.font.align(text.align)}
+      ${({ text }) => text && text.color && cs.font.color(text.color)}
+      ${({ text }) => text && text.align && cs.font.align(text.align)}
 
-      ${({text}) => text && text.align && text.align === "left" && `padding-left: 10px !important;`}
-      ${({text}) => text && text.align && text.align === "right" && `padding-right: 30px !important;`}
+      ${({ text }) => text && text.align && text.align === "left" && `padding-left: 10px !important;`}
+      ${({ text }) => text && text.align && text.align === "right" && `padding-right: 30px !important;`}
 
-      ${({border}) => border && cs.box.line}
-      ${({border}) => border && border.color && cs.border.color(border.color)}
-      ${({border}) => border && border.radius && cs.border.radius(border.radius)}
-      ${({border}) => border && border.width && cs.border.width(border.width)}
+      ${({ border }) => border && cs.box.line}
+      ${({ border }) => border && border.color && cs.border.color(border.color)}
+      ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+      ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
   }
 }`;
@@ -210,13 +212,13 @@ export default class Combobox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { list = null, noti, show, pos } = state;
-    const { disable, theme, className } = props;
+    const { disable, theme, className, inline = false } = props;
     const selected = list ? pos < list.length ? list[pos] : list[0] : null;
     const title = selected && selected.name ? selected.name.toString() : 'noitem';
-    const { text, label } = props.options || {text: null, label: null};
+    const { text, label } = props.options || { text: null, label: null };
 
     return (
-      <StyledObject className={cx('combo-box md', className, { disable }, theme && `theme-${theme}`)} text={text} label={label} border={props.border} >
+      <StyledObject className={cx('combo-box md', className, { disable }, { inline }, theme && `theme-${theme}`)} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
         <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
           <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>

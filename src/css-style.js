@@ -18,7 +18,7 @@ const color = {
   blue: '#0058b7',
   green: '#00c73c',
   greenhover: '#006b20',
-  black: '#101010',
+  black: '#000000',
   dark: '#353535',
   darkhover: '#636363',
   lightblack: '#303030',

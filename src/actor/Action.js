@@ -10,7 +10,6 @@ const LOGIN = "/login";
 export function go(url, value) {
   Storage.setLocalItem(url, value);
   window.location.href = url;
-  // this.props.history.push(URL.NOTEBOOK, { rowid: data.dashid });
 }
 
 export function getParam(url = null) {

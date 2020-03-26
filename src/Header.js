@@ -213,6 +213,7 @@ class Header extends React.PureComponent {
 
     const { float } = this.state;
     const logouttitle = props.logouttitle || 'Logout';
+    const logintitle = props.logouttitle || 'Login';
 
     const renderMobile = () => {
       if (show === EID.SHOW) {
@@ -246,8 +247,8 @@ class Header extends React.PureComponent {
                 </li>
               })}
               {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
-              {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}
-              </li>}
+              {props.onLogin && <li className={cx("li-nav")} onClick={(e) => props.onLogin(e)}>{logintitle}</li>}
+              {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}</li>}
             </ul>}
 
             {/* 모바일에서의 아이콘 */}

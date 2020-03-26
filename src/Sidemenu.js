@@ -166,9 +166,10 @@ class Sidemenu extends React.PureComponent {
               {list && list.map((item, index) => {
                 const path = window.location.pathname;
                 const active = path ? path.toLowerCase() === item.url.toLowerCase() : (index === 0);
+                const { show = true } = item;
                 return <React.Fragment>
                   {item.divider && <div className={"sm-div"} />}
-                  <li className={cx("sm-li", { active })} url={item.url} eid={item.id} onClick={this.onClickMenu}>{item.name}</li>
+                  {show && <li className={cx("sm-li", { active })} url={item.url} eid={item.id} onClick={this.onClickMenu}>{item.name}</li>}
                 </React.Fragment>
               })}
             </ul>

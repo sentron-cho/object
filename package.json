@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "start-storybook -p 33000",
-    "build": "build-storybook"
+    "build": "build-storybook",
+    "docker.build": "docker build -t sentron/storybook:v0.0.1 .",
+    "docker.push": "docker push sentron/storybook:v0.0.1"
   },
   "repository": {
     "type": "git",

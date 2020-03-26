@@ -1,0 +1,19 @@
+echo "storybook install stating(version: $1)....."
+
+if [ -n "$1" ]; then
+   echo "docker install check...."
+   docker=$(docker -v)
+   str="command not found"
+
+   #echo $docker
+
+   echo "storybook:$1 docker image download...."
+   docker pull sentron/storybook:$1
+   docker rm -f storybook
+
+   echo "storybook:$1 docker image run...."
+   docker run -itd -p 33000:33000 --name storybook sentron/storybook:$1
+   docker restart storybook
+else
+   echo "input version tag"
+fi

@@ -92,11 +92,13 @@ const StyledObject = styled.div` {
     }
 
     .cb-sel {
-      ${({ text }) => text && text.color && cs.font.color(text.color)}
-      ${({ text }) => text && text.align && cs.font.align(text.align)}
+      .cb-txt {
+        ${({ text }) => text && text.color && cs.font.color(text.color)}
+        ${({ text }) => text && text.align && cs.font.align(text.align)}
 
-      ${({ text }) => text && text.align && text.align === "left" && `padding-left: 10px !important;`}
-      ${({ text }) => text && text.align && text.align === "right" && `padding-right: 30px !important;`}
+        ${({ text }) => text && text.align && text.align === "left" && `padding-left: 10px !important;`}
+        ${({ text }) => text && text.align && text.align === "right" && `padding-right: 30px !important;`}
+      }
 
       ${({ border }) => border && cs.box.line}
       ${({ border }) => border && border.color && cs.border.color(border.color)}

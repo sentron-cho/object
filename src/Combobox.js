@@ -9,14 +9,15 @@ import { Util } from './Utils';
 const StyledObject = styled.div` {
   &.combo-box {
     ${cs.noselect} ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} ${cs.noliststyle}
-    ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} ${cs.float.left}    
+    ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} ${cs.float.left}
 
     ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
-    .cb-sel { ${cs.pos.relative} ${cs.p.h30} ${cs.size.full} ${cs.mouse.pointer} 
-      ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner} 
+    .cb-sel { ${cs.pos.relative} ${cs.size.full} ${cs.mouse.pointer} ${cs.min.width(120)}
+      ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner}
+      // ${cs.p.h30} 
 
       .cb-txt { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} ${cs.max.width("calc(100% - 30px)")}
-        ${cs.font.ellipsis}
+        ${cs.font.ellipsis} ${cs.w.full} ${cs.font.center} ${cs.align.center}
         &.noitem { ${cs.opac.alpha} } 
       }
       &:hover { ${cs.anim.show} }
@@ -42,11 +43,11 @@ const StyledObject = styled.div` {
 
     &.inline { .cb-label { ${cs.align.ltop} ${cs.font.xs} ${cs.font.lightgray} ${cs.z.front} ${cs.top(3)} ${cs.left(3)} } }
     
-    &.md { .cb-sel { ${cs.h.md} ${cs.p.h50} } ${cs.font.md} }
-    &.xs { .cb-sel { ${cs.h.xs} ${cs.p.h30} } ${cs.font.xs} .cb-ul { ${cs.m.t10} } }
-    &.sm { .cb-sel { ${cs.h.sm} ${cs.p.h40} } ${cs.font.sm} }
-    &.lg { .cb-sel { ${cs.h.lg} ${cs.p.h50} } ${cs.font.xl} .cb-ul { ${cs.m.t20} } }
-    &.xl { .cb-sel { ${cs.h.xl} ${cs.p.h50} } ${cs.font.t1} .cb-ul { ${cs.m.t25} } }
+    &.md { .cb-sel { ${cs.h.md} } ${cs.font.md} }
+    &.xs { .cb-sel { ${cs.h.xs} } ${cs.font.xs} .cb-ul { ${cs.m.t10} } }
+    &.sm { .cb-sel { ${cs.h.sm} } ${cs.font.sm} }
+    &.lg { .cb-sel { ${cs.h.lg} } ${cs.font.xl} .cb-ul { ${cs.m.t20} } }
+    &.xl { .cb-sel { ${cs.h.xl} } ${cs.font.t1} .cb-ul { ${cs.m.t25} } }
     &.full { ${cs.w.full} ${cs.disp.inblock} .cb-sel { ${cs.w.full} ${cs.p.a0} .cb-txt { ${cs.p.l20} } } }
     
     &.left { }

@@ -94,15 +94,15 @@ export default class Search extends React.PureComponent {
     // const combo = 120;
     // const edit = list ? `calc(100% - ${combo + 25}px)` : 'calc(100% - 35px)';
     const pos = list ? list.findIndex(item => item.id === state.key) : 0;
-    const innercs = className.replace('border', '');
+    // const innercs = className.replace('border', '');
 
     return (
       <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
-        <Svg className={cx("sc-btn", innercs)} color={'black'} onClick={this.onClicked} icon={'find'} />
-        <Editbox type="text" className={cx("sc-in", innercs, list && 'combo')} 
+        <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
+        <Editbox type="text" className={cx("sc-in", color, list && 'combo')} 
           guide={props.guide} value={state.value} theme={theme}
           onEnter={this.onEnter} onChange={this.onChange} />
-        {list && <Combobox className={cx("sc-combo sky md", innercs)} 
+        {list && <Combobox className={cx("sc-combo sky md", color)} 
           pos={pos} frameid={frameid} theme={theme}
           list={list} onClick={this.onClickCombo} inline={true} />
         }

@@ -91,6 +91,17 @@ export default class Checkbox extends React.PureComponent {
     this.state = { list: list || null, noti: false, modified: false };
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.list) {
+      const list = nextProps.list && nextProps.value ? nextProps.list.map(item => {
+        item.check = (item.id === nextProps.value);
+        return item;
+      }) : nextProps.list;
+
+      this.setState({ list: list });
+    }
+  }
+
   isValidate = () => {
     if (this.isEmpty()) {
       return this.showNoti();

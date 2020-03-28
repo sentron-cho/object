@@ -8,14 +8,15 @@ import { Util } from './Utils';
 
 const StyledObject = styled.div` {
   &.combo-box {
-    ${cs.noselect} ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} 
+    ${cs.noselect} ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} ${cs.noliststyle}
     ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} ${cs.float.left}    
 
     ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
     .cb-sel { ${cs.pos.relative} ${cs.p.h30} ${cs.size.full} ${cs.mouse.pointer} 
-      ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner}
+      ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner} 
 
-      .cb-txt { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} 
+      .cb-txt { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} ${cs.max.width("calc(100% - 30px)")}
+        ${cs.font.ellipsis}
         &.noitem { ${cs.opac.alpha} } 
       }
       &:hover { ${cs.anim.show} }
@@ -26,11 +27,12 @@ const StyledObject = styled.div` {
         &:hover { ${cs.opac.get(0.9)} }
       }
 
-      .cb-ul { ${cs.bg.white} ${cs.min.width("100px")} 
+      .cb-ul { ${cs.bg.white} ${cs.min.width("100px")}
         ${cs.w.get("max-content")} ${cs.max.width("max-content")} 
         ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t15}
         ${cs.box.radius} ${cs.border.lightgray} ${cs.box.shadow}
-        .cb-li { ${cs.p.get("5px 10px")}
+        ${cs.max.width(500)}
+        .cb-li { ${cs.p.get("5px 10px")} ${cs.font.ellipsis}
           &:hover { ${cs.bg.lightgray} }
         }
       }  

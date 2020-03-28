@@ -29,8 +29,8 @@ const StyledObject = styled.div` {
 
       .cb-ul { ${cs.bg.white} ${cs.min.width("100px")}
         ${cs.w.get("max-content")} ${cs.max.width("max-content")} 
-        ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t15}
-        ${cs.box.radius} ${cs.border.lightgray} ${cs.box.shadow}
+        ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t10} ${cs.box.line}
+        ${cs.box.radius} ${cs.border.alphagray} ${cs.box.shadow}
         ${cs.max.width(500)}
         .cb-li { ${cs.p.get("5px 10px")} ${cs.font.ellipsis}
           &:hover { ${cs.bg.lightgray} }
@@ -104,32 +104,6 @@ const StyledObject = styled.div` {
     }
   }
 }`;
-
-// &.md { }
-// &.xs { }
-// &.sm { }
-// &.lg { }
-// &.xl { }
-
-// &.left { }
-// &.right {  }
-// &.center {  }
-
-// &.trans { }
-// &.sky { }
-// &.orange { }
-// &.green { }
-// &.red { }
-// &.primary { }
-// &.gray { }
-// &.dark { }
-// &.black { }
-
-// &.theme-sky { }
-// &.theme-primary { }
-// &.theme-gray { }
-// &.theme-dark { }
-// &.theme-black { }
 
 export default class Combobox extends React.PureComponent {
   constructor(props) {

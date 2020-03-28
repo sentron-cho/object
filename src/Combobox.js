@@ -48,7 +48,7 @@ const StyledObject = styled.div` {
     &.sm { .cb-sel { ${cs.h.sm} } ${cs.font.sm} }
     &.lg { .cb-sel { ${cs.h.lg} } ${cs.font.xl} .cb-ul { ${cs.m.t20} } }
     &.xl { .cb-sel { ${cs.h.xl} } ${cs.font.t1} .cb-ul { ${cs.m.t25} } }
-    &.full { ${cs.w.full} ${cs.disp.inblock} .cb-sel { ${cs.w.full} ${cs.p.a0} .cb-txt { ${cs.p.l20} } } }
+    &.full { ${cs.w.full} ${cs.disp.inblock} .cb-sel { ${cs.w.full} ${cs.p.a0} .cb-txt { ${cs.p.l0} } } }
     
     &.left { }
     &.right { ${cs.align.right} }

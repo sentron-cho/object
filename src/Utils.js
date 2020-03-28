@@ -203,7 +203,6 @@ export const Util = {
 
   fromCharAlphabet(index) { return String.fromCharCode(65 + index); },
 
-
   // Date 타입으로 넘겨진 년월일을 symbol과 함께 String 타입의 년월일로 변환한다.
   toStringDay(today, symbol = '') {
     var year = today.getFullYear();

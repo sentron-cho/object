@@ -21,8 +21,9 @@ export function doList(url, value = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
 
   return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
     axios.patch(url, { params: { ...value } }).then((res) => {
-      const {status, data} = res;
+      const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
@@ -30,7 +31,8 @@ export function doList(url, value = null) {
         let result = { data: data.value, total: data.total, page: 1, max: 1 };
 
         if (isPage) {
-          result = { ...data, 'loaded': true, 'list': data.value,
+          result = {
+            ...data, 'loaded': true, 'list': data.value,
             'loading': { 'show': false },
             'page': { 'current': data.page, 'max': data.max_page, 'total': data.total }
           };
@@ -45,7 +47,7 @@ export function doList(url, value = null) {
         resolve({ 'code': data.code, 'err': data.value, ...data });
       }
     }).catch(error => {
-      const {status, data} = error.response;
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else {
@@ -59,8 +61,9 @@ export function doSelect(url, value = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
 
   return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
     axios.get(url, { params: { ...value } }).then((res) => {
-      const {status, data} = res;
+      const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
@@ -69,7 +72,7 @@ export function doSelect(url, value = null) {
         resolve({ 'code': data.code, 'err': data.value });
       }
     }).catch(error => {
-      const {status, data} = error.response;
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else {
@@ -83,8 +86,9 @@ export function doInsert(url, value = null, list = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
 
   return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
     axios.post(url, value).then((res) => {
-      const {status, data} = res;
+      const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
@@ -94,7 +98,7 @@ export function doInsert(url, value = null, list = null) {
         resolve({ 'code': data.code, 'err': data.value });
       }
     }).catch(error => {
-      const {status, data} = error.response;
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else {
@@ -106,10 +110,11 @@ export function doInsert(url, value = null, list = null) {
 
 export function doUpdate(url, value = null, list) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
-  
+
   return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
     axios.put(url, value).then((res) => {
-      const {status, data} = res;
+      const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
@@ -119,7 +124,7 @@ export function doUpdate(url, value = null, list) {
         resolve({ 'code': data.code, 'err': data.value });
       }
     }).catch(error => {
-      const {status, data} = error.response;
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else {
@@ -131,8 +136,9 @@ export function doUpdate(url, value = null, list) {
 
 export function doDelete(url, value = null, list) {
   return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
     axios.delete(url, { params: { ...value } }).then((res) => {
-      const {status, data} = res;
+      const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         const result = list == null ? data.value : list.filter(item => item.rowid !== data.value);
         resolve({ 'code': data.code, 'result': result });
@@ -140,7 +146,7 @@ export function doDelete(url, value = null, list) {
         resolve({ 'code': data.code, 'err': data.value });
       }
     }).catch(error => {
-      const {status, data} = error.response;
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
       } else {

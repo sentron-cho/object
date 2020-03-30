@@ -61,6 +61,7 @@ const KOR = {
   THUMB: "썸네일",
   PREVIEW: "미리보기",
   TEXTCOLOR: "글자색",
+  BGCOLOR: "배경색",
   SET_OPTIONS: "옵션설정",
   IMAGESIZE: "이미지 크기(표준)",
   IN_TITLE: "여기에 제목을 입력하세요.",

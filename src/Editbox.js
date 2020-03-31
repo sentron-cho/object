@@ -261,7 +261,7 @@ class Editbox extends React.PureComponent {
     this.setState({ value: '' }); this.focus();
 
     this.props.onChange && this.props.onChange('', e);
-    this.props.onClear && this.props.onClear('', e);
+    this.props.onClear && this.props.onClear(this.props.value, e);
   }
 
   onChange = (e) => {

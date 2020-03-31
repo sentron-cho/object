@@ -120,12 +120,12 @@ const StyledObject = styled.div` {
     &.trans { .input { ${cs.bg.trans} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
     &.white { .input { ${cs.bg.white} ${cs.font.black} &::placeholder { ${cs.font.dark} } &:focus { ${cs.bg.get('#fffbcf')} } } }
     &.sky { .input { ${cs.bg.sky} ${cs.font.black} &::placeholder { ${cs.font.gray} } &:focus { ${cs.bg.get('#fffbcf')} } } }
-    &.orange { .input { ${cs.bg.orange} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.orangehover} } } }
-    &.yellow { .input { ${cs.bg.yellow} ${cs.font.dark} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.yellowhover} } } }
-    &.green { .input { ${cs.bg.green} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.greenhover} } } }
-    &.red { .input { ${cs.bg.red} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.redhover} } } }
-    &.primary { .input { ${cs.bg.primary} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.primaryhover} } } }
-    &.gray { .input { ${cs.bg.lightgray} ${cs.font.black} &::placeholder { ${cs.font.darkgray} } &:focus { ${cs.bg.darkwhite} } } }
+    &.orange { .input { ${cs.bg.orange} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.lightorange} } } }
+    &.yellow { .input { ${cs.bg.yellow} ${cs.font.dark} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.lightyellow} } } }
+    &.green { .input { ${cs.bg.green} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.lightgreen} } } }
+    &.red { .input { ${cs.bg.red} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.lightred} } } }
+    &.primary { .input { ${cs.bg.primary} ${cs.font.white} &::placeholder { ${cs.font.lightgray} } &:focus { ${cs.bg.lightprimary} } } }
+    &.gray { .input { ${cs.bg.darkwhite} ${cs.font.black} &::placeholder { ${cs.font.darkgray} } &:focus { ${cs.bg.lightwhite} } } }
     &.dark { .input { ${cs.bg.dark} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
     &.black { .input { ${cs.bg.black} ${cs.font.white} &:focus { ${cs.bg.darkgray} } } }
 

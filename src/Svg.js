@@ -136,9 +136,7 @@ const StyledObject = styled.span` {
 const Svg = (props) => {
   const { color = cs.color.gray } = props;
   const onClicked = (e) => {
-    if (props.onClick != null) {
-      props.onClick(props.eid, e);
-    }
+    props.onClick && props.onClick(props.eid, e);
   };
 
   const { disabled } = props;

@@ -95,10 +95,11 @@ const cs = {
     relative: 'position: relative;',
     fixed: 'position: fixed;',
 
-    ltop: 'left: 0; top: 0;',
-    rtop: 'right: 0; top: 0;',
-    lbottom: 'left: 0; bottom: 0;',
-    rbottom: 'right: 0; bottom: 0;',
+    ltop: 'bottom: unset; right: unset; left: 0; top: 0;',
+    rtop: 'bottom: unset; left: unset; right: 0; top: 0;',
+    lbottom: 'top: unset; right: unset; left: 0; bottom: 0;',
+    rbottom: 'top: unset; left: unset; right: 0; bottom: 0;',
+    unset:  'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
 
     get: (v) => `position: ${v};`,
   },

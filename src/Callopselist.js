@@ -189,7 +189,7 @@ const StyledObject = styled.div`{
 
 const Callopselist = (props) => {
   // const [select, setSelect] = useState(-1);  
-  const { height = 30, tags = null, list = null, datakey = "text", multi = false, theme } = props;
+  const { height = 30, tags = null, list = null, datakey = "text", multi = false, theme, rowid = "rowid" } = props;
   const { inner } = props.options || { inner: null, label: null };
   const align = 'center';
   const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
@@ -197,25 +197,25 @@ const Callopselist = (props) => {
   const [data, setData] = useState(list);
 
   const onSelect = (e) => {
-    const rowid = e.currentTarget.getAttribute("rowid");
+    const rid = e.currentTarget.getAttribute("rowid");
 
     if (multi) {
-      const item = data && data.find(item => String(item.rowid) === String(rowid));
+      const item = data && data.find(item => String(item[rowid]) === String(rid));
       if (item) {
         item.show ? item.show = !item.show : item["show"] = true;
       };
     } else {
-      data.map(item => String(item.rowid) === String(rowid) ? item["show"] = item["show"] ? !item["show"] : true : item["show"] = false);
+      data.map(item => String(item[rowid]) === String(rid) ? item["show"] = item["show"] ? !item["show"] : true : item["show"] = false);
     }
 
     setData([...data]);
     // setSelect(rowid === select ? -1 : rowid);
-    props.onSelect && props.onSelect(rowid, e);
+    props.onSelect && props.onSelect(rid, e);
   }
 
-  const onClickItem = (eid, rowid, e) => {
+  const onClickItem = (eid, rid, e) => {
     e.stopPropagation();
-    props.onClickItem && props.onClickItem(eid, rowid, e);
+    props.onClickItem && props.onClickItem(eid, rid, e);
   }
 
   const onClickPage = (page, e) => {
@@ -246,7 +246,7 @@ const Callopselist = (props) => {
 
     if (data && data[0]) {
       const item = data[0];
-      if (item.rowid == null || item.rowid === undefined) {
+      if (item[rowid] == null || item[rowid]=== undefined) {
         guide = "'rowid' is required in the list.\n"
           + "ex. const list = [{ rowid: 'a12345', title: 'callopse', text: 'callopse test', utime: '20200101' }, {...}\n"
           + "rowid and text is required. Rest is optional.\n"
@@ -278,7 +278,7 @@ const Callopselist = (props) => {
       {tlist && <ul className="csl-body csl-border">
         {/* row */}
         {tlist.map((item, index) => {
-          const rowid = props.rowid != null ? data[index][props.rowid] : data[index]['rowid'];
+          const rid = rowid != null ? data[index][rowid] : data[index]['rowid'];
           // const show = (String(select) === String(rowid));
           const text = data[index][datakey];
           const { show = false } = data[index];
@@ -287,7 +287,7 @@ const Callopselist = (props) => {
             <li className={cx("csl-row csl-border")} key={String(index)} >
 
               {/* col title */}
-              <div className="csl-line" rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
+              <div className="csl-line" rowid={rid} onClick={onSelect} eid={EID.SELECT}>
                 {item.map((col, index) => {
                   const { value } = col;
                   const { type, align, flex } = tags[index];
@@ -300,12 +300,12 @@ const Callopselist = (props) => {
               </div>
 
               {/* show/hide callopse contents */}
-              {show && <div className={cx("csl-cont csl-border")} rowid={rowid}>
+              {show && <div className={cx("csl-cont csl-border")} rowid={rid}>
                 {text}
               </div>}
               
               {show && props.onClickItem &&
-                <Svgbox className={cx('cls-cont-btns full')} size={"sm"} rowid={rowid} list={[{ icon: EID.EDIT }, { icon: EID.DELETE }]} onClick={onClickItem} />
+                <Svgbox className={cx('cls-cont-btns full')} size={"sm"} rowid={rid} list={[{ icon: EID.EDIT }, { icon: EID.DELETE }]} onClick={onClickItem} />
               }
             </li>
           )
@@ -313,7 +313,7 @@ const Callopselist = (props) => {
       </ul>}
 
       {/* page navi */}
-      <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} clolr="white" />
+      {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} clolr="white" />}
     </StyledObject >
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
@@ -20,6 +20,7 @@ const StyledObject = styled.div`{
         ${cs.p.get("4px 10px")}
         
         .lbx-tl { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock}
+          ${cs.font.ellipsis} ${cs.max.w("calc(100% - 80px)")}
           &.left { ${cs.font.left} };
           &.center { ${cs.font.center} };
           &.right { ${cs.font.right} };
@@ -189,10 +190,14 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, children = null, total = '', theme,
+    divider, children = null, total = '', theme, rowid,
     title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
   const [list, setList] = useState(props.list);
+
+  useEffect(() => {
+    setList(props.list);
+  }, [props.list])
 
   let styled = {};
   if (divider != null) {
@@ -204,8 +209,8 @@ const Listbox = (props) => {
 
   const onSelect = (e) => {
     if (disable) return;
-    const rowid = e.currentTarget.getAttribute('rowid');
-    props.onSelect && props.onSelect(rowid, e);
+    const rid = e.currentTarget.getAttribute('rowid');
+    props.onSelect && props.onSelect(rid, e);
   }
 
   const onClickPage = (page, e) => {
@@ -215,8 +220,8 @@ const Listbox = (props) => {
   const onClickDelete = (eid, e) => {
     e.stopPropagation();
     // const rowid = e.currentTarget.getAttribute('rowid');
-    const rowid = eid;
-    props.onClickDelete && props.onClickDelete(rowid, e);
+    const rid = eid;
+    props.onClickDelete && props.onClickDelete(rid, e);
   }
 
   const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props;
@@ -226,7 +231,7 @@ const Listbox = (props) => {
     let guide = null;
     if (list && list[0]) {
       const item = list[0];
-      if (item.rowid == null || item.rowid === undefined) {
+      if (item[rowid] == null || item[rowid] === undefined) {
         guide = "'rowid' is required in the list.\n"
           + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n"
           + "rowid and text is required. Rest is optional.\n"
@@ -276,16 +281,16 @@ const Listbox = (props) => {
       <DndProvider backend={Backend}>
         {list && <ul className={"lbx-body"}>
           {list.map((item, index) => {
-            const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+            const rid = rowid != null ? list[index][rowid] : list[index]['rowid'];
             const stitle = item[title] || '';
-            const sdate = item[date] ? Util.toStringSymbol(item[date]) : '';
+            const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : '';
             const scount = item[count] >= 0 ? item[count] : -1;
 
             return (
-              <Dragable key={rowid} id={rowid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
+              <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
                 <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
                   {props.onDragDrop &&
-                    <Svg className="i-btn btn-move xs" eid={rowid} name={"move"} />
+                    <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
                   }
 
                   <p className={cx('lbx-tl', titlealign)}>{stitle}
@@ -306,7 +311,7 @@ const Listbox = (props) => {
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />
+      {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />}
     </StyledObject >
   );
 };

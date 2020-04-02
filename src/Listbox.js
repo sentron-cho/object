@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
@@ -49,7 +49,7 @@ const StyledObject = styled.div`{
         .btn-move { ${cs.left(-5)} ${cs.align.ycenter} ${cs.pos.relative} ${cs.m.r0} ${cs.opac.get(0.3)} }
 
         &.selection { ${cs.mouse.pointer}
-          &:hover { ${cs.bg.hover} 
+          &:hover, &.active { ${cs.bg.hover} 
             .lbx-icon { ${cs.opac.alpha} &:hover { ${cs.opac.show} } }
             .btn-move { ${cs.opac.show} }
           }
@@ -89,7 +89,7 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.sky} ${cs.font.black}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
         .lbx-date { ${cs.bg.primary} ${cs.font.white} }
-        .lbx-li.selection:hover { ${cs.bg.lightgray} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.lightgray} }
         .lbx-icon { .svg-path { ${cs.fill.dark} } } 
       }
       .btn-new { ${cs.bg.sky} ${cs.font.dark} }
@@ -98,14 +98,14 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
-        .lbx-li.selection:hover { ${cs.bg.primaryhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
       .lbx-body { ${cs.bg.lightgray} 
-        .lbx-li.selection:hover { ${cs.bg.grayhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.grayhover} }
         .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
@@ -113,7 +113,7 @@ const StyledObject = styled.div`{
     &.dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
-        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -121,7 +121,7 @@ const StyledObject = styled.div`{
     &.black {
       .lbx-body { ${cs.bg.black} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
-        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -131,7 +131,7 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.sky} ${cs.font.black}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
         .lbx-date { ${cs.bg.primary} ${cs.font.white} }
-        .lbx-li.selection:hover { ${cs.bg.lightgray} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.lightgray} }
         .lbx-icon { .svg-path { ${cs.fill.dark} } } 
       }
       .btn-new { ${cs.bg.sky} ${cs.font.dark} }
@@ -140,14 +140,14 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
-        .lbx-li.selection:hover { ${cs.bg.primaryhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.theme-gray {
       .lbx-body { ${cs.bg.lightgray} 
-        .lbx-li.selection:hover { ${cs.bg.grayhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.grayhover} }
         .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
@@ -155,7 +155,7 @@ const StyledObject = styled.div`{
     &.theme-dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
-        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -163,7 +163,7 @@ const StyledObject = styled.div`{
     &.theme-black {
       .lbx-body { ${cs.bg.black} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
-        .lbx-li.selection:hover { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -190,7 +190,7 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, children = null, total = '', theme, rowid,
+    divider, children = null, total = '', theme, rowid, selpos = -1,
     title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
   const [list, setList] = useState(props.list);
@@ -262,7 +262,7 @@ const Listbox = (props) => {
   }, [list, props]);
 
   return (
-    <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)} 
+    <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)}
       eid="select" style={styled} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 
@@ -285,10 +285,11 @@ const Listbox = (props) => {
             const stitle = item[title] || '';
             const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : '';
             const scount = item[count] >= 0 ? item[count] : -1;
+            const active = selpos === index;
 
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <li key={index} className={cx("lbx-li", { selection })} rowid={item[rowid]} onClick={onSelect}>
+                <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={onSelect}>
                   {props.onDragDrop &&
                     <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
                   }
@@ -297,7 +298,7 @@ const Listbox = (props) => {
                     {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
                   </p>
                   <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>
-                  
+
                   {props.onClickDelete &&
                     <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
                   }

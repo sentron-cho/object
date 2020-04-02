@@ -4,7 +4,7 @@ const color = {
   active: '#e2f1ff',
   white: '#ffffff',
   alpha:  '#ffffff10',
-  lightwhite: '#ecf0f2',
+  lightwhite: '#f6f8fa',
   darkwhite: '#eaeaea',
   trans: 'transparent',
   sky: '#f1f8ff',

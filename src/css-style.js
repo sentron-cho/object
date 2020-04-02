@@ -305,6 +305,7 @@ const cs = {
     lower: 'text-transform: lowercase;',
     ellipsis: 'text-overflow: ellipsis; overflow: hidden; white-space: nowrap;',
     breakall: 'word-break: break-all;',
+    breakword: 'word-break: break-word;',
 
     outline: (v = '1px', c = 'black') => Number.isInteger(v) ? `-webkit-text-stroke: ${v}px ${c};` : `-webkit-text-stroke: ${v} ${c};`,
     overflow: (v) => `text-overflow: ${v};`,

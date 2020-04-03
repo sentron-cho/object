@@ -3,8 +3,8 @@ const color = {
   hover: '#e2f1ff',
   active: '#e2f1ff',
   white: '#ffffff',
-  alpha:  '#ffffff10',
-  lightwhite: '#f6f8fa',
+  alpha: '#ffffff10',
+  lightwhite: '#ecf0f2',
   darkwhite: '#eaeaea',
   trans: 'transparent',
   sky: '#f1f8ff',
@@ -84,7 +84,7 @@ const cs = {
   nolist: 'list-style: none; margin: 0; padding: 0;',
 
   content: {
-    none: `content: "";`,
+    none: 'content: "";',
 
     attr: (v) => `content: attr(${v});`,
     get: (v) => `content: ${v};`,
@@ -99,7 +99,7 @@ const cs = {
     rtop: 'bottom: unset; left: unset; right: 0; top: 0;',
     lbottom: 'top: unset; right: unset; left: 0; bottom: 0;',
     rbottom: 'top: unset; left: unset; right: 0; bottom: 0;',
-    unset:  'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
+    unset: 'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
 
     get: (v) => `position: ${v};`,
   },
@@ -138,9 +138,9 @@ const cs = {
     scaledown: 'object-fit: scale-down;',
     cover: 'object-fit: cover;',
     fill: 'object-fit: fill;',
-    center: `object-position: center center;`,
+    center: 'object-position: center center;',
 
-    fit: (v) => `object-fit: ${v};`,    
+    fit: (v) => `object-fit: ${v};`,
     position: (v) => `object-position: ${v};`
   },
 
@@ -174,10 +174,10 @@ const cs = {
     wmin: 'height: 100%; width: min-content;',
     hmin: 'width: 100%; height: min-content;',
 
-    normal: (w = 320) => `width: ${w}px;; height ${(w / 4) * 3}px;`,  //4:3
-    wide: (w = 320) => `width: ${w}px;; height ${(w / 16) * 9}px;`,  //16:9
-    xwide: (w = 320) => `width: ${w}px;; height ${(w / 21) * 9}px;`,  //21:9
-    fwide: (w = 320) => `width: ${w}px;; height ${(w / 28) * 9}px;`,  //28:9
+    normal: (w = 320) => `width: ${w}px;; height ${(w / 4) * 3}px;`,  // 4:3
+    wide: (w = 320) => `width: ${w}px;; height ${(w / 16) * 9}px;`,  // 16:9
+    xwide: (w = 320) => `width: ${w}px;; height ${(w / 21) * 9}px;`,  // 21:9
+    fwide: (w = 320) => `width: ${w}px;; height ${(w / 28) * 9}px;`,  // 28:9
 
     get: (v) => Number.isInteger(v) ? `width: ${v}px; height: ${v}px;` : `width: ${v}; height: ${v};`,
   },
@@ -336,8 +336,8 @@ const cs = {
     hide: 'transition: all 200ms ease-out;',
     show: 'transition: all 200ms ease-in;',
     repeat: 'animation-iteration-count: infinite;',
-    bounding: `animation-timing-function: cubic-bezier(0, 0, 0.4, 1.5);`,
-    quadratic: `animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);`,
+    bounding: 'animation-timing-function: cubic-bezier(0, 0, 0.4, 1.5);',
+    quadratic: 'animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);',
 
     in: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
     out: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
@@ -358,7 +358,7 @@ const cs = {
   },
 
   align: {
-    unset:  'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
+    unset: 'top: unset; bottom: unset; left: unset; right: unset; transform: none;',
     top: 'position: absolute; bottom: unset; top: 0;',
     bottom: 'position: absolute; top: unset; bottom: 0;',
     left: 'position: absolute; right: unset; left: 0;',
@@ -443,6 +443,7 @@ const cs = {
   },
 
   fill: {
+    none: 'fill: none;',
     white: `fill: ${color.white};`,
     lightwhite: `fill: ${color.lightwhite};`,
     darkwhite: `fill: ${color.darkwhite};`,
@@ -494,6 +495,7 @@ const cs = {
     dark: `stroke: ${color.dark};`,
     lightblack: `stroke: ${color.lightblack};`,
     alphablack: `stroke: ${color.alphablack};`,
+    semiblack: `stroke: ${color.semiblack};`,
     darkgray: `stroke: ${color.darkgray};`,
     lightgray: `stroke: ${color.lightgray};`,
     alphagray: `stroke: ${color.alphagray};`,
@@ -806,7 +808,7 @@ const cs = {
     ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
     `,
 
-    get: (v = color.gray, bar = color.dark ) => `
+    get: (v = color.gray, bar = color.dark) => `
     ::-webkit-scrollbar { width: 10px; height: 10px; background-color: ${v}; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: ${v}; }
     ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: ${bar}; }

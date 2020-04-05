@@ -11,8 +11,10 @@ const StyledObject = styled.div`{
   &.list-box {
     ${cs.pos.relative} ${cs.noliststyle}
 
+    .search-frame { ${cs.m.b10} }
+    
     .lbx-body {
-      ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md} ${cs.m.t10}
+      ${cs.pos.relative} ${cs.size.hauto} ${cs.font.md}
       ${cs.box.inner} ${cs.noselect} ${cs.font.dark} ${cs.over.hidden}
 
       .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.border.gray}
@@ -27,14 +29,13 @@ const StyledObject = styled.div`{
         }
 
         .lbx-date { 
-          ${cs.pos.absolute} ${cs.opac.get(0.7)} ${cs.p.h5} 
-          ${cs.bg.alphagray} ${cs.box.round} ${cs.z.front} ${cs.font.sm}
+          ${cs.pos.absolute} ${cs.opac.get(0.7)} ${cs.p.h5} ${cs.box.round} ${cs.z.front} ${cs.font.xs}
 
           &.top { ${cs.pos.rtop} }
-          &.right { ${cs.align.rbottom} &.delete { ${cs.right(30)} } }
+          &.right { ${cs.pos.rbottom} &.delete { ${cs.right(30)} } }
           &.bottom { ${cs.pos.rbottom} }
-          &.left { ${cs.align.lbottom} }
-          &.center { ${cs.align.bottom} ${cs.bottom(-10)} }
+          &.left { ${cs.pos.lbottom} }
+          &.center { ${cs.pos.bottom} ${cs.bottom(-10)} }
         }
 
         .lbx-cnt {
@@ -297,7 +298,7 @@ const Listbox = (props) => {
                   <p className={cx('lbx-tl', titlealign)}>{stitle}
                     {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
                   </p>
-                  <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>
+                  {sdate && <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>}
 
                   {props.onClickDelete &&
                     <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />

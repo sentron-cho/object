@@ -12,7 +12,7 @@ const StyledObject = styled.div`{
     .svg-icon { ${cs.opac.show} ${cs.w.get(6)} }
 
     &.left { ${cs.align.ycenter} ${cs.h.get(60)} }
-    &.right { }
+    &.right { ${cs.align.ycenter} ${cs.align.right} ${cs.h.get(60)} }
     &.top { } 
     &.bottom { }
 

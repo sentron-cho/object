@@ -1,114 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
-// import cx from 'classnames/bind';
-// import { Svg, cs } from './index';
-// import { Util } from './Utils';
-
-// const msize = { sm: { w: 80, h: 18 }, md: { w: 100, h: 20 }, lg: { w: 120, h: 26 } };
-
-// const StyledObject = styled.ul`{
-//   &.pop-menu { ${cs.pos.relative} ${cs.disp.inblock} ${cs.noselect} ${cs.nolist}
-//     .pm-frame { ${cs.disp.inblock} ${cs.z.top} ${cs.pos.absolute} ${cs.h.fit} ${cs.bg.white} ${cs.font.dark}
-//       ${cs.box.radius} ${cs.border.radius(2)} ${cs.border.shadow()} ${cs.anim.show} 
-//       ${props => cs.top(props.top + "px")} ${props => cs.left(props.left + "px")}
-
-//       .pm-li { 
-//         ${cs.disp.block} ${cs.mouse.pointer} ${cs.w.full} ${cs.p.v5} ${cs.font.center} ${cs.p.h10}
-//         ${cs.min.w(100)}
-
-//         &:hover { ${cs.bg.lightgray} }
-//       }
-
-//       .pm-li:not(:first-child) {
-//         ${cs.border.top} //${cs.border.color(cs.color.alphablack)}
-//       }
-
-//       &.lg { ${cs.font.lg} ${cs.w.get(msize.lg.w)} .pm-li { ${cs.font.line(msize.lg.h)} ${cs.p.v5} } }
-//       &.md { ${cs.font.md} ${cs.w.get(msize.md.w)} .pm-li { ${cs.font.line(msize.md.h)} ${cs.p.v4} } }
-//       &.sm { ${cs.font.sm} ${cs.w.get(msize.sm.w)} .pm-li { ${cs.font.line(msize.sm.h)} ${cs.p.v3} } }
-
-//       &.center { .pm-li { ${cs.font.center} } }
-//       &.left { .pm-li { ${cs.font.left} } }
-//       &.right { .pm-li { ${cs.font.right} } }
-
-//       &.dark { ${cs.bg.dark} ${cs.font.white} .pm-li:hover { ${cs.bg.black} } 
-//         .pm-li:not(:first-child) { ${cs.border.color(cs.color.darkgray)} }
-//       }
-//       &.primary { ${cs.bg.primary} ${cs.font.white} .pm-li:hover { ${cs.bg.blue} } }
-//       &.gray { ${cs.bg.darkgray} ${cs.font.black} .pm-li:hover { ${cs.bg.gray} } }
-
-//       ${props => `${props.width && cs.w.get(props.width)} ${props.padding && cs.p.get(props.padding)}`}
-//     }
-
-//     .noitem { ${cs.font.lightgray} }
-//   }
-// }`;
-
-// class Menu extends React.PureComponent {
-//   constructor(props) {
-//     super(props);
-//     const { frameid = "body" } = props;
-//     this.state = { show: false, frameid: frameid };
-//   }
-
-//   componentDidMount() {
-//     const body = document.getElementById(this.state.frameid);
-//     body && body.addEventListener('mouseup', this.onResize);
-//     window.addEventListener('resize', this.onResize);
-//   }
-
-//   componentWillUnmount() {
-//     const body = document.getElementById(this.state.frameid);
-//     body && body.removeEventListener('mouseup', this.onResize);
-//     window.removeEventListener('resize', this.onResize);
-//   }
-
-//   // 메뉴 이외의 화면을 터치시 메뉴를 닫기 위한 기능
-//   onResize = (e) => {
-//     // props.onClick && props.onClick(null);
-//     const a = Util.isSelfClick(e, (item) => {
-//       return item.indexOf("pm-li") >= 0;
-//     });
-//     if (a) return;
-
-//     this.setState({ show: false });
-//   }
-
-//   onClickItem = (e) => {
-//     const eid = e.currentTarget.getAttribute("eid");
-//     this.props.onClick && this.props.onClick(eid, e);
-//   }
-
-//   onClickMenu = (eid, e) => {
-//     this.setState({ show: !this.state.show });
-//   }
-
-//   render() {
-//     const { props, state } = this;
-//     const { menus = null, width, padding, size = "md", theme = "" } = props;
-//     const length = menus ? menus.length : 0;
-//     const menu = msize[size] || msize['md'];
-//     console.dir(menu);
-//     const left = (menu.w - 20) * -1;
-//     const top = menu.h * -1 * length;
-
-//     return <StyledObject className={cx('pop-menu', props.className)} width={width} padding={padding} left={left} top={top}>
-//       <Svg className={'pm-btn sm'} icon={"vmenu"} color={"black"} onClick={this.onClickMenu} />
-//       {state.show && <div className={cx('pm-frame', theme, size)} >
-//         {menus && menus.map((item, index) => (
-//           <li key={index} className="pm-li" onMouseDown={this.onClickItem} eid={item.id}>
-//             {item.icon && <Svg className={"pm-icon sm"} icon={item.icon} color={cs.color.white} />}
-//             <span className={cx('pm-it', !item.name && 'noitem')} >{item.name || 'noname'}</span>
-//           </li>
-//         ))}
-//         {!menus && <span className={'pm-li noitem'}>noitem</span>}
-//       </div>}
-//     </StyledObject>
-//   }
-// }
-
-// export default Menu;
-
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
@@ -226,6 +115,7 @@ export default class Menu extends React.PureComponent {
     if (a) return;
 
     this.setState({ 'type': type, show: false });
+    this.props.onShow && this.props.onShow(false);
   }
 
   componentDidMount() {
@@ -263,7 +153,9 @@ export default class Menu extends React.PureComponent {
 
   onClick = (eid, e) => {
     e.stopPropagation();
-    this.setState({ show: !this.state.show });
+    const show = !this.state.show;
+    this.setState({ show });
+    this.props.onShow && this.props.onShow(show);
   }
 
   onChanged = (e) => {
@@ -274,15 +166,11 @@ export default class Menu extends React.PureComponent {
       console.dir("none");
     } else {
       const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
-      // if (index === this.state.pos) {
-      //   this.setState({ show: false });
-      //   return;
-      // } else {
-        const item = this.getSelected(index);
-        this.props.onClick && this.props.onClick(item ? item.id : EID.SELECT, e, item);
-        this.props.onChange && this.props.onChange(item ? item.id : EID.SELECT, e, item);
-        this.setState({ pos: index, show: false, modified: true });
-      // }
+      const item = this.getSelected(index);
+      this.props.onClick && this.props.onClick(item ? item.id : EID.SELECT, e, item);
+      this.props.onChange && this.props.onChange(item ? item.id : EID.SELECT, e, item);
+      this.setState({ pos: index, show: false, modified: true });
+      this.props.onShow && this.props.onShow(false);
     }
   }
 

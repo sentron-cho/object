@@ -2,28 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { IMG } from './Icons';
+import { cs } from './index';
 
 const StyledFrame = styled.div`{
   &.loading-box {
-    display: block; padding-right: 0; z-index: 99999 !important; height: 100%; position: absolute; width: 100%
-    .bg { height: 100%; position: absolute; width: 100%; background: transparent;
-      img{ width: auto; height: 80px; position: absolute; opacity: 0.5
-        top: 50%; left: 50%; transform: translate(-50%, -50%);
+    ${cs.disp.block} ${cs.p.r0} ${cs.z.menu} ${cs.size.full} ${cs.pos.absolute}
+    // z-index: 99999 !important;
+    .bg {
+      ${cs.size.full} ${cs.pos.absolute} ${cs.bg.trans}
+      img { 
+        ${cs.w.auto} ${cs.h.get(80)} ${cs.opac.alpha} ${cs.align.center}
       }
     }
 
-    &.sm { .bg img { width: auto; height: 100px; } }
-    &.md { .bg img { width: auto; height: 200px; } }
-    &.lg { .bg img { width: auto; height: 300px; } }
-    &.xs { .bg img { width: auto; height: 50px; } }
-    &.half { .bg img { width: auto; height: 50%; } }
+    &.sm { .bg img { ${cs.h.get(40)} } }
+    &.md { .bg img { ${cs.h.get(100)} } }
+    &.lg { .bg img { ${cs.h.get(200)} } }
+    &.xs { .bg img { ${cs.h.get(25)} } }
+    &.half { .bg img { ${cs.h.half} } }
 
-    &.hide { display: none; }
-    &.show { display: block; }
+    &.hide { ${cs.disp.none} }
+    &.show { ${cs.disp.block} }
 
-    .bg-show {
-      background: rgba(0,0,0,0.5);
-    }
+    .bg-show { ${cs.bg.alphablack} }
   }
 }`;
 

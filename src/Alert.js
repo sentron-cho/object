@@ -157,7 +157,6 @@ class Alert extends React.PureComponent {
       <ul className="alb-list">
         {list.map((item, index) => {
           const {size, hide} = item;
-          console.log(size);
           return <li key={`no-${index}`} className={cx("alb-box", item.type, `no-${index}`, {hide}, size)} eid={item.key} onAnimationEnd={this.onAnimEnd}>
             <Svg className="alb-cancel sm" name={"cancel"} onClick={this.removeAlert} eid={item.key} color={"black"} />
             <div className="alb-body">

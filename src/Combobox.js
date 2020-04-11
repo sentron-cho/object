@@ -32,7 +32,7 @@ const StyledObject = styled.div` {
         ${cs.w.get("max-content")} ${cs.max.width("max-content")} 
         ${cs.p.h5} ${cs.align.ltop} ${cs.z.menu} ${cs.m.t10} ${cs.box.line}
         ${cs.box.radius} ${cs.border.alphagray} ${cs.box.shadow}
-        ${cs.max.width(500)}
+        ${cs.max.width(500)} ${cs.max.height(180)} ${cs.over.yauto} ${cs.scrollbar.t3}
         .cb-li { ${cs.p.get("5px 10px")} ${cs.font.ellipsis}
           &:hover { ${cs.bg.lightgray} }
         }

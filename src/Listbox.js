@@ -99,14 +99,14 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.primaryhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.gray {
       .lbx-body { ${cs.bg.lightgray} 
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.grayhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.grayhover} }
         .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
@@ -114,7 +114,7 @@ const StyledObject = styled.div`{
     &.dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.black} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -122,7 +122,7 @@ const StyledObject = styled.div`{
     &.black {
       .lbx-body { ${cs.bg.black} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -132,7 +132,7 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.sky} ${cs.font.black}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
         .lbx-date { ${cs.bg.primary} ${cs.font.white} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.lightgray} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.lightgray} }
         .lbx-icon { .svg-path { ${cs.fill.dark} } } 
       }
       .btn-new { ${cs.bg.sky} ${cs.font.dark} }
@@ -141,14 +141,14 @@ const StyledObject = styled.div`{
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
         .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.primaryhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.primary} ${cs.font.white} }
     }
     &.theme-gray {
       .lbx-body { ${cs.bg.lightgray} 
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.grayhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.grayhover} }
         .lbx-icon { ${cs.opac.get(0.5)} .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.lightblack} ${cs.font.white} }
@@ -156,7 +156,7 @@ const StyledObject = styled.div`{
     &.theme-dark {
       .lbx-body { ${cs.bg.dark} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.dark} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
@@ -164,7 +164,7 @@ const StyledObject = styled.div`{
     &.theme-black {
       .lbx-body { ${cs.bg.black} ${cs.font.white} 
         .lbx-cnt { ${cs.bg.lightgray} ${cs.font.black} }
-        .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.darkhover} }
+        .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.darkhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
       }
       .btn-new { ${cs.bg.black} ${cs.font.white} }

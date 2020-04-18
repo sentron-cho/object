@@ -99,7 +99,7 @@ const StyledObject = styled.div`{
   }
 }`;
 
-class Pagenavi extends React.Component {
+class Pagenavi extends React.PureComponent {
 
   constructor(props) {
     super(props);

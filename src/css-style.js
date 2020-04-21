@@ -307,7 +307,14 @@ const cs = {
     ellipsis: 'text-overflow: ellipsis; overflow: hidden; white-space: nowrap;',
     breakall: 'word-break: break-all;',
     breakword: 'word-break: break-word;',
-
+    payton: 'font-family: "Paytone One";',
+    eastsea: 'font-family: "East Sea Dokdo";',
+    hansans: 'font-family: "Black Han Sans";',
+    nanumgothic: 'font-family: "Nanum Gothic";',
+    nanumcoding: 'font-family: "Nanum Gothic Coding";',
+    natosans: 'font-family: "Noto Sans";',
+    himelody: 'font-family: "Hi Melody";',
+    
     outline: (v = '1px', c = 'black') => Number.isInteger(v) ? `-webkit-text-stroke: ${v}px ${c};` : `-webkit-text-stroke: ${v} ${c};`,
     overflow: (v) => `text-overflow: ${v};`,
     space: (v) => `white-space: ${v};`,

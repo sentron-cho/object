@@ -19,14 +19,14 @@ const StyledObject = styled.span`{
     &.xs { ${cs.h.xs} ${cs.font.xs} ${cs.p.get("0px 4px")} }
 
     &.icon { ${cs.disp.get("inline-flex")} 
-      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} ${cs.left(18)} }
-      .btn-label { ${cs.align.center} ${cs.pos.relative} }
+      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} ${cs.pos.relative} }
+      .btn-label { ${cs.align.center} ${cs.pos.relative} ${cs.p.l0} }
 
-      &.md { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(22)} } }
-      &.xl { .btn-icon { ${cs.icon.md} ${cs.m.left(-6)} } .btn-label { ${cs.p.get("0px 30px")} ${cs.p.b2} ${cs.p.left(30)} } }
-      &.lg { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(22)} } }
-      &.sm { .btn-icon { ${cs.icon.xs} ${cs.m.left(-1)} } .btn-label { ${cs.p.get("0px 14px")} ${cs.p.b2} ${cs.p.left(18)} } }
-      &.xs { .btn-icon { ${cs.icon.get(10)} ${cs.m.left(0)} } .btn-label { ${cs.p.get("0px 12px")} ${cs.p.b2} ${cs.p.left(16)} } }
+      &.md { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(0)} } }
+      &.xl { .btn-icon { ${cs.icon.md} ${cs.m.left(-6)} } .btn-label { ${cs.p.get("0px 30px")} ${cs.p.b2} ${cs.p.left(0)} } }
+      &.lg { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(0)} } }
+      &.sm { .btn-icon { ${cs.icon.xs} ${cs.m.left(-1)} } .btn-label { ${cs.p.get("0px 14px")} ${cs.p.b2} ${cs.p.left(0)} } }
+      &.xs { .btn-icon { ${cs.icon.get(10)} ${cs.m.left(0)} } .btn-label { ${cs.p.get("0px 12px")} ${cs.p.b2} ${cs.p.left(0)} } }
 
       .running { ${cs.z.front} }
     }
@@ -77,7 +77,7 @@ const StyledObject = styled.span`{
     &.full { ${cs.w.full} ${cs.p.h0} }
 
     .btn-label {
-      ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.block} 
+      ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} 
       ${cs.font.center} ${cs.h.fit} ${cs.mouse.pointer}
     }
 

@@ -19,7 +19,7 @@ const StyledObject = styled.span`{
     &.xs { ${cs.h.xs} ${cs.font.xs} ${cs.p.get("0px 4px")} }
 
     &.icon { ${cs.disp.get("inline-flex")} 
-      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} }
+      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} ${cs.left(18)} }
       .btn-label { ${cs.align.center} ${cs.pos.relative} }
 
       &.md { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(22)} } }

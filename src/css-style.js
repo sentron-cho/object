@@ -276,6 +276,7 @@ const cs = {
     right: 'text-align: right;',
     thin: 'font-weight: 300;',
     thinbold: 'font-weight: 400;',
+    semibold: 'font-weight: 500;',
     bold: 'font-weight: 550;',
     thickbold: 'font-weight: 600;',
     white: `color: ${color.white};`,

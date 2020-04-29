@@ -365,6 +365,7 @@ const cs = {
     slideout: (v = '150ms', s = '0', e = '-100%', name = 'slideout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateX(${s});  opacity: 0.3; } to { transform: translateX(${e});  opacity: 1; } };`,
     slidedown: (v = '150ms', s = '-100%', e = '0') => `animation: slidedown linear 1 forwards ${v}; @keyframes slidedown { from  { transform: translateY(${s}); opacity: 0.3; } to { transform: translateY(${e}); opacity: 1; } };`,
     slideup: (v = '150ms', s = '0', e = '-100%') => `animation: slideup linear 1 forwards ${v}; @keyframes slideup { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
+    flicking: (v = '150ms', s = '1', e = '0') => `animation: flicking linear 1 forwards ${v}; @keyframes flicking { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
   },
 
   align: {

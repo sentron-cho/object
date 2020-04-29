@@ -72,6 +72,10 @@ const StyledObject = styled.div` {
       ${cs.border.none} ${cs.font.bold} ${cs.font.darkgray} 
     }
 
+    .ed-required {
+      ${cs.font.red} ${cs.p.l2} ${cs.font.lg} ${cs.font.thickbold} ${cs.pos.relative} ${cs.top(3)}
+    }
+
     .guide { 
       ${cs.font.sm} ${cs.font.gray} ${cs.font.right} 
       display: ${cs.disp.get((props) => props.helper && 'block')} 
@@ -358,14 +362,16 @@ class Editbox extends React.PureComponent {
     const {
       disable = disabled, readonly, inline, multi,
       fontsize = '14px', height = '80px', minheight, maxheight,
-      bordercolor, helpcolor, bgcolor, fontcolor
+      bordercolor, helpcolor, bgcolor, fontcolor, validate
     } = props;
 
     return (
       <StyledObject className={cx('edit-box', props.className, { inline }, theme && `theme-${theme}`)}
         height={height} fontsize={fontsize} maxheight={maxheight} minheight={minheight}
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
-        {props.label && !inline && <label className="ed-label">{props.label}</label>}
+        {props.label && !inline && <label className="ed-label">{props.label}
+          {validate && <span className="ed-required">*</span>}
+          </label>}
         <div className={cx('box', { disable }, { readonly })} >
           {props.label && inline && <label className={cx('ed-label', { noti })}>{props.label}</label>}
           {this.elemInput()}

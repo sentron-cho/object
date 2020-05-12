@@ -135,6 +135,8 @@ export function doUpdate(url, value = null, list) {
 };
 
 export function doDelete(url, value = null, list) {
+  axios.defaults.headers.common['Authorization'] = Storage.getToken();
+
   return new Promise((resolve, reject) => {
     if (!url) { alert('is not url'); reject(); return; };
     axios.delete(url, { params: { ...value } }).then((res) => {

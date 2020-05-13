@@ -68,8 +68,8 @@ const StyledObject = styled.div` {
     &.red { .cb-sel, .cb-ul { ${cs.bg.red} ${cs.font.white} .cb-li:hover { ${cs.bg.redhover} } } }
     &.primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }
     &.gray { .cb-sel, .cb-ul { ${cs.bg.lightgray} ${cs.font.black} .cb-li:hover { ${cs.bg.gray} } } &.inline { .cb-label { ${cs.font.dark} } } }
-    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } .cb-icon .svg-path { ${cs.fill.white} } }
-    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } .cb-icon .svg-path { ${cs.fill.white} } }
+    &.dark { .cb-sel, .cb-ul { ${cs.bg.dark} ${cs.font.white} .cb-li:hover { ${cs.bg.black}} } .cb-icon .svg-path { ${cs.fill.white} } .cb-sel { ${cs.border.darkgray} } }
+    &.black { .cb-sel, .cb-ul { ${cs.bg.black} ${cs.font.white} .cb-li:hover { ${cs.bg.dark}} } .cb-icon .svg-path { ${cs.fill.white} } .cb-sel { ${cs.border.darkgray} } }
 
     &.theme-sky { .cb-sel, .cb-ul { ${cs.bg.sky} ${cs.font.black} .cb-li:hover {  ${cs.bg.lightgray} } } }
     &.theme-primary { .cb-sel, .cb-ul { ${cs.bg.primary} ${cs.font.white} .cb-li { &:hover { ${cs.bg.blue} ${cs.font.white} } } } }

@@ -179,14 +179,13 @@ export default class Combobox extends React.PureComponent {
     //   console.dir("none");
     // } else {
     const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
+    this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index), index);
+    this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index), index);
+
     if (index === this.state.pos) {
-      this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
-      this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
       this.setState({ show: false });
       return;
     } else {
-      this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
-      this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
       this.setState({ pos: index, show: false, modified: true });
     }
     // }

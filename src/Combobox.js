@@ -39,6 +39,8 @@ const StyledObject = styled.div` {
       }  
     }
 
+    &.show { ${cs.z.over} }
+
     .cb-label { ${cs.disp.block} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} ${cs.border.none} ${cs.font.weight(500)} }
 
     &.inline { .cb-label { ${cs.align.ltop} ${cs.font.xs} ${cs.font.lightgray} ${cs.z.front} ${cs.top(3)} ${cs.left(3)} } }
@@ -176,17 +178,17 @@ export default class Combobox extends React.PureComponent {
     // if (eid === "none") {
     //   console.dir("none");
     // } else {
-      const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
-      if (index === this.state.pos) {
-        this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
-        this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
-        this.setState({ show: false });
-        return;
-      } else {
-        this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
-        this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
-        this.setState({ pos: index, show: false, modified: true });
-      }
+    const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
+    if (index === this.state.pos) {
+      this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
+      this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
+      this.setState({ show: false });
+      return;
+    } else {
+      this.props.onClick && this.props.onClick(EID.SELECT, e, this.getSelected(index));
+      this.props.onChange && this.props.onChange(EID.SELECT, e, this.getSelected(index));
+      this.setState({ pos: index, show: false, modified: true });
+    }
     // }
   }
 
@@ -199,7 +201,7 @@ export default class Combobox extends React.PureComponent {
     const { text, label } = props.options || { text: null, label: null };
 
     return (
-      <StyledObject className={cx('combo-box md', className, { disable }, { inline }, theme && `theme-${theme}`)} text={text} label={label} border={props.border} >
+      <StyledObject className={cx('combo-box md', className, { disable }, { inline }, theme && `theme-${theme}`, { show })} text={text} label={label} border={props.border} >
         {props.label ? <label className="cb-label">{props.label}</label> : null}
         <div ref={(ref) => { this.input = ref }} className={cx("cb-sel")} onClick={this.onClick} >
           <span className={cx("cb-txt", title === 'noitem' && 'noitem')}>{title}</span>

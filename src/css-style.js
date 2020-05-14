@@ -254,6 +254,8 @@ const cs = {
     menu: 'z-index: 99999;',
     header: 'z-index: 199999;',
     popup: 'z-index: 999999;',
+    modal: 'z-index: 1999999;',
+    confirm: 'z-index: 2999999;',
     top: 'z-index: 9999999;',
 
     get: (v) => `z-index: ${v};`,

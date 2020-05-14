@@ -7,7 +7,7 @@ import { Button, Svg, cs } from './index';
 
 const StyledObject = styled.div`
 &.confirm {
-  ${cs.pos.fixed} ${cs.p.right(0)} ${cs.z.popup} ${cs.disp.black} ${cs.pos.ltop} ${cs.size.full}
+  ${cs.pos.fixed} ${cs.p.right(0)} ${cs.z.confirm} ${cs.disp.black} ${cs.pos.ltop} ${cs.size.full}
 
   .bg { ${cs.size.full} ${cs.bg.back} ${cs.pos.ltop} }
   .cf-close { ${cs.float.right} }
@@ -76,7 +76,7 @@ const StyledObject = styled.div`
 class Confirm extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { show: false, title: ST.ALARM, msg: ST.IS_DELETE, type: '', ok: 'OK', cancel: null, className: '', isok: false };
+    this.state = { show: false, title: ST.ALARM, msg: ST.IS_DELETE, type: '', ok: 'OK', size: '', cancel: null, className: '', isok: false };
   }
 
   // props가 업데이트 되면 동작 여기서 state상태를 바꿔준다.
@@ -103,7 +103,7 @@ class Confirm extends React.PureComponent {
       this.state.show &&
       <StyledObject className={cx("confirm", state.type, state.theme)}>
         <div className="bg" onKeyPress={this.onKeyPressed} />
-        <div className={cx("cf-frame", state.className)}>
+        <div className={cx("cf-frame", state.className, state.size)}>
           <div className="cf-head">
             <span className="cf-title">{state.title}</span>
             <Svg className="cf-close sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />

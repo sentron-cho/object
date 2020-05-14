@@ -8,7 +8,7 @@ import { Button, Svg } from './index';
 
 export const StyledObject = styled.div`{ 
   &.modal {
-    ${cs.disp.block} ${cs.p.a0} ${cs.z.popup} ${cs.font.black} 
+    ${cs.disp.block} ${cs.p.a0} ${cs.z.modal} ${cs.font.black} 
     ${cs.pos.fixed} ${cs.size.full} ${cs.pos.ltop}
 
     .bg { ${cs.size.full} ${cs.pos.absolute} ${cs.bg.alphablack} }

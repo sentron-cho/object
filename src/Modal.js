@@ -45,53 +45,56 @@ export const StyledObject = styled.div`{
     &.sm { .md-frame { ${cs.w.dssm} } }
     &.xs { .md-frame { ${cs.w.dsxs} } }
     
-    &.sky { .cf-head, .cf-frame { ${cs.bg.sky} ${cs.font.dark} 
+    &.sky { .md-head, .md-frame { ${cs.bg.sky} ${cs.font.dark} } 
       .md-head { ${cs.border.sky} }
-      .md-foot .button { ${cs.bg.sky} ${cs.box.line} ${cs.border.gray} ${cs.font.dark} } } 
+      .md-foot .button { ${cs.bg.sky} ${cs.box.line} ${cs.border.gray} ${cs.font.dark} }
       .svg-path { ${cs.fill.dark} }
     }
-    &.primary { .md-head, .md-frame { ${cs.bg.primary} ${cs.font.white} 
+    &.primary { .md-head, .md-frame { ${cs.bg.primary} ${cs.font.white} } 
       .md-head { ${cs.border.gray} }
-      .md-foot .button { ${cs.bg.primary} ${cs.box.line} ${cs.border.lightgray} } } 
+      .md-foot .button { ${cs.bg.primary} ${cs.box.line} ${cs.border.lightgray} }
       .svg-path { ${cs.fill.white} }
     }
-    &.gray { .md-head, .md-frame { ${cs.bg.gray} ${cs.font.white} 
+    &.gray { .md-head, .md-frame { ${cs.bg.gray} ${cs.font.white} } 
       .md-head { ${cs.border.lightgray} }
-      .md-foot .button { ${cs.bg.gray} ${cs.box.line} ${cs.border.lightwhite} } } 
+      .md-foot .button { ${cs.bg.gray} ${cs.box.line} ${cs.border.lightwhite} }
       .svg-path { ${cs.fill.white} }
     } 
-    &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} 
+    &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} } 
       .md-head { ${cs.border.darkgray} }
-      .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
+      .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} }
       .svg-path { ${cs.fill.white} }
     }
-    &.black { .md-head, .md-frame { ${cs.bg.black} ${cs.font.white} 
+    &.black { .md-head, .md-frame { ${cs.bg.black} ${cs.font.white} } 
       .md-head { ${cs.border.dark} }
-      .md-foot .button { ${cs.bg.black} ${cs.box.line} ${cs.border.dark} } } 
+      .md-foot .button { ${cs.bg.black} ${cs.box.line} ${cs.border.dark} }
       .svg-path { ${cs.fill.white} }
     } 
-    // &.dark { .md-head, .md-frame { ${cs.bg.dark} ${cs.font.white} 
-    //   .md-head { ${cs.border.darkgray} }
-    //   .md-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
-    //   .svg-path { fill: white; }
-    // }
     &.white { .md-head, .md-frame { ${cs.bg.white} ${cs.font.dark} } 
-      .md-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
+      .md-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} }
     }
 
 
-    @media screen and (max-width : 767px) {
+    @media screen and (max-width : 600px) {
       .bg { ${cs.disp.none} }
-      .md-frame {
-        ${cs.size.full} ${cs.m.a0} ${cs.min.width(400)}
-  
-        .md-head { 
-          ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(60)} 
-          ${cs.p.t20} ${cs.bg.get("#13203a")} ${cs.font.white}
-        };
-        .md-body { ${cs.h.calc("100% - 140px")} };
-        .md-foot { ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(80)} }
+      &.xl, &.lg, &.md, &.sm {
+        .md-frame {
+          ${cs.size.full} ${cs.m.a0} ${cs.min.width(240)}
+    
+          .md-head { 
+            ${cs.border.radius(0)} ${cs.border.bottom} ${cs.h.get(60)} 
+            ${cs.p.t20} ${cs.font.white}
+          };
+          .md-body { ${cs.h.calc("100% - 140px")} };
+          .md-foot { ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(80)} }
+        }
       }
+
+      // &.xl { .md-frame { ${cs.w.full} } }
+      // &.lg { .md-frame { ${cs.w.full} } }
+      // &.md { .md-frame { ${cs.w.full} } }
+      // &.sm { .md-frame { ${cs.w.full} } }
+      // &.xs { .md-frame { ${cs.w.full} } }
     }
   }
 }`;

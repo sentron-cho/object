@@ -252,7 +252,7 @@ class Header extends React.PureComponent {
             </ul>}
 
             {/* 모바일에서의 아이콘 */}
-            {type === SCREEN.ST.MOBILE && renderMobile()}
+            {array.length > 0 && type === SCREEN.ST.MOBILE && renderMobile()}
           </div>
         </div>
       </StyledObject>

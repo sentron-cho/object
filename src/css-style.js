@@ -359,7 +359,7 @@ const cs = {
 
     name: (v = '150ms') => `animation-name: ${v};`,
     time: (v = '150ms') => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
-    showin: (v = '150ms', s = '0.1', e = '1') => `animation: show-in linear 1 forwards ${v}; @keyframes show-in { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    showin: (v = '150ms', s = '0', e = '1') => `animation: show-in linear 1 forwards ${v}; @keyframes show-in { from { opacity: ${s};  } to { opacity: ${e}; } };`,
     showout: (v = '150ms', s = '1', e = '0') => `animation: show-out linear 1 forwards ${v}; @keyframes show-out { from { opacity: ${s};  } to { opacity: ${e}; } };`,
     fadein: (v = '150ms', s = '0', e = '1') => `animation: fadein linear 1 forwards ${v}; @keyframes fadein { from { opacity: ${s}; } to { opacity: ${e}; } };`,
     fadeout: (v = '150ms', s = '1', e = '0') => `animation: fadeout linear 1 forwards ${v}; @keyframes fadeout { from { opacity: ${s}; } to { opacity: ${e}; } };`,

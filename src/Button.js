@@ -59,6 +59,7 @@ const StyledObject = styled.span`{
       .btn-label { ${cs.mouse.default} }
       // &.primary, &.orange, &.red, &.green, &.dark, &.black, &.gray { ${cs.font.white} }
       &.trans:hover { &:hover { ${cs.font.noneline} } }
+      &.gd-gray { ${cs.font.darkgray} }
     }
 
     &.right { ${cs.align.right} }

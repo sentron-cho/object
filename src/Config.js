@@ -209,6 +209,8 @@ export const EID = {
   DELETE: "delete",
   INSERT: "insert",
   UPDATE: "update",
+  FIND: "find",
+  SEARCH: "search",
   MENU: "menu",
   HOME: "home",
   PAGE: "page",

@@ -7,7 +7,7 @@ import { Button, Svg, cs } from './index';
 
 const StyledObject = styled.div`
 &.confirm {
-  ${cs.pos.fixed} ${cs.p.right(0)} ${cs.z.confirm} ${cs.disp.black} ${cs.pos.ltop} ${cs.size.full}
+  ${cs.pos.fixed} ${cs.p.right(0)} ${cs.z.confirm} ${cs.disp.black} ${cs.pos.ltop} ${cs.size.full} ${cs.noselect}
 
   .bg { ${cs.size.full} ${cs.bg.back} ${cs.pos.ltop} }
   .cf-close { ${cs.float.right} }
@@ -96,9 +96,10 @@ class Confirm extends React.PureComponent {
   }
 
   onKeyPressed = (e) => (e.key === KEY.ENTER) && this.onClicked(EID.OK);
-
+  
   render() {
     const { state } = this;
+    const btnsize = state.size === 'sm' ? 'md' : state.size === 'xs' ? 'sm' : 'lg'
     return (
       this.state.show &&
       <StyledObject className={cx("confirm", state.type, state.theme)}>
@@ -114,8 +115,8 @@ class Confirm extends React.PureComponent {
           </div>
 
           <div className="cf-foot">
-            <Button className="primary right" onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />
-            {state.cancel && <Button className="primary right cf-cancel" onClick={this.onClicked} title={state.cancel ? state.cancel : EID.CANCEL} eid={EID.CANCEL} />}
+            <Button className={cx("primary right", btnsize)} onClick={this.onClicked} title={state.ok ? state.ok : ST.OK} eid={EID.OK} />
+            {state.cancel && <Button className={cx("primary right cf-cancel", btnsize)} onClick={this.onClicked} title={state.cancel ? state.cancel : EID.CANCEL} eid={EID.CANCEL} />}
           </div>
         </div>
       </StyledObject>

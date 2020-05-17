@@ -91,19 +91,18 @@ export const svg = {
 };
 
 const StyledObject = styled.span` {
-  &.svg-icon { ${cs.size.full} ${cs.disp.inblock} ${cs.z.front} ${cs.pos.relative} ${cs.opac.alpha}
+  &.svg-icon { ${cs.size.full} ${cs.disp.inblock} ${cs.z.front} ${cs.pos.relative} 
 
     &.clickable:not(.disabled):hover { ${cs.opac.show} ${cs.mouse.pointer} ${cs.anim.show}
       .svg-path { ${cs.icon.fill(cs.color.green)} }
       &.box { ${cs.border.color('#3476c1')} ${cs.bg.get('#3476c1')} }
     }
 
-    svg { ${cs.top(0)} ${cs.left(0)} ${cs.pos.relative} }
+    svg { ${cs.align.center} }
 
     &.active { ${cs.opac.show} .svg-path { ${cs.icon.fill(cs.color.green)} } }
-    &.box { ${cs.box.line} ${cs.border.lightgray} ${cs.p.get('4px')} ${cs.border.radius(5)} }
-    &.bg { ${cs.bg.get('rgba(0, 0, 0, 0.5)')} }
-    &.radius { ${cs.border.radius('50%')} }
+    &.box { ${cs.box.line} ${cs.border.lightgray} ${cs.border.radius(3)} .svg { ${cs.w.get('90%')} } }
+    &.bg { ${cs.bg.get('rgba(0, 0, 0, 0.5)')} }    
     
     &.left { ${cs.align.left} }
     &.center { ${cs.align.xcenter} }
@@ -124,14 +123,16 @@ const StyledObject = styled.span` {
     &.gray { .svg-path { ${cs.fill.gray} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.grayhover} } } }
     &.white { .svg-path { ${cs.fill.white} ${cs.opac.get(0.7)} } &.clickable:not(.disabled):hover { .svg-path { ${cs.fill.lightgray} } } }
 
-    &.md { ${cs.icon.md} &.box { ${cs.p.get('5px')} } }
-    &.xxl { ${cs.icon.xxl} &.box { ${cs.p.get('10px')} } }
-    &.xl { ${cs.icon.xl} &.box { ${cs.p.get('7px')} } }
-    &.lg { ${cs.icon.lg} &.box { ${cs.p.get('5px')} } }
-    &.sm { ${cs.icon.sm} &.box { ${cs.p.get('4px')} } }
-    &.xs { ${cs.icon.xs} &.box { ${cs.p.get('3px')} svg { ${cs.top(-3)} } } }
+    &.md { ${cs.icon.md} .svg { ${cs.p.get('2px')} } &.box { ${cs.border.radius(3)} } }
+    &.xxl { ${cs.icon.xxl} .svg { ${cs.p.get('4px')} } &.box { ${cs.border.radius(5)} } }
+    &.xl { ${cs.icon.xl} .svg { ${cs.p.get('3px')} } &.box { ${cs.border.radius(5)} } }
+    &.lg { ${cs.icon.lg} .svg { ${cs.p.get('2px')} } &.box { ${cs.border.radius(3)} } }
+    &.sm { ${cs.icon.sm} .svg { ${cs.p.get('1px')} } &.box { ${cs.border.radius(2)} } }
+    &.xs { ${cs.icon.xs} .svg { ${cs.p.get('0')} } &.box { ${cs.border.radius(2)} } }
 
+    &.radius { ${cs.border.radius('50% !important')} .svg { ${cs.w.get('65%')} } }
     &.disabled { ${cs.opac.hide} }
+    &.alpha { ${cs.opac.alpha} }
   }
 }`;
 
@@ -150,7 +151,7 @@ const Svg = (props) => {
   return (
     <StyledObject className={cx('svg-icon md', props.className, { disabled }, { clickable }, { active })} style={props.style}
       name={name} color={props.color} onClick={props.disabled ? () => null : onClicked} eid={props.eid} title={props.help} >
-      <svg x={'0px'} y={'0px'} width={'100%'} height={'100%'} viewBox={icon.viewbox} eid={props.eid} >
+      <svg className={'svg'} x={'0px'} y={'0px'} width={'100%'} height={'100%'} viewBox={icon.viewbox} eid={props.eid} >
         <path className={'svg-path'} fill={color} d={icon.path} />
       </svg >
     </StyledObject >

@@ -317,7 +317,7 @@ const cs = {
     nanumcoding: 'font-family: "Nanum Gothic Coding";',
     natosans: 'font-family: "Noto Sans";',
     himelody: 'font-family: "Hi Melody";',
-    
+
     outline: (v = '1px', c = 'black') => Number.isInteger(v) ? `-webkit-text-stroke: ${v}px ${c};` : `-webkit-text-stroke: ${v} ${c};`,
     overflow: (v) => `text-overflow: ${v};`,
     space: (v) => `white-space: ${v};`,
@@ -331,7 +331,7 @@ const cs = {
     weight: (v) => `font-weight: ${v};`,
     align: (v) => `text-align: ${v};`,
     break: (v = 'break-all') => `word-break: ${v};`,
-    spacing:(v = 0) => Number.isInteger(v) ? `letter-spacing: ${v}px;` : `letter-spacing: ${v};`,
+    spacing: (v = 0) => Number.isInteger(v) ? `letter-spacing: ${v}px;` : `letter-spacing: ${v};`,
   },
 
   opac: {
@@ -359,10 +359,10 @@ const cs = {
 
     name: (v = '150ms') => `animation-name: ${v};`,
     time: (v = '150ms') => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
-    showin: (v = '150ms', s = '0', e = '1', name='showin') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
-    showout: (v = '150ms', s = '1', e = '0', name='showout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
-    fadein: (v = '150ms', s = '0', e = '1', name='fadein') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
-    fadeout: (v = '150ms', s = '1', e = '0', name='fadeout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
+    showin: (v = '150ms', s = '0', e = '1', name = 'showin') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    showout: (v = '150ms', s = '1', e = '0', name = 'showout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    fadein: (v = '150ms', s = '0', e = '1', name = 'fadein') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
+    fadeout: (v = '150ms', s = '1', e = '0', name = 'fadeout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
     slidein: (v = '150ms', s = '-100%', e = '0', name = 'slidein') => `animation: ${name} linear 1 forwards ${v}; @keyframes  ${name} { from  { transform: translateX(${s}); opacity: 0.3; } to { transform: translateX(${e}); opacity: 1; } };`,
     slideout: (v = '150ms', s = '0', e = '-100%', name = 'slideout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateX(${s});  opacity: 0.3; } to { transform: translateX(${e});  opacity: 1; } };`,
     slidedown: (v = '150ms', s = '-100%', e = '0', name = 'slidedown') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s}); opacity: 0.3; } to { transform: translateY(${e}); opacity: 1; } };`,
@@ -392,6 +392,7 @@ const cs = {
     y: (v) => Number.isInteger(v) ? `transform: translateY(${v}px);;` : `transform: translateY(${v});`,
     vertical: (v) => `vertical-align : ${v};`,
     get: (v) => `transform: ${v};`,
+    translate: (v) => `transform: translate(${v});`,
     justify: (v) => `justify-content: ${v};`,
   },
 

@@ -211,6 +211,7 @@ export const EID = {
   UPDATE: "update",
   FIND: "find",
   SEARCH: "search",
+  DIC: "dic",
   MENU: "menu",
   HOME: "home",
   PAGE: "page",

@@ -396,6 +396,14 @@ const cs = {
     justify: (v) => `justify-content: ${v};`,
   },
 
+  transform: {
+    none: 'transform: none;',
+    translateX: (v) => `transform: translateX(${v});`,
+    translateY: (v) => `transform: translateY(${v});`,
+    translate: (v) => `transform: translate(${v});`,
+    rotate: (v) => `transform: rotate(${v});`,
+  },
+
   bg: {
     active: `background: ${color.active};`,
     hover: `background: ${color.hover};`,

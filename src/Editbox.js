@@ -102,18 +102,20 @@ const StyledObject = styled.div` {
     
     &.inline { ${cs.m.get('5px 0')}
       .ed-label { 
-        ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.m.a2} 
-        ${cs.font.primary} ${cs.m.top(-2)}
+        ${cs.disp.inblock} ${cs.pos.absolute} ${cs.z.front} ${cs.max.width(100)} ${cs.p.h5}
+        ${cs.font.primary} ${cs.m.top(-12)} ${cs.m.left(-8)} ${cs.opac.get(0.3)} ${cs.border.radius(3)}
       }
 
       .box {
         &:focus-within {
-          .ed-label { ${cs.font.xs} ${cs.anim.get('scale(0.7) 150ms ease-in')} }
+          .ed-label { ${cs.bg.trans} ${cs.opac.get(0.3)} ${cs.font.sm} }
           .ed-label.noti { ${cs.opac.hide} ${cs.anim.show} }
         }
 
-        .input { ${cs.font.right} ${cs.p.top(12)} }
+        .input { ${cs.font.right} ${cs.p.top(6)} }
       }
+
+      &:hover { .ed-label { ${cs.font.md} ${cs.opac.show} ${cs.anim.show} } }
     }
 
     &.xs .box .input { ${cs.h.get(16)} ${cs.min.height(16)} ${cs.p.get('0 0px')} ${cs.font.line(14)} ${cs.font.xs} }

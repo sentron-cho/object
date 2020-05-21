@@ -347,7 +347,7 @@ export const Util = {
     if (url.indexOf("http") === 0) {
       return url;
     }
-    
+
     return (type === "youtube" || type === "link") ? url : (url.indexOf("data:") === 0 ? url : url ? path + url : '');
   },
 
@@ -357,13 +357,13 @@ export const Util = {
     return (typeof item === "object" && item !== null) ? true : false;
   },
 
-  parseJson(value) {
+  parseJson(value, deep = true) {
     if (!this.isEmpty(value)) {
       value = value.replace(/\n/gi, '\\n');
       value = value.replace(/\r/gi, '\\r');
       // value = value.replace(/\\"/gi, '\\"');
       let temps = JSON.parse(value);
-      if (temps.length > 0) {
+      if (deep && temps.length > 0) {
         temps.map(item =>
           Object.keys(item).map(key =>
             item[key] = item[key].toString()
@@ -465,7 +465,7 @@ export const Storage = {
   clearSession() {
     window.sessionStorage.clear();
   },
-  
+
   setLocalItem(key, value) {
     this.setItem(window.localStorage, key, value);
   },

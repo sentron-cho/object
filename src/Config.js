@@ -207,6 +207,7 @@ export const EID = {
   SAVE: "save",
   SELECT: "select",
   DELETE: "delete",
+  REMOVE: "remove",
   INSERT: "insert",
   UPDATE: "update",
   FIND: "find",

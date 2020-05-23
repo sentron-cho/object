@@ -228,6 +228,8 @@ export const EID = {
   SHOW_ALL: "show-all",
   MINUS: "minus",
   PLUS: "plus",
+  MIN: "min",
+  MAX: "max",
 };
 
 export const KEY = {

@@ -17,6 +17,13 @@ export function getParam(url = null) {
   return Storage.getLocalItem(path);
 }
 
+export function popParam(url = null) {
+  const path = url || window.location.pathname;
+  const param = Storage.getLocalItem(path);
+  Storage.removeLocalItem(path);
+  return param;
+}
+
 export function doList(url, value = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
 

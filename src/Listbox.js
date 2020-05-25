@@ -267,7 +267,7 @@ const Listbox = (props) => {
       eid="select" style={styled} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 
-      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+      <SearchFrame searchs={props.searchs} searchkey={props.searchkey}
         onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
         onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
 

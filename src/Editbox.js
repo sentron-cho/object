@@ -81,10 +81,6 @@ const StyledObject = styled.div` {
       display: ${cs.disp.get((props) => props.helper && 'block')} 
       ${(props) => props.helpcolor && cs.font.color(props.helpcolor)};
     }
-    
-    &.center { .input { ${cs.font.center} } }
-    &.right { .input { ${cs.font.right} } }
-    &.left { .input { ${cs.font.left} } }
 
     &.border .input { ${cs.box.line} ${(props) => props.bordercolor && cs.border.color(props.bordercolor)}; }
     &.radius .input { ${cs.box.radius} }
@@ -145,6 +141,10 @@ const StyledObject = styled.div` {
     &.scroll-t2 { .box > textarea.input { ${cs.scrollbar.t2} } }
     &.scroll-t3 { .box > textarea.input { ${cs.scrollbar.t3} } }
     &.scroll-t4 { .box > textarea.input { ${cs.scrollbar.t4} } }
+    
+    &.center { .box .input { ${cs.font.center} } }
+    &.right { .box .input { ${cs.font.right} } }
+    &.left { .box .input { ${cs.font.left} } }
   
     @media screen and (max-width : 1024px) {}
   

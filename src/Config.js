@@ -79,6 +79,7 @@ const KOR = {
   DB_CONN_OK: "DB가 정상으로 연결되었습니다.",
   DB_CRE_OK: "DB가 생성되었습니다.",
   DB_CRE_ERR: "DB 생성중 오류가 발생했습니다.",
+  OPEN_DETAIL: "자세히...",
   
   REFRESH: "화면갱신",
   NO_SERVICE: "서비스 준비중",

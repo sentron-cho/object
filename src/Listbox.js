@@ -39,8 +39,8 @@ const StyledObject = styled.div`{
         }
 
         .lbx-cnt {
-          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.v1} ${cs.p.h5} ${cs.pos.relative}
-          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.p.b2}
+          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.v1} ${cs.p.h5} 
+          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.p.b2} ${cs.pos.relative}
         }
 
         .lbx-icon {
@@ -313,7 +313,7 @@ const Listbox = (props) => {
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} color="white" />}
+      {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />}
     </StyledObject >
   );
 };

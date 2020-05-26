@@ -12,6 +12,11 @@ export function go(url, value) {
   window.location.href = url;
 }
 
+export function open(url, value) {
+  Storage.setLocalItem(url, value);
+  window.open(url);
+}
+
 export function getParam(url = null) {
   const path = url || window.location.pathname;
   return Storage.getLocalItem(path);

@@ -286,6 +286,7 @@ const cs = {
     gray: `color: ${color.gray};`,
     trans: `color: ${color.trans};`,
     primary: `color: ${color.primary};`,
+    primaryhover: `color: ${color.primaryhover};`,
     lightprimary: `color: ${color.lightprimary};`,
     blue: `color: ${color.blue};`,
     yellow: `color: ${color.yellow};`,

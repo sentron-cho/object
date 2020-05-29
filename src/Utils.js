@@ -361,6 +361,7 @@ export const Util = {
     if (!this.isEmpty(value)) {
       value = value.replace(/\n/gi, '\\n');
       value = value.replace(/\r/gi, '\\r');
+      value = value.replace(/\t/gi, '\\t');
       // value = value.replace(/\\"/gi, '\\"');
       let temps = JSON.parse(value);
       if (deep && temps.length > 0) {

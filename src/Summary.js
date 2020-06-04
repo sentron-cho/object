@@ -23,6 +23,7 @@ const StyledObject = styled.div`{
             ${cs.disp.block} ${cs.w.full} ${cs.h.r50} ${cs.font.center} ${cs.pos.relative}
 
             &.li-tl { ${cs.font.md} }
+            &.li-desc { ${cs.font.xs} ${cs.disp.inblock} ${cs.w.fit} ${cs.m.l3} }
             &.li-txt { ${cs.m.t5} }
           }
         }
@@ -183,7 +184,7 @@ const Summarybox = (props) => {
         {data ? <div className="t-div">
           {data.map((item, index) => {
             return <span key={index} className="li-itm">
-              <span className="li-tl">{item.title}</span>
+              <span className="li-tl">{item.title}{item.desc && <span className="li-desc">{item.desc}</span>}</span>
               <span className="li-txt">{item.value}</span>
             </span>
           })}

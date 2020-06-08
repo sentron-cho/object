@@ -236,7 +236,7 @@ const StyledObject = styled.div`{
 }`;
 
 const Tablebox = (props) => {
-  const { head = null, total = '', height = 30, theme } = props;
+  const { head = null, total = '', height = 30, theme, rowid } = props;
   const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
   const align = 'center';
   const style = { cursor, height, align };
@@ -303,7 +303,7 @@ const Tablebox = (props) => {
 
     if (list && list[0]) {
       const item = list[0];
-      if (item.rowid == null || item.rowid === undefined) {
+      if (item[rowid] == null || item[rowid] === undefined) {
         guide = "'rowid' is required in the list.\n"
           + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n"
           + "rowid and text is required. Rest is optional.\n"

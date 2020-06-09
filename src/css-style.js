@@ -151,9 +151,9 @@ const cs = {
     auto: 'overflow: auto;',
     xauto: 'overflow-x: auto;',
     yauto: 'overflow-y: auto;',
-    visible: 'overflow: visible;',
-    xvisible: 'overflow-x: visible;',
-    yvisible: 'overflow-y: visible;',
+    visible: 'overflow: scroll;',
+    xvisible: 'overflow-x: scroll;',
+    yvisible: 'overflow-y: scroll;',
     unset: 'overflow: unset;',
 
     get: (v) => `overflow: ${v};`,

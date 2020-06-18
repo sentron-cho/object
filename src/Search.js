@@ -99,9 +99,9 @@ export default class Search extends React.PureComponent {
     return (
       <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
         <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
-        <Editbox type="text" className={cx("sc-in", color, list && 'combo')} 
+        <Editbox type="text" className={cx("sc-in", color, list && 'combo')}
           guide={props.guide} value={state.value} theme={theme}
-          onEnter={this.onEnter} onChange={this.onChange} />
+          onEnter={this.onEnter} onChange={this.onChange} onClear={this.props.onClear}/>
         {list && <Combobox className={cx("sc-combo sky md", color)} 
           pos={pos} frameid={frameid} theme={theme}
           list={list} onClick={this.onClickCombo} inline={true} />

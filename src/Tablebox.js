@@ -9,16 +9,16 @@ import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.table-box { 
-    ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} ${cs.p.b50}
+    ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} 
 
-    .tb-frame { ${cs.m.t10} ${cs.over.hidden} }
+    .tb-frame { ${cs.over.hidden} ${cs.w.full} ${cs.over.yauto} ${cs.scrollbar.t4} ${cs.h.calc("100% - 50px")} }
 
-    .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block} 
+    .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block}
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
 
       .tb-row { 
         ${cs.w.full} ${cs.pos.relative} ${cs.disp.get("flex; flex-direction: row;")}
-        ${cs.border.bottom}
+        ${cs.border.bottom} 
         ${({ height }) => cs.font.line(height)};
         ${({ height }) => cs.h.get(height)};
         cursor: ${(props) => props.cursor};
@@ -60,9 +60,12 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray}
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
+      ${cs.pos.absolute} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
         .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
+
+      &.tb-body { ${cs.m.t40} }
 
       .selection {
         &:hover { ${cs.bg.hover} }
@@ -70,7 +73,7 @@ const StyledObject = styled.div`{
     }
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
-    .page-navi { ${cs.m.t5} }
+    .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.border.top} ${cs.border.lightgray} }
     
     &.sm { 
       .tb-row { 
@@ -78,7 +81,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.h.get(height - 6)};
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
-      .tb-body { ${cs.font.sm} } 
+      .tb-body { ${cs.font.sm} ${cs.m.t30} } 
       .tb-head { ${cs.font.md} }
     }
 
@@ -87,7 +90,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.font.line(height + 6)};
         ${({ height }) => cs.h.get(height + 6)};
       }
-      .tb-body { ${cs.font.lg} }
+      .tb-body { ${cs.font.lg} ${cs.m.t40} }
       .tb-head { ${cs.font.xl} }
     }
 
@@ -281,6 +284,7 @@ const Tablebox = (props) => {
         case "datetime": data = Util.toStringSymbol(value); break;
         case "date": data = Util.toStringSymbol(value).substr(0, 10); break;
         case "phone": data = Util.toStringPhone(value); break;
+        case "number": data = Util.numberWithCommas(value); break;
         default: data = value; break;
       }
 
@@ -410,7 +414,7 @@ const Tablebox = (props) => {
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      <Pagenavi className={props.theme} pos={props.pos} max={props.max} onItemClick={onClickPage} />
+      <Pagenavi className={props.theme} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
     </StyledObject >
   );
 }

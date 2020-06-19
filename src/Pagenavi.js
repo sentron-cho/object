@@ -13,7 +13,7 @@ const StyledObject = styled.div`{
 
     .pgn-frame {
       ${cs.h.get(40)} ${cs.w.fit} ${cs.box.inner} ${cs.p.a5} ${cs.p.h20}
-      ${cs.m.left("auto")} ${cs.m.right("auto")}
+      ${cs.m.left("auto")} ${cs.m.right("auto")} ${cs.w.full}
 
       .pg-no {
         ${cs.mouse.pointer} ${cs.h.full} ${cs.w.get(36)} ${cs.border.radius(2)}

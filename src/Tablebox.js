@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
@@ -9,7 +9,7 @@ import { EID, ST } from './Config';
 
 const StyledObject = styled.div`{
   &.table-box { 
-    ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle}
+    ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} ${cs.p.b50}
 
     .tb-frame { ${cs.m.t10} ${cs.over.hidden} }
 
@@ -70,7 +70,7 @@ const StyledObject = styled.div`{
     }
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
-    .page-navi { ${cs.m.t40} }
+    .page-navi { ${cs.m.t5} }
     
     &.sm { 
       .tb-row { 
@@ -243,6 +243,10 @@ const Tablebox = (props) => {
   const selection = (cursor === 'pointer');
   const [list, setList] = useState(props.list);
 
+  useEffect(() => {
+    setList(props.list);
+  }, [props.list]);
+
   const onSelect = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
     props.onSelect && props.onSelect(rowid, e);
@@ -406,7 +410,7 @@ const Tablebox = (props) => {
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />
+      <Pagenavi className={props.theme} pos={props.pos} max={props.max} onItemClick={onClickPage} />
     </StyledObject >
   );
 }

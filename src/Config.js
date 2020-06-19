@@ -102,6 +102,13 @@ const KOR = {
     SIZE_CHECK: "의 이미지 사이즈로 맞춰야 합니다."
   },
 
+  INVEST: {
+    ALL: "전체",
+    PRICE: "시가총액",
+    VALUE: "주당가치",
+    BEDANG: "배당금",
+  },
+
   CONTENT: {
     MEDIA: "이미지/동영상 URL",
     LINK: "다운로드 링크",

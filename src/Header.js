@@ -242,9 +242,13 @@ class Header extends React.PureComponent {
             {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
               {array.map((item, index) => {
                 const active = location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
-                return <li key={index} className={cx("li-nav", { active })}
-                  url={item.url} onClick={this.onClickMenu}>{item.name && item.name.toUpperCase()}
-                </li>
+                if (item.hide) {
+                  return null;
+                } else {
+                  return <li key={index} className={cx("li-nav", { active })}
+                    url={item.url} onClick={this.onClickMenu}>{item.name && item.name.toUpperCase()}
+                  </li>
+                }
               })}
               {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
               {props.onLogin && <li className={cx("li-nav")} onClick={(e) => props.onLogin(e)}>{logintitle}</li>}

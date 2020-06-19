@@ -60,7 +60,7 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} ${cs.w.calc("100% - 12px")}
       ${cs.pos.absolute} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
         .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
@@ -81,7 +81,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.h.get(height - 6)};
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
-      .tb-body { ${cs.font.sm} ${cs.m.t30} } 
+      .tb-body { ${cs.font.sm} ${cs.m.t25} } 
       .tb-head { ${cs.font.md} }
     }
 
@@ -90,7 +90,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.font.line(height + 6)};
         ${({ height }) => cs.h.get(height + 6)};
       }
-      .tb-body { ${cs.font.lg} ${cs.m.t40} }
+      .tb-body { ${cs.font.lg} ${cs.m.top(36)} }
       .tb-head { ${cs.font.xl} }
     }
 

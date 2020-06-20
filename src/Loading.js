@@ -24,7 +24,7 @@ const StyledFrame = styled.div`{
     &.hide { ${cs.disp.none} }
     &.show { ${cs.disp.block} }
 
-    .bg-show { ${cs.bg.alphablack} }
+    &.bg-show { .bg { ${cs.bg.alphablack} } }
   }
 }`;
 

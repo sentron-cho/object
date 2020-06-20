@@ -11,7 +11,7 @@ import { Util } from './Utils';
 /*******************************************************************
  Bar 차트
 *******************************************************************/
-const StyledObject = styled.div`{
+export const StyledChart = styled.div`{
   &.chart-box { display: inline-block; width: 100%; height: 100%; position: relative;
 
     .chart-itm { 
@@ -166,13 +166,13 @@ class LineChartFrame extends PureComponent {
 
     if (data) {
       return (
-        <StyledObject ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
+        <StyledChart ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
           <Cardbox className={cx("chart-itm line", props.cardbox)} height="100%" width="100%">
             {this.renderChart()}
             {/* {data.length > 0 && this.renderChart()}
             {data.length <= 0 && <Nodata />} */}
           </Cardbox>
-        </StyledObject>
+        </StyledChart>
       );
     }
   }
@@ -251,7 +251,7 @@ class BarChartFrame extends PureComponent {
     }
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
+      <StyledChart ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
         <Cardbox className={"chart-itm bar"} type={"full"} height="100%" width="100%">
           {/* <span className="chart-tl">{props.title}</span> */}
           {data.length > 0 && <BarChart className="chart-frame" width={width} height={height} data={data} stackOffset="sign" margin={margin} >
@@ -264,7 +264,7 @@ class BarChartFrame extends PureComponent {
           <div className="gui top">{props.children}</div>
           {unitname && <span className="unit">{unitname}</span>}
         </Cardbox>
-      </StyledObject>
+      </StyledChart>
     );
   }
 }
@@ -360,7 +360,7 @@ class PieChartFrame extends PureComponent {
     // }
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
+      <StyledChart ref={ref => { this.box = ref }} className={cx("chart-box", props.className)}>
         <Cardbox className={"chart-itm pie"} type={"full"} height="100%" width="100%">
           {/* <span className="chart-tl">{props.title}</span> */}
           <div className="chart-frame">
@@ -378,7 +378,7 @@ class PieChartFrame extends PureComponent {
           <span className="gui top">{getLabel(this.state.data)}</span>
           {unitname && <span className="unit">{unitname}</span>}
         </Cardbox>
-      </StyledObject>
+      </StyledChart>
     );
   }
 };

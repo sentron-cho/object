@@ -226,9 +226,10 @@ export const Util = {
       return '';
     }
 
+    value = Number.isInteger(value) ? String(value) : value
     var temp = value;
     //시분초
-    if (value.length === 6) {
+    if (temp.length === 6) {
       temp = value.substr(0, 2) + time_symbol + value.substr(2, 2) + time_symbol + value.substr(4, 2);
       return;
     }

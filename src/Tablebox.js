@@ -11,7 +11,7 @@ const StyledObject = styled.div`{
   &.table-box { 
     ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} 
 
-    .tb-frame { ${cs.over.hidden} ${cs.w.full} ${cs.over.yauto} ${cs.scrollbar.t4} ${cs.h.calc("100% - 50px")} }
+    // .tb-frame { ${cs.over.hidden} ${cs.w.full} ${cs.over.yauto} ${cs.scrollbar.t4} ${cs.h.calc("100% - 50px")} }
 
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block}
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
@@ -60,12 +60,13 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} ${cs.w.calc("100% - 12px")}
-      ${cs.pos.absolute} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray}
+      //  ${cs.w.calc("100% - 12px")}
+      ${cs.pos.relative} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
         .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
 
-      &.tb-body { ${cs.m.t40} }
+      &.tb-body { ${cs.m.t0} }
 
       .selection {
         &:hover { ${cs.bg.hover} }
@@ -73,7 +74,7 @@ const StyledObject = styled.div`{
     }
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
-    .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.border.top} ${cs.border.lightgray} }
+    .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.pos.relative} ${cs.border.top} ${cs.border.lightgray} }
     
     &.sm { 
       .tb-row { 
@@ -81,7 +82,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.h.get(height - 6)};
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
-      .tb-body { ${cs.font.sm} ${cs.m.t25} } 
+      .tb-body { ${cs.font.sm} ${cs.m.t0} } 
       .tb-head { ${cs.font.md} }
     }
 
@@ -90,7 +91,7 @@ const StyledObject = styled.div`{
         ${({ height }) => cs.font.line(height + 6)};
         ${({ height }) => cs.h.get(height + 6)};
       }
-      .tb-body { ${cs.font.lg} ${cs.m.top(36)} }
+      .tb-body { ${cs.font.lg} }
       .tb-head { ${cs.font.xl} }
     }
 

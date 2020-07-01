@@ -19,7 +19,7 @@ const StyledObject = styled.div`{
       ${cs.h.calc("100%")} ${cs.w.get(0)} ${cs.bg.green} ${cs.disp.inblock} ${cs.max.w('100%')}
       ${cs.float.left} ${cs.border.right} ${cs.border.primary} ${cs.pos.relative}
 
-      &.norm { ${cs.bg.get("#ffbf30c0")} }
+      &.norm { ${cs.bg.lightprimary} }
       &.warn { ${cs.bg.get("#ff8d17c0")} }
       &.err { ${cs.bg.get("#ff5413c0")} }
       &.full { border-radius: 4px; }
@@ -32,6 +32,8 @@ const StyledObject = styled.div`{
 
     &.nobg { background: transparent; border: 1px solid #515b65; }
 
+    &.notext { .pb-txt { ${cs.disp.none} } }
+
     &.border { ${cs.border.lightgray} }
     &.radius { ${cs.box.radius} .pb-bar { ${cs.border.radius("4px")} } }
 
@@ -41,15 +43,16 @@ const StyledObject = styled.div`{
     &.sm { ${cs.h.get(14)} .pb-label { ${cs.font.xs} } .pb-icon { ${cs.icon.get(10)} ${cs.left(-6)} ${cs.top(-6)} } }
     &.xs { ${cs.h.get(10)} .pb-label { ${cs.font.xs} } .pb-icon { ${cs.icon.get(8)} ${cs.left(-6)} ${cs.top(-9)} } }
 
-    &.sky { ${cs.bg.sky} ${cs.font.gray} }
-    &.green { ${cs.bg.green} ${cs.font.white} .pb-label { ${cs.font.white} } }
-    &.orange { ${cs.bg.orange} ${cs.font.white} .pb-label { ${cs.font.white} } }
-    &.red { ${cs.bg.red} ${cs.font.white}  .pb-label { ${cs.font.white} } }
-    &.primary { ${cs.bg.primary} ${cs.font.white}  .pb-label { ${cs.font.white} } }
-    &.blue { ${cs.bg.blue} ${cs.font.white}  .pb-label { ${cs.font.white} } }
-    &.gray { ${cs.bg.gray} ${cs.font.white}  .pb-label { ${cs.font.white} } }
-    &.dark { ${cs.bg.dark} ${cs.font.white}  .pb-label { ${cs.font.white} } }
-    &.black { ${cs.bg.black} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+    &.trans { ${cs.bg.trans} ${cs.font.gray} .pb-bar.norm { ${cs.bg.lightgray} } }
+    &.sky { ${cs.bg.sky} ${cs.font.gray} .pb-bar.norm { ${cs.bg.lightprimary} } }
+    &.green { ${cs.bg.green} ${cs.font.white} .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.greenhover} } }
+    &.orange { ${cs.bg.orange} ${cs.font.white} .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.orangehover} } }
+    &.red { ${cs.bg.red} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.redhover} } }
+    &.primary { ${cs.bg.primary} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.primaryhover} } }
+    &.blue { ${cs.bg.blue} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.primary} } }
+    &.gray { ${cs.bg.gray} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.dark} } }
+    &.dark { ${cs.bg.dark} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.gray} } }
+    &.black { ${cs.bg.black} ${cs.font.white}  .pb-label { ${cs.font.white} } .pb-bar.norm { ${cs.bg.dark} } }
 
     &.theme-sky { ${cs.bg.sky} ${cs.font.gray} }
     &.theme-primary { ${cs.bg.primary} ${cs.font.white}  .pb-label { ${cs.font.white} } }
@@ -66,10 +69,10 @@ const StyledObject = styled.div`{
 
 const Progress = (props) => {
 
-  const { 
-    max = 100, min = 0, value = 0, limit = 70, unit = '', 
-    width = '100%', height = '16px', label = null, 
-    border, theme    
+  const {
+    max = 100, min = 0, value = 0, limit = 70, unit = '',
+    width = '100%', height = '16px', label = null,
+    border, theme, islevel = false
   } = props;
   let rate = props.rate;
   if (max > 0 && value > 0) {
@@ -78,12 +81,14 @@ const Progress = (props) => {
   }
 
   let bar_style = 'norm';
-  if (rate >= 100) {
-    bar_style = 'err';
-  } else if (rate >= limit) {
-    bar_style = 'warn';
-  } else if (rate > 50) {
-    bar_style = 'norm';
+  if (islevel) {
+    if (rate >= 100) {
+      bar_style = 'err';
+    } else if (rate >= limit) {
+      bar_style = 'warn';
+    } else if (rate > 50) {
+      bar_style = 'norm';
+    }
   }
 
   let alarm = bar_style === 'warn' || bar_style === 'err' ? bar_style : null;

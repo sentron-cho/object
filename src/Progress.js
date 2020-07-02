@@ -30,8 +30,6 @@ const StyledObject = styled.div`{
       ${cs.left(-7)} ${cs.top(-4)}
     }
 
-    &.nobg { background: transparent; border: 1px solid #515b65; }
-
     &.notext { .pb-txt { ${cs.disp.none} } }
 
     &.border { ${cs.border.lightgray} }
@@ -59,6 +57,9 @@ const StyledObject = styled.div`{
     &.theme-gray { ${cs.bg.gray} ${cs.font.white}  .pb-label { ${cs.font.white} } }
     &.theme-dark { ${cs.bg.dark} ${cs.font.white}  .pb-label { ${cs.font.white} } }
     &.theme-black { ${cs.bg.black} ${cs.font.white}  .pb-label { ${cs.font.white} } }
+
+    &.nobg { ${cs.bg.trans} ${cs.box.line} }
+    &.alphabg { ${cs.bg.get("#00000005")} }
 
     ${({ border }) => border && `${cs.box.line}`}
     ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}

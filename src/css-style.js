@@ -333,6 +333,7 @@ const cs = {
     align: (v) => `text-align: ${v};`,
     break: (v = 'break-all') => `word-break: ${v};`,
     spacing: (v = 0) => Number.isInteger(v) ? `letter-spacing: ${v}px;` : `letter-spacing: ${v};`,
+    stretch: (v = 'normal') => `font-stretch: ${v};`,
   },
 
   opac: {

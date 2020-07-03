@@ -124,6 +124,7 @@ const cs = {
     inblock: 'display: inline-block;',
     inline: 'display: inline;',
     autoflex: 'display: flex;',
+    contents: 'display: contents;',
 
     visible: 'visibility: visible;',
     invisible: 'visibility: hidden;',

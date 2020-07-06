@@ -79,6 +79,7 @@ const cs = {
   top: (v) => Number.isInteger(v) ? `bottom:unset; top: ${v}px;` : `bottom:unset; top: ${v};`,
   bottom: (v) => Number.isInteger(v) ? `top: unset; bottom: ${v}px;` : `top: unset; bottom: ${v};`,
 
+  textselect: 'user-select: text;',
   noselect: 'user-select: none;',
   noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
   nolist: 'list-style: none; margin: 0; padding: 0;',

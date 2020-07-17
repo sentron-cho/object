@@ -79,6 +79,7 @@ const cs = {
   top: (v) => Number.isInteger(v) ? `bottom:unset; top: ${v}px;` : `bottom:unset; top: ${v};`,
   bottom: (v) => Number.isInteger(v) ? `top: unset; bottom: ${v}px;` : `top: unset; bottom: ${v};`,
 
+  textselect: 'user-select: text;',
   noselect: 'user-select: none;',
   noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
   nolist: 'list-style: none; margin: 0; padding: 0;',
@@ -124,6 +125,7 @@ const cs = {
     inblock: 'display: inline-block;',
     inline: 'display: inline;',
     autoflex: 'display: flex;',
+    contents: 'display: contents;',
 
     visible: 'visibility: visible;',
     invisible: 'visibility: hidden;',
@@ -291,7 +293,9 @@ const cs = {
     blue: `color: ${color.blue};`,
     yellow: `color: ${color.yellow};`,
     orange: `color: ${color.orange};`,
+    orangehover: `color: ${color.orangehover};`,
     red: `color: ${color.red};`,
+    redhover: `color: ${color.redhover};`,
     green: `color: ${color.green};`,
     black: `color: ${color.black};`,
     dark: `color: ${color.dark};`,
@@ -333,6 +337,7 @@ const cs = {
     align: (v) => `text-align: ${v};`,
     break: (v = 'break-all') => `word-break: ${v};`,
     spacing: (v = 0) => Number.isInteger(v) ? `letter-spacing: ${v}px;` : `letter-spacing: ${v};`,
+    stretch: (v = 'normal') => `font-stretch: ${v};`,
   },
 
   opac: {

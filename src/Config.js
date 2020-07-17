@@ -48,6 +48,7 @@ const KOR = {
   YES: "YES",
   NO: "NO",
   FIRST: "처음",
+  LAST: "끝",
   YEAR: "년",
   MONTH: "월",
   DAY: "일",

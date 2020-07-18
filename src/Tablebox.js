@@ -278,7 +278,7 @@ const Tablebox = (props) => {
   const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null } = head[index];
       let data = value;
 
       switch (type) {
@@ -294,9 +294,11 @@ const Tablebox = (props) => {
         color = { 'color': data, 'textTransform': 'uppercase' }
       }
 
+      const vcolor = getcolor && getcolor(value);
+
       const styled = { flex: flex, textAlign: align };
       return <div key={String(index)} style={styled} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
-        <p style={color}>{data}</p>
+        <p style={color} className={cx('tb-p', vcolor)}>{data}</p>
       </div>
     })
   }

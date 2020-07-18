@@ -614,6 +614,9 @@ const cs = {
   },
 
   radius: {
+    group: (v) => Number.isInteger(v) ?
+      `border-radius: 0; border-right-color: transparent; &:last-child { border-radius: 0 ${v}px ${v}px 0; }; &:first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
+      `border-radius: 0; border-right-color: transparent; &:last-child { border-radius: 0 ${v} ${v} 0; }; &:first-child { border-radius: ${v} 0 0 ${v}; }`,
     all: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
     right: (v) => Number.isInteger(v) ? `border-radius: 0 ${v}px ${v}px 0;` : `border-radius: 0 ${v} ${v} 0;`,
     left: (v) => Number.isInteger(v) ? `border-radius: ${v}px 0 0 ${v}px;` : `border-radius: ${v} 0 0 ${v};`,

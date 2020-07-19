@@ -231,7 +231,7 @@ export const Util = {
     //시분초
     if (temp.length === 6) {
       temp = value.substr(0, 2) + time_symbol + value.substr(2, 2) + time_symbol + value.substr(4, 2);
-      return;
+      // return;
     }
 
     //년월일

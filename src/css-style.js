@@ -70,6 +70,11 @@ const cs = {
     h: (v) => Number.isInteger(v) ? `min-height: ${v}px;` : `min-height: ${v};`,
   },
 
+  group: (v) =>
+    Number.isInteger(v) ?
+      `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
+      `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v} ${v} 0; }; & > :first-child { border-radius: ${v} 0 0 ${v}; } `,
+
   max: {
     wxl: 'max-width: 1280px;',
     wlg: 'max-width: 1024px;',
@@ -614,9 +619,6 @@ const cs = {
   },
 
   radius: {
-    group: (v) => Number.isInteger(v) ?
-      `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
-      `border-radius: 0; border-right-color: transparent; &:last-child { border-radius: 0 ${v} ${v} 0; }; &:first-child { border-radius: ${v} 0 0 ${v}; }`,
     all: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
     right: (v) => Number.isInteger(v) ? `border-radius: 0 ${v}px ${v}px 0;` : `border-radius: 0 ${v} ${v} 0;`,
     left: (v) => Number.isInteger(v) ? `border-radius: ${v}px 0 0 ${v}px;` : `border-radius: ${v} 0 0 ${v};`,

@@ -241,7 +241,7 @@ const StyledObject = styled.div`{
 
 const Tablebox = (props) => {
   const { head = null, total = '', height = 30, theme, rowid } = props;
-  const cursor = 'pointer'; //props.onSelect ? 'pointer' : 'default';
+  const cursor = props.onSelect ? 'pointer' : 'default';
   const align = 'center';
   const style = { cursor, height, align };
   const selection = (cursor === 'pointer');

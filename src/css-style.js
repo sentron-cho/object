@@ -70,7 +70,7 @@ const cs = {
     h: (v) => Number.isInteger(v) ? `min-height: ${v}px;` : `min-height: ${v};`,
   },
 
-  group: (v) =>
+  group: (v = 5) =>
     Number.isInteger(v) ?
       `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
       `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v} ${v} 0; }; & > :first-child { border-radius: ${v} 0 0 ${v}; } `,

@@ -71,3 +71,4 @@ export { default as Datebox } from "./Datebox";
 export { default as CloseButton } from "./CloseButton";
 export { default as Summarybox } from "./Summary";
 export { default as Memobox } from "./Memobox";
+export { default as Chartbox } from "./Chartbox";

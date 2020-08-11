@@ -108,6 +108,9 @@ const KOR = {
     PRICE: "시가총액",
     VALUE: "주당가치",
     BEDANG: "배당금",
+    VA: "1조이상",
+    VB: "5조이상",
+    VC: "10조이상",
   },
 
   CONTENT: {

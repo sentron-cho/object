@@ -111,6 +111,8 @@ const KOR = {
     VA: "1조이상",
     VB: "5조이상",
     VC: "10조이상",
+    VALCUR: "올해예상주당가치",
+    VALYEAR: "1년전기준",
   },
 
   CONTENT: {

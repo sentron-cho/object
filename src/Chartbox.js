@@ -42,7 +42,7 @@ export default function Chartbox(props) {
   const { theme, border = null, } = props;
   const [chartElement, setChartElement] = React.useState(chart);
   const [height, setHeight] = React.useState(`calc(100%)`);
-  const [width, setWidth] = React.useState(`calc(100% + 140px)`);
+  const [width, setWidth] = React.useState(`calc(100% + 60px)`);
 
   React.useEffect(() => {
     if (chartElement.current) {
@@ -57,19 +57,19 @@ export default function Chartbox(props) {
     return () => { }
   }, [props.resize, props.config, chartElement, props.refresh]);
 
-  
+
   React.useEffect(() => {
     const handleResize = () => {
       if (frame && frame.current) {
         setWidth(frame.current.clientWidth);
         // if (frame.current.clientWidth < 640) {
-          props.config.xAxis.axisPointer.handle.show = frame.current.clientWidth < 640;
-          chartElement.setOption(props.config);
+        props.onResize && props.onResize(frame.current)
+        chartElement.setOption(props.config);
         // }
       }
       if (chartElement) chartElement.resize && chartElement.resize();
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

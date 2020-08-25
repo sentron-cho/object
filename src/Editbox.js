@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { Svg, cs } from './index';
+import { Util } from './Utils';
 
 const ST = {
   NOT: "문장안에 \" 대신 ' 를 사용하세요",
@@ -71,6 +72,8 @@ const StyledObject = styled.div` {
       ${cs.disp.inblock} ${cs.p.a0} ${cs.font.sm} ${cs.font.left} 
       ${cs.border.none} ${cs.font.bold} ${cs.font.darkgray} 
     }
+
+    .nb-help { ${cs.align.rtop} ${cs.font.xs} ${cs.font.gray} ${cs.top(-15)} }
 
     .ed-required {
       ${cs.font.red} ${cs.p.l2} ${cs.font.lg} ${cs.font.thickbold} ${cs.pos.relative} ${cs.top(3)}
@@ -336,7 +339,7 @@ class Editbox extends React.PureComponent {
         onFocus={this.onFocused}
         modefied={state.modified.toString()} />;
     } else {
-      return <input
+      return (<input
         ref={(ref) => { this.input = ref; }}
         name={props.name}
         className={cx('input', { noti }, addedClass, { disable }, { border }, { readonly }, { right })}
@@ -353,7 +356,7 @@ class Editbox extends React.PureComponent {
         {...attr}
         onKeyPress={this.onKeyPressed}
         onFocus={this.onFocused}
-        modefied={state.modified.toString()} />;
+        modefied={state.modified.toString()} />)
     }
   }
 
@@ -377,6 +380,7 @@ class Editbox extends React.PureComponent {
         <div className={cx('box', { disable }, { readonly })} >
           {props.label && inline && <label className={cx('ed-label', { noti })}>{props.label}</label>}
           {this.elemInput()}
+          {props.type === 'number' && this.state.value > 999 && <span className={'nb-help'}>{Util.commas(this.state.value)}</span>}
           {!readonly && <div className="underline"></div>}
           {this.elemNoti()}
           {(props.onClear || props.clear) && <Svg className={cx('btn-clear sm', {multi})} onClick={this.onClear} name={'clear'} color={'black'} />

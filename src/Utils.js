@@ -29,6 +29,8 @@ export const Util = {
   },
 
   numberWithCommas(x) { return this.isEmpty(x) ? 0 : x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); },
+  
+  commas(x) { return this.numberWithCommas(x); },
 
   toShortCost(x) {
     var temp = x;

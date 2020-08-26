@@ -30,6 +30,8 @@ const StyledObject = styled.section`{
     &.theme-dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } .cls-frame { ${cs.border.gray} } }
     &.theme-black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } .cls-frame { ${cs.border.darkgray} } }
 
+    &.reload { ${cs.anim.showin('200ms')} }
+
     ${({ border }) => border && cs.box.line}
     ${({ border }) => border && border.color && cs.border.color(border.color)}
     ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
@@ -44,6 +46,8 @@ export default function Chartbox(props) {
   const [chartElement, setChartElement] = React.useState(chart);
   const [height, setHeight] = React.useState(`calc(100%)`);
   const [width, setWidth] = React.useState(`calc(100% + 60px)`);
+  const [reload, setReload] = React.useState(false);
+
   const [config, setConfig] = React.useState(props.config || {
     tooltip: {
       trigger: 'axis',
@@ -70,97 +74,81 @@ export default function Chartbox(props) {
     },
     xAxis: {
       data: props.axis || null,
-      type: 'category',
-      boundaryGap: false,
-      axisPointer: {
-        show: true,
-        value: '2016-10-7',
-        snap: true,
-        lineStyle: {
-          color: cs.color.dark,
-          opacity: 0.5,
-          width: 2
-        },
-        label: {
-          show: true,
-          backgroundColor: cs.color.dark
-        },
-        handle: {
-          show: false,
-          color: cs.color.dark,
-          size: 30,
-          margin: 40
-        }
-      }
+      // type: 'category',
+      // boundaryGap: false,
+      // axisPointer: {
+      //   show: true,
+      //   value: '2016-10-7',
+      //   snap: true,
+      //   lineStyle: {
+      //     color: cs.color.dark,
+      //     opacity: 0.5,
+      //     width: 2
+      //   },
+      //   label: {
+      //     show: true,
+      //     backgroundColor: cs.color.dark
+      //   },
+      //   handle: {
+      //     show: false,
+      //     color: cs.color.dark,
+      //     size: 30,
+      //     margin: 40
+      //   }
+      // }
     },
     yAxis: {
       type: 'value',
-      boundaryGap: [0, '100%']
+      boundaryGap: [0, props.boundary || '20%']
     },
-    dataZoom: [{
+    dataZoom: props.zoom && [{
       type: 'inside',
       throttle: 50,
-      start: 0,
-      end: 100
+      start: props.zoom.start || 50,
+      end: props.zoom.end || 100,
     }, {
       start: 0,
       end: 100,
-      handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-      handleSize: '60%',
-      handleStyle: {
-        color: cs.color.lightgray,
-        shadowBlur: 3,
-        shadowColor: 'rgba(0, 0, 0, 0.6)',
-        shadowOffsetX: 2,
-        shadowOffsetY: 2
-      }
+      ...props.zoom.handle,
     }],
-    series: [
-      {
-        name: '',
-        type: 'line',
-        smooth: true,
-        sampling: 'average',
-        itemStyle: {
-          color: cs.color.dark
-        },
-        label: {
-          normal: {
-            show: true,
-            position: 'top'
-          }
-        },
-        markPoint: {
-          data: [
-            { type: 'max', name: '' },
-            { type: 'min', name: '' }
-          ],
-          label: {
-            normal: {
-              formatter: function (param) {
-                return param != null ? `${param.value}` : '';
-              }
-            }
-          },
-          tooltip: {
-            formatter: function (param) {
-              return `${param.name}<br>${param.value}`;
-            }
-          }
-        },
-        data: (props.data && props.data[0]) || null,
-      }
-    ]
+    series: props.series || [{
+      name: '',
+      type: 'line',
+      smooth: true,
+      // sampling: 'average',
+      itemStyle: {
+        color: cs.color.dark
+      },
+      label: {
+        normal: {
+          show: true,
+          position: 'top'
+        }
+      },
+      markPoint: props.mark && {
+        data: [
+          { type: 'max', name: '' },
+          { type: 'min', name: '' }
+        ],
+      },
+      data: (props.data && props.data[0]) || null,
+    }], ...props.options,
   });
 
   React.useEffect(() => {
-    config.xAxis.data = props.axis;
-    config.series.map((a, i) => a.data = (props.data && props.data[i]) || null);
+    if (!props.config) {
+      config.xAxis.data = props.axis;
+      config.series.map((a, i) => {
+        a.data = (props.data && props.data[i]) || null;
+        // a.type = (props.type && props.type[i]) || null;
+        return null;
+      });
+    }
 
     if (chartElement.current) {
       setChartElement(echarts.init(chartElement.current));
     } else {
-      chartElement.setOption(config);
+      chartElement.setOption(props.config || config);
     }
 
     setConfig(config);
@@ -168,8 +156,13 @@ export default function Chartbox(props) {
     // const h = props.config && props.config.dataZoom ? `calc(100%)` : `calc(100% + 40px)`;
     // setHeight(h);
 
+    setReload(true);
+    setTimeout(() => {
+      setReload(false)
+    }, 200);
+
     return () => { }
-  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data]);
+  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config]);
 
 
   React.useEffect(() => {
@@ -191,7 +184,7 @@ export default function Chartbox(props) {
   })
 
   return (
-    <StyledObject ref={frame} className={cx("echart-box", props.className, theme && `theme-${theme}`)} border={border} >
+    <StyledObject ref={frame} className={cx("echart-box", props.className, theme && `theme-${theme}`, { reload })} border={border} >
       <span className={cx("ec-title")}>{props.title}</span>
       <div className={cx("ec-frame")} ref={chart} style={{ height, width }} />
     </StyledObject>

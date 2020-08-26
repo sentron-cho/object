@@ -27,9 +27,13 @@ const StyledObject = styled.div`{
           ${cs.font.center} ${cs.disp.inblock} ${cs.p.v4} ${cs.h.full}
           ${cs.over.hidden} ${cs.font.ellipsis}
           ${({ flex }) => flex && cs.disp.flex(flex)};
-          ${cs.border.right} ${cs.border.white}
+          ${cs.border.right} ${cs.border.white} ${cs.p.h5}
 
-          p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; }
+          p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; ${cs.pos.relative}
+            // .tb-u { ${cs.font.xs} ${cs.m.l3} ${cs.opac.get(0.7)} } //${cs.align.right} ${cs.bottom(0)} }
+          }
+
+          .tb-u { ${cs.font.xs} ${cs.m.l1} ${cs.opac.get(0.7)} }
 
           // &:nth-child(1) { ${cs.p.l10} }
           &:last-child { ${cs.border.none} }
@@ -270,15 +274,10 @@ const Tablebox = (props) => {
     props.onClickHead && props.onClickHead(eid, e);
   }
 
-  // const onClickMove = (rowid, e) => {
-  //   e.stopPropagation();
-  //   props.onClickMove && props.onClickMove(rowid, e);
-  // }
-
   const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null } = head[index];
       let data = value;
 
       switch (type) {
@@ -289,16 +288,21 @@ const Tablebox = (props) => {
         default: data = value; break;
       }
 
-      let color = {};
+      let styled = { textAlign: align };
       if (type === "color") {
-        color = { 'color': data, 'textTransform': 'uppercase' }
+        styled = { 'color': data, 'textTransform': 'uppercase' };
+      }
+
+      if (color) {
+        styled['color'] = color instanceof Function ? color(value) : color;
       }
 
       const vcolor = getcolor && getcolor(value);
 
-      const styled = { flex: flex, textAlign: align };
-      return <div key={String(index)} style={styled} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
-        <p style={color} className={cx('tb-p', vcolor)}>{data}</p>
+      return <div key={String(index)} style={{ flex: flex }} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
+        <p style={styled} className={cx('tb-p', vcolor)}>{data}
+          {/* {unit && <span className="tb-u">{`${unit}`}</span>} */}
+        </p>
       </div>
     })
   }
@@ -361,11 +365,11 @@ const Tablebox = (props) => {
   return (
     <StyledObject className={cx('table-box', props.className, theme && `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
-      
+
       <SearchFrame list={props.searchs} searchkey={props.searchkey}
         onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
         onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
-      
+
       {/* error guid */}
       {renderGuide()}
 
@@ -375,11 +379,13 @@ const Tablebox = (props) => {
           <div className="tb-row" >
             {props.onDragDrop && <Svg className="i-btn btn-head sm" name={""} />}
             {head.map((item, index) => {
-              const { tablet = 'show', mobile = 'show', flex } = item;
+              const { tablet = 'show', mobile = 'show', flex, unit = '' } = item;
               const styled = { flex: flex, };
               return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
                 className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
-                  tablet === 'hide' && 'tablet')} >{item.title}</div>
+                  tablet === 'hide' && 'tablet')} >{item.title}
+                {unit && <span className="tb-u">{`[${unit}]`}</span>}
+              </div>
             })}
             {props.onClickDelete && <Svg className="i-btn btn-head btn-del sm" name={""} />}
           </div>

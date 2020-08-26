@@ -147,6 +147,7 @@ const cs = {
     flex: (v) => `flex: ${v};`,
     get: (v) => `display: ${v};`,
     flexgrow: (v = 1, s = 'column') => `display: flex; flex-grow: ${v}; flex-direction: ${s}; `,
+    flexwrap: (v = 'row', s = 'wrap') => `display: flex; flex-flow: ${v}; flex-wrap: ${s};`,
   },
 
   object: {

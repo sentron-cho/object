@@ -3,6 +3,7 @@ import echarts from 'echarts';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import cs from './css-style';
+import { Util } from './Utils';
 
 const StyledObject = styled.section`{
   &.echart-box { ${cs.size.full} ${cs.p.a10}
@@ -43,19 +44,132 @@ export default function Chartbox(props) {
   const [chartElement, setChartElement] = React.useState(chart);
   const [height, setHeight] = React.useState(`calc(100%)`);
   const [width, setWidth] = React.useState(`calc(100% + 60px)`);
+  const [config, setConfig] = React.useState(props.config || {
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#202020e0',
+      axisPointer: {
+        type: 'shadow',
+        label: {
+          backgroundColor: '#202020e0',
+        }
+      },
+      ...props.tooltip,
+    },
+    title: {
+      left: 'center',
+      text: '',
+    },
+    toolbox: {
+      show: false,
+      feature: {
+        mark: { show: false },
+        restore: { show: false },
+        saveAsImage: { show: false }
+      }
+    },
+    xAxis: {
+      data: props.axis || null,
+      type: 'category',
+      boundaryGap: false,
+      axisPointer: {
+        show: true,
+        value: '2016-10-7',
+        snap: true,
+        lineStyle: {
+          color: cs.color.dark,
+          opacity: 0.5,
+          width: 2
+        },
+        label: {
+          show: true,
+          backgroundColor: cs.color.dark
+        },
+        handle: {
+          show: false,
+          color: cs.color.dark,
+          size: 30,
+          margin: 40
+        }
+      }
+    },
+    yAxis: {
+      type: 'value',
+      boundaryGap: [0, '100%']
+    },
+    dataZoom: [{
+      type: 'inside',
+      throttle: 50,
+      start: 0,
+      end: 100
+    }, {
+      start: 0,
+      end: 100,
+      handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+      handleSize: '60%',
+      handleStyle: {
+        color: cs.color.lightgray,
+        shadowBlur: 3,
+        shadowColor: 'rgba(0, 0, 0, 0.6)',
+        shadowOffsetX: 2,
+        shadowOffsetY: 2
+      }
+    }],
+    series: [
+      {
+        name: '',
+        type: 'line',
+        smooth: true,
+        sampling: 'average',
+        itemStyle: {
+          color: cs.color.dark
+        },
+        label: {
+          normal: {
+            show: true,
+            position: 'top'
+          }
+        },
+        markPoint: {
+          data: [
+            { type: 'max', name: '' },
+            { type: 'min', name: '' }
+          ],
+          label: {
+            normal: {
+              formatter: function (param) {
+                return param != null ? `${param.value}` : '';
+              }
+            }
+          },
+          tooltip: {
+            formatter: function (param) {
+              return `${param.name}<br>${param.value}`;
+            }
+          }
+        },
+        data: (props.data && props.data[0]) || null,
+      }
+    ]
+  });
 
   React.useEffect(() => {
+    config.xAxis.data = props.axis;
+    config.series.map((a, i) => a.data = (props.data && props.data[i]) || null);
+
     if (chartElement.current) {
       setChartElement(echarts.init(chartElement.current));
     } else {
-      chartElement.setOption(props.config);
+      chartElement.setOption(config);
     }
+
+    setConfig(config);
 
     // const h = props.config && props.config.dataZoom ? `calc(100%)` : `calc(100% + 40px)`;
     // setHeight(h);
 
     return () => { }
-  }, [props.resize, props.config, chartElement, props.refresh]);
+  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data]);
 
 
   React.useEffect(() => {

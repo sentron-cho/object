@@ -3,7 +3,6 @@ import echarts from 'echarts';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import cs from './css-style';
-import { Util } from './Utils';
 
 const StyledObject = styled.section`{
   &.echart-box { ${cs.size.full} ${cs.p.a10}
@@ -38,7 +37,19 @@ const StyledObject = styled.section`{
     ${({ border }) => border && border.width && cs.border.width(border.width)}
 
   }
-}`
+}`;
+
+export const series = {
+  name: '',
+  type: 'line',
+  smooth: true,
+  itemStyle: { color: cs.color.dark },
+  label: { normal: { show: true, position: 'top' } },
+  markPoint: { data: [{ type: 'max', name: '' }, { type: 'min', name: '' }] }
+};
+
+export const cloneSeries = () => JSON.parse(JSON.stringify(series));
+
 export default function Chartbox(props) {
   const chart = React.useRef(null);
   const frame = React.useRef(null);
@@ -104,43 +115,36 @@ export default function Chartbox(props) {
     dataZoom: props.zoom && [{
       type: 'inside',
       throttle: 50,
-      start: props.zoom.start || 50,
+      start: props.zoom.start || 0,
       end: props.zoom.end || 100,
     }, {
       start: 0,
       end: 100,
+      handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+      handleSize: '80%',
+      handleStyle: { color: cs.color.lightgray, shadowBlur: 3, shadowColor: 'rgba(0, 0, 0, 0.6)', shadowOffsetX: 2, shadowOffsetY: 2 },
       ...props.zoom.handle,
     }],
-    series: props.series || [{
-      name: '',
-      type: 'line',
-      smooth: true,
-      // sampling: 'average',
-      itemStyle: {
-        color: cs.color.dark
-      },
-      label: {
-        normal: {
-          show: true,
-          position: 'top'
-        }
-      },
-      markPoint: props.mark && {
-        data: [
-          { type: 'max', name: '' },
-          { type: 'min', name: '' }
-        ],
-      },
-      data: (props.data && props.data[0]) || null,
-    }], ...props.options,
+    series: [], // props.series || [], ...props.options,
+    ...props.options
   });
 
   React.useEffect(() => {
     if (!props.config) {
       config.xAxis.data = props.axis;
+      if (props.data && props.data.length > 0) {
+        config.series = [];
+        props.data.map((a, i) => {
+          if (props.series && props.series[i]) return config.series.push(props.series[i]);
+          else return config.series.push(JSON.parse(JSON.stringify(series)));
+        });
+      }
+
       config.series.map((a, i) => {
         a.data = (props.data && props.data[i]) || null;
-        // a.type = (props.type && props.type[i]) || null;
+        if (props.type && props.type[i]) a.type = props.type[i];
+        if (!a.itemStyle) a['itemStyle'] = {};
+        if (props.color && props.color[i]) a.itemStyle['color'] = cs.color.dark;
         return null;
       });
     }
@@ -162,7 +166,7 @@ export default function Chartbox(props) {
     }, 200);
 
     return () => { }
-  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config]);
+  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config, props.type]);
 
 
   React.useEffect(() => {

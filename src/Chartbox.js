@@ -56,7 +56,7 @@ export default function Chartbox(props) {
   const { theme, border = null, } = props;
   const [chartElement, setChartElement] = React.useState(chart);
   const [height, setHeight] = React.useState(`calc(100%)`);
-  const [width, setWidth] = React.useState(`calc(100% + 60px)`);
+  const [width, setWidth] = React.useState(`calc(100%)`);
   const [reload, setReload] = React.useState(false);
 
   const [config, setConfig] = React.useState(props.config || {
@@ -157,16 +157,15 @@ export default function Chartbox(props) {
 
     setConfig(config);
 
-    // const h = props.config && props.config.dataZoom ? `calc(100%)` : `calc(100% + 40px)`;
-    // setHeight(h);
+    return () => { }
+  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config, props.type, props.series, props.color]);
 
+  React.useEffect(() => {
     setReload(true);
     setTimeout(() => {
-      setReload(false)
+      setReload(false);
     }, 200);
-
-    return () => { }
-  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config, props.type]);
+  }, [props.reload]);
 
 
   React.useEffect(() => {
@@ -175,7 +174,7 @@ export default function Chartbox(props) {
         setWidth(frame.current.clientWidth);
         // if (frame.current.clientWidth < 640) {
         props.onResize && props.onResize(frame.current)
-        chartElement.setOption(props.config);
+        chartElement.setOption(props.config || config);
         // }
       }
       if (chartElement) chartElement.resize && chartElement.resize();

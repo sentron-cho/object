@@ -70,19 +70,6 @@ export default class Advertbox extends React.PureComponent {
   }
 
   render() {
-    // const getAdmin = (obj, key, def = null) => {
-    //   if (def == null) {
-    //     switch (key) {
-    //       case "phone": def = null; break;
-    //       case "email": def = null; break;
-    //       default: break;
-    //     }
-    //   }
-
-    //   key = key.toLowerCase();
-    //   return (obj != null && obj[key] != null && obj[key] != '') ? obj[key] : def;
-    // };
-
     const props = this.props;
     const show = props.show === true ? true : false;
 

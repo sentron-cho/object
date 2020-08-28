@@ -72,7 +72,6 @@ export const sobject = () => {
         sample={samplecode('title={"Optionbar"} onClick={onClick} onChange={onChange}', 'primary')} box={true}>
         {!refresh && <Optionbar className={cx(classname, bg, size)} options={opt}
           theme={theme} title={title} onClick={onClick} children={ischild && OptionChild} /> }
-        {/* title={ST.ADMIN.OPTIONS.TITLE} onClick={onClickOptions} children={LayerOptions} rowid={state.rowid} data={state.data} state={state.state} */}
       </Linebox>
 
       <div className={"res-view"}>

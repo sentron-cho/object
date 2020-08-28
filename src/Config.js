@@ -173,13 +173,11 @@ const KOR = {
 export const AUTH = {
   SYSTEM: 'system',
   SUPER: 'super',
-  ADMIN: 'admin',
   USER: 'user',
 
   ST: {
     SYSTEM: '시스템관리자',
     SUPER: '슈퍼관리자',
-    ADMIN: '관리자',
     USER: '사용자',
   }
 }

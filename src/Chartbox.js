@@ -144,7 +144,7 @@ export default function Chartbox(props) {
         a.data = (props.data && props.data[i]) || null;
         if (props.type && props.type[i]) a.type = props.type[i];
         if (!a.itemStyle) a['itemStyle'] = {};
-        if (props.color && props.color[i]) a.itemStyle['color'] = cs.color.dark;
+        if (props.color && props.color[i]) a.itemStyle['color'] = props.color[i];
         return null;
       });
     }
@@ -173,7 +173,7 @@ export default function Chartbox(props) {
       if (frame && frame.current) {
         setWidth(frame.current.clientWidth);
         // if (frame.current.clientWidth < 640) {
-        props.onResize && props.onResize(frame.current)
+        props.onResize && props.onResize(frame.current, props.config || config)
         chartElement.setOption(props.config || config);
         // }
       }

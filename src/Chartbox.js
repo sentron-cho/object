@@ -36,6 +36,13 @@ const StyledObject = styled.section`{
     ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
     ${({ border }) => border && border.width && cs.border.width(border.width)}
 
+    .c-tip { ${cs.w.fit} 
+      .t-li { ${cs.disp.block}
+        .t-l { ${cs.disp.inblock} ${cs.min.w(40)} ${cs.font.left} }
+        .t-r { ${cs.disp.inblock} ${cs.min.w(40)} ${cs.font.right} }
+      }
+    }
+
   }
 }`;
 
@@ -49,6 +56,17 @@ export const series = {
 };
 
 export const cloneSeries = () => JSON.parse(JSON.stringify(series));
+
+export const ChartTooltip = (value, left = '50px', right = '80px') => {
+  if (value instanceof Array) {
+    left = left ?  `style='width: ${left}'` : '';
+    right = right ?  `style='width: ${right}'` : '';
+    let str = value.reduce((a, b) => a + `<li class='t-li'><span class='t-l' ${left}>${b.label}:</span><span class='t-r' ${right}>${b.value}</span></li>`, '');
+    return `<ul class='c-tip'>${str}</ul>`;
+  } else {
+    return value;
+  }
+}
 
 export default function Chartbox(props) {
   const chart = React.useRef(null);

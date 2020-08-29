@@ -72,3 +72,4 @@ export { default as CloseButton } from "./CloseButton";
 export { default as Summarybox } from "./Summary";
 export { default as Memobox } from "./Memobox";
 export { default as Chartbox } from "./Chartbox";
+export { ChartTooltip } from "./Chartbox";

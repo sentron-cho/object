@@ -6,6 +6,7 @@ import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { SearchFrame, Pagenavi, Util, Svg, cs, Guidebox, Dragable } from './index';
 import { EID, ST } from './Config';
+import moment from 'moment';
 
 const StyledObject = styled.div`{
   &.table-box { 
@@ -277,12 +278,12 @@ const Tablebox = (props) => {
   const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null, format = null } = head[index];
       let data = value;
 
       switch (type) {
-        case "datetime": data = Util.toStringSymbol(value); break;
-        case "date": data = Util.toStringSymbol(value).substr(0, 10); break;
+        case "datetime": data = moment(value).format(format || "YYYY.MM.DD hh:mm:ss"); break;
+        case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
         case "phone": data = Util.toStringPhone(value); break;
         case "number": data = Util.numberWithCommas(value); break;
         default: data = value; break;

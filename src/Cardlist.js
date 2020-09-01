@@ -4,6 +4,7 @@ import cx from 'classnames/bind';
 import cs from './css-style';
 import { Pagenavi, Nodata, Util, Svg, SearchFrame } from './index';
 import { EID, ST } from './Config';
+import moment from 'moment';
 
 const StyledObject = styled.div`{
   &.card-list { ${cs.pos.relative} ${cs.w.full} ${cs.h.fit} ${cs.p.b50} ${cs.min.h((props) => props.min)}
@@ -185,12 +186,12 @@ const Cardlist = (props) => {
     return item.map((col, index) => {
       const { value } = col;
       index = (index > head.length - 1) ? head.length - 1 : index;
-      let { type, title, unit = '', color = null } = head[index];
+      let { type, title, unit = '', color = null, format = null } = head[index];
       let data = value;
 
       switch (type) {
-        case "datetime": data = Util.toStringSymbol(value); break;
-        case "date": data = Util.toStringSymbol(value).substr(0, 10); break;
+        case "datetime": data = moment(value).format(format || "YYYY.MM.DD hh:mm:ss"); break;
+        case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
         case "phone": data = Util.toStringPhone(value); break;
         case "json": title = col.title; break;
         case "number": data = Util.numberWithCommas(value); break;

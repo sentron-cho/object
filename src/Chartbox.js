@@ -154,8 +154,16 @@ export default function Chartbox(props) {
         config.series = [];
         props.data.map((a, i) => {
           if (props.series && props.series[i]) return config.series.push(props.series[i]);
-          else return config.series.push(JSON.parse(JSON.stringify(series)));
+          else {
+            return config.series.push(JSON.parse(JSON.stringify(series)));
+          }
         });
+
+        config.series.map(a => {
+          a.markPoint = props.mark === true ? a.markPoint : props.mark instanceof Object ? props.mark : null;
+          a.label = props.label === true ? a.label : props.label instanceof Object ? props.label : null;
+          return null;
+        })
       }
 
       config.series.map((a, i) => {

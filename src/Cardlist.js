@@ -170,23 +170,23 @@ const Cardlist = (props) => {
 
   const onSelect = (e) => {
     const rowid = e.currentTarget.getAttribute("rowid");
-    (this.props.onSelect != null) && this.props.onSelect(rowid, e);
+    props.onSelect && props.onSelect(rowid, e);
   }
 
   const onClickDelete = (rowid, e) => {
     e.stopPropagation();
-    (this.props.onClickDelete != null) && this.props.onClickDelete(rowid, e);
+    props.onClickDelete && props.onClickDelete(rowid, e);
   }
 
   const onClickPage = (page, e) => {
-    (this.props.onClickPage != null) && this.props.onClickPage(page, e);
+    props.onClickPage && props.onClickPage(page, e);
   }
 
   const renderColumnElem = (item, head) => {
     return item.map((col, index) => {
       const { value } = col;
       index = (index > head.length - 1) ? head.length - 1 : index;
-      let { type, title, unit = '', color = null, format = null } = head[index];
+      let { type, title, unit = '', color = null, format = null, getcolor = null,  } = head[index];
       let data = value;
 
       switch (type) {
@@ -207,9 +207,11 @@ const Cardlist = (props) => {
         styled['color'] = color instanceof Function ? color(value) : color;
       }
 
+      const vcolor = getcolor && getcolor(value);
+      
       return <div key={String(col.key)} className={cx("tcol", col.key)}>
         <p className="tcol-label">{title}{unit && <span className="tcol-unit">{`[${unit}]`}</span>}</p>
-        <p className="tcol-txt" style={styled}>{`${data}`}
+        <p className={cx("tcol-txt", vcolor)} style={styled}>{`${data}`}
           {/* {unit && <span className="tcol-unit">{`${unit}`}</span>} */}
         </p>
       </div>

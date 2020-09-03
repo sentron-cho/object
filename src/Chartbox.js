@@ -59,8 +59,8 @@ export const cloneSeries = () => JSON.parse(JSON.stringify(series));
 
 export const ChartTooltip = (value, left = '50px', right = '80px') => {
   if (value instanceof Array) {
-    left = left ?  `style='width: ${left}'` : '';
-    right = right ?  `style='width: ${right}'` : '';
+    left = left ? `style='width: ${left}'` : '';
+    right = right ? `style='width: ${right}'` : '';
     let str = value.reduce((a, b) => a + `<li class='t-li'><span class='t-l' ${left}>${b.label}:</span><span class='t-r' ${right}>${b.value}</span></li>`, '');
     return `<ul class='c-tip'>${str}</ul>`;
   } else {
@@ -144,12 +144,23 @@ export default function Chartbox(props) {
       ...props.zoom.handle,
     }],
     series: [], // props.series || [], ...props.options,
-    ...props.options
+    legend: { data: props.legend || null },
+    ...props.options,
   });
 
   React.useEffect(() => {
     if (!props.config) {
       config.xAxis.data = props.axis;
+      // if (props.axis instanceof Array) {
+      //   config.xAxis = [];
+      //   props.axis.map((a, i) => {
+      //     config.xAxis[i] = { data: null };
+      //     config.xAxis[i].data = a ? a : props.xAxis[0];
+      //     return 0;
+      //   });
+      // } else {
+      //   config.xAxis.data = props.axis;
+      // }
       if (props.data && props.data.length > 0) {
         config.series = [];
         props.data.map((a, i) => {
@@ -159,9 +170,10 @@ export default function Chartbox(props) {
           }
         });
 
-        config.series.map(a => {
+        config.series.map((a, i) => {
           a.markPoint = props.mark === true ? a.markPoint : props.mark instanceof Object ? props.mark : null;
           a.label = props.label === true ? a.label : props.label instanceof Object ? props.label : null;
+          a.name = props.legend && props.legend[i] ? props.legend[i] : null;
           return null;
         })
       }

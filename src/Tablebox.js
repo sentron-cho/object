@@ -275,19 +275,28 @@ const Tablebox = (props) => {
     props.onClickHead && props.onClickHead(eid, e);
   }
 
-  const renderColumnElem = (item, head) => {
+  const renderColumnElem = (item, head, pos) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null, format = null } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null, format = null, formatter = null } = head[index];
       let data = value;
 
       switch (type) {
-        case "datetime": data = moment(value).format(format || "YYYY.MM.DD hh:mm:ss"); break;
-        case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
-        case "phone": data = Util.toStringPhone(value); break;
-        case "number": data = Util.numberWithCommas(value); break;
-        default: data = value; break;
+        case "datetime": {
+          let v = String(value);
+          v = value.length === 14 ? `${value.substr(0, 8)} ${value.substr(8, 6)}` : value;
+          data = formatter ? formatter(v) : moment(v).format(format || "YYYY.MM.DD HH:mm:ss"); break;
+        }
+        case "date": data = formatter ? formatter(value) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
+        case "time": data = formatter ? formatter(value) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
+        case "phone": data = formatter ? formatter(value) : Util.toStringPhone(value); break;
+        case "number": data = formatter ? formatter(value) : Util.numberWithCommas(value); break;
+        default: data = formatter ? formatter(value) : value; break;
       }
+
+      // if (formatter) {
+      //   formatter(value);
+      // }
 
       let styled = { textAlign: align };
       if (type === "color") {
@@ -295,7 +304,7 @@ const Tablebox = (props) => {
       }
 
       if (color) {
-        styled['color'] = color instanceof Function ? color(value) : color;
+        styled['color'] = color instanceof Function ? color(value, pos) : color;
       }
 
       const vcolor = getcolor && getcolor(value);
@@ -410,7 +419,7 @@ const Tablebox = (props) => {
                     {props.onDragDrop &&
                       <Svg className="i-btn btn-move sm" eid={rowid} name={"move"} />
                     }
-                    {renderColumnElem(item, head)}
+                    {renderColumnElem(item, head, index)}
                     {props.onClickDelete &&
                       <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
                     }

@@ -96,7 +96,7 @@ const StyledObject = styled.div` {
     }
 
     .cb-sel {
-      .cb-txt {
+      .cb-txt, .cb-li {
         ${({ text }) => text && text.color && cs.font.color(text.color)}
         ${({ text }) => text && text.align && cs.font.align(text.align)}
 

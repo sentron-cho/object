@@ -182,20 +182,34 @@ const Cardlist = (props) => {
     props.onClickPage && props.onClickPage(page, e);
   }
 
-  const renderColumnElem = (item, head) => {
+  const renderColumnElem = (item, head, pos) => {
     return item.map((col, index) => {
       const { value } = col;
       index = (index > head.length - 1) ? head.length - 1 : index;
-      let { type, title, unit = '', color = null, format = null, getcolor = null,  } = head[index];
+      let { type, title, unit = '', color = null, format = null, getcolor = null, formatter = null  } = head[index];
       let data = value;
 
+      // switch (type) {
+      //   case "datetime": data = moment(value).format(format || "YYYY.MM.DD hh:mm:ss"); break;
+      //   case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
+      //   case "phone": data = Util.toStringPhone(value); break;
+      //   case "json": title = col.title; break;
+      //   case "number": data = Util.numberWithCommas(value); break;
+      //   default: data = value; break;
+      // }
+
       switch (type) {
-        case "datetime": data = moment(value).format(format || "YYYY.MM.DD hh:mm:ss"); break;
-        case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
-        case "phone": data = Util.toStringPhone(value); break;
-        case "json": title = col.title; break;
-        case "number": data = Util.numberWithCommas(value); break;
-        default: data = value; break;
+        case "datetime": {
+          let v = String(value);
+          v = value.length === 14 ? `${value.substr(0, 8)} ${value.substr(8, 6)}` : value;
+          data = formatter ? formatter(v, list[pos], pos) : moment(v).format(format || "YYYY.MM.DD HH:mm:ss"); break;
+        }
+        case "date": data = formatter ? formatter(value, list[pos], pos) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
+        case "time": data = formatter ? formatter(value, list[pos], pos) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
+        case "phone": data = formatter ? formatter(value, list[pos], pos) : Util.toStringPhone(value); break;
+        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.numberWithCommas(value); break;
+        //   case "json": title = col.title; break;
+        default: data = formatter ? formatter(value, list[pos], pos) : value; break;
       }
 
       let styled = {};
@@ -204,7 +218,7 @@ const Cardlist = (props) => {
       }
       
       if (color) {
-        styled['color'] = color instanceof Function ? color(value) : color;
+        styled['color'] = color instanceof Function ? color(value, list[pos], pos) : color;
       }
 
       const vcolor = getcolor && getcolor(value);
@@ -264,7 +278,7 @@ const Cardlist = (props) => {
           const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
           return <li className={cx("trow", { selection })} key={String(index)} rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
             {/* col */}
-            {renderColumnElem(item, head)}
+            {renderColumnElem(item, head, index)}
             {props.onClickDelete &&
               <div className="tcol-button">
                 <Svg className="btn-edit sm" onClick={onClickDelete} name={"delete"} eid={rowid} color={props.color} />

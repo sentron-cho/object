@@ -285,18 +285,14 @@ const Tablebox = (props) => {
         case "datetime": {
           let v = String(value);
           v = value.length === 14 ? `${value.substr(0, 8)} ${value.substr(8, 6)}` : value;
-          data = formatter ? formatter(v, tlist[pos], pos) : moment(v).format(format || "YYYY.MM.DD HH:mm:ss"); break;
+          data = formatter ? formatter(v, list[pos], pos) : moment(v).format(format || "YYYY.MM.DD HH:mm:ss"); break;
         }
-        case "date": data = formatter ? formatter(value, tlist[pos], pos) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
-        case "time": data = formatter ? formatter(value, tlist[pos], pos) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
-        case "phone": data = formatter ? formatter(value, tlist[pos], pos) : Util.toStringPhone(value); break;
-        case "number": data = formatter ? formatter(value, tlist[pos], pos) : Util.numberWithCommas(value); break;
-        default: data = formatter ? formatter(value, tlist[pos], pos) : value; break;
+        case "date": data = formatter ? formatter(value, list[pos], pos) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
+        case "time": data = formatter ? formatter(value, list[pos], pos) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
+        case "phone": data = formatter ? formatter(value, list[pos], pos) : Util.toStringPhone(value); break;
+        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.numberWithCommas(value); break;
+        default: data = formatter ? formatter(value, list[pos], pos) : value; break;
       }
-
-      // if (formatter) {
-      //   formatter(value);
-      // }
 
       let styled = { textAlign: align };
       if (type === "color") {
@@ -304,7 +300,7 @@ const Tablebox = (props) => {
       }
 
       if (color) {
-        styled['color'] = color instanceof Function ? color(value, tlist[pos], pos) : color;
+        styled['color'] = color instanceof Function ? color(value, list[pos], pos) : color;
       }
 
       const vcolor = getcolor && getcolor(value);

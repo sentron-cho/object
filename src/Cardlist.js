@@ -17,17 +17,20 @@ const StyledObject = styled.div`{
         ${(props) => cs.mouse.get(props.cursor)}; ${cs.box.line} ${cs.box.radius}
 
         .tcol { ${cs.disp.block} ${cs.m.a2} ${cs.h.get(20)} ${cs.font.sm} ${cs.opac.show} //${cs.font.line(20)}
-          p { 
+          ${({ height }) => cs.font.line(height)};
+          ${({ height }) => cs.h.get(height)};
+
+          & > p { 
             ${cs.font.left} ${cs.font.ellipsis} ${cs.disp.inblock} ${cs.max.w("30%")}
             &:last-child { ${cs.font.right} ${cs.align.right} ${cs.max.w('calc(70% - 10px)')} ${cs.right(10)} }
           }
-          p:first-child { ${cs.opac.get(0.7)} ${cs.font.sm} }
-          p:last-child { ${cs.font.md} }
+          & > p:first-child { ${cs.opac.get(0.7)} ${cs.font.sm} }
+          & > p:last-child { ${cs.font.md} }
 
           &.no {
             margin-bottom: 10px; ${cs.font.thickbold}  ${cs.font.md}
-            p:first-child { ${cs.opac.show} ${cs.font.sm} }
-            p:last-child { ${cs.pos.relative} ${cs.p.l10} }
+            & > p:first-child { ${cs.opac.show} ${cs.font.sm} }
+            & > p:last-child { ${cs.pos.relative} ${cs.p.l10} }
           }
 
           .tcol-unit { ${cs.font.xs} ${cs.m.l1} }
@@ -165,7 +168,7 @@ const Cardlist = (props) => {
   const cursor = props.onSelect == null ? 'default' : "pointer";
   const min = props.min ? props.min : "100px";
   const width = props.width ? props.width : "240px";
-  const style = { cursor, min, width };
+  const style = { cursor, min, width, height };
   const selection = props.onSelect;
 
   const onSelect = (e) => {
@@ -194,7 +197,7 @@ const Cardlist = (props) => {
       //   case "date": data = moment(value).format(format || "YYYY.MM.DD"); break;
       //   case "phone": data = Util.toStringPhone(value); break;
       //   case "json": title = col.title; break;
-      //   case "number": data = Util.numberWithCommas(value); break;
+      //   case "number": data = Util.commas(value); break;
       //   default: data = value; break;
       // }
 
@@ -207,7 +210,7 @@ const Cardlist = (props) => {
         case "date": data = formatter ? formatter(value, list[pos], pos) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
         case "time": data = formatter ? formatter(value, list[pos], pos) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
         case "phone": data = formatter ? formatter(value, list[pos], pos) : Util.toStringPhone(value); break;
-        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.numberWithCommas(value); break;
+        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.commas(value); break;
         //   case "json": title = col.title; break;
         default: data = formatter ? formatter(value, list[pos], pos) : value; break;
       }
@@ -225,9 +228,7 @@ const Cardlist = (props) => {
       
       return <div key={String(col.key)} className={cx("tcol", col.key)}>
         <p className="tcol-label">{title}{unit && <span className="tcol-unit">{`[${unit}]`}</span>}</p>
-        <p className={cx("tcol-txt", vcolor)} style={styled}>{`${data}`}
-          {/* {unit && <span className="tcol-unit">{`${unit}`}</span>} */}
-        </p>
+        <p className={cx("tcol-txt", vcolor)} style={styled}>{data}</p>
       </div>
     })
   }

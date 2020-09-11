@@ -290,7 +290,7 @@ const Tablebox = (props) => {
         case "date": data = formatter ? formatter(value, list[pos], pos) : moment(`${value} 000000`).format(format || "YYYY.MM.DD"); break;
         case "time": data = formatter ? formatter(value, list[pos], pos) : moment(`00000000 ${value}`).format(format || "HH:mm:ss"); break;
         case "phone": data = formatter ? formatter(value, list[pos], pos) : Util.toStringPhone(value); break;
-        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.numberWithCommas(value); break;
+        case "number": data = formatter ? formatter(value, list[pos], pos) : Util.commas(value); break;
         default: data = formatter ? formatter(value, list[pos], pos) : value; break;
       }
 
@@ -306,9 +306,7 @@ const Tablebox = (props) => {
       const vcolor = getcolor && getcolor(value);
 
       return <div key={String(index)} style={{ flex: flex }} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
-        <p style={styled} className={cx('tb-p', vcolor)}>{data}
-          {/* {unit && <span className="tb-u">{`${unit}`}</span>} */}
-        </p>
+        <p style={styled} className={cx('tb-p', vcolor)}>{data}</p>
       </div>
     })
   }

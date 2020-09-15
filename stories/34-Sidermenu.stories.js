@@ -34,7 +34,7 @@ const list = [
 ];
 
 export const object = () => {
-  const title = text('title', 'nuriweb');
+  const title = text('title', 'nurigo');
   const [menu, setMenu] = useState(null);
   const [click, setClick] = useState(null);
   const [result, setResult] = useState(null);

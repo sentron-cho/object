@@ -103,28 +103,6 @@ export default function Chartbox(props) {
     },
     xAxis: {
       data: props.axis || null,
-      // type: 'category',
-      // boundaryGap: false,
-      // axisPointer: {
-      //   show: true,
-      //   value: '2016-10-7',
-      //   snap: true,
-      //   lineStyle: {
-      //     color: cs.color.dark,
-      //     opacity: 0.5,
-      //     width: 2
-      //   },
-      //   label: {
-      //     show: true,
-      //     backgroundColor: cs.color.dark
-      //   },
-      //   handle: {
-      //     show: false,
-      //     color: cs.color.dark,
-      //     size: 30,
-      //     margin: 40
-      //   }
-      // }
     },
     yAxis: {
       type: 'value',
@@ -151,16 +129,6 @@ export default function Chartbox(props) {
   React.useEffect(() => {
     if (!props.config) {
       config.xAxis.data = props.axis;
-      // if (props.axis instanceof Array) {
-      //   config.xAxis = [];
-      //   props.axis.map((a, i) => {
-      //     config.xAxis[i] = { data: null };
-      //     config.xAxis[i].data = a ? a : props.xAxis[0];
-      //     return 0;
-      //   });
-      // } else {
-      //   config.xAxis.data = props.axis;
-      // }
       if (props.data && props.data.length > 0) {
         config.series = [];
         props.data.map((a, i) => {

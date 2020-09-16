@@ -164,7 +164,7 @@ const StyledObject = styled.div`{
 }`;
 
 const Cardlist = (props) => {
-  const { head, list, total = '', height = 30, theme, rowid } = props;
+  const { head, list, total = '', height = 30, theme } = props;
   const cursor = props.onSelect == null ? 'default' : "pointer";
   const min = props.min ? props.min : "100px";
   const width = props.width ? props.width : "240px";

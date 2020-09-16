@@ -12,8 +12,6 @@ const StyledObject = styled.div`{
   &.table-box { 
     ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} 
 
-    // .tb-frame { ${cs.over.hidden} ${cs.w.full} ${cs.over.yauto} ${cs.scrollbar.t4} ${cs.h.calc("100% - 50px")} }
-
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block}
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
 
@@ -278,7 +276,7 @@ const Tablebox = (props) => {
   const renderColumnElem = (item, head, pos) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, unit = '', color = null, format = null, formatter = null } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, color = null, format = null, formatter = null } = head[index];
       let data = value;
 
       switch (type) {

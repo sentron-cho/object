@@ -75,7 +75,7 @@ const StyledObject = styled.span`{
 
     &.border { ${cs.box.line} }
 
-    &.full { ${cs.w.full} ${cs.p.h0} }
+    &.full { ${cs.w.full} ${cs.p.h0} ${cs.font.center} }
 
     .btn-label {
       ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} 

@@ -29,7 +29,7 @@ export const Util = {
   },
 
   numberWithCommas(x) { return this.isEmpty(x) ? 0 : x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); },
-  
+
   commas(x) { return this.numberWithCommas(x); },
 
   toShortCost(x) {
@@ -426,7 +426,25 @@ export const Util = {
     } else {
       return false;
     }
-  }
+  },
+
+  isEmail(asValue) {
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴	
+  },
+
+  isPhone(asValue) {
+    const regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  isPassword(asValue, min = 8, max = 12) {
+    if (asValue.length < min || asValue.length > max) return false;
+
+    const regExp = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; //  8 ~ 10자 영문, 숫자 조합
+    const is = regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+    return is;
+  },
 };
 
 export const Storage = {

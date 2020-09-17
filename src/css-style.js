@@ -127,6 +127,7 @@ const cs = {
     default: 'cursor: default;',
     cross: 'cursor: crosshair;',
     move: 'cursor: move;',
+    text: 'cursor: text;',
 
     get: (v) => `cursor: ${v};`,
   },
@@ -388,6 +389,7 @@ const cs = {
     slideout: (v = '150ms', s = '0', e = '-100%', name = 'slideout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateX(${s});  opacity: 0.3; } to { transform: translateX(${e});  opacity: 1; } };`,
     slidedown: (v = '150ms', s = '-100%', e = '0', name = 'slidedown') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s}); opacity: 0.3; } to { transform: translateY(${e}); opacity: 1; } };`,
     slideup: (v = '150ms', s = '0', e = '-100%', name = 'slideup') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
+    sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizeup') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
     flicking: (v = '150ms', s = '1', e = '0') => `animation: flicking linear 1 forwards ${v}; @keyframes flicking { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
   },
 

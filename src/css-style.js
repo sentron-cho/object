@@ -75,6 +75,9 @@ const cs = {
       `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
       `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v} ${v} 0; }; & > :first-child { border-radius: ${v} 0 0 ${v}; } `,
 
+  selection: (v = color.lightgray, r = '5px') => `cursor: pointer; border: 1px solid ${v}; border-radius: ${Number.isInteger(r) ? r + 'px' : r}; `
+    + `&:hover { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-color: transparent; };`,
+
   max: {
     wxl: 'max-width: 1280px;',
     wlg: 'max-width: 1024px;',
@@ -157,7 +160,7 @@ const cs = {
     cover: 'object-fit: cover;',
     fill: 'object-fit: fill;',
     center: 'object-position: center center;',
-    
+
     shadow: (v) => v ? v : `box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`,
     fit: (v) => `object-fit: ${v};`,
     position: (v) => `object-position: ${v};`

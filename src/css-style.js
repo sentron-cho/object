@@ -8,7 +8,7 @@ const color = {
   darkwhite: '#eaeaea',
   trans: 'transparent',
   sky: '#f1f8ff',
-  primary: '#4a92e4',
+  primary: '#1a9be4',
   lightprimary: '#8ec3ff',
   primaryhover: '#0f55d6',
   lightyellow: '#fff5c1',

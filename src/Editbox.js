@@ -85,7 +85,7 @@ const StyledObject = styled.div` {
       ${(props) => props.helpcolor && cs.font.color(props.helpcolor)};
     }
 
-    &.border .input { ${cs.box.line} ${(props) => props.bordercolor && cs.border.color(props.bordercolor)}; }
+    &.border .input { ${cs.box.light} ${(props) => props.bordercolor && cs.border.color(props.bordercolor)}; }
     &.radius .input { ${cs.box.radius} }
 
     &.transparent { 

@@ -15,14 +15,14 @@ const StyledObject = styled.header`{
       &.float { ${cs.pos.fixed} ${cs.anim.show} ${cs.border.gray} }
 
       .nav-layer { ${cs.size.full} ${cs.disp.block} ${cs.p.l10} ${props => cs.max.width(props.maxwidth)}
-        .li-title { ${cs.align.ycenter} ${cs.pos.relative} ${cs.font.t1} ${cs.font.thickbold} ${cs.h.auto} ${cs.disp.inblock}
+        .li-title { ${cs.align.ycenter} ${cs.pos.relative} ${cs.font.t1} ${cs.font.weight(700)} ${cs.h.auto} ${cs.disp.inblock}
           ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} letter-spacing: 3px; 
         }
 
         .ul-navi { ${cs.opac.show} ${cs.disp.block} ${cs.size.wfit} 
           ${cs.mouse.pointer} ${cs.z.header} ${cs.disp.inblock} ${cs.h.auto}
           .li-nav { ${cs.disp.inblock} ${cs.size.fit} ${cs.m.h10} ${cs.font.center} ${cs.font.thickbold} 
-            ${cs.z.front} 
+            ${cs.z.front} ${cs.font.md}
 
             &:hover, &.active { ${cs.font.primary} }
           }
@@ -63,14 +63,14 @@ const StyledObject = styled.header`{
       .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
       .nav-layer .ul-navi .li-nav {
         ${cs.font.sky}
-        &:hover, &.active { ${cs.font.dark } }
+        &:hover, &.active { ${cs.font.dark} }
       }
     }
     &.gray {
       .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
         .nav-layer .ul-navi .li-nav {
           ${cs.font.dark}
-          &:hover, &.active { ${cs.font.primary } }
+          &:hover, &.active { ${cs.font.primary} }
         }
       }
     }
@@ -82,14 +82,14 @@ const StyledObject = styled.header`{
       .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
       .nav-layer .ul-navi .li-nav {
         ${cs.font.sky}
-        &:hover, &.active { ${cs.font.dark } }
+        &:hover, &.active { ${cs.font.dark} }
       }
     }
     &.theme-gray {
       .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
         .nav-layer .ul-navi .li-nav {
           ${cs.font.dark}
-          &:hover, &.active { ${cs.font.primary } }
+          &:hover, &.active { ${cs.font.primary} }
         }
       }
     }
@@ -99,11 +99,13 @@ const StyledObject = styled.header`{
     .nav-frame {
       .nav-layer .li-title {
         ${({ font }) => font && font.title && cs.font.color(font.title)}
+        ${({ font }) => font && font.type && cs.font.family(font.type)}
       }
 
       .nav-layer .ul-navi .li-nav {
         ${({ font }) => font && font.color && cs.font.color(font.color)}
         ${({ font }) => font && font.size && cs.font.size(font.size)}
+        // ${({ font }) => font && font.type && cs.font.family(font.type)}
 
         &:hover, &.active { 
           ${({ font }) => font && font.hover && cs.font.color(font.hover)}

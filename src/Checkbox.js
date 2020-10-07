@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import { Svg, cs } from './index';
 
 const StyledObject = styled.div` {
-  &.chk-box { ${cs.w.fit} ${cs.disp.inblock}
-    ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
+  &.chk-box { ${cs.w.fit} ${cs.disp.inblock} ${cs.noliststyle}
 
     .chk-group {
       ${cs.disp.inblock} ${cs.w.auto}
 
       .chk-itm { 
         ${cs.max.width('100%')} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
-        .chk-icon { ${cs.float.left} ${cs.m.r5} }
+        .chk-icon { ${cs.float.left} ${cs.m.r5} svg { ${cs.p.a0} ${cs.m.top(-2)} } }
 
         &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
       }
@@ -65,6 +64,7 @@ const StyledObject = styled.div` {
     &.radius { ${cs.box.radius} }
     &.round { ${cs.border.radius('100px')} }
     &.full { ${cs.w.full} }
+    &.block { ${cs.w.full} .chk-itm { ${cs.disp.block} ${cs.font.left} ${cs.w.full} } }
 
     ${({ border }) => border && cs.box.line}
     ${({ border }) => border && border.color && cs.border.color(border.color)}
@@ -165,8 +165,9 @@ export default class Checkbox extends React.PureComponent {
           {list ? list.map((item, index) => {
             const icon = radio ? item.check ? 'radio' : 'unradio' : item.check ? 'check' : 'uncheck';
             return <li key={index} className="chk-itm" onClick={this.onClickItem} eid={item.id}>
-              {<React.Fragment><Svg className="chk-icon" name={icon} /> <span className="chk-txt">{item.name}</span></React.Fragment>}
-            </li>;
+              <Svg className="chk-icon" name={icon} />
+              <span className="chk-txt">{item.name}</span>
+            </li>
           }) : <span className={'no-data'}>no list</span>}
         </ul>
         {guide && <div className="chk-guide">{guide}</div>}

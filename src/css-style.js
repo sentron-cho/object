@@ -1,5 +1,6 @@
 
 const color = {
+  frame: '#f3f3f3',
   hover: '#e2f1ff',
   active: '#e2f1ff',
   white: '#ffffff',
@@ -148,6 +149,17 @@ const cs = {
     invisible: 'visibility: hidden;',
     hidden: 'visibility: hidden;',
 
+    popup: (v = 999999, bg = 'transparent', w = 800, h = 600) => `z-index: ${v}; width: 100%; height: 100%; display: block; position: fixed; bottom:unset; top: 0;
+      .bg { background: ${bg}; width: 100%; height: 100%; display: block; }
+      .box { 
+        width: 100%; height: 100%; display: block; max-width: ${w}px; max-height: ${h}px; 
+        ${cs.box.line} ${cs.radius.all(2)} ${cs.align.center} ${cs.bg.white} ${cs.over.hidden} 
+        .head {
+          ${cs.h.get(60)} ${cs.border.bottom} ${cs.font.t0} ${cs.font.line(60)} ${cs.border.primary} ${cs.bg.sky}
+        }
+        .body { ${cs.h.calc('100% - 60px')} ${cs.font.sm} }
+      }
+    `,
     flex: (v) => `flex: ${v};`,
     get: (v) => `display: ${v};`,
     flexgrow: (v = 1, s = 'column') => `display: flex; flex-grow: ${v}; flex-direction: ${s}; `,
@@ -290,6 +302,7 @@ const cs = {
     lg: 'font-size: 16px;',
     xl: 'font-size: 18px;',
     xxl: 'font-size: 20px;',
+    t0: 'font-size: 22px; font-weight: 550;',
     t1: 'font-size: 28px; font-weight: 550;',
     t2: 'font-size: 34px; font-weight: 550;',
     t3: 'font-size: 40px; font-weight: 550;',
@@ -432,6 +445,7 @@ const cs = {
   },
 
   bg: {
+    frame: `background: ${color.frame};`,
     active: `background: ${color.active};`,
     hover: `background: ${color.hover};`,
     white: `background: ${color.white};`,
@@ -730,6 +744,7 @@ const cs = {
     r40: 'margin-right: 40px;',
     r50: 'margin-right: 50px;',
 
+    center: (top = 0, bottom = 0) => Number.isInteger(top) && Number.isInteger(bottom) ? `margin: ${top}px auto ${bottom}px auto;` : `margin: ${top} auto ${bottom} auto;`,
     left: (v) => Number.isInteger(v) ? `margin-left: ${v}px;` : `margin-left: ${v};`,
     right: (v) => Number.isInteger(v) ? `margin-right: ${v}px;` : `margin-right ${v};`,
     top: (v) => Number.isInteger(v) ? `margin-top: ${v}px;` : `margin-top: ${v};`,

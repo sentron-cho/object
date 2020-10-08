@@ -3,6 +3,7 @@ import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { Svg, Util, cs } from './index';
 import { EID, SCREEN } from './Config';
+import * as actions from './actor/Action';
 
 const StyledObject = styled.header`{
   &.header {
@@ -156,7 +157,8 @@ class Header extends React.PureComponent {
         if (url && url.indexOf("http") === 0) {
           window.open(url);
         } else {
-          window.location.href = url;
+          actions.go(url)
+          // window.location.href = url;
         }
       }
     }

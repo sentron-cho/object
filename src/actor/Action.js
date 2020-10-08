@@ -7,7 +7,7 @@ import { Storage } from '../Utils';
 
 const LOGIN = "/login";
 
-export function go(url, value) {
+export function go(url, value = {}) {
   Storage.setLocalItem(url, value);
   window.location.href = url;
 }

@@ -19,7 +19,7 @@ const StyledObject = styled.span`{
     &.xs { ${cs.h.xs} ${cs.font.xs} ${cs.p.get("0px 4px")} }
 
     &.icon { ${cs.disp.get("inline-flex")} 
-      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} ${cs.pos.relative} }
+      .btn-icon { ${cs.align.ycenter} ${cs.opac.show} ${cs.pos.relative} .svg-path { ${cs.fill.dark} } }
       .btn-label { ${cs.align.center} ${cs.pos.relative} ${cs.p.l0} }
 
       &.md { .btn-icon { ${cs.icon.sm} ${cs.m.left(-4)} } .btn-label { ${cs.p.get("0px 18px")} ${cs.p.b2} ${cs.p.left(0)} } }
@@ -33,14 +33,14 @@ const StyledObject = styled.span`{
 
     &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
     &.sky { ${cs.bg.sky} ${cs.font.dark} }
-    &.primary { ${cs.bg.primary} ${cs.font.white} }
+    &.primary { ${cs.bg.primary} ${cs.font.white} .btn-icon { .svg-path { ${cs.fill.white} } } }
     &.yellow { ${cs.bg.yellow} ${cs.font.black} }
-    &.orange { ${cs.bg.orange} ${cs.font.white} }
+    &.orange { ${cs.bg.orange} ${cs.font.white} .btn-icon { .svg-path { ${cs.fill.white} } } }
     &.red { ${cs.bg.red} ${cs.font.white} }
     &.green { ${cs.bg.green} ${cs.font.white} }
     &.gray { ${cs.bg.gray} ${cs.font.black} }
-    &.dark { ${cs.bg.dark} ${cs.font.white} }
-    &.black { ${cs.bg.black} ${cs.font.white} }
+    &.dark { ${cs.bg.dark} ${cs.font.white} .btn-icon { .svg-path { ${cs.fill.white} } } }
+    &.black { ${cs.bg.black} ${cs.font.white} .btn-icon { .svg-path { ${cs.fill.white} } } }
     &.lightgray { ${cs.bg.lightwhite} ${cs.font.black} }
     &.white { ${cs.bg.white} ${cs.font.black} }
     &.primary-line { ${cs.bg.trans} ${cs.font.primary} ${cs.box.line} ${cs.border.primary} }

@@ -17,9 +17,7 @@ const StyledObject = styled.div`{
 
       .tb-row { 
         ${cs.w.full} ${cs.pos.relative} ${cs.disp.get("flex; flex-direction: row;")}
-        ${cs.border.bottom} 
-        ${({ height }) => cs.font.line(height)};
-        ${({ height }) => cs.h.get(height)};
+        ${cs.border.bottom} ${cs.h.fit} ${cs.p.v3}
         cursor: ${(props) => props.cursor};
 
         .tb-col {  
@@ -65,7 +63,7 @@ const StyledObject = styled.div`{
 
       &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
       ${cs.pos.relative} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
-        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
+        .tb-row { .tb-col { ${cs.border.lightwhite} ${cs.p.v5} } } 
       }
 
       &.tb-body { ${cs.m.t0} }
@@ -80,8 +78,8 @@ const StyledObject = styled.div`{
     
     &.sm { 
       .tb-row { 
-        ${({ height }) => cs.font.line(height - 6)};
-        ${({ height }) => cs.h.get(height - 6)};
+        // ${({ height }) => cs.font.line(height - 6)};
+        // ${({ height }) => cs.h.get(height - 6)};
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.sm} ${cs.m.t0} } 
@@ -90,8 +88,8 @@ const StyledObject = styled.div`{
 
     &.md { 
       .tb-row { 
-        ${({ height }) => cs.font.line(height)};
-        ${({ height }) => cs.h.get(height)};
+        // ${({ height }) => cs.font.line(height)};
+        // ${({ height }) => cs.h.get(height)};
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.md} ${cs.m.t0} } 
@@ -100,13 +98,25 @@ const StyledObject = styled.div`{
 
     &.lg { 
       .tb-row { 
-        ${({ height }) => cs.font.line(height + 6)};
-        ${({ height }) => cs.h.get(height + 6)};
+        // ${({ height }) => cs.font.line(height + 6)};
+        // ${({ height }) => cs.h.get(height + 6)};
       }
       .tb-body { ${cs.font.lg} }
       .tb-head { ${cs.font.xl} }
     }
 
+    
+    &.trans {
+      .tb-body { ${cs.bg.trans} ${cs.font.dark} 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+        .tb-row { .tb-col { ${cs.border.trans} } } 
+      }
+      .tb-head { ${cs.bg.white} ${cs.font.dark} 
+        .tb-row { .tb-col { ${cs.border.trans} } } 
+      }
+      .selection:hover { ${cs.bg.frame} }
+      .btn-new { ${cs.bg.frame} ${cs.font.dark} }
+    }
     &.white {
       .tb-body { ${cs.bg.white} ${cs.font.dark} 
         .i-btn { .svg-path { ${cs.fill.dark} } }

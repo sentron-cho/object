@@ -1,6 +1,7 @@
 
 const color = {
-  frame: '#f3f3f3',
+  box: '#f5f5f5f5',
+  frame: '#f0f0f0',
   hover: '#e2f1ff',
   active: '#e2f1ff',
   white: '#ffffff',
@@ -73,8 +74,8 @@ const cs = {
 
   group: (v = 5) =>
     Number.isInteger(v) ?
-      `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
-      `& > * { border-radius: 0; border-right-color: transparent; } & > :last-child { border-radius: 0 ${v} ${v} 0; }; & > :first-child { border-radius: ${v} 0 0 ${v}; } `,
+      `& > *:not(:last-child) { border-radius: 0; border-right: 0; } & > :last-child { border-radius: 0 ${v}px ${v}px 0; }; & > :first-child { border-radius: ${v}px 0 0 ${v}px; } ` :
+      `& > *:not(:last-child) { border-radius: 0; border-right: 0; } & > :last-child { border-radius: 0 ${v} ${v} 0; }; & > :first-child { border-radius: ${v} 0 0 ${v}; } `,
 
   selection: (v = color.lightgray, r = '5px') => `cursor: pointer; border: 1px solid ${v}; border-radius: ${Number.isInteger(r) ? r + 'px' : r}; `
     + `&:hover { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-color: transparent; };`,
@@ -445,6 +446,7 @@ const cs = {
   },
 
   bg: {
+    box: `background: ${color.box};`,
     frame: `background: ${color.frame};`,
     active: `background: ${color.active};`,
     hover: `background: ${color.hover};`,

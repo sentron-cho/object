@@ -49,6 +49,7 @@ const KOR = {
   NO: "NO",
   FIRST: "처음",
   LAST: "끝",
+  WEEK: "주일",
   YEAR: "년",
   MONTH: "월",
   DAY: "일",

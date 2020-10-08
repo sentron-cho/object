@@ -63,8 +63,7 @@ const StyledObject = styled.div`{
         &.disable { ${cs.bg.trans} ${cs.font.gray} }
       }
 
-      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray}
-      //  ${cs.w.calc("100% - 12px")}
+      &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
       ${cs.pos.relative} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
         .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
@@ -89,6 +88,16 @@ const StyledObject = styled.div`{
       .tb-head { ${cs.font.md} }
     }
 
+    &.md { 
+      .tb-row { 
+        ${({ height }) => cs.font.line(height)};
+        ${({ height }) => cs.h.get(height)};
+        .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
+      }
+      .tb-body { ${cs.font.md} ${cs.m.t0} } 
+      .tb-head { ${cs.font.md} }
+    }
+
     &.lg { 
       .tb-row { 
         ${({ height }) => cs.font.line(height + 6)};
@@ -98,6 +107,17 @@ const StyledObject = styled.div`{
       .tb-head { ${cs.font.xl} }
     }
 
+    &.white {
+      .tb-body { ${cs.bg.white} ${cs.font.dark} 
+        .i-btn { .svg-path { ${cs.fill.dark} } }
+        .tb-row { .tb-col { ${cs.border.lightgray} } } 
+      }
+      .tb-head { ${cs.bg.white} ${cs.font.dark} 
+        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
+      }
+      .selection:hover { ${cs.bg.sky} }
+      .btn-new { ${cs.bg.sky} ${cs.font.dark} }
+    }
     &.sky {
       .tb-body { ${cs.bg.sky} ${cs.font.dark} 
         .i-btn { .svg-path { ${cs.fill.dark} } }

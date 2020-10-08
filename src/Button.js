@@ -31,7 +31,7 @@ const StyledObject = styled.span`{
       .running { ${cs.z.front} }
     }
 
-    &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { ${cs.font.underline} } }
+    &.trans { ${cs.bg.trans} ${cs.font.black} &:hover { .btn-label { ${cs.font.underline} } } }
     &.sky { ${cs.bg.sky} ${cs.font.dark} }
     &.primary { ${cs.bg.primary} ${cs.font.white} .btn-icon { .svg-path { ${cs.fill.white} } } }
     &.yellow { ${cs.bg.yellow} ${cs.font.black} }

@@ -145,8 +145,8 @@ class Header extends React.PureComponent {
     this.state = { type: type, menus: EID.HIDE, float: false, frameid: frameid };
   }
 
-  onClickMenu = (e) => {
-    const url = e.currentTarget.getAttribute("url");
+  onClickMenu = (e, item) => {
+    const { url, param = {} } = item;
     if (this.props.preview) {
       window.open(url);
     } else {
@@ -157,7 +157,7 @@ class Header extends React.PureComponent {
         if (url && url.indexOf("http") === 0) {
           window.open(url);
         } else {
-          actions.go(url)
+          actions.go(url, param)
           // window.location.href = url;
         }
       }
@@ -250,7 +250,7 @@ class Header extends React.PureComponent {
                   return null;
                 } else {
                   return <li key={index} className={cx("li-nav", { active })}
-                    url={item.url} onClick={this.onClickMenu}>{item.name && item.name.toUpperCase()}
+                    onClick={(e) => this.onClickMenu(e, item)}>{item.name && item.name.toUpperCase()}
                   </li>
                 }
               })}

@@ -286,6 +286,7 @@ const cs = {
     front: 'z-index: 1;',
     icon: 'z-index: 9;',
     over: 'z-index: 99;',
+    sidebar: 'z-index: 999;',
     menu: 'z-index: 99999;',
     header: 'z-index: 199999;',
     popup: 'z-index: 999999;',

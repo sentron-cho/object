@@ -1,51 +1,48 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import axios from 'axios';
 import { Svg, Loading, Util, cs } from './index';
-import { EID, SCREEN, ST, CODE} from './Config';
+import { EID, SCREEN, ST } from './Config';
 import * as actions from './actor/Action';
-import { ICON } from "./Icons";
 
 const StyledObject = styled.div`{
   &.nav-side {
     .side-bar {
-      position: fixed; min-height: 800px; height: calc(100vh - ${ props => props.top}); top: ${ props => props.top}; z-index: 101; 
-      width: ${ props => props.width}; ${cs.font.left} ${cs.border.right} ${cs.bg.alphablack} 
+      ${cs.pos.fixed} ${cs.min.height('100vh')} ${cs.h.full} ${cs.z.sidebar} ${props => cs.top(props.top)} 
+      ${props => cs.w.get(props.width)} ${cs.font.left} ${cs.border.right} ${cs.bg.lightblack} ${cs.noselect}
+      // height: calc(100vh - ${props => props.top});
       
-      &.slidein { animation: slide-in linear 1 forwards ${ props => props.fade.time}s; };
-      &.slideout { animation: slide-out linear 1 forwards ${ props => props.fade.time}s; };
+      &.slidein { ${props => cs.anim.slidein(`${props.fade.time}s`, '-120%', '0', 'side-bar-in')} };
+      &.slideout { ${props => cs.anim.slideout(`${props.fade.time}s`, '0', '-120%', 'side-bar-out')} };
 
-      .home { position: relative; cursor: pointer; height: 100px; line-height: 100px; 
-        ont-size: 24px; text-align: center; font-weight: 800; }
-
-      .nav-frame { position: relative; width: 100%; height: calc(100% - 240px);
-        .nav-li { width: 100%; height: 60px; display: inline-block; cursor: pointer;
-          .nav-link { padding-left: 20px; width: 100%; height: 60px; display: inline-block;
-            font-size: 20px; line-height: 60px; font-weight: 500; opacity: 0.8; }
-          .nav-link:hover { background: #25507a90; transition: all 200ms ease-in; }
-          .nav-link.active { background: #25507a; color:#fff; }
+      .nav-frame { ${cs.pos.relative} ${cs.w.full} ${props => cs.h.get(props.width)}
+        .nav-li { ${cs.w.full} ${cs.h.fit} ${cs.disp.inblock} ${cs.mouse.pointer}
+          &.nav-link {
+            ${cs.p.l20} ${cs.w.full} ${cs.font.line(50)} ${cs.disp.inblock} ${cs.font.xl} ${cs.opac.show} ${cs.font.white}
+          }
+          &.nav-link:hover { ${cs.bg.alphablack} }
+          &.nav-link.active { ${cs.bg.primary} ${cs.font.white} }
         }
       }
 
     }
 
-    .top-bar { top: 0; left: 0; height: 60px; z-index: 99999; line-height: 60px;
-      position: fixed; display: block; width: 100vw;
-      ${cs.bg.lightblack} ${cs.border.bottom} border-color: ${cs.color.alphablack}; 
+    .top-bar { ${cs.align.top} ${cs.left(0)} ${props => `${cs.h.get(props.top)} ${cs.font.line(props.top)}`} 
+      ${cs.z.header} ${cs.pos.fixed} ${cs.disp.block} ${cs.w.get('100%')} ${cs.min.w('100vw')}
+      ${cs.bg.lightblack} ${cs.border.bottom} ${cs.border.alphablack}
 
-        .btn-menu { position: relative; z-index: 9999; top: 7px; left: 20px; float: none; display: inline-block; }
-        .nav-title { font-size: 30px; height: 100%; opacity: 0.8; font-weight: 600; 
-          padding-left 20px; letter-spacing: 5px; position: relative; vertical-align: middle;
-        &:hover { cursor: pointer; }}
+        .btn-menu { 
+          ${cs.pos.relative} ${cs.z.menu} ${cs.top(7)} ${cs.left(20)} ${cs.disp.inblock}
+        }
+        .nav-title { 
+          ${cs.font.t1} ${cs.h.full} ${cs.opac.show} ${cs.p.l20} ${cs.font.spacing(3)} ${cs.pos.relative} ${cs.mouse.pointer}
+          ${cs.font.white} ${cs.font.payton}
+        }
     }
 
-    .nav-bg { background: rgba(0,0,0,0.3); width: 100vw; height: 100%; float: left; position: fixed; top: 0; z-index: 99;}
+    .nav-bg { ${cs.bg.alphablack} ${cs.w.get('100vw')} ${cs.h.full} ${cs.pos.fixed} ${cs.top(0)} ${cs.z.over} }
 
-    .appinfo { line-height: 12px; color: #aaa; font-size: 10px; position: absolute; bottom: 5px; right: 5px; z-index: 9; }
-
-    .hide { display: none; }
+    .hide { ${cs.disp.none} }
 
     @media screen and (max-width : 1280px) {
     }
@@ -54,22 +51,22 @@ const StyledObject = styled.div`{
     }
 
     @media screen and (max-width : 860px) {
-      .top-bar { display: block; }
+      .top-bar { ${cs.disp.block} }
       .top-bar{
-        .nav-title { position: absolute; width: 100%; text-align: center; }
-        .btn-menu { margin-left: 10px;}
+        .nav-title { ${cs.pos.absolute} ${cs.w.full} ${cs.font.center} }
+        .btn-menu { ${cs.m.l10} }
       }
     }
 
-    @keyframes slide-in {
-      from { opacity: 0.5; transform: translate3d(-300px, 0, 0); }
-      to { opacity: 1; display: block; transform: translate3d(0px, 0, 0); } 
-    }
+    // @keyframes slide-in {
+    //   from { opacity: 0.5; transform: translate3d(-300px, 0, 0); }
+    //   to { opacity: 1; display: block; transform: translate3d(0px, 0, 0); } 
+    // }
 
-    @keyframes slide-out {
-      from { opacity: 1; transform: translate3d(0px, 0, 0); }
-      to { opacity: 0.5; display: none; transform: translate3d(-300px, 0, 0); } 
-    }
+    // @keyframes slide-out {
+    //   from { opacity: 1; transform: translate3d(0px, 0, 0); }
+    //   to { opacity: 0.5; display: none; transform: translate3d(-300px, 0, 0); } 
+    // }
   }
 }`;
 
@@ -80,116 +77,27 @@ class Sidebar extends React.PureComponent {
     const { type } = Util.getScreenType();
     this.api = props.api || '';
     const menus = type !== SCREEN.ST.MOBILE ? EID.SHOW : EID.HIDE;
-    this.state = { type: type, menus: menus, anim: '', alarms: null, appinfo: null, update: false, updatestate: 'update...' }
+    this.state = { type: type, menus: menus, anim: '' }
     this.interval = 0.2;
-
-    this.doReload();
   }
 
-  doReload = () => {
-    this.api && actions.doSelect(this.api.ADMIN.WEBINFO, null).then(({ result }) => {
-      this.setState({ appinfo: result });
-    })
 
-    this.api && actions.doSelect(this.api.ADMIN.ALARMS, null).then(({ result }) => {
-      result && result.map(item => {
-        if (item.level === "appup") {
-          item.type = "system";
-          item.img = item.tag === "nuriweb" ? ICON.Nuriweb : ICON.Nuriman;
-          item.onClick = this.onClickAppUpdate;
-        } else {
-          item.onClick = this.onClickAlarm;
-        }
-        return null;
-      })
-      this.setState({ alarms: result });
-    });
-  }
-
-  // 일반 알림을 클릭하면...
-  onClickAlarm = (item) => {
-    this.api && actions.doUpdate(this.api.ADMIN.ALARMS, { rowid: item.alarmid, ok: "Y" }, null).then(({ code }) => {
-      this.props.openConfirm({
-        title: item.title,  msg: item.text, type: 'info', cancel: false,
-        onClicked: (isOk) => this.doReload()
-      });
-    });
-  }
-
-  // 앱의 업데이트 알림을 클릭하면 실행...
-  onClickAppUpdate = (item) => { 
-    // console.dir(item);
-    const title = item.tag === "nuriweb" ? ST.APPUP.WEB : ST.APPUP.APP;
-    this.props.openConfirm({
-      title: title,  msg: `${title}${ST.APPUP.DESC}`, type: 'warn',
-      onClicked: (isOk) => {
-        if (isOk) {
-          this.setState({ update: true });
-          this.api && actions.doUpdate(this.api.ADMIN.APPUP, { 'type': item.tag, 'tag': item.vers }, null).then(({ code, result }) => {
-            const cmdid = result;
-            if (cmdid > 0) {
-              this.runCheckState(cmdid);
-            } else {
-              console.error("cmd error");
-              this.setState({ update: false });
-            }
-          });
-        }
-      },
-    });
-  }
-
-  // 시스템 업데이트 상태를 주기적으로 체크하여 진행상태를 화면에 표시
-  runCheckState = (cmdid) => {
-
-    const relogin = () => {
-      this.setState({ update: false });
-      this.props.openConfirm({
-        title: ST.APPUP.TITLE,  msg: ST.APPUP.LOGIN, type: 'info', cancel: false,
-        onClicked: (isOk) => window.location.href = '/login'
-      });
-    }
-
-    if (!this.api) return;
-    
-    this.timer = setInterval(() => {
-      axios.get(this.api.ADMIN.APPUP_CHECK, { params: { cmdid: cmdid } }).then((res) => {
-        const { data } = res;
-        const { code, value } = data;
-        const { state } = value;
-        // console.log(res);
-        if (code === CODE.SUCCESS && (!state || state === "success" || state === "fail")) {
-          clearInterval(this.timer);
-          this.timer = null;
-          // this.setState({ update: false });
-          relogin();
-        } else {
-          this.setState({ updatestate: state + "..." });
-        }
-      }).catch(error => {
-        const { status } = error.response;
-        if (status === 500) { // 연결 에러일 경우, 재실행된 상태이므로, 재로그인 유도
-          relogin();
-          // window.location.href = data.value ? data.value : "/";
-        } else {
-          console.log(error)
-        }
-      });
-    }, 1000 * 3);
-  }
-
-  onClickMenu = () => {
+  onClickMenu = (e, item) => {
     if (this.state.type === SCREEN.ST.MOBILE && this.state.menus === EID.SHOW) {
       this.hide();
+    }
+
+    const { url, param = {} } = item;
+    if (url && url.indexOf("http") === 0) {
+      window.open(url);
+    } else {
+      actions.go(url, param)
     }
   }
 
   onClickLogout = (e) => {
-    // window.location.href = "/logout";
     const to = e.currentTarget.getAttribute("to");
     actions.doSelect(to).then(({ result, config }) => {
-      // console.dir("aaaaaaaaaa");
-      // window.location.href = "/login";
     });
   }
 
@@ -237,41 +145,35 @@ class Sidebar extends React.PureComponent {
 
   render() {
     const { props, state } = this;
-    const { title, list, root, sidebarW = '235px', topbarH = '60px'} = props;
-    const { menus, type, anim, alarms, appinfo, update, updatestate } = state;
+    const { title, list, root, sidebarW = '235px', topbarH = '60px', children } = props;
+    const { menus, type, anim, alarms } = state;
     const fade = { time: this.interval };
     const show = menus === EID.SHOW ? '' : EID.HIDE;
     const istopbar = this.props.topbar === false ? EID.HIDE : '';
     const isbg = type === SCREEN.ST.MOBILE && show !== EID.HIDE ? '' : EID.HIDE;
 
-    // 시스템이 업데이트 되었는지 체크하여 알림으로 표시하자...
-    // let alarms = this.checkAppUpdate();
+    const location = window.location.pathname;
 
     return (
       <StyledObject className={cx("nav-side", istopbar)} fade={fade} width={sidebarW} top={topbarH}>
         <div className={cx("top-bar")}>
-          <span className="nav-title logo-font" onClick={() => window.location.href = root}>{title}</span>
+          <span className="nav-title" onClick={() => window.location.href = root}>{title}</span>
           <Svg className="btn-menu md" name={"menu"} onClick={this.onClicked} eid={EID.MENU} color={this.props.color} />
           {alarms && alarms.length > 0 && <Alarms list={alarms} />}
         </div>
         <div className={cx("side-bar", anim === '' ? show : anim)} onAnimationStart={this.onAnimStart} onAnimationEnd={this.onAnimEnd}>
-          {appinfo && <div className={"appinfo"}><span>{`${appinfo.nuriweb.tag}`}</span><span>{`(${appinfo.nuriman.tag})`}</span></div>}
-          {/* <div className="home" onClick={() => location.href = root}>{title}</div> */}
+          {children && <children />}
           <ul className={cx("nav-frame")} ref={ref => { this.menu = ref }}>
-            {(list.map((item, index) => item.id !== 'logout' ?
-              <li key={String(index)} onClick={this.onClickMenu} className="nav-li">
-              <NavLink className="nav-link" activeClassName="active" id="nav-main" to={item.url}>{item.title}</NavLink>
-              </li> :
-              <li key={String(index)} onClick={this.onClickMenu} className="nav-li">
-                <span className="nav-link" onClick={this.onClickLogout} to={item.url}>{item.title}</span>
-                {/* <a className="nav-link" onClick={this.onClickLogout} to={item.url}>{item.title}</a> */}
+            {(list.map((item, index) => {
+              const active = location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
+              return <li key={String(index)} className={cx("nav-li nav-link", { active })} onClick={(e) => this.onClickMenu(e, item)}>
+                {item.name && item.name.toUpperCase()}
               </li>
+            }
             ))}
           </ul>
         </div>
         <div className={cx("nav-bg", isbg)} onClick={this.onClicked}></div>
-
-        {update && <SystemUpdate state={updatestate} />}
       </StyledObject >
     )
   };
@@ -370,15 +272,6 @@ class Alarms extends React.PureComponent {
   }
 
   onClickBg = (e) => {
-    // if (e.path) {
-    //   const a = e.path.find(item => {
-    //     const temp = item.className ? item.className.toString() : "";
-    //     return temp.indexOf("arm-icon") >= 0 || temp.indexOf("arm-li") >= 0;
-    //   });
-    //   if (a) {
-    //     return;
-    //   }
-    // }
 
     const a = Util.isSelfClick(e, (item) => {
       return item.indexOf("arm-icon") >= 0 || item.indexOf("arm-li") >= 0;
@@ -409,7 +302,7 @@ class Alarms extends React.PureComponent {
 
   render() {
     const { show } = this.state;
-    const { list = []} = this.props;
+    const { list = [] } = this.props;
     const count = list.length;
 
     return <StyledAlarms className={"arm-grp"}>
@@ -424,7 +317,7 @@ class Alarms extends React.PureComponent {
               <span className={"txt"}>{item.title}</span></div>
           </li>
         })}
-      </ul> }
+      </ul>}
     </StyledAlarms>
   }
 }

@@ -42,7 +42,7 @@ const StyledObject = styled.div`{
           .i-btn { ${cs.opac.show} ${cs.anim.show} }
         }
 
-        .i-btn { ${cs.align.ycenter} ${cs.z.icon} ${cs.opac.hide} ${cs.pos.relative}
+        .i-btn { ${cs.z.icon} ${cs.opac.hide} ${cs.pos.relative} ${cs.top('50%')}
           &.btn-del { ${cs.right(5)} ${cs.pos.relative} ${cs.m.l10} }
           &.btn-move { ${cs.left(5)} ${cs.pos.relative} }
         }

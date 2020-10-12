@@ -5,11 +5,14 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { EID, SCREEN } from './Config';
 import { Util } from './Utils';
+import cs from './css-style';
 
 const StyledObject = styled.div`{
-  &.layout { position: absolute; margin: 0px; min-height: 600px; overflow-x: hidden;
-    height: calc(100vh); min-width: 400px; width: calc(100vw); font-size: 14px; 
-    padding-left: ${props => props.width}; padding-top: ${props => props.top};
+  &.layout { 
+    ${cs.pos.absolute} ${cs.m.a0} ${props => cs.h.get(`calc(100vh - ${props.top})`)}
+    ${cs.over.xhidden} ${cs.h.full} ${cs.w.full} ${props => cs.min.width(`calc(100vw - ${props.width})`)}
+    ${cs.font.md} ${props => cs.p.left(props.width)} ${props => cs.p.top(props.top)}
+    ${cs.scrollbar.t1}
     
     &.anim.menuin { animation: menu-in linear 1 forwards ${props => props.fade.time}s};
     &.anim.menuout { animation: menu-out linear 1 forwards ${props => props.fade.time}s };

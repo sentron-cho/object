@@ -29,19 +29,19 @@ const StyledObject = styled.div`
         &.cf-cancel { ${cs.m.l10} }
       }
     }
-
-    &.left { .cf-body .msg { ${cs.font.left} } }
-    &.right { .cf-body .msg { ${cs.font.right} } }
-    &.center { .cf-body .msg { ${cs.font.center} } }
-
-    &.lg { ${cs.w.get(600)} ${cs.font.md} .cf-body { ${cs.p.a20} ${cs.min.height(140)} ${cs.font.md} } }
-    &.sm { ${cs.w.get(300)} ${cs.font.sm} .cf-body { ${cs.p.v10} ${cs.min.height(80)} ${cs.font.md} } }
-    &.xs { ${cs.w.get(200)} ${cs.font.sm} .cf-body { ${cs.p.v5} ${cs.min.height(40)} ${cs.font.sm} } }
   }
 
-  &.warn { .cf-head { ${cs.bg.orange} ${cs.font.white} } }
-  &.err { .cf-head { ${cs.bg.red} ${cs.font.white} } }
-  &.info { .cf-head { ${cs.bg.trans} ${cs.font.dark} } }
+  &.warn { .cf-frame .cf-head { ${cs.bg.orange} ${cs.font.white} } }
+  &.err { .cf-frame .cf-head { ${cs.bg.red} ${cs.font.white} } }
+  &.info { .cf-frame .cf-head { ${cs.bg.trans} ${cs.font.dark} } }
+
+  &.left { .cf-frame .cf-body .msg { ${cs.font.left} } }
+  &.right { .cf-frame .cf-body .msg { ${cs.font.right} } }
+  &.center { .cf-frame .cf-body .msg { ${cs.font.center} } }
+
+  &.lg { .cf-frame { ${cs.w.get(600)} ${cs.font.md} .cf-body { ${cs.p.a20} ${cs.min.height(140)} ${cs.font.md} } } }
+  &.sm { .cf-frame { ${cs.w.get(300)} ${cs.font.sm} .cf-body { ${cs.p.v10} ${cs.min.height(80)} ${cs.font.md} } } }
+  &.xs { .cf-frame { ${cs.w.get(200)} ${cs.font.sm} .cf-body { ${cs.p.v5} ${cs.min.height(40)} ${cs.font.sm} } } }
 
   &.sky { .cf-head, .cf-frame { ${cs.bg.sky} ${cs.font.dark} 
     .cf-head { ${cs.border.sky} }
@@ -102,9 +102,9 @@ class Confirm extends React.PureComponent {
     const btnsize = state.size === 'sm' ? 'md' : state.size === 'xs' ? 'sm' : 'lg'
     return (
       this.state.show &&
-      <StyledObject className={cx("confirm", state.type, state.theme)}>
+      <StyledObject className={cx("confirm", state.className, state.type, state.size, state.theme)}>
         <div className="bg" onKeyPress={this.onKeyPressed} />
-        <div className={cx("cf-frame", state.className, state.size)}>
+        <div className={cx("cf-frame")}>
           <div className="cf-head">
             <span className="cf-title">{state.title}</span>
             <Svg className="cf-close sm" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={"black"} />

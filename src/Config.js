@@ -160,6 +160,7 @@ const KOR = {
   IS_CREATE_TABLE: "테이블을 생성하시겠습니까?",
   IS_CLEAR_TABLE: "테이블을 모두 클리어 하시겠습니까?",
   IS_CLEAR_TABLE_ROWS: "테이블 데이터(ROW)을 클리어 하시겠습니까?",
+  IS_DELETE: "삭제 하시겠습니까?",
   IS_DELETE_BACKUP: "선택한 백업 파일을 삭제 하시겠습니까?",
   IS_BACKUP: "을(를) 백업 하시겠습니까?",
   IS_ROLLBACK: "을(를) 복원 하시겠습니까?",

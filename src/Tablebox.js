@@ -17,7 +17,7 @@ const StyledObject = styled.div`{
 
       .tb-row { 
         ${cs.w.full} ${cs.pos.relative} ${cs.disp.get("flex; flex-direction: row;")}
-        ${cs.border.bottom} ${cs.h.fit} ${cs.p.v3}
+        ${cs.border.bottom} ${cs.h.fit} ${cs.p.v3} ${cs.font.line(24)}
         cursor: ${(props) => props.cursor};
 
         .tb-col {  
@@ -42,9 +42,9 @@ const StyledObject = styled.div`{
           .i-btn { ${cs.opac.show} ${cs.anim.show} }
         }
 
-        .i-btn { ${cs.z.icon} ${cs.opac.hide} ${cs.pos.relative} ${cs.top('50%')}
-          &.btn-del { ${cs.right(5)} ${cs.pos.relative} ${cs.m.l10} }
-          &.btn-move { ${cs.left(5)} ${cs.pos.relative} }
+        .i-btn { ${cs.z.icon} ${cs.opac.hide} ${cs.align.ycenter} 
+          &.btn-del { ${cs.right(5)} ${cs.m.l10} }
+          &.btn-move { ${cs.left(5)} }
         }
         
         &:first-child { .btn-up { ${cs.disp.hidden} } }
@@ -80,6 +80,7 @@ const StyledObject = styled.div`{
       .tb-row { 
         // ${({ height }) => cs.font.line(height - 6)};
         // ${({ height }) => cs.h.get(height - 6)};
+        ${cs.font.line(20)}
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.sm} ${cs.m.t0} } 
@@ -90,6 +91,7 @@ const StyledObject = styled.div`{
       .tb-row { 
         // ${({ height }) => cs.font.line(height)};
         // ${({ height }) => cs.h.get(height)};
+        ${cs.font.line(24)}
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.md} ${cs.m.t0} } 
@@ -100,6 +102,7 @@ const StyledObject = styled.div`{
       .tb-row { 
         // ${({ height }) => cs.font.line(height + 6)};
         // ${({ height }) => cs.h.get(height + 6)};
+        ${cs.font.line(30)}
       }
       .tb-body { ${cs.font.lg} }
       .tb-head { ${cs.font.xl} }

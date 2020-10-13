@@ -39,8 +39,8 @@ const StyledObject = styled.div`{
         }
 
         .lbx-cnt {
-          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.v1} ${cs.p.h5} 
-          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.p.b2} ${cs.pos.relative}
+          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.h5}
+          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.pos.relative}
         }
 
         .lbx-icon {
@@ -65,7 +65,7 @@ const StyledObject = styled.div`{
 
     }
 
-    .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
+    .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.m.t5} ${cs.font.sm} ${cs.opac.get(0.7)} }
     .page-navi { ${cs.m.t40} }
 
     &.border { .lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } } }
@@ -191,7 +191,7 @@ const StyledObject = styled.div`{
 
 const Listbox = (props) => {
   const {
-    divider, children = null, total = '', theme, rowid, selpos = -1,
+    divider, children = null, total = 0, theme, rowid, selpos = -1,
     title = 'title', date = 'date', count = 'count', disable = false, height = 30,
   } = props;
   const [list, setList] = useState(props.list);
@@ -275,7 +275,7 @@ const Listbox = (props) => {
       {renderGuide()}
 
       {/* no data view */}
-      {!list && <div className="frame"><Nodata /></div>}
+      {(!list || list.length < 1) && <div className="frame"><Nodata /></div>}
 
       {children && children}
 
@@ -310,7 +310,7 @@ const Listbox = (props) => {
         </ul>}
       </DndProvider>
 
-      {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
+      {total > 0 && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
       {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />}

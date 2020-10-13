@@ -108,12 +108,6 @@ function uploadImageCallBack(file) {
   );
 }
 
-// const isIE =  /*@cc_on!@*/false || !!document.documentMode;
-
-// var CKEditor = null, ClassicEditor = null;
-
-// let API = URL.API.PAGE;
-
 export default class Texteditor extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -244,7 +238,7 @@ export default class Texteditor extends React.PureComponent {
     return (
       <StyledObject className={cx("editor-frame", {readonly})}>
         <div className="ed-navi">
-          {!readonly && <Button title={ST.DELETE} className="btn-del dark mR20" onClick={this.onDelete} eid={EID.DELETE} />}
+          {!readonly && <Button title={ST.DELETE} className="btn-del black mR20" onClick={this.onDelete} eid={EID.DELETE} />}
           {!readonly && <Button title={ST.SAVE} className="btn-save red mR10" onClick={() => this.onClick(true)} eid={EID.OK} />}
           <Button title={readonly ? ST.CLOSE : ST.CANCEL} className="btn-cancel white" onClick={() => this.onClick(false)} eid={EID.CANCEL} />
         </div>

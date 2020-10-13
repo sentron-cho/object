@@ -73,3 +73,4 @@ export { default as Summarybox } from "./Summary";
 export { default as Memobox } from "./Memobox";
 export { default as Chartbox } from "./Chartbox";
 export { ChartTooltip } from "./Chartbox";
+export { default as TabButton } from "./TabButton";

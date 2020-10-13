@@ -17,7 +17,8 @@ const StyledObject = styled.div`{
 
       .tb-row { 
         ${cs.w.full} ${cs.pos.relative} ${cs.disp.get("flex; flex-direction: row;")}
-        ${cs.border.bottom} ${cs.h.fit} ${cs.p.v3} ${cs.font.line(24)}
+        ${cs.border.bottom} ${cs.h.fit} ${cs.p.v3} 
+
         cursor: ${(props) => props.cursor};
 
         .tb-col {  
@@ -25,14 +26,13 @@ const StyledObject = styled.div`{
           ${cs.over.hidden} ${cs.font.ellipsis}
           ${({ flex }) => flex && cs.disp.flex(flex)};
           ${cs.border.right} ${cs.border.white} ${cs.p.h5}
+          ${({ height }) => cs.font.line(height)};
+          ${({ height }) => cs.h.get(height)};
 
-          p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; ${cs.pos.relative}
-            // .tb-u { ${cs.font.xs} ${cs.m.l3} ${cs.opac.get(0.7)} } //${cs.align.right} ${cs.bottom(0)} }
-          }
+          p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; ${cs.pos.relative} }
 
           .tb-u { ${cs.font.xs} ${cs.m.l1} ${cs.opac.get(0.7)} }
 
-          // &:nth-child(1) { ${cs.p.l10} }
           &:last-child { ${cs.border.none} }
         }
 
@@ -63,7 +63,7 @@ const StyledObject = styled.div`{
 
       &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
       ${cs.pos.relative} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
-        .tb-row { .tb-col { ${cs.border.lightwhite} ${cs.p.v5} } } 
+        .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
 
       &.tb-body { ${cs.m.t0} }
@@ -78,9 +78,10 @@ const StyledObject = styled.div`{
     
     &.sm { 
       .tb-row { 
-        // ${({ height }) => cs.font.line(height - 6)};
-        // ${({ height }) => cs.h.get(height - 6)};
-        ${cs.font.line(20)}
+        .tb-col {
+          ${({ height }) => cs.font.line(height - 6)};
+          ${({ height }) => cs.h.get(height - 6)};
+        }
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.sm} ${cs.m.t0} } 
@@ -89,9 +90,10 @@ const StyledObject = styled.div`{
 
     &.md { 
       .tb-row { 
-        // ${({ height }) => cs.font.line(height)};
-        // ${({ height }) => cs.h.get(height)};
-        ${cs.font.line(24)}
+        .tb-col {
+          ${({ height }) => cs.font.line(height)};
+          ${({ height }) => cs.h.get(height)};
+        }
         .i-btn { ${cs.w.get(14)} ${cs.h.get(14)} }
       }
       .tb-body { ${cs.font.md} ${cs.m.t0} } 
@@ -100,9 +102,10 @@ const StyledObject = styled.div`{
 
     &.lg { 
       .tb-row { 
-        // ${({ height }) => cs.font.line(height + 6)};
-        // ${({ height }) => cs.h.get(height + 6)};
-        ${cs.font.line(30)}
+        .tb-col {
+          ${({ height }) => cs.font.line(height + 10)};
+          ${({ height }) => cs.h.get(height + 10)};
+        }
       }
       .tb-body { ${cs.font.lg} }
       .tb-head { ${cs.font.xl} }

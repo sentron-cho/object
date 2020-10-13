@@ -8,7 +8,7 @@ import cs from './css-style';
 // 버튼 오브젝트
 const StyledObject = styled.span`{
   &.button { ${cs.pos.relative} ${cs.border.radius(2)} ${cs.over.hidden} ${cs.box.inner}
-    ${cs.disp.inblock} ${cs.mouse.pointer} ${cs.border.trans} ${cs.noselect}
+    ${cs.disp.inblock} ${cs.mouse.pointer} ${cs.border.trans} ${cs.noselect} ${cs.font.center}
 
     &:hover { ${cs.anim.show} ${cs.opac.get(0.8)} }
 

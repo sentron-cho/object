@@ -25,7 +25,7 @@ const StyledObject = styled.div`{
           ${cs.font.center} ${cs.disp.inblock} ${cs.p.v4} ${cs.h.full}
           ${cs.over.hidden} ${cs.font.ellipsis}
           ${({ flex }) => flex && cs.disp.flex(flex)};
-          ${cs.border.right} ${cs.border.white} ${cs.p.h5}
+          ${cs.border.right} ${cs.border.white} ${cs.p.h10}
           ${({ height }) => cs.font.line(height)};
           ${({ height }) => cs.h.get(height)};
 

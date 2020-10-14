@@ -13,8 +13,10 @@ const StyledObject = styled.div`{
 
     .tline { ${cs.size.full} ${cs.pos.relative} ${cs.font.md} ${cs.m.t10}
       .trow { ${cs.h.full} ${cs.disp.inblock} ${cs.pos.relative} 
-        ${cs.disp.inblock} ${cs.w.calc("25% - 10px")} ${cs.min.width(200)} ${cs.p.a5} ${cs.m.a5}
+        ${cs.disp.inblock} ${cs.min.width(200)} ${cs.p.a5} ${cs.m.a5}
         ${(props) => cs.mouse.get(props.cursor)}; ${cs.box.line} ${cs.box.radius}
+        ${cs.w.calc("25% - 10px")}
+        ${({ width }) => cs.w.get(width)};
 
         .tcol { ${cs.disp.block} ${cs.m.a2} ${cs.h.get(20)} ${cs.font.sm} ${cs.opac.show} //${cs.font.line(20)}
           ${({ height }) => cs.font.line(height)};

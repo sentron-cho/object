@@ -24,6 +24,9 @@ const StyledObject = styled.div`{
         .fg-col { ${cs.m.a5}
           ${(props) => props.flex && `flex: ${props.flex}`};
         }
+
+        .fg-col:first-child { ${cs.m.l0} }
+        .fg-col:last-child { ${cs.m.r0} }
       }
     }
 

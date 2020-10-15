@@ -165,6 +165,7 @@ class Sidebar extends React.PureComponent {
           {children && <children />}
           <ul className={cx("nav-frame")} ref={ref => { this.menu = ref }}>
             {(list.map((item, index) => {
+              if (item.hide) return null;
               const active = location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
               return <li key={String(index)} className={cx("nav-li nav-link", { active })} onClick={(e) => this.onClickMenu(e, item)}>
                 {item.name && item.name.toUpperCase()}

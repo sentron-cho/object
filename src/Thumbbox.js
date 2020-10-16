@@ -7,10 +7,10 @@ const StyledObject = styled.div`{
   &.thumb-box { 
     ${cs.pos.relative} ${cs.noselect} ${cs.box.inner} ${cs.over.hidden}
     ${cs.disp.inblock}
-    // ${cs.opac.invisible} 
     
     .tmb-img { 
       ${cs.pos.relative} ${cs.size.full} ${cs.object.fill}
+      ${props => props && props.fit && cs.object.fit(props.fit)}
     }
 
     .tmb-odr { 
@@ -24,6 +24,9 @@ const StyledObject = styled.div`{
     &.md { ${cs.h.get(80)} ${cs.w.get(100)} }
     &.sm { ${cs.h.get(60)} ${cs.w.get(75)} }
     &.lg { ${cs.h.get(120)} ${cs.w.get(150)} }
+
+    ${props => props && props.width && cs.w.get(props.width)}
+    ${props => props && props.height && cs.h.get(props.height)}
 
     &.full { ${cs.size.full} .tmb-img { ${cs.object.contain} } }
     &.border { ${cs.box.line} }
@@ -52,8 +55,9 @@ const StyledObject = styled.div`{
 const Thumbbox = (props) => {
   const [anim, setAnim] = useState(props.anim);
 
-  const { odr, border } = props;
+  const { odr, border, width = null, height = null } = props;
   const image = props.thumb || props.src;
+  const size = !width && !height ? 'md' : props.size;
 
   useEffect(() => {
     setAnim(props.anim);
@@ -73,7 +77,8 @@ const Thumbbox = (props) => {
   }
 
   return (
-    <StyledObject className={cx("thumb-box md", props.className, (anim && "anim"))} border={border}
+    <StyledObject className={cx("thumb-box", size, props.className, (anim && "anim"))} border={border}
+      width={width} height={height} fit={props.objectFit || 'fill'}
       onClick={onClicked} anim={anim} onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart} >
       {image && <img className={"tmb-img"} src={image} alt="thumb" />}
       {!image && <span className={"tmb-noimg"} >{"Noimage"}</span>}

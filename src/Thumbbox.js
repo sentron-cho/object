@@ -21,9 +21,9 @@ const StyledObject = styled.div`{
 
     .tmb-noimg { ${cs.align.center} ${cs.opac.alpha} ${cs.font.darkgray} ${cs.font.sm} }
 
-    &.md { ${cs.h.get(100)} ${cs.w.get(80)} }
-    &.sm { ${cs.h.get(64)} ${cs.w.get(52)} }
-    &.lg { ${cs.h.get(140)} ${cs.w.get(110)} }
+    &.md { ${cs.h.get(80)} ${cs.w.get(100)} }
+    &.sm { ${cs.h.get(60)} ${cs.w.get(75)} }
+    &.lg { ${cs.h.get(120)} ${cs.w.get(150)} }
 
     &.full { ${cs.size.full} .tmb-img { ${cs.object.contain} } }
     &.border { ${cs.box.line} }

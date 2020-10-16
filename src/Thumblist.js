@@ -8,12 +8,12 @@ import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
 
 const StyledObject = styled.div`{
   &.thumb-list { 
-    ${cs.pos.relative} ${cs.m.t5} ${cs.box.line} ${cs.border.lightgray} 
+    ${cs.pos.relative} ${cs.m.t5}
     ${cs.noselect} ${cs.noliststyle} ${cs.w.full} ${cs.box.inner} ${cs.over.hidden}
 
     .thb-new { ${cs.align.rtop} ${cs.opac.get(0.3)} ${cs.top(2)} ${cs.left(2)} ${cs.float.right} }
 
-    .v-line { ${cs.over.xauto} ${cs.scrollbar.t3} ${cs.disp.get("flex")} ${cs.w.full}
+    .v-line { ${cs.over.xauto} ${cs.scrollbar.t1} ${cs.disp.get("flex")} ${cs.w.full}
       .v-item { 
         ${cs.disp.inblock} ${cs.p.a5} ${cs.pos.relative} ${cs.opac.show}
 
@@ -23,6 +23,9 @@ const StyledObject = styled.div`{
           .thb-delete { ${cs.opac.show} } 
         }
 
+        &:first-child { ${cs.p.left(0)} }
+        &:last-child { ${cs.p.right(0)} }
+        
         ${({ cursor }) => cursor && cs.mouse.get(cursor)};
       }
     }
@@ -84,16 +87,11 @@ const Thumblist = (props) => {
 
   useEffect(() => {
     setAnim(props.anim);
-  }, [props.anim]);
+    setList(props.list);
+  }, [props.anim, props.list]);
 
-  const onSelectItem = (e) => {
-    const rowid = e.currentTarget.getAttribute("rowid");
-    onSelect(rowid, e);
-  }
-
-  const onSelect = (rowid, e) => {
-    // let rowid = e.currentTarget.getAttribute("rowid");
-    (props.onSelect != null) && props.onSelect(rowid, e);
+  const onSelect = (rid, e, item) => {
+    (props.onSelect != null) && props.onSelect(rowid, e, item);
   }
 
   const onClickDelete = (rowid, e) => {
@@ -191,8 +189,9 @@ const Thumblist = (props) => {
 
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <span className={cx("v-item drag-li")} rowid={rid} onClick={onSelectItem} onWheel={onWheel}>
-                  <Thumbbox className={cx("border radius", size)} {...config.child} odr={odr} thumb={url} anim={true} delay={index * 50} />
+                <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel}
+                  onClick={(e) => onSelect(rid, e, item)} >
+                  <Thumbbox className={cx(props.itemClassName, size)} {...config.child} odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
                     <Svg className="thb-delete delete sm" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
                   }

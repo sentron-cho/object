@@ -70,6 +70,11 @@ export const Util = {
 
   getGenerateKey() { return new Date().getTime(); },
 
+  getUuid(max = 4) { 
+    const str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, max);
+    return `${str.toUpperCase()}${new Date().getTime()}`;
+  },
+
   isEmpty(value) {
     if (!value || value.length < 1) {
       // if (value == null || value == null || value === 'undefined' || value === "" || value.length < 1) {
@@ -468,7 +473,7 @@ export const Storage = {
       return null;
     }
 
-    const isjson = this.isJson(JSON.parse(value));
+    const isjson = this.isJson(value);
     return (isjson) ? JSON.parse(value) : value;
   },
 

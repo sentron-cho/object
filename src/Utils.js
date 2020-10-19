@@ -515,7 +515,7 @@ export const Storage = {
   },
 
   logout() {
-    window.localStorage.clear(this.key.userinfo);
+    window.localStorage.removeItem(this.key.userinfo);
   },
 
   clearLocal() {

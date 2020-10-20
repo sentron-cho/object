@@ -54,7 +54,7 @@ const KOR = {
   MONTH: "월",
   DAY: "일",
   DATE: "날자",
-  COUNT: "회",
+  COUNT: "개",
   PHONE: "연락처",
   PASSWORD: "비밀번호",
   MEMBERSHIP: "회원가입",

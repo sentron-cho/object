@@ -107,6 +107,8 @@ const StyledObject = styled.div`{
       ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
   }
+
+  &.mouse { .cau-ul { ${cs.mouse.pointer} } }
   
   &.full { ${cs.w.full} }
   &.lg { ${cs.w.get(1200)} }
@@ -281,6 +283,10 @@ export default class Carousel extends React.PureComponent {
   }
 
   renderContents = (list, anim) => {
+    const onSelect = (e, item, index) => {
+      this.props.onSelect && this.props.onSelect(e, item, index);
+    }
+
     return list.map((item, index) => {
       if (item == null) {
         return <li key={index} className={cx("cau-li")}><div className={cx("cau-image noimage")} index={index} /></li>;
@@ -301,7 +307,7 @@ export default class Carousel extends React.PureComponent {
       const { active, color = "" } = item;
       const styled = { color };
       // 카우셀 이미지 및 캡션 프레임...
-      return <li key={index} className={cx("cau-li", { active }, item.loaded && 'loaded')}>
+      return <li key={index} className={cx("cau-li", { active }, item.loaded && 'loaded')} onClick={(e) => onSelect(e, item, index)}>
         {image}
         {!item.loaded && <Loading type="ring" />}
         <div className="cau-caption">
@@ -342,9 +348,8 @@ export default class Carousel extends React.PureComponent {
       }
     }
 
-    console.log(time);
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)}
+      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className, this.props.onSelect && 'mouse')}
         {...styled} length={list.length} text={text} title={title} border={border} time={time}>
         {/* error guid */}
         {renderGuide()}

@@ -113,10 +113,17 @@ export default class Texteditor extends React.PureComponent {
     super(props);
     this.api = props.api || '';
     this.state = { type: SCREEN.ST.PC, rowid: props.rowid, editorState: EditorState.createEmpty(), loaded: false };
-    this.doReload();
+    this.doReload(props.rowid);
   }
 
   doReload = (value = this.state.rowid) => {
+    if (!value) {
+      setTimeout(() => {
+        this.setState({ loaded: true });
+      }, 200);
+      return;
+    }
+
     actions.doSelect(this.api, { rowid: value }, true).then(({ result }) => {
       let data = result && result.txt ? result.txt : "";
       if (data) {
@@ -219,7 +226,7 @@ export default class Texteditor extends React.PureComponent {
 
   render() {
     const { title, loaded } = this.state;
-    const { readonly = false } = this.props;
+    const { readonly = false, className } = this.props;
 
     const toolbar = {
       options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'image', 'remove', 'history'],
@@ -236,7 +243,7 @@ export default class Texteditor extends React.PureComponent {
     };
 
     return (
-      <StyledObject className={cx("editor-frame", {readonly})}>
+      <StyledObject className={cx("editor-frame", {readonly}, className)}>
         <div className="ed-navi">
           {!readonly && <Button title={ST.DELETE} className="btn-del black mR20" onClick={this.onDelete} eid={EID.DELETE} />}
           {!readonly && <Button title={ST.SAVE} className="btn-save red mR10" onClick={() => this.onClick(true)} eid={EID.OK} />}

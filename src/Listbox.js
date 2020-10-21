@@ -208,10 +208,10 @@ const Listbox = (props) => {
     }
   }
 
-  const onSelect = (e) => {
+  const onSelect = (e, item) => {
     if (disable) return;
     const rid = e.currentTarget.getAttribute('rowid');
-    props.onSelect && props.onSelect(rid, e);
+    props.onSelect && props.onSelect(rid, e, item);
   }
 
   const onClickPage = (page, e) => {
@@ -290,7 +290,7 @@ const Listbox = (props) => {
 
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={onSelect}>
+                <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={(e) => onSelect(e, item)}>
                   {props.onDragDrop &&
                     <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
                   }

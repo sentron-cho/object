@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
-import { Svg, Loading, Util, cs } from './index';
-import { EID, SCREEN, ST } from './Config';
+import { Svg, Util, cs } from './index';
+import { EID, SCREEN } from './Config';
 import * as actions from './actor/Action';
 
 const StyledObject = styled.div`{
@@ -188,38 +188,38 @@ export default Sidebar;
 /**
  * 시스템/앱의 업데이트시 업데이트 진행 상태 표시를 위한 화면
  */
-const StyledUpdate = styled.div`{
-  &.sysup {
-    width: 100vw; height: 100vh; background: #232323a1; position: fixed;
-    z-index: 999991; top: 0; left: 0;
+// const StyledUpdate = styled.div`{
+//   &.sysup {
+//     width: 100vw; height: 100vh; background: #232323a1; position: fixed;
+//     z-index: 999991; top: 0; left: 0;
 
-    .sysup-frame {
-      position: absolute; text-align: center; left: 50%; top: calc(50%); transform: translate(-50%, -50%);
+//     .sysup-frame {
+//       position: absolute; text-align: center; left: 50%; top: calc(50%); transform: translate(-50%, -50%);
 
-      .s-txt {
-        font-size: 24px; text-align: center; line-height: 50px; left: 50%; white-space: pre-line; font-weight: 600;
-      }
+//       .s-txt {
+//         font-size: 24px; text-align: center; line-height: 50px; left: 50%; white-space: pre-line; font-weight: 600;
+//       }
 
-      .state { 
-        color: #ffa41ad1; font-size: 20px; letter-spacing: 4px; background: #00000059;
-        width: calc(100% - 100px); margin: 0 50px; border-radius: 100px; 
-      }
+//       .state { 
+//         color: #ffa41ad1; font-size: 20px; letter-spacing: 4px; background: #00000059;
+//         width: calc(100% - 100px); margin: 0 50px; border-radius: 100px; 
+//       }
 
-      .loading-box { height: 100px; position: relative; }
-    }
-  }
-}`;
+//       .loading-box { height: 100px; position: relative; }
+//     }
+//   }
+// }`;
 
-const SystemUpdate = (props) => {
-  return <StyledUpdate className={"sysup"}>
-    <div className={"sysup-frame"}>
-      <div className={'s-txt'}>{ST.APPUP.GUIDE}</div>
-      <Loading className={'sysup-load'} />
-      {/* <div className={'s-txt state'}>{"success"}</div> */}
-      <div className={'s-txt state'}>{props.state}</div>
-    </div>
-  </StyledUpdate>
-}
+// const SystemUpdate = (props) => {
+//   return <StyledUpdate className={"sysup"}>
+//     <div className={"sysup-frame"}>
+//       <div className={'s-txt'}>{ST.APPUP.GUIDE}</div>
+//       <Loading className={'sysup-load'} />
+//       {/* <div className={'s-txt state'}>{"success"}</div> */}
+//       <div className={'s-txt state'}>{props.state}</div>
+//     </div>
+//   </StyledUpdate>
+// }
 
 
 

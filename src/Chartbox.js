@@ -73,6 +73,7 @@ export default function Chartbox(props) {
   const frame = React.useRef(null);
   const { theme, border = null, } = props;
   const [chartElement, setChartElement] = React.useState(chart);
+  // eslint-disable-next-line no-unused-vars
   const [height, setHeight] = React.useState(`calc(100%)`);
   const [width, setWidth] = React.useState(`calc(100%)`);
   const [reload, setReload] = React.useState(false);
@@ -164,7 +165,7 @@ export default function Chartbox(props) {
     setConfig(config);
 
     return () => { }
-  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config, props.type, props.series, props.color]);
+  }, [props.resize, config, chartElement, props.refresh, props.axis, props.data, props.config, props.type, props.series, props.color, props.mark, props.label, props.legend]);
 
   React.useEffect(() => {
     setReload(true);

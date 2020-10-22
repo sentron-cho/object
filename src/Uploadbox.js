@@ -40,7 +40,7 @@ const StyledObject = styled.div`{
           &.svg-icon { ${cs.size.get(50)} }
         }
 
-        .upv-img { ${cs.size.full} ${cs.p.a2} ${cs.object.fit} ${cs.border.radius(5)} ${cs.bg.lightgray} 
+        .upv-img { ${cs.size.full} ${cs.p.a2} ${cs.object.fit()} ${cs.border.radius(5)} ${cs.bg.lightgray} 
           .btn-media-edit { ${cs.disp.none} }
         }
         .upv-delete { 
@@ -419,7 +419,7 @@ class Uploadbox extends React.PureComponent {
     const isMultiMidia = props.onSelectedMedia ? true : false;
     const oneline = inline;
     const thumb = thumbnail;
-    const fit = thumb ? 'contain' : 'cover';
+    const fit = props.fit ? props.fit : thumb ? 'contain' : 'cover';
     // const itype = type === CT.YOUTUBE ? 'text' : "file";
 
     return (

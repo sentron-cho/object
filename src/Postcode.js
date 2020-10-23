@@ -17,12 +17,7 @@ const StyledObject = styled.span`{
   }
 }`;
 
-var timer1 = null;
-var timer2 = null;
-
 const Postcode = (props) => {
-
-
   const modalStyle = {
     display: "block",
     position: "absolute",
@@ -38,14 +33,11 @@ const Postcode = (props) => {
   useEffect(() => {
     setShow(true);
 
-    timer1 = setTimeout(() => setShow(false), 200);
-    timer2 = setTimeout(() => setShow(true), 1000);
+    setTimeout(() => setShow(false), 200);
+    setTimeout(() => setShow(true), 1000);
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
     }
   }, []);
-
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
@@ -74,7 +66,7 @@ const Postcode = (props) => {
       {show ? <DaumPostCode onComplete={handleComplete} autoClose width={'100%'} height={'100%'}
         style={modalStyle} /> : <Loading />
       }
-      <Button className={'gd-gray right bottom cancel'} title={ST.CANCEL} onClick={onCancel} />
+      <Button className={'gd-gray right bottom cancel'} title={ST.CANCEL} onClick={onCancel}/>
     </StyledObject>
   );
 }

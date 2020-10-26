@@ -74,7 +74,7 @@ const StyledObject = styled.div`{
     }
     
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
-    .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.pos.relative} ${cs.border.top} ${cs.border.lightgray} }
+    .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.pos.relative} }
     
     &.sm { 
       .tb-row { 

@@ -27,7 +27,7 @@ const StyledObject = styled.div`{
     
     .loading-box { ${cs.top(0)} ${cs.opac.invisible} }
 
-    .pointer { ${cs.mouse.pointer} };
+    &.pointer { ${cs.mouse.pointer} };
 
     .guide-size { 
       ${cs.z.front} ${cs.bottom(10)} ${cs.align.center} ${cs.font.white} ${cs.font.center} ${cs.p.a5}

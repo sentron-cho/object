@@ -43,9 +43,14 @@ const StyledObject = styled.div`{
         .upv-img { ${cs.size.full} ${cs.p.a2} ${cs.object.fit()} ${cs.border.radius(5)} ${cs.bg.lightgray} 
           .btn-media-edit { ${cs.disp.none} }
         }
-        .upv-delete { 
-          ${cs.float.right} ${cs.pos.rtop} ${cs.pos.absolute} ${cs.z.icon} ${cs.font.weight(600)} ${cs.font.center} ${cs.p.a0}
+        .upv-clear { 
+          ${cs.align.rtop} ${cs.z.icon} ${cs.font.weight(600)} ${cs.font.center} ${cs.p.a0}
           ${cs.border.radius(3)} ${cs.icon.md} ${cs.box.lightgray} ${cs.opac.get(0.7)} ${cs.m.a3}
+          &.hide { ${cs.disp.none} }
+        }
+        .upv-delete {
+          ${cs.align.rbottom} ${cs.z.icon} ${cs.font.weight(600)}
+          &.hide { ${cs.disp.none} }
         }
         .noimage { ${cs.object.contain} ${cs.opac.visible} }
       }
@@ -152,16 +157,16 @@ const StyledObject = styled.div`{
     ${({ border }) => border && border.width && cs.border.width(border.width)}
 
     &.sky { .up-frame .upf-preview .upv-img { ${cs.bg.sky} } }
-    &.primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-clear { .svg-path { ${cs.fill.white} } } }
 
     &.theme-sky { .up-frame .upf-preview .upv-img { ${cs.bg.sky} } }
-    &.theme-primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.theme-gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.theme-dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-delete { .svg-path { ${cs.fill.white} } } }
-    &.theme-black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-delete { .svg-path { ${cs.fill.white} } } }
+    &.theme-primary { .up-frame .upf-preview .upv-img { ${cs.bg.primary} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.theme-gray { .up-frame .upf-preview .upv-img { ${cs.bg.gray} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.theme-dark { .up-frame .upf-preview .upv-img { ${cs.bg.dark} } .upv-clear { .svg-path { ${cs.fill.white} } } }
+    &.theme-black { .up-frame .upf-preview .upv-img { ${cs.bg.black} } .upv-clear { .svg-path { ${cs.fill.white} } } }
 
     @media screen and (max-width : 860px) {
       padding: 0; font-size: 12px;
@@ -410,7 +415,7 @@ class Uploadbox extends React.PureComponent {
 
   render() {
     const { props } = this;
-    const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
+    const { onClickClear, onClicked, onChange, onClickLinkOk, onDelete } = this;
     const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null } = props;
 
     const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
@@ -434,7 +439,9 @@ class Uploadbox extends React.PureComponent {
 
           {/* 미리보기(썸네일) 화면*/}
           <div className={cx("upf-preview")}>
-            <Svg className={cx("upv-delete sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.DELETE} color={'dark'} />
+            <Svg className={cx("upv-clear sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.CLEAR} color={'dark'} />
+            <Svg className={cx("upv-delete sm", !props.onDelete ? 'hide' : '')} name={"delete"} eid={EID.DELETE} color={'dark'}
+              onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
             <Mediabox className={cx("upv-img", type)} ref={ref => { this.refImage = ref }} fit={fit}
               link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
               onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} />

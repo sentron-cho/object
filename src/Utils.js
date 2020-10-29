@@ -328,12 +328,12 @@ export const Util = {
   },
 
   showFailAlert(props, align) {
-    props.showAlert({ msg: ST.NOTI.FAILUER, type: 'err', align });
+    props.showAlert && props.showAlert({ msg: ST.NOTI.FAILUER, type: 'err', align });
     return false;
   },
 
   showSuccessAlert(props, align) {
-    props.showAlert({ msg: ST.NOTI.SUCCESS, type: 'info', align });
+    props.showAlert && props.showAlert({ msg: ST.NOTI.SUCCESS, type: 'info', align });
     return true;
   },
 

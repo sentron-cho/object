@@ -81,7 +81,7 @@ const StyledObject = styled.div` {
 
     .guide { 
       ${cs.font.sm} ${cs.font.gray} ${cs.font.right} 
-      display: ${cs.disp.get((props) => props.helper && 'block')} 
+      ${(props) => cs.disp.get(props.helper || 'block')};
       ${(props) => props.helpcolor && cs.font.color(props.helpcolor)};
     }
 

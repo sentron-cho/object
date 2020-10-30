@@ -32,7 +32,7 @@ const StyledObject = styled.span`{
 }`;
 
 const Togglebox = (props) => {
-  const { list, icon = null, anim = false, theme } = props;
+  const { list, icon = null, anim = false, theme, size = 'md' } = props;
 
   if (!list) {
     return <div style={{ color: `${cs.color.gray}` }}>no items</div>
@@ -45,7 +45,7 @@ const Togglebox = (props) => {
       // setItem(list[index]);
       setItem(next);
       setNext(nextItem(next.eid));
-      props.onClick && props.onClick(eid, next);
+      props.onClick && props.onClick(eid, next, e);
     }
 
     const nextItem = (eid) => {
@@ -61,18 +61,18 @@ const Togglebox = (props) => {
     return <StyledObject className={cx("toggle-box", props.className, { anim }, theme)}>
       <span className={"tgb-curr"}>
         {!icon &&
-          <Button className={cx("primary tgb-btn", props.className)} theme={theme} onClick={onClicked} title={item.title} eid={item.eid} />
+          <Button className={cx("tgb-btn", props.className, size, item.color || 'primary')} theme={theme} onClick={onClicked} title={item.title} eid={item.eid} />
         }
         {icon &&
-          <Svg className={cx("icon md tgb-icon", icon, props.className)} theme={theme} onClick={onClicked} eid={item.eid} name={item.icon} color={props.color} />
+          <Svg className={cx("icon tgb-icon", icon, size, props.className)} theme={theme} onClick={onClicked} eid={item.eid} name={item.icon} color={props.color} />
         }
       </span>
       {anim && <span className={"tgb-next"}>
         {!icon &&
-          <Button className={cx("primary tgb-btn", props.className)} theme={theme} onClick={onClicked} title={next.title} eid={next.eid} />
+          <Button className={cx("tgb-btn", props.className, size, item.color || 'primary')} theme={theme} onClick={onClicked} title={next.title} eid={next.eid} />
         }
         {icon &&
-          <Svg className={cx("icon md tgb-icon", icon, props.className)} theme={theme} onClick={onClicked} eid={next.eid} name={next.icon} color={props.color} />
+          <Svg className={cx("icon tgb-icon", icon, size, props.className)} theme={theme} onClick={onClicked} eid={next.eid} name={next.icon} color={props.color} />
         }
       </span>}
     </StyledObject>

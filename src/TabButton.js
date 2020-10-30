@@ -21,7 +21,7 @@ const StyledObject = styled.span`{
 
 const TabButton = (props) => {
   const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green' } = props;
-  
+
 
   if (!list) {
     return <div style={{ color: `${cs.color.gray}` }}>no items</div>
@@ -30,7 +30,7 @@ const TabButton = (props) => {
 
     const onClicked = (eid, e) => {
       const item = list.find(a => a.id === eid);
-      props.onClick && props.onClick(eid, item);
+      props.onClick && props.onClick(eid, item, e);
       setSelect(item.id);
     }
 
@@ -38,12 +38,13 @@ const TabButton = (props) => {
       <span className={"tab-frame"}>
         {list.map((a, i) => {
           const active = a.id === select;
+          const btncolor = active ? (a.color || activeColor) : color;
 
           if (icon)
-            return <Svg key={i} className={cx("icon tab-icon", active ? activeColor : color, icon, size)} theme={theme} onClick={onClicked}
+            return <Svg key={i} className={cx("icon tab-icon", btncolor, icon, size)} theme={theme} onClick={onClicked}
               eid={a.id} name={a.icon} color={color} />
           else
-            return <Button key={i} className={cx("tab-btn", active ? activeColor : color, size)} theme={theme}
+            return <Button key={i} className={cx("tab-btn", btncolor, size)} theme={theme}
               onClick={onClicked} title={a.title} eid={a.id} />
         })}
       </span>

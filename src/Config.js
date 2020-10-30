@@ -26,6 +26,7 @@ const KOR = {
   ORDER: "순번",
   KIND: "종류",
   DESC: "설명",
+  STATUS: "상태",
   CTIME: "등록일",
   UTIME: "수정일",
   IMAGE: "이미지",

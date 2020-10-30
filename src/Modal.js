@@ -38,6 +38,9 @@ export const StyledObject = styled.div`{
 
       .no-child { ${cs.color.red} ${cs.opac.get(0.7)} ${cs.font.xl} ${cs.font.line(80)} ${cs.font.center} }
     }
+    
+    &.small { .md-frame .md-body { ${cs.max.height(320)} } }
+    &.big { .md-frame .md-body { ${cs.max.height(520)} } }
 
     &.xl { .md-frame { ${cs.w.dsxl} } }
     &.lg { .md-frame { ${cs.w.dslg} } }

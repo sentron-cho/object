@@ -62,7 +62,7 @@ const StyledObject = styled.div`{
       }
 
       &.tb-head { ${cs.font.lg} ${cs.font.weight(600)} ${cs.bg.lightgray} 
-      ${cs.pos.relative} ${cs.top(0)} ${cs.z.top} ${cs.border.bottom} ${cs.border.gray}
+      ${cs.pos.relative} ${cs.top(0)} ${cs.z.menu} ${cs.border.bottom} ${cs.border.gray}
         .tb-row { .tb-col { ${cs.border.lightwhite} } } 
       }
 

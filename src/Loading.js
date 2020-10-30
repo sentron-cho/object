@@ -23,7 +23,7 @@ const StyledFrame = styled.div`{
 
     &.hide { ${cs.disp.none} }
     &.show { ${cs.disp.block} }
-    &.fixed { ${cs.pos.fixed} }
+    &.fixed { ${cs.pos.fixed} ${cs.top(0)} ${cs.left(0)} }
 
     &.bg-show { .bg { ${cs.bg.alphablack} } }
   }

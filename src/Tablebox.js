@@ -340,7 +340,7 @@ const Tablebox = (props) => {
       const vcolor = getcolor && getcolor(value);
 
       return <div key={String(index)} style={{ flex: flex }} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
-        <p style={styled} className={cx('tb-p', vcolor)}>{data}</p>
+        {formatter ? <div style={styled} className={cx('tb-p', vcolor)}>{data}</div> : <p style={styled} className={cx('tb-p', vcolor)}>{data}</p>}
       </div>
     })
   }

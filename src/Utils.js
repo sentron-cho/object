@@ -517,6 +517,8 @@ export const Storage = {
 
   logout() {
     window.localStorage.removeItem(this.key.userinfo);
+    // const isToken = window.Kakao && window.Kakao.Auth && window.Kakao.Auth.getAccessToken();
+    // if (isToken) window.Kakao.Auth.logout();
   },
 
   clearLocal() {

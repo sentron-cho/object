@@ -205,7 +205,7 @@ class Uploadbox extends React.PureComponent {
 
     this.state = {
       maxSize: 100 * MAGA,   //100M
-      imageExt: '.jpg, .jpeg, .png', videoExt: '.mp3, .mp4, .mov, .avi', pdfExt: '.pdf',
+      imageExt: '.jpg, .jpeg, .png, .gif', videoExt: '.mp3, .mp4, .mov, .avi', pdfExt: '.pdf',
       files: files, bufs: bufs, type: type, noti: '', modified: false, //load: load,
       textbox: false, link: link, refresh: false,
     };

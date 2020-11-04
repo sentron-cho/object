@@ -123,6 +123,9 @@ export default class Combobox extends React.PureComponent {
     if (nextProps.list) {
       this.setState({ list: nextProps.list });
     }
+    if (nextProps.pos) {
+      this.setState({ pos: nextProps.pos });
+    }
   }
 
   onResize = (e) => {

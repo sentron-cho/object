@@ -231,8 +231,8 @@ class Editbox extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if(this.props.noupdate) return;
-    
+    if (this.props.noupdate) return;
+
     this.state.value = nextProps.value != null ? nextProps.value : '';
   }
 
@@ -304,11 +304,12 @@ class Editbox extends React.PureComponent {
     const { props, state } = this;
     const { noti } = state;
     const { disabled = false } = props;
-    const { disable = disabled, border, readonly, type, guide } = props;
+    const { disable = disabled, border, readonly, type, guide, placeholder = null } = props;
 
     let addedClass = '';
     let attr = { spellCheck: false };
     attr.placeholder = (!readonly && !disable) ? guide : null;
+    if (placeholder) attr.placeholder = placeholder;
 
     const right = type && type.indexOf('number') >= 0 ? 'right' : '';
     if (type === 'date') {
@@ -324,7 +325,7 @@ class Editbox extends React.PureComponent {
         ref={(ref) => { this.input = ref; }}
         name={props.name}
         className={cx('input', { noti }, addedClass, { disable }, { readonly }, { border }, { right })}
-        type={type ? type : 'text'}
+        type={'text'}
         value={state.value}
         onChange={this.onChange}
         maxLength={props.maxLength}
@@ -343,7 +344,7 @@ class Editbox extends React.PureComponent {
         ref={(ref) => { this.input = ref; }}
         name={props.name}
         className={cx('input', { noti }, addedClass, { disable }, { border }, { readonly }, { right })}
-        type={type ? type : 'text'}
+        type={type === 'phone' ? 'number' : type || 'text'}
         value={state.value != null ? this.state.value : ''}
         onChange={this.onChange}
         maxLength={props.maxLength}
@@ -376,14 +377,15 @@ class Editbox extends React.PureComponent {
         helpcolor={helpcolor} bordercolor={bordercolor} bgcolor={bgcolor} fontcolor={fontcolor} style={props.style}>
         {props.label && !inline && <label className="ed-label">{props.label}
           {validate && <span className="ed-required">*</span>}
-          </label>}
+        </label>}
         <div className={cx('box', { disable }, { readonly })} >
           {props.label && inline && <label className={cx('ed-label', { noti })}>{props.label}</label>}
           {this.elemInput()}
           {props.type === 'number' && this.state.value > 999 && <span className={'nb-help'}>{Util.commas(this.state.value)}</span>}
+          {props.type === 'phone' && this.state.value.length >= 10 && <span className={'nb-help'}>{Util.toStringPhone(this.state.value)}</span>}
           {!readonly && <div className="underline"></div>}
           {this.elemNoti()}
-          {(props.onClear || props.clear) && <Svg className={cx('btn-clear sm', {multi})} onClick={this.onClear} name={'clear'} color={'black'} />
+          {(props.onClear || props.clear) && <Svg className={cx('btn-clear sm', { multi })} onClick={this.onClear} name={'clear'} color={'black'} />
           }
         </div>
         {props.helper && <div className="guide">{props.helper}</div>}

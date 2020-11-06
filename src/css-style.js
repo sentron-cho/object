@@ -145,6 +145,8 @@ const cs = {
     inline: 'display: inline;',
     autoflex: 'display: flex;',
     contents: 'display: contents;',
+    table: 'display: table;',
+    tcell: 'display: table-cell;',
 
     visible: 'visibility: visible;',
     invisible: 'visibility: hidden;',

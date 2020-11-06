@@ -198,7 +198,7 @@ export default class Formgroup extends React.PureComponent {
           const { flex, name } = item.props;
           const styled = { "flex": flex };
           const type = item.type.name ? item.type.name.toLowerCase() : item.type.toLowerCase();
-          return <div className={cx("fg-col", type, name)} key={index} style={styled}>{item}</div>
+          return <div className={cx("fg-col", `col-${index}`, type, name)} key={index} style={styled}>{item}</div>
         });
       } else {
         return <div className="fg-col">{children}</div>
@@ -207,7 +207,7 @@ export default class Formgroup extends React.PureComponent {
 
     const Child = child;
     return (
-      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, theme && `theme-${theme}`)} 
+      <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, theme && `theme-${theme}`)}
         {...props.options} {...props.style} border={props.border} bgcolor={props.bgcolor}
         anim={state.anim} onAnimationEnd={this.onAnimEnd}>
 
@@ -217,7 +217,7 @@ export default class Formgroup extends React.PureComponent {
           {children && renderChildren()}
 
           {child && props.list && list.map((item, index) =>
-            <div className="fg-col" key={index}>
+            <div className={cx("fg-col", `col-${index}`)} key={index}>
               <Child {...item} {...config.child} active={item.id === selected} full={true} disable={disable}
                 onClicked={this.props.onSelected ? this.onSelected : null} />
             </div>)

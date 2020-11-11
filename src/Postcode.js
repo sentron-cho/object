@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DaumPostCode from 'react-daum-postcode';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { cs, Svg, Button } from './index';
+import { cs, Button } from './index';
 import Loading from './Loading';
 import { ST } from './Config';
 

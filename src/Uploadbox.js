@@ -415,7 +415,7 @@ class Uploadbox extends React.PureComponent {
 
   render() {
     const { props } = this;
-    const { onClickClear, onClicked, onChange, onClickLinkOk, onDelete } = this;
+    const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
     const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null } = props;
 
     const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;

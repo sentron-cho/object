@@ -29,8 +29,9 @@ const makesid = (count = 5) => {
 const Kakaomap = (props) => {
   // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [elemid, setElemid] = useState(makesid(5));
-  const [maker, setMaker] = useState(null);
+  // const [maker, setMaker] = useState(null);
 
   useEffect(() => {
     const kakaokey = props.kakaokey;
@@ -81,6 +82,7 @@ const Kakaomap = (props) => {
     // } else {
     //   creatMapbox();
     // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elemid, props.kakaokey, props.position]);
 
   // if (!props.rowid) {

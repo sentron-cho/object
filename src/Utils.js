@@ -295,7 +295,7 @@ export const Util = {
 
   toStringPhone(number = '') {
     const value = number;
-    if (value.length < 3) {
+    if (!value || value.length < 3) {
       return value;
     }
 

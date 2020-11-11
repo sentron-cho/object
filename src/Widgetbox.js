@@ -57,7 +57,7 @@ const StyledObject = styled.div`{
     }
 
     &.hover {
-      &:not(.disable):hover { ${cs.mouse.pointer} ${cs.bg.hover}
+      &:not(.disable):hover { ${cs.mouse.pointer} ${cs.opac.get(0.7)}
         .t-image { ${cs.opac.show} } 
       }
     }

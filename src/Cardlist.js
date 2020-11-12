@@ -191,7 +191,7 @@ const Cardlist = (props) => {
     return item.map((col, index) => {
       const { value } = col;
       index = (index > head.length - 1) ? head.length - 1 : index;
-      let { type, title, unit = '', color = null, format = null, getcolor = null, formatter = null  } = head[index];
+      let { type, title, unit = '', color = null, format = null, getcolor = null, formatter = null } = head[index];
       let data = value;
 
       // switch (type) {
@@ -221,16 +221,16 @@ const Cardlist = (props) => {
       if (type === "color") {
         styled = { 'color': data, 'textTransform': 'uppercase' };
       }
-      
+
       if (color) {
         styled['color'] = color instanceof Function ? color(value, list[pos], pos) : color;
       }
 
       const vcolor = getcolor && getcolor(value);
-      
+
       return <div key={String(col.key)} className={cx("tcol", col.key)}>
-        <p className="tcol-label">{title}{unit && <span className="tcol-unit">{`[${unit}]`}</span>}</p>
-        <p className={cx("tcol-txt", vcolor)} style={styled}>{data}</p>
+        <div className="tcol-label">{title}{unit && <span className="tcol-unit">{`[${unit}]`}</span>}</div>
+        <div className={cx("tcol-txt", vcolor)} style={styled}>{data}</div>
       </div>
     })
   }

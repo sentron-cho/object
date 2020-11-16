@@ -35,6 +35,8 @@ const StyledObject = styled.div`{
             & > p:last-child { ${cs.pos.relative} ${cs.p.l10} }
           }
 
+          .tcol-label { ${cs.disp.inblock} ${cs.w.get(80)} ${cs.font.left} ${cs.font.gray} ${cs.font.xs} }
+          .tcol-txt { ${cs.disp.inblock} ${cs.w.calc('100% - 80px')} ${cs.p.l10} ${cs.font.left} }
           .tcol-unit { ${cs.font.xs} ${cs.m.l1} }
         }          
 

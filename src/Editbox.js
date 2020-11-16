@@ -76,7 +76,7 @@ const StyledObject = styled.div` {
     .nb-help { ${cs.align.rtop} ${cs.font.xs} ${cs.font.gray} ${cs.top(-15)} }
 
     .ed-required {
-      ${cs.font.red} ${cs.p.l2} ${cs.font.lg} ${cs.font.thickbold} ${cs.pos.relative} ${cs.top(3)}
+      ${cs.font.red} ${cs.p.l2} ${cs.font.md} ${cs.font.thickbold} ${cs.pos.relative} ${cs.top(3)}
     }
 
     .guide { 

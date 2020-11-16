@@ -21,7 +21,7 @@ const StyledObject = styled.div`{
     // .svg-icon { ${cs.opac.get(0.5)}  }
     
     .sm-body { 
-      ${cs.p.v10} ${cs.border.top}
+      ${cs.p.v10} ${cs.border.top} ${cs.scrollbar.t4}
       .sm-ul {
         .sm-li {
           ${cs.font.line(40)} ${cs.mouse.pointer} ${cs.p.r10} ${cs.p.l20} ${cs.border.radius('0 50px 50px 0px')} ${cs.m.r10}
@@ -159,7 +159,7 @@ class Sidemenu extends React.PureComponent {
           <p className={'sm-title'}>{title ? title.toUpperCase() : ''}</p>
           <Svg className="btn-cancel md" name={"cancel"} onClick={this.onClicked} eid={EID.CANCEL} color={color} />
         </div>
-        <div className="sm-body scrollbar-4">
+        <div className="sm-body">
           {Component ?
             <Component onClose={this.onClose} onClickMenu={this.onClickMenu} /> :
             <ul className={"sm-ul"}>

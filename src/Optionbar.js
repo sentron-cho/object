@@ -15,7 +15,7 @@ const StyledObject = styled.div`{
       }
 
       .ob-frame {
-        ${cs.over.auto} ${cs.w.full} ${cs.h.get('100vh')} ${cs.p.b40}
+        ${cs.over.auto} ${cs.w.full} ${cs.h.get('100vh')} ${cs.p.b40} ${cs.scrollbar.t3}
         .ob-body { 
           min-height: 200px; ${cs.p.h10} 
           .no-child { ${cs.opac.alpha} ${cs.align.center} ${cs.w.full} ${cs.font.center} }
@@ -127,7 +127,7 @@ export default class Optionbar extends React.PureComponent {
             <span className="opt-tl">{props.title || "Option Bar"}</span>
           </div>
 
-          <div className="ob-frame scrollbar-3">
+          <div className="ob-frame">
             <div className="ob-body">
               {Component && <Component refs={this.object} {...props} onChange={this.onChange} />}
               {!Component && <p className="no-child">The child component does not exist.</p>}

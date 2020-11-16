@@ -174,14 +174,11 @@ export default class Popbox extends React.PureComponent {
         <Cardbox className={cx("pop-frame no-box")}>
           {this.renderContents(r)}
 
-          {/* {style === "thumb" && <Button className={cx("pop-btn-del gray")} onClick={this.onDelete} title={ST.DELETE} eid={EID.DELETE} />} */}
           {isdel === "show" && style === "thumb" && <Svg className={cx("pop-btn-del md")} onClick={this.onDelete} eid={EID.DELETE} icon={"delete"} />}
           <Svg className={cx("pop-btn-cancel md")} onClick={this.onCancel} eid={EID.CANCEL} icon={"exit"} />
 
           <div className="pop-btn-grp">
-            {/* <Svg className={cx("pop-btn-ok md box")} onClick={this.onOk} eid={EID.OK} icon={"ok"} /> */}
             <Button className={cx("red sm")} onClick={this.onOk} title={ST.OK} eid={EID.OK} disabled={!state.modefied} />
-            {/* <Button className={cx("primary mL10")} onClick={this.onCancel} title={ST.CANCEL} eid={EID.CANCEL} /> */}
           </div>
         </Cardbox>
       </StyledObject >

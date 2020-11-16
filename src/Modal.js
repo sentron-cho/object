@@ -26,7 +26,7 @@ export const StyledObject = styled.div`{
           .md-title { ${cs.font.bold} ${cs.font.lg} ${cs.m.l5} }
         }
 
-        .md-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.max.height(400)} ${cs.over.auto} ${cs.h.fit} }
+        .md-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.max.height(400)} ${cs.over.auto} ${cs.h.fit} ${cs.scrollbar.t4} }
 
         .md-foot { ${cs.p.a10} ${cs.over.hidden} ${cs.font.right}
           ${cs.border.top} ${cs.border.lightgray}
@@ -210,7 +210,7 @@ class Modal extends React.PureComponent {
 
           {state.desc && <div className="md-desc">{state.desc}</div>}
 
-          <div className="md-body scrollbar-4">
+          <div className="md-body">
             {Component && <Component data={state.data} state={state.state} onClick={this.onClicked} act={this.act} />}
             {!Component && <p className="no-child">The child component does not exist.</p>}
           </div>

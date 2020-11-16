@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { cs, Svg, Button } from './index';
@@ -22,11 +22,16 @@ const StyledObject = styled.span`{
 const TabButton = (props) => {
   const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green' } = props;
 
-
   if (!list) {
     return <div style={{ color: `${cs.color.gray}` }}>no items</div>
   } else {
     const [select, setSelect] = useState(props.select || list[0].id);
+
+    useEffect(() => {
+      setSelect(props.select);
+      return () => {
+      }
+    }, [props.select])
 
     const onClicked = (eid, e) => {
       const item = list.find(a => a.id === eid);

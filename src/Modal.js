@@ -16,7 +16,7 @@ export const StyledObject = styled.div`{
     .md-cancel { ${cs.m.r10} }
 
     .md-frame { ${cs.z.get(99)} ${cs.w.get(560)} ${cs.min.height("fit-content")}
-      ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.box.shadow}
+      ${cs.bg.white} ${cs.box.radius} ${cs.align.center} ${cs.box.shadow} ${cs.over.hidden}
 
         .md-head { 
           ${cs.over.hidden} ${cs.border.radius("5px 5px 0 0")} ${cs.p.a10} 
@@ -26,7 +26,7 @@ export const StyledObject = styled.div`{
           .md-title { ${cs.font.bold} ${cs.font.lg} ${cs.m.l5} }
         }
 
-        .md-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.max.height(400)} ${cs.over.auto} ${cs.h.fit} ${cs.scrollbar.t4} }
+        .md-body { ${cs.p.a20} ${cs.min.height(100)} ${cs.max.height(400)} ${cs.over.auto} ${cs.h.fit} ${cs.scrollbar.t3} }
 
         .md-foot { ${cs.p.a10} ${cs.over.hidden} ${cs.font.right}
           ${cs.border.top} ${cs.border.lightgray}

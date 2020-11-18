@@ -180,7 +180,10 @@ class Modal extends React.PureComponent {
     } else if (eid === EID.CANCEL) {
       onCancel && onCancel(null);
     } else {
-      onClick && onClick(eid, data);
+      const ret = onClick && onClick(eid, data);
+      this.setState({ show: !ret });
+      ret && this.showBodyScroll(true);
+      return;
     }
 
     this.setState({ show: false });

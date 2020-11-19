@@ -868,14 +868,14 @@ const cs = {
     ::-webkit-scrollbar-thumb { background-color: #000000; }
     `,
     t3: `
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px ${color.alphagray}; }
-    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
+    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; }
     `,
     t4: `
-    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar { width: 14px; height: 14px; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px ${color.alphagray}; }
-    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; outline: 1px solid ${color.lightgray}; }
+    ::-webkit-scrollbar-thumb { background-color: ${color.gray}; }
     `,
 
     get: (v = color.gray, bar = color.dark) => `

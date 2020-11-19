@@ -6,10 +6,10 @@ import { cs } from './index';
 
 const StyledFrame = styled.div`{
   &.loading-box {
-    ${cs.disp.block} ${cs.p.r0} ${cs.z.menu} ${cs.size.full} ${cs.pos.absolute}
+    ${cs.disp.block} ${cs.p.r0} ${cs.z.menu} ${cs.size.full} ${cs.pos.absolute} ${cs.left(0)} ${cs.top(0)}
     // z-index: 99999 !important;
     .bg {
-      ${cs.size.full} ${cs.pos.absolute} ${cs.bg.trans}
+      ${cs.size.full} ${cs.pos.absolute} ${cs.bg.trans} 
       img { 
         ${cs.w.auto} ${cs.h.get(80)} ${cs.opac.alpha} ${cs.align.center}
       }

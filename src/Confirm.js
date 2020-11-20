@@ -25,15 +25,17 @@ const StyledObject = styled.div`
     .cf-foot { 
       ${cs.border.radius("0 0 5px 5px")} ${cs.p.a10} ${cs.over.hidden} ${cs.font.right} 
       .button { 
-        ${cs.pos.relative} 
+        ${cs.pos.relative} ${cs.font.bold}
         &.cf-cancel { ${cs.m.l10} }
       }
     }
   }
 
-  &.warn { .cf-frame .cf-head { ${cs.bg.orange} ${cs.font.white} } }
-  &.err { .cf-frame .cf-head { ${cs.bg.red} ${cs.font.white} } }
+  &.warn { .cf-frame .cf-head { ${cs.bg.get("#ff5b1999")} ${cs.font.white} } }
+  &.err { .cf-frame .cf-head { ${cs.bg.get("#ff5151b5")} ${cs.font.white} } }
   &.info { .cf-frame .cf-head { ${cs.bg.trans} ${cs.font.dark} } }
+  &.primary { .cf-frame .cf-head { ${cs.bg.get("#1a9be4c4")} ${cs.font.white} } }
+  &.success { .cf-frame .cf-head { ${cs.bg.get("#00c73c87")} ${cs.font.white} } }
 
   &.left { .cf-frame .cf-body .msg { ${cs.font.left} } }
   &.right { .cf-frame .cf-body .msg { ${cs.font.right} } }
@@ -53,10 +55,10 @@ const StyledObject = styled.div`
     .cf-foot .button { ${cs.bg.primary} ${cs.box.line} ${cs.border.lightgray} } } 
     .svg-path { ${cs.fill.white} }
   }
-  &.gray { .cf-head, .cf-frame { ${cs.bg.gray} ${cs.font.white} 
-    .cf-head { ${cs.border.lightgray} }
-    .cf-foot .button { ${cs.bg.gray} ${cs.box.line} ${cs.border.lightwhite} } } 
-    .svg-path { ${cs.fill.white} }
+  &.gray { .cf-head, .cf-frame { ${cs.bg.lightgray} ${cs.font.dark} 
+    .cf-head { ${cs.border.white}  }
+    .cf-foot .button { ${cs.bg.darkgray} ${cs.font.white} } } 
+    .svg-path { ${cs.fill.dark} }
   } 
   &.dark { .cf-head, .cf-frame { ${cs.bg.dark} ${cs.font.white} 
     .cf-head { ${cs.border.darkgray} }

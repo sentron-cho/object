@@ -20,7 +20,7 @@ const StyledObject = styled.span`{
 }`;
 
 const TabButton = (props) => {
-  const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green' } = props;
+  const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green', disabled = false } = props;
 
   if (!list) {
     return <div style={{ color: `${cs.color.gray}` }}>no items</div>
@@ -50,7 +50,7 @@ const TabButton = (props) => {
               eid={a.id} name={a.icon} color={color} />
           else
             return <Button key={i} className={cx("tab-btn", btncolor, size)} theme={theme}
-              onClick={onClicked} title={a.title} eid={a.id} />
+              onClick={onClicked} title={a.title} eid={a.id} disabled={disabled} />
         })}
       </span>
     </StyledObject>

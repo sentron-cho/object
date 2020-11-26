@@ -105,7 +105,7 @@ export function doInsert(url, value = null, list = null) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
         const result = list == null ? data.value : [...list, data.value];
-        resolve({ 'code': data.code, 'result': result });
+        resolve({ 'code': data.code, 'result': result, ...data });
       } else {
         resolve({ 'code': data.code, 'err': data.value });
       }
@@ -131,7 +131,7 @@ export function doUpdate(url, value = null, list) {
         window.location.href = data.value ? data.value : LOGIN;
       } else if (data.code === CODE.SUCCESS) {
         const result = list == null ? data.value : list.map(item => { if (item.rowid === data.value.rowid) item = data.value; return item; });
-        resolve({ 'code': data.code, 'result': result, 'item': data.item ? data.item : '' });
+        resolve({ 'code': data.code, 'result': result, 'item': data.item ? data.item : '', ...data });
       } else {
         resolve({ 'code': data.code, 'err': data.value });
       }
@@ -155,7 +155,7 @@ export function doDelete(url, value = null, list) {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         const result = list == null ? data.value : list.filter(item => item.rowid !== data.value);
-        resolve({ 'code': data.code, 'result': result });
+        resolve({ 'code': data.code, 'result': result, ...data });
       } else {
         resolve({ 'code': data.code, 'err': data.value });
       }

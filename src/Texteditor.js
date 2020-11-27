@@ -9,17 +9,18 @@ import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 
 const StyledObject = styled.div`{
-  &.editor-frame { padding-left: 10px; max-width: 100%; margin-top: 0px; position: relative;
-    h1, h2, h3, h4, h5, h6, p { color: #000 };
+  &.editor-frame { 
+    ${cs.p.l10} ${cs.max.w('100%')} ${cs.m.t0} ${cs.pos.relative}
 
-    .ed-navi { position: relative; margin-bottom: 20px; text-align: right; }
+    h1, h2, h3, h4, h5, h6, p { ${cs.font.dark} };
 
-    .ed-body { width: 100%; margin-top: 20px; color: #000; min-height: calc(400px); background: ${cs.color.white};
+    .ed-navi { ${cs.pos.relative} ${cs.m.b20} ${cs.font.right} .button { ${cs.m.l20} } }
+    .ed-body { 
+      ${cs.w.full} ${cs.m.t20} ${cs.font.dark} ${cs.min.h(400)} ${cs.bg.white}
       .rdw-editor-wrapper {
-
         .rdw-editor-toolbar {
           .rdw-option-wrapper {
-            ${cs.border.lightgray} height: 28px; width: 34px;
+            ${cs.border.lightgray} ${cs.h.get(28)} ${cs.w.get(34)}
             &:hover {
               ${cs.border.green} ${cs.bg.green} box-shadow: none;
             }
@@ -43,7 +44,7 @@ const StyledObject = styled.div`{
           .rdw-dropdown-selectedtext { ${cs.font.black} }
 
           .rdw-colorpicker-modal {
-            width: 300px; height: 200px;
+            ${cs.w.get(300)} ${cs.h.get(200)}
             .rdw-colorpicker-modal-options { overflow: auto; }
             .rdw-colorpicker-option { box-shadow: none; }
           }
@@ -54,7 +55,7 @@ const StyledObject = styled.div`{
 
           .rdw-embedded-modal-header-option, .rdw-embedded-modal-header-label, .rdw-embedded-modal-link-input,
           .rdw-embedded-modal-size-input {
-            width: 100%;
+            ${cs.w.full}
           }
           
           input { ${cs.border.lightgray} margin-bottom: 10px; line-height: 28px; min-height: 30px; padding: 2px 5px; }

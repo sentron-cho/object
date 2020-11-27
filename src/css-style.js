@@ -64,6 +64,7 @@ const cs = {
     wxl: 'min-width: 1280px;',
     wlg: 'min-width: 1024px;',
     wmd: 'min-width: 800px;',
+    wsm: 'min-width: 600px;',
 
     width: (v) => Number.isInteger(v) ? `min-width: ${v}px;` : `min-width: ${v};`,
     height: (v) => Number.isInteger(v) ? `min-height: ${v}px;` : `min-height: ${v};`,
@@ -84,6 +85,7 @@ const cs = {
     wxl: 'max-width: 1280px;',
     wlg: 'max-width: 1024px;',
     wmd: 'max-width: 800px;',
+    wsm: 'max-width: 600px;',
 
     width: (v) => Number.isInteger(v) ? `max-width: ${v}px;` : `max-width: ${v};`,
     height: (v) => Number.isInteger(v) ? `max-height: ${v}px;` : `max-height: ${v};`,

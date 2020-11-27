@@ -6,14 +6,15 @@ import { EID, ST } from './Config';
 
 const StyledObject = styled.div` {
   &.search-box {
-    ${cs.pos.relative} ${cs.w.calc('100% - 20px')} ${cs.disp.inblock} ${cs.p.get("0 10px")} 
+    ${cs.pos.relative} ${cs.w.calc('100% - 20px')} ${cs.disp.inblock} ${cs.p.h10} 
     ${cs.bg.white} ${cs.box.radius} ${cs.bg.sky} ${cs.box.inner} //${cs.over.hidden}
 
-    .sc-in { }
-    .sc-btn { ${cs.align.ycenter} }
+    .sc-in { ${cs.disp.inblock} ${cs.align.ycenter} ${cs.pos.relative} }
+    .sc-btn { ${cs.align.ycenter} ${cs.right(5)} }
     .sc-combo { 
-      ${cs.align.ycenter} ${cs.right(0)} ${cs.right(0)}
-      .cb-sel { ${cs.border.radius("0 5px 5px 0")} ${cs.p.a0} ${cs.font.center} } 
+      ${cs.align.ycenter} ${cs.left(0)} ${cs.pos.relative}
+      .cb-sel { ${cs.border.radius("0")} ${cs.border.none} ${cs.border.right} 
+        ${cs.border.color(cs.color.lightgray)}  ${cs.p.a0} ${cs.font.center} } 
     }
 
     &.box, &.border { ${cs.box.line} .sc-combo, .sc-combo .cb-sel { ${cs.h.calc('100%')} } }
@@ -21,23 +22,23 @@ const StyledObject = styled.div` {
 
     &.md { ${cs.h.md} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(140)} } 
-      .sc-in { ${cs.m.l30} ${cs.m.top(2)} &.combo { ${cs.w.calc('100% - 170px')} } } 
+      .sc-in { ${cs.p.r30} &.combo { ${cs.w.calc('100% - 140px')} } } 
     }
     &.xs { ${cs.h.xs} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(100)} } 
-      .sc-in { ${cs.m.l15} ${cs.m.top(-5)} &.combo { ${cs.w.calc('100% - 110px')} }  } .sc-btn { ${cs.m.left(-4)} ${cs.m.top(-3)} } 
+      .sc-in { ${cs.p.r15} &.combo { ${cs.w.calc('100% - 100px')} }  } .sc-btn { ${cs.m.left(-4)} ${cs.m.top(-3)} } 
     }
     &.sm { ${cs.h.sm} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(120)} } 
-      .sc-in { ${cs.m.l25} ${cs.m.top(0)} &.combo { ${cs.w.calc('100% - 140px')} } }
+      .sc-in { ${cs.p.r25}  &.combo { ${cs.w.calc('100% - 120px')} } }
     }
     &.lg { ${cs.h.lg} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(160)} } 
-      .sc-in { ${cs.m.l40} .box .input { ${cs.h.get(32)} ${cs.min.h(32)} } ${cs.m.top(0)} &.combo { ${cs.w.calc('100% - 200px')} } }
+      .sc-in { ${cs.p.r40} .box .input { ${cs.h.get(32)} ${cs.min.h(32)} } &.combo { ${cs.w.calc('100% - 200px')} } }
     }
     &.xl { ${cs.h.xl} 
       .sc-combo, .sc-combo .cb-sel { ${cs.w.get(200)} } 
-      .sc-in { ${cs.m.get(50)} ${cs.m.top(3)} &.combo { ${cs.w.calc('100% - 250px')} } }
+      .sc-in { ${cs.p.right(50)} &.combo { ${cs.w.calc('100% - 250px')} } }
     }
     
     &.left { }
@@ -98,14 +99,14 @@ export default class Search extends React.PureComponent {
 
     return (
       <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
-        <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
-        <Editbox type="text" className={cx("sc-in", color, list && 'combo')}
-          guide={props.guide} value={state.value} theme={theme}
-          onEnter={this.onEnter} onChange={this.onChange} onClear={this.props.onClear}/>
-        {list && <Combobox className={cx("sc-combo sky md", color)} 
+        {list && <Combobox className={cx("sc-combo sky md", color)}
           pos={pos} frameid={frameid} theme={theme}
           list={list} onClick={this.onClickCombo} inline={true} />
         }
+        <Editbox type="text" className={cx("sc-in", color, list && 'combo')}
+          guide={props.guide} value={state.value} theme={theme}
+          onEnter={this.onEnter} onChange={this.onChange} onClear={this.props.onClear} />
+        <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
       </StyledObject>
     )
   }
@@ -132,7 +133,8 @@ export const SearchFrame = (props) => {
     return null;
   } else {
     return <StyledFrame className={cx("search-frame", props.className)}>
-      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch} className={cx("search", props.className)} list={props.searchs} searchkey={props.searchkey} />}
+      {props.onClickSearch && <Search guide={ST.SEARCH} onClick={onClickSearch}
+        className={cx("search", props.className)} list={props.searchs} searchkey={props.searchkey} />}
       {props.onClickNew && <Button className={"btn-new green md"} title={ST.ADD} onClick={onClickNew} eid={EID.NEW} />}
     </StyledFrame>
   }

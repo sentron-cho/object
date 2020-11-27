@@ -12,6 +12,8 @@ const StyledObject = styled.div`{
   &.table-box { 
     ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} 
 
+    .search-frame { ${cs.z.header} }
+
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block}
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
 
@@ -173,6 +175,7 @@ const StyledObject = styled.div`{
       .tb-head { ${cs.bg.black} ${cs.font.white} 
         .tb-row { ${cs.border.semiblack} .tb-col { ${cs.border.semiblack} } } 
       }
+      .total-txt { ${cs.font.white} }
       .selection:hover { ${cs.bg.darkhover} }
       .btn-new { ${cs.bg.black} ${cs.font.white} }
     }
@@ -404,7 +407,7 @@ const Tablebox = (props) => {
     <StyledObject className={cx('table-box', props.className, theme && `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 
-      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+      <SearchFrame searchs={props.searchs} searchkey={props.searchkey}
         onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
         onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
 
@@ -461,7 +464,7 @@ const Tablebox = (props) => {
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      <Pagenavi className={props.theme} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
+      <Pagenavi className={cx(props.theme, props.naviClass)} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
     </StyledObject >
   );
 }

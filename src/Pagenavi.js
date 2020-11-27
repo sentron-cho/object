@@ -35,6 +35,11 @@ const StyledObject = styled.div`{
     &.sky {
       .pg-no { &.active { ${cs.bg.sky} ${cs.font.dark} } &:hover { ${cs.border.sky} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
     }
+    &.white {
+      .pg-no { ${cs.font.lightgray} 
+        &.active { ${cs.bg.white} ${cs.font.black} } &:hover { ${cs.border.lightgray} } .svg-icon { .svg-path { ${cs.fill.lightgray} } } 
+      } 
+    }
     &.green {
       .pg-no { &.active { ${cs.bg.green} } &:hover { ${cs.border.green} } .svg-icon { .svg-path { ${cs.fill.green} } } } 
     }
@@ -54,11 +59,16 @@ const StyledObject = styled.div`{
       .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
     }
     &.black {
+      ${cs.font.darkgray} 
       .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
     }
 
     &.theme-sky {
       .pg-no { &.active { ${cs.bg.sky} ${cs.font.dark} } &:hover { ${cs.border.sky} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+    }
+    &.theme-white {
+      ${cs.font.lightgray} 
+      .pg-no { &.active { ${cs.bg.white} ${cs.font.dark} } &:hover { ${cs.border.lightgray} } .svg-icon { .svg-path { ${cs.fill.white} } } } 
     }
     &.theme-primary {
       .pg-no { &.active { ${cs.bg.primary} } &:hover { ${cs.border.primary} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
@@ -66,10 +76,11 @@ const StyledObject = styled.div`{
     &.theme-gray {
       .pg-no { &.active { ${cs.bg.gray} } &:hover { ${cs.border.darkgray} } .svg-icon { .svg-path { ${cs.fill.gray} } } } 
     }
-    &.theme-dark {
+    &.theme-dark { ${cs.font.gray} 
       .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
     }
     &.theme-black {
+      ${cs.font.darkgray} 
       .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
     }
 

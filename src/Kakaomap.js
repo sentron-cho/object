@@ -10,6 +10,7 @@ const StyledObject = styled.span`{
     ${cs.min.w(300)} ${cs.min.h(200)} ${cs.scrollbar.t1}
 
     .nodata { ${cs.font.gray} ${cs.box.line} ${cs.font.center} ${cs.pos.relative} ${cs.size.full} 
+      ${cs.align.center}
       & > span { ${cs.align.center} } 
     }
 

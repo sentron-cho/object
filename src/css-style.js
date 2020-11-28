@@ -155,7 +155,8 @@ const cs = {
     invisible: 'visibility: hidden;',
     hidden: 'visibility: hidden;',
 
-    popup: (v = 999999, bg = 'transparent', w = 800, h = 600) => `z-index: ${v}; width: 100%; height: 100%; display: block; position: fixed; bottom:unset; top: 0;
+    popup: (v = 999999, bg = 'transparent', w = 800, h = 600) => `z-index: ${v}; width: 100%; 
+      height: 100%; display: block; position: fixed; bottom:unset; top: 0; left: 0;
       .bg { background: ${bg}; width: 100%; height: 100%; display: block; }
       .box { 
         width: 100%; height: 100%; display: block; max-width: ${w}px; max-height: ${h}px; 

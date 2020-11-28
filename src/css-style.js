@@ -115,6 +115,7 @@ const cs = {
     absolute: 'position: absolute;',
     relative: 'position: relative;',
     fixed: 'position: fixed;',
+    sticky: 'position: sticky;',
 
     ltop: 'bottom: unset; right: unset; left: 0; top: 0;',
     rtop: 'bottom: unset; left: unset; right: 0; top: 0;',

@@ -70,7 +70,7 @@ export const Util = {
 
   getGenerateKey() { return new Date().getTime(); },
 
-  getUuid(max = 4) { 
+  getUuid(max = 4) {
     const str = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, max);
     return `${str.toUpperCase()}${new Date().getTime()}`;
   },
@@ -365,6 +365,23 @@ export const Util = {
     return (typeof item === "object" && item !== null) ? true : false;
   },
 
+  // \'" 이 3가지 특수문자는 입력오류
+  stringify(value) {
+    let temp = JSON.stringify(value);
+    temp = temp.replace(/'/gi, `#[${"'".charCodeAt(0)}]#`);
+    // temp = temp.replace(/"/gi, '\\"');
+    temp = temp.replace(/\\/gi, `#[${"\\".charCodeAt(0)}]#`)
+    return temp;
+  },
+
+  // stringify(value) {
+  //   let temp = JSON.stringify(value);
+  //   temp = temp.replace(/'/gi, "\\'")
+  //   temp = temp.replace(/"/gi, '\\"');
+  //   temp = temp.replace(/\\/gi, "\\\\");
+  //   return JSON.stringify(temp);
+  // },
+
   parseJson(value, deep = true) {
     if (!this.isEmpty(value)) {
       value = value.replace(/\n/gi, '\\n');
@@ -441,6 +458,12 @@ export const Util = {
 
   isPhone(asValue) {
     const regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  // 특수문자가 포함되어 있으면 true를 반환한다.
+  checkJson(asValue) {
+    const regExp = /[\\\'\"]/gi;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
   },
 

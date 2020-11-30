@@ -450,6 +450,9 @@ export const Util = {
     }
   },
 
+  // eslint-disable-next-line no-useless-escape
+  getSpecialCharPattern() { return /[`~!@#$%^&*|\\\'\";:\/?]/gi },
+
   isEmail(asValue) {
     // eslint-disable-next-line no-useless-escape
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -463,8 +466,14 @@ export const Util = {
 
   // 특수문자가 포함되어 있으면 true를 반환한다.
   checkJson(asValue) {
+    // eslint-disable-next-line no-useless-escape
     const regExp = /[\\\'\"]/gi;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  // eslint-disable-next-line no-useless-escape
+  checkSpecialChar(value, exp = /[`~!@#$%^&*|\\\'\";:\/?]/gi) {
+    return exp.test(value); // 형식에 맞는 경우 true 리턴
   },
 
   isPassword(asValue, min = 8, max = 12) {

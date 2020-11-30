@@ -7,6 +7,8 @@ import { Util } from './Utils';
 
 const ST = {
   NOT: "문장안에 \" 대신 ' 를 사용하세요",
+  // eslint-disable-next-line no-useless-escape
+  NOT_TEXT: `괄호안의 특수문자( \\ ' \" ) 세개는 입력할 수 없습니다.`,
 };
 
 const StyledObject = styled.div` {
@@ -57,7 +59,8 @@ const StyledObject = styled.div` {
       }
 
       span.noti {
-        ${cs.pos.absolute} ${cs.opac.show} ${cs.bottom(2)} ${cs.font.xs} ${cs.z.get(10)} ${cs.font.red}
+        ${cs.pos.absolute} ${cs.opac.show} ${cs.bottom(2)} ${cs.font.xs} ${cs.z.get(10)} ${cs.font.redhover}
+        ${cs.z.over} ${cs.bg.get("#ffffff30")} ${cs.border.radius(3)} ${cs.bg.get('#fffbcfa0')} ${cs.font.line(14)}
         &.left { ${cs.left('5px')} }
         &.right { ${cs.right('5px')} }
       }
@@ -177,12 +180,25 @@ class Editbox extends React.PureComponent {
     return !isNaN(Number(data));
   }
 
-  isValidate = () => {
+  // 특수문자가 포함되어 있으면 true를 반환한다.
+  // eslint-disable-next-line no-useless-escape
+  checkFunc(exp = /[\\\'\"]/gi) {
+    // const exp = /[\\\'\"]/gi;
+    const { value } = this.input;
+    return exp.test(value); // 형식에 맞는 경우 true 리턴
+  }
+
+  // 입력되지 말아야할 문자
+  isValidate = (checkFunc = null, msg = ST.NOT_TEXT) => {
     const { validate, noti } = this.props;
     const { value, validationMessage } = this.input;
 
     // " 는 무조건 입력 못하도록 하자.. DB 입력시 오류 발생으로...
-    if (value.indexOf('"') >= 0) { return this.showNoti(ST.NOT_DOUBLE_QUARTER); }
+    if (checkFunc !== null) {
+      if (checkFunc) { return this.showNoti(msg); };
+    } else {
+      if (value.indexOf('"') >= 0) { return this.showNoti(ST.NOT); }
+    }
 
     // validation 체크이면...
     if (validate) {
@@ -364,7 +380,7 @@ class Editbox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { noti } = state;
-    const { disabled = false, theme } = props;
+    const { disabled = false, theme, preview = true } = props;
     const {
       disable = disabled, readonly, inline, multi,
       fontsize = '14px', height = '80px', minheight, maxheight,
@@ -381,8 +397,8 @@ class Editbox extends React.PureComponent {
         <div className={cx('box', { disable }, { readonly })} >
           {props.label && inline && <label className={cx('ed-label', { noti })}>{props.label}</label>}
           {this.elemInput()}
-          {props.type === 'number' && this.state.value > 999 && <span className={'nb-help'}>{Util.commas(this.state.value)}</span>}
-          {props.type === 'phone' && this.state.value.length >= 10 && <span className={'nb-help'}>{Util.toStringPhone(this.state.value)}</span>}
+          {preview && props.type === 'number' && this.state.value > 999 && <span className={'nb-help'}>{Util.commas(this.state.value)}</span>}
+          {preview && props.type === 'phone' && this.state.value.length >= 10 && <span className={'nb-help'}>{Util.toStringPhone(this.state.value)}</span>}
           {!readonly && <div className="underline"></div>}
           {this.elemNoti()}
           {(props.onClear || props.clear) && <Svg className={cx('btn-clear sm', { multi })} onClick={this.onClear} name={'clear'} color={'black'} />

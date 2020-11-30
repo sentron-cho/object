@@ -4,7 +4,7 @@ import cx from 'classnames/bind';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
-import { SearchFrame, Pagenavi, Util, Svg, cs, Guidebox, Dragable } from './index';
+import { SearchFrame, Pagenavi, Util, Svg, cs, Guidebox, Dragable, Nodata } from './index';
 import { EID, ST } from './Config';
 import moment from 'moment';
 
@@ -282,7 +282,7 @@ const StyledObject = styled.div`{
 }`;
 
 const Tablebox = (props) => {
-  const { head = null, total = '', height = 30, theme, rowid } = props;
+  const { head = null, total = '', height = 30, theme, rowid, nodata = null } = props;
   const cursor = props.onSelect ? 'pointer' : 'default';
   const align = 'center';
   const style = { cursor, height, align };
@@ -434,7 +434,7 @@ const Tablebox = (props) => {
 
         {/* {!tlist && <div className="no-data"><Nodata /></div>} */}
         {/* body */}
-        <DndProvider backend={Backend}>
+        {tlist && tlist.length > 0 && <DndProvider backend={Backend}>
           {tlist && <ul className="tb-line tb-body">
             {/* row */}
             {tlist.map((item, index) => {
@@ -458,7 +458,8 @@ const Tablebox = (props) => {
                 </Dragable>)
             })}
           </ul>}
-        </DndProvider>
+        </DndProvider>}
+        {(nodata && (!tlist || tlist.length < 1)) && <Nodata className={'sm center middle'} title={nodata} />}
       </div>
 
       {total && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}

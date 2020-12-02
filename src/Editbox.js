@@ -8,7 +8,8 @@ import { Util } from './Utils';
 const ST = {
   NOT: "문장안에 \" 대신 ' 를 사용하세요",
   // eslint-disable-next-line no-useless-escape
-  NOT_TEXT: `괄호안의 특수문자( \\ ' \" ) 세개는 입력할 수 없습니다.`,
+  NOT_TEXT: `특수문자( \\ ' \" ) 세개는 입력할 수 없습니다.`,
+  NOT_JSON: `특수문자(" \\) 는 입력할 수 없습니다.`,
 };
 
 const StyledObject = styled.div` {
@@ -205,17 +206,22 @@ class Editbox extends React.PureComponent {
       // 입력이 없으면
       if (noti && this.isEmpty()) { return this.showNoti(); }
 
-      // 숫자 타입에서 숫자가 아닌 값이 입력될 경우.
-      // if (type.indexOf("number") >= 0 && !this.isNumeric(value)) {
-      //   return this.showNoti(ST.NOTI.ONLY_NUMBER);
-      // }
-
       // 그외 타입 오류 및 기타 시스템 오류
       if (validationMessage) { return this.showNoti(validationMessage); };
     }
 
     return true;
   };
+
+  isValidateJson = (noti = ST.NOT_JSON) => {
+    const { value, validationMessage } = this.input;
+    if (!value) return this.showNoti(noti);
+    if (value.indexOf('"') >= 0) return this.showNoti(noti);
+    if (value.indexOf('\\') >= 0) return this.showNoti(noti);
+    if (validationMessage) { return this.showNoti(validationMessage); };
+    
+    return true;
+  }
 
   componentWillUnmount = () => {
     if (this.timer) {

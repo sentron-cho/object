@@ -453,6 +453,11 @@ export const Util = {
   // eslint-disable-next-line no-useless-escape
   getSpecialCharPattern() { return /[`~!@#$%^&*|\\\'\";:\/?]/gi },
 
+  inChar(asValue, char = /"/) {
+    const regExp = char;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
   isEmail(asValue) {
     // eslint-disable-next-line no-useless-escape
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -470,7 +475,7 @@ export const Util = {
   },
 
   isEnglish(asValue) {
-    const regExp = /^[a-zA-Z]*$/; 
+    const regExp = /^[a-zA-Z]*$/;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
   },
 

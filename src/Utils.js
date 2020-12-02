@@ -459,6 +459,26 @@ export const Util = {
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴	
   },
 
+  isNumber(asValue) {
+    const regExp = /^[0-9]*$/;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  isJumin(asValue) {
+    const regExp = /\d{6} \- [1-4]\d{6}/;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  isEnglish(asValue) {
+    const regExp = /^[a-zA-Z]*$/; 
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
+  isEngNum(asValue) {
+    const regExp = /[0-9][a-z][A-Z]/gi;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
   isPhone(asValue) {
     const regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴

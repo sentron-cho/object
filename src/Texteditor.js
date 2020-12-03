@@ -128,10 +128,10 @@ export default class Texteditor extends React.PureComponent {
     actions.doSelect(this.api, { rowid: value }, true).then(({ result }) => {
       let data = result && result.txt ? result.txt : "";
       if (data) {
-        data = data ? Util.parseJson(data) : "";
+        data = data ? JSON.parse(data) : ""; //Util.parseJson(data) : "";
         data = data ? convertFromRaw(data) : "";
       }
-      
+
       data = data ? EditorState.createWithContent(data) : EditorState.createEmpty();
 
       this.setState({ editorState: data, ...result, loaded: true });
@@ -145,13 +145,13 @@ export default class Texteditor extends React.PureComponent {
 
   onFocusEditor = () => {
     if (this.props.readonly) return;
-    
+
     if (this.editor) {
       // const editor = this.editor.getWrapperRef();
       this.editor.focus();
     }
   };
-  
+
   componentDidMount() {
     // this.doReload();
     window.addEventListener('resize', this.checkScreen);
@@ -171,12 +171,13 @@ export default class Texteditor extends React.PureComponent {
     const type = (screen <= SCREEN.MOBILE) ? SCREEN.ST.MOBILE : (screen <= SCREEN.TABLET) ? SCREEN.ST.TABLET : SCREEN.ST.PC;
     this.setState({ 'type': type });
   }
-  
+
   parseData = (value) => {
     let data = value;
     data = convertToRaw(data);
     data && data.blocks && data.blocks.map(item => {
-      item.text = Util.toJson(item.text);
+      item.text = item.text.replace(/"/gi, "＂"); //Util.toJson(item.text);
+      item.text = item.text.replace(/'/gi, "＇");
       return 0;
     });
     // data = draftToHtml(data);
@@ -191,22 +192,18 @@ export default class Texteditor extends React.PureComponent {
 
     const title = this.title.getValue();
     const value = editorState.getCurrentContent();
-    const data = this.parseData(value);
-    const text = data.replace(/\\"/gi, "'");
+    const text = this.parseData(value);
+    // console.dir(text);
     const item = { 'title': title, 'rowid': rowid, 'txt': text };
     const state = rowid ? STAT.U : STAT.I;
 
     if (state === STAT.I) {
       actions.doInsert(this.api, item).then(({ code, result }) => {
-        // Util.showAlert(this.props, code);
-        // this.doReload();
         this.props.onClick && this.props.onClick(EID.SAVE, code);
       });
     } else {
       actions.doUpdate(this.api, item).then(({ code, result }) => {
         this.props.onClick && this.props.onClick(EID.SAVE, code);
-        // Util.showAlert(this.props, code);
-        // this.doReload();
       });
     }
   }
@@ -244,7 +241,7 @@ export default class Texteditor extends React.PureComponent {
     };
 
     return (
-      <StyledObject className={cx("editor-frame", {readonly}, className)}>
+      <StyledObject className={cx("editor-frame", { readonly }, className)}>
         <div className="ed-navi">
           {!readonly && <Button title={ST.DELETE} className="btn-del black" onClick={this.onDelete} eid={EID.DELETE} />}
           {!readonly && <Button title={ST.SAVE} className="btn-save red" onClick={() => this.onClick(true)} eid={EID.OK} />}
@@ -253,7 +250,7 @@ export default class Texteditor extends React.PureComponent {
         <div className="ed-head">
           {readonly && <p className="ed-title">{title}</p>}
           {!readonly && <Editbox ref={(ref) => { this.title = ref }} name="title" className="" type="text"
-              label={''} value={title} guide={ST.NO_INPUT_VALUE} maxLength="100" validate="true" readonly={readonly} />}
+            label={''} value={title} guide={ST.NO_INPUT_VALUE} maxLength="100" validate="true" readonly={readonly} />}
         </div>
         <div className="ed-body" onClick={this.onFocusEditor}>
           <Editor editorRef={(ref) => this.editor = ref}

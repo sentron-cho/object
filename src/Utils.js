@@ -409,7 +409,8 @@ export const Util = {
     if (!value) {
       return value;
     } else {
-      value = value.replace(/"/gi, '&dqm');
+      value = value.replace(/"/gi, '＂');
+      value = value.replace(/'/gi, '＇');
       return value;
     }
   },
@@ -418,7 +419,8 @@ export const Util = {
     if (!value) {
       return value;
     } else {
-      value = value.replace(/&dqm/gi, '"');
+      value = value.replace(/＂/gi, '"');
+      value = value.replace(/＇/gi, "'");
       return value;
     }
   },

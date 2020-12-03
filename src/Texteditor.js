@@ -14,7 +14,10 @@ const StyledObject = styled.div`{
 
     h1, h2, h3, h4, h5, h6, p { ${cs.font.dark} };
 
-    .ed-navi { ${cs.pos.relative} ${cs.m.b20} ${cs.font.right} .button { ${cs.m.l20} } }
+    .ed-navi { ${cs.pos.relative} ${cs.m.b20} ${cs.font.right} 
+      .button { ${cs.m.l20} } 
+      .btn-del { ${cs.float.left} ${cs.m.l0} }
+    }
     .ed-body { 
       ${cs.w.full} ${cs.m.t20} ${cs.font.dark} ${cs.min.h(400)} ${cs.bg.white}
       .rdw-editor-wrapper {
@@ -113,7 +116,7 @@ export default class Texteditor extends React.PureComponent {
   constructor(props) {
     super(props);
     this.api = props.api || '';
-    this.state = { type: SCREEN.ST.PC, rowid: props.rowid, editorState: EditorState.createEmpty(), loaded: false };
+    this.state = { type: SCREEN.ST.PC, rowid: props.rowid, editorState: EditorState.createEmpty(), loaded: false, modified: false };
     this.doReload(props.rowid);
   }
 
@@ -140,7 +143,7 @@ export default class Texteditor extends React.PureComponent {
 
   onChange = (state) => {
     if (this.props.readonly) return;
-    this.setState({ editorState: state });
+    this.setState({ editorState: state, modified: true });
   }
 
   onFocusEditor = () => {
@@ -223,8 +226,8 @@ export default class Texteditor extends React.PureComponent {
   }
 
   render() {
-    const { title, loaded } = this.state;
-    const { readonly = false, className } = this.props;
+    const { title, loaded, modified } = this.state;
+    const { readonly = false, className, rowid = 0 } = this.props;
 
     const toolbar = {
       options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'image', 'remove', 'history'],
@@ -243,13 +246,13 @@ export default class Texteditor extends React.PureComponent {
     return (
       <StyledObject className={cx("editor-frame", { readonly }, className)}>
         <div className="ed-navi">
-          {!readonly && <Button title={ST.DELETE} className="btn-del black" onClick={this.onDelete} eid={EID.DELETE} />}
-          {!readonly && <Button title={ST.SAVE} className="btn-save red" onClick={() => this.onClick(true)} eid={EID.OK} />}
+          {!readonly && rowid > 0 && <Button title={ST.DELETE} className="btn-del black" onClick={this.onDelete} eid={EID.DELETE} />}
           <Button title={readonly ? ST.CLOSE : ST.CANCEL} className="btn-cancel white" onClick={() => this.onClick(false)} eid={EID.CANCEL} />
+          {!readonly && <Button title={ST.SAVE} className="btn-save red" onClick={() => this.onClick(true)} eid={EID.OK} disabled={!modified}/>}
         </div>
         <div className="ed-head">
           {readonly && <p className="ed-title">{title}</p>}
-          {!readonly && <Editbox ref={(ref) => { this.title = ref }} name="title" className="" type="text"
+          {!readonly && <Editbox ref={(ref) => { this.title = ref }} name="title" className="" type="text" onChange={() => this.setState({ modified: true })}
             label={''} value={title} guide={ST.NO_INPUT_VALUE} maxLength="100" validate="true" readonly={readonly} />}
         </div>
         <div className="ed-body" onClick={this.onFocusEditor}>

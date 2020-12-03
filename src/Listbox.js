@@ -192,7 +192,7 @@ const StyledObject = styled.div`{
 const Listbox = (props) => {
   const {
     divider, children = null, total = 0, theme, rowid, selpos = -1,
-    title = 'title', date = 'date', count = 'count', disable = false, height = 30,
+    disable = false, height = 30, formatter = null,
   } = props;
   const [list, setList] = useState(props.list);
 
@@ -283,9 +283,6 @@ const Listbox = (props) => {
         {list && <ul className={"lbx-body"}>
           {list.map((item, index) => {
             const rid = rowid != null ? list[index][rowid] : list[index]['rowid'];
-            const stitle = item[title] || '';
-            const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : '';
-            const scount = item[count] >= 0 ? item[count] : -1;
             const active = selpos === index;
 
             return (
@@ -295,10 +292,12 @@ const Listbox = (props) => {
                     <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
                   }
 
-                  <p className={cx('lbx-tl', titlealign)}>{stitle}
-                    {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
-                  </p>
-                  {sdate && <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>}
+                  {formatter ? formatter(item) : <Line titlealign={titlealign} countalign={countalign} datealign={datealign} item={item} />}
+                  {/* <p className={cx('lbx-tl', titlealign)}>{stitle}
+                      {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
+                    </p>
+                    {sdate && <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>}
+                  </div> */}
 
                   {props.onClickDelete &&
                     <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
@@ -317,5 +316,21 @@ const Listbox = (props) => {
     </StyledObject >
   );
 };
+
+const Line = (props) => {
+  const { titlealign, countalign, datealign, item } = props;
+  const { title, date, count } = props.keys || { title: 'title', date: 'date', count: 'count' };
+
+  const stitle = item[title] || '';
+  const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : '';
+  const scount = item[count] >= 0 ? item[count] : -1;
+
+  return <span>
+    <span className={cx('lbx-tl', titlealign)}>{stitle}
+      {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
+    </span>
+    {sdate && <span className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</span>}
+  </span>
+}
 
 export default Listbox;

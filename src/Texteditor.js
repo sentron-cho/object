@@ -9,6 +9,10 @@ import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 
 const StyledObject = styled.div`{
+  &.editor-loading {
+    ${cs.align.ycenter} ${cs.w.full} ${cs.disp.block}
+  }
+
   &.editor-frame { 
     ${cs.p.l10} ${cs.max.w('100%')} ${cs.m.t0} ${cs.pos.relative}
 
@@ -243,12 +247,14 @@ export default class Texteditor extends React.PureComponent {
       image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
     };
 
+    if (!loaded) return <StyledObject className={cx("editor-loading")}><Loading className={''} /></StyledObject>
+
     return (
       <StyledObject className={cx("editor-frame", { readonly }, className)}>
         <div className="ed-navi">
           {!readonly && rowid > 0 && <Button title={ST.DELETE} className="btn-del black" onClick={this.onDelete} eid={EID.DELETE} />}
           <Button title={readonly ? ST.CLOSE : ST.CANCEL} className="btn-cancel white" onClick={() => this.onClick(false)} eid={EID.CANCEL} />
-          {!readonly && <Button title={ST.SAVE} className="btn-save red" onClick={() => this.onClick(true)} eid={EID.OK} disabled={!modified}/>}
+          {!readonly && <Button title={ST.SAVE} className="btn-save red" onClick={() => this.onClick(true)} eid={EID.OK} disabled={!modified} />}
         </div>
         <div className="ed-head">
           {readonly && <p className="ed-title">{title}</p>}

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React from 'react';
 import { STAT, EID, SCREEN, ST } from './Config';
-import { Util, Editbox, Button, Loading, cs } from './index';
+import { Editbox, Button, Loading, cs } from './index';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import * as actions from './actor/Action';

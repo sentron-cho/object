@@ -472,6 +472,7 @@ export const Util = {
   },
 
   isJumin(asValue) {
+    // eslint-disable-next-line no-useless-escape
     const regExp = /\d{6} \- [1-4]\d{6}/;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
   },

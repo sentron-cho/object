@@ -66,7 +66,7 @@ const StyledObject = styled.div`{
     }
 
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.m.t5} ${cs.font.sm} ${cs.opac.get(0.7)} }
-    .page-navi { ${cs.m.t40} }
+    .page-navi { ${cs.m.t10} }
 
     &.border { .lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } } }
 

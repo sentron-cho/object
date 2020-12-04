@@ -312,7 +312,8 @@ const Listbox = (props) => {
       {total > 0 && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
       {/* page navi */}
-      {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />}
+      <Pagenavi className={cx(props.theme, props.naviClass)} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
+      {/* {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />} */}
     </StyledObject >
   );
 };

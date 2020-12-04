@@ -115,6 +115,7 @@ const Pagenavi = (props) => {
   const [type, setType] = useState('s-pc');
   const [pos, setPos] = useState(0);
   const [max, setMax] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [scp, setScp] = useState((type === "s-pc" ? 10 : 5));
   const [first, setFirst] = useState(0);
   const [items, setItems] = useState(null);
@@ -129,6 +130,12 @@ const Pagenavi = (props) => {
 
   useEffect(() => {
     setPos(props.pos);
+
+    return () => { }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.pos]);
+
+  useEffect(() => {
     setMax(props.max);
     // setScp((type === "s-pc" ? 10 : 5));
 
@@ -153,7 +160,7 @@ const Pagenavi = (props) => {
 
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.pos, props.max]);
+  }, [props.max]);
   
   const checkScreen = () => {
     const { type } = Util.getScreenType();

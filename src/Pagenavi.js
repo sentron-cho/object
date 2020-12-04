@@ -1,5 +1,5 @@
 /* eslint-disable react/no-direct-mutation-state */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { EID } from './Config';
@@ -110,38 +110,89 @@ const StyledObject = styled.div`{
   }
 }`;
 
-class Pagenavi extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.state = { type: 's-pc', pos: 1, max: 1, scp: 10 };
-  }
+const Pagenavi = (props) => {
+  const [type, setType] = useState('s-pc');
+  const [pos, setPos] = useState(0);
+  const [max, setMax] = useState(0);
+  const [scp, setScp] = useState((type === "s-pc" ? 10 : 5));
+  const [first, setFirst] = useState(0);
+  const [items, setItems] = useState(null);
+  const [invisable, setInvisable] = useState(false);
 
-  componentDidMount() {
-    window.addEventListener('resize', this.checkScreen);
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.pos) {
-      this.setState({ pos: nextProps.pos });
+  useEffect(() => {
+    window.addEventListener('resize', checkScreen);
+    return () => {
+      window.removeEventListener('resize', checkScreen);
     }
-  }
+  }, []);
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.checkScreen);
-  }
+  useEffect(() => {
+    setPos(props.pos);
+    setMax(props.max);
+    // setScp((type === "s-pc" ? 10 : 5));
 
-  checkScreen = () => {
+    const f = getFirstPage(props.pos, scp);
+    let last = f + scp - 1;
+    let invis = true;
+    // 전체 페이지수가 scp보다 크면...
+    if (last < props.max) {
+      invis = false;
+    } else if (last >= props.max) {
+      last = props.max;
+    }
+
+    let array = [];
+    for (let i = f; i <= last; i++) {
+      array.push({ 'page': (i) });
+    }
+
+    setItems(array);
+    setFirst(f);
+    setInvisable(invis);
+
+    return () => { }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.pos, props.max]);
+  
+  // useEffect(() => {
+  //   setPos(props.pos);
+  //   setMax(props.max);
+  //   // setScp((type === "s-pc" ? 10 : 5));
+
+  //   const f = getFirstPage(props.pos, scp);
+  //   let last = f + scp - 1;
+  //   let invis = true;
+  //   // 전체 페이지수가 scp보다 크면...
+  //   if (last < props.max) {
+  //     invis = false;
+  //   } else if (last >= props.max) {
+  //     last = props.max;
+  //   }
+
+  //   let array = [];
+  //   for (let i = f; i <= last; i++) {
+  //     array.push({ 'page': (i) });
+  //   }
+
+  //   setItems(array);
+  //   setFirst(f);
+  //   setInvisable(invis);
+
+  //   return () => { }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [props.max]);
+
+  const checkScreen = () => {
     const { type } = Util.getScreenType();
-    this.setState({ 'type': type });
+    setType(type);
   }
 
-  getFirstPage = (pos, scp) => (Math.floor((pos - 1) / scp) * scp + 1);
+  const getFirstPage = (pos, scp) => (Math.floor((pos - 1) / scp) * scp + 1);
 
-  onClicked = (e) => {
+  const onClicked = (e) => {
     let eid = e.currentTarget.getAttribute('eid');
-    const { pos, scp } = this.state;
-    let first = this.getFirstPage(pos, scp);
+    let first = getFirstPage(pos, scp);
     let page = pos;
     switch (eid) {
       case EID.PREV:
@@ -152,61 +203,140 @@ class Pagenavi extends React.PureComponent {
         break;
       case EID.NEXT:
         page = first + scp;
-        if (page >= this.max) {
-          page = this.max;
+        if (page >= max) {
+          page = max;
         }
         break;
       default: page = e.currentTarget.textContent; break;
     }
 
-    this.setState({ pos: page });
+    setPos(page);
 
-    this.props.onItemClick != null && this.props.onItemClick(page, e);
-    this.props.onClick != null && this.props.onClick(page, e);
+    props.onItemClick && props.onItemClick(page, e);
+    props.onClick && props.onClick(page, e);
   }
 
-  render() {
-    const { className, max, border, font, bgcolor, button, theme } = this.props;
-    const { pos } = this.state;
-    const { type, scp } = this.state = { ...this.state, pos, max, scp: (this.state.type === "s-pc" ? 10 : 5) };
-
-    const first = this.getFirstPage(pos, scp);
-    let last = first + scp - 1;
-    let invisable = true;
-    // 전체 페이지수가 scp보다 크면...
-    if (last < max) {
-      invisable = false;
-    } else if (last >= max) {
-      last = max;
-    }
-
-    let items = [];
-    for (let i = first; i <= last; i++) {
-      items.push({ 'page': (i) });
-    }
-
-    if (items.length <= 1 && first <= 1) {
-      return null;
-    } else {
-      return (
-        <StyledObject className={cx('page-navi', (type), className, theme && `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
-          <ul className={cx('pgn-frame')}>
-            <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
-              <Svg className="prev sm" name={"prev"} color={this.props.color} />
+  const { className, border, font, bgcolor, button, theme } = props;
+  if (items && items.length <= 1 && first <= 1) {
+    return null;
+  } else {
+    return (
+      <StyledObject className={cx('page-navi', (type), className, theme && `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
+        {items && <ul className={cx('pgn-frame')}>
+          <li className={cx('pg-no pg-icon')} onClick={onClicked} eid={EID.PREV}>
+            <Svg className="prev sm" name={"prev"} color={props.color} />
+          </li>
+          {items.map((item, index) => (
+            <li className={cx('pg-no', String(item.page) === String(pos) ? 'active' : '')}
+              key={String(index)} onClick={onClicked} eid={EID.PAGE}><span>{item.page}</span>
             </li>
-            {items.map((item, index) => (
-              <li className={cx('pg-no', String(item.page) === String(pos) ? 'active' : '')}
-                key={String(index)} onClick={this.onClicked} eid={EID.PAGE}><span>{item.page}</span>
-              </li>
-            ))}
-            <li className={cx('pg-no pg-icon', { invisable })} onClick={this.onClicked} eid={EID.NEXT}>
-              <Svg className="next sm" name={"next"} color={this.props.color} />
-            </li>
-          </ul>
-        </StyledObject>
-      )
-    }
+          ))}
+          <li className={cx('pg-no pg-icon', { invisable })} onClick={onClicked} eid={EID.NEXT}>
+            <Svg className="next sm" name={"next"} color={props.color} />
+          </li>
+        </ul>}
+      </StyledObject>
+    )
   };
 }
+
+// class Pagenavi extends React.PureComponent {
+
+//   constructor(props) {
+//     super(props);
+//     this.state = { type: 's-pc', pos: 1, max: 1, scp: 10 };
+//   }
+
+//   componentDidMount() {
+//     window.addEventListener('resize', this.checkScreen);
+//   }
+
+//   UNSAFE_componentWillReceiveProps(nextProps) {
+//     if (nextProps.pos) {
+//       this.setState({ pos: nextProps.pos });
+//     }
+//   }
+
+//   componentWillUnmount() {
+//     window.removeEventListener('resize', this.checkScreen);
+//   }
+
+//   checkScreen = () => {
+//     const { type } = Util.getScreenType();
+//     this.setState({ 'type': type });
+//   }
+
+//   getFirstPage = (pos, scp) => (Math.floor((pos - 1) / scp) * scp + 1);
+
+//   onClicked = (e) => {
+//     let eid = e.currentTarget.getAttribute('eid');
+//     const { pos, scp } = this.state;
+//     let first = this.getFirstPage(pos, scp);
+//     let page = pos;
+//     switch (eid) {
+//       case EID.PREV:
+//         page = first - scp;
+//         if (page < 1) {
+//           page = 1;
+//         }
+//         break;
+//       case EID.NEXT:
+//         page = first + scp;
+//         if (page >= this.max) {
+//           page = this.max;
+//         }
+//         break;
+//       default: page = e.currentTarget.textContent; break;
+//     }
+
+//     this.setState({ pos: page });
+
+//     this.props.onItemClick != null && this.props.onItemClick(page, e);
+//     this.props.onClick != null && this.props.onClick(page, e);
+//   }
+
+//   render() {
+//     const { className, max, border, font, bgcolor, button, theme } = this.props;
+//     const { pos } = this.state;
+//     const { type, scp } = this.state = { ...this.state, pos, max, scp: (this.state.type === "s-pc" ? 10 : 5) };
+
+//     const first = this.getFirstPage(pos, scp);
+//     let last = first + scp - 1;
+//     let invisable = true;
+//     // 전체 페이지수가 scp보다 크면...
+//     if (last < max) {
+//       invisable = false;
+//     } else if (last >= max) {
+//       last = max;
+//     }
+
+//     let items = [];
+//     for (let i = first; i <= last; i++) {
+//       items.push({ 'page': (i) });
+//     }
+
+//     if (items.length <= 1 && first <= 1) {
+//       return null;
+//     } else {
+//       return (
+//         <StyledObject className={cx('page-navi', (type), className, theme && `theme-${theme}`)} button={button} border={border} font={font} bgcolor={bgcolor} >
+//           <ul className={cx('pgn-frame')}>
+//             <li className={cx('pg-no pg-icon')} onClick={this.onClicked} eid={EID.PREV}>
+//               <Svg className="prev sm" name={"prev"} color={this.props.color} />
+//             </li>
+//             {items.map((item, index) => (
+//               <li className={cx('pg-no', String(item.page) === String(pos) ? 'active' : '')}
+//                 key={String(index)} onClick={this.onClicked} eid={EID.PAGE}><span>{item.page}</span>
+//               </li>
+//             ))}
+//             <li className={cx('pg-no pg-icon', { invisable })} onClick={this.onClicked} eid={EID.NEXT}>
+//               <Svg className="next sm" name={"next"} color={this.props.color} />
+//             </li>
+//           </ul>
+//         </StyledObject>
+//       )
+//     }
+//   };
+// }
 
 export default Pagenavi;

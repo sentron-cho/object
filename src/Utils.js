@@ -466,6 +466,11 @@ export const Util = {
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴	
   },
 
+  isUrl(asValue) {
+    let regExp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
   isNumber(asValue) {
     const regExp = /^[0-9]*$/;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴

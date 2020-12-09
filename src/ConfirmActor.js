@@ -29,6 +29,7 @@ class ConfirmActor extends React.PureComponent {
     data.ok = value.ok == null ? ST.OK : value.ok;
     data.cancel = value.cancel === false ? '' : value.cancel == null ? ST.CANCEL : value.cancel;
     data.msg = value.msg == null ? ST.NOTI.ISDELETE : value.msg;
+    value.children = value.children || null;
     data.onClicked = value.onClicked == null ? null : value.onClicked;
     this.props.openConfirm(data);
   }

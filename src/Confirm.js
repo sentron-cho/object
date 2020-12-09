@@ -78,7 +78,11 @@ const StyledObject = styled.div`
 class Confirm extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { show: false, title: ST.ALARM, msg: ST.IS_DELETE, type: '', ok: 'OK', size: '', cancel: null, className: '', isok: false };
+    this.state = {
+      show: false, title: ST.ALARM, msg: ST.IS_DELETE, type: '',
+      ok: 'OK', size: '', cancel: null, className: '', isok: false,
+      children: props.children ? props.children : null,
+    };
   }
 
   // props가 업데이트 되면 동작 여기서 state상태를 바꿔준다.
@@ -98,10 +102,12 @@ class Confirm extends React.PureComponent {
   }
 
   onKeyPressed = (e) => (e.key === KEY.ENTER) && this.onClicked(EID.OK);
-  
+
   render() {
     const { state } = this;
-    const btnsize = state.size === 'sm' ? 'md' : state.size === 'xs' ? 'sm' : 'lg'
+    // const { children = null } = state;
+    const Component = this.state.children;
+    const btnsize = state.size === 'sm' ? 'md' : state.size === 'xs' ? 'sm' : 'lg';
     return (
       this.state.show &&
       <StyledObject className={cx("confirm", state.className, state.type, state.size, state.theme)}>
@@ -113,7 +119,7 @@ class Confirm extends React.PureComponent {
           </div>
 
           <div className="cf-body">
-            <p className="msg">{state.msg}</p>
+            {Component ? <Component /> : <p className="msg">{state.msg}</p>}
           </div>
 
           <div className="cf-foot">

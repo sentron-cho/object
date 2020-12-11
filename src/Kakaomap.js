@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { cs } from './index';
+import cs from './css-style';
 
 const StyledObject = styled.span`{
   &.kakao-map {

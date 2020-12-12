@@ -356,6 +356,7 @@ const cs = {
     ellipsis: 'text-overflow: ellipsis; overflow: hidden; white-space: nowrap;',
     breakall: 'word-break: break-all;',
     breakword: 'word-break: break-word;',
+    keepall: 'word-break: keep-all;',
     payton: 'font-family: "Paytone One";',
     eastsea: 'font-family: "East Sea Dokdo";',
     hansans: 'font-family: "Black Han Sans";',

@@ -53,7 +53,7 @@ const Footer = (props) => {
   return (
     <StyledObject className={cx("footer", className, theme && `theme-${theme}`)}
       height={height} border={border} font={font}>
-      <div className="ft-frame" onClick={props.onClick && props.onClick}>
+      <div className="ft-frame" onClick={props.onClick}>
         {children && children}
         {!children && <p className="ft-copyright">{value}</p>}
       </div>

@@ -359,7 +359,7 @@ const cs = {
     minus: `color: ${color.minus};`,
     plus: `color: ${color.plus};`,
     preline: 'white-space: pre-line; word-break: break-all;',
-    prewrap: 'white-space: pre-wrap; word-break: break-all;',
+    prewrap: 'white-space: pre-wrap; word-break: keep-all;',
     underline: 'text-decoration: underline;',
     cancelline: 'text-decoration: line-through;',
     noneline: 'text-decoration: none;',

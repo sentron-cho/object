@@ -2,7 +2,7 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Cardbox, Editbox, Uploadbox, Button, Svg } from './index';
+import { Cardbox, Editbox, Uploadbox, Button, Svg, cs } from './index';
 import { ST, EID } from './Config';
 
 var min = { w: 400, h: 240 };
@@ -11,16 +11,17 @@ var max = { w: 600, h: 400 };
 
 const StyledObject = styled.div`{
   &.pop-box {
-    float: left; position: absolute; left: 0; top: 100px; min-height: 140px; z-index: 999;
-    display: inline-block; padding: 10px 20px; background: rgba(0, 0, 0, 0.98); border: 1px solid rgba(195,195,195);
-    border-radius: 5px; box-shadow: 2px 2px rgba(72,72,72,0.7); 
+    ${cs.float.left} ${cs.align.left} ${cs.top(100)} ${cs.min.h(140)} ${cs.z.popup}
+    ${cs.disp.inblock} ${cs.p.a20} ${cs.bg.white} ${cs.box.line} ${cs.box.radius} ${cs.box.shadow}
     min-width: ${({ rect }) => rect.minW}px;
-    left: ${({ rect }) => rect.x}px; top: ${({ rect }) => rect.y}px;
-    width: ${({ rect }) => rect.w}px; height: ${({ rect }) => rect.h}px;
+    left: ${({ rect }) => rect.x}px; 
+    top: ${({ rect }) => rect.y}px;
+    width: ${({ rect }) => rect.w}px; 
+    height: ${({ rect }) => rect.h}px;
 
-    .pop-btn-grp { position: absolute; bottom: 5px; right: 5px; }
-    .pop-btn-del { position: absolute; bottom: 10px; left: 10px; }
-    .pop-btn-cancel { position: absolute; top: 3px; right: 3px; }
+    .pop-btn-grp { ${cs.align.rbottom} }
+    .pop-btn-del { ${cs.align.lbottom} ${cs.left(10)} ${cs.bottom(10)} }
+    .pop-btn-cancel { ${cs.align.rtop} ${cs.top(3)} ${cs.right(3)} }
 
     &.fixed { position: absolute; left: 50%; transform: translateX(-50%); 
       &.center { top: 50%; transform: translate(-50%, -50%);  }
@@ -29,9 +30,7 @@ const StyledObject = styled.div`{
 
     .pop-frame { padding-top: 15px; }
 
-    &.editarea { min-height: ${min.minH}px; min-width: ${({ rect }) => rect.minW}px; 
-      // max-height: ${({ rect }) => rect.mh}px; 
-    }
+    &.editarea { min-height: ${min.minH}px; min-width: ${({ rect }) => rect.minW}px; }
     &.thumb { max-height: ${max.h}px; max-width: ${max.w}px; padding: 5px;
       .pop-frame { text-align: center; 
         .thumb-box { width: calc(100% - 50px); height: calc(100% - 40px); margin-top: 10px; }
@@ -42,8 +41,12 @@ const StyledObject = styled.div`{
     &.edit { max-height: 100px; }
 
     @media screen and (max-width : 1280px) {}  
-    @media screen and (max-width : 1024px) {}  
-    @media screen and (max-width : 860px) {}
+    @media screen and (max-width : 800px) {
+      .pop-box { ${cs.size.full} }
+    }  
+    @media screen and (max-width : 600px) {
+      .pop-box
+    }
   }
 }`;
 

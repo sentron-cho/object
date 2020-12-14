@@ -156,7 +156,7 @@ const cs = {
     hidden: 'visibility: hidden;',
 
     popup: (v = 999999, bg = 'transparent', w = 800, h = 600) => `z-index: ${v}; width: 100%; 
-      height: 100%; display: block; position: fixed; bottom:unset; top: 0; left: 0;
+      height: 100%; display: block; position: fixed; bottom: unset; top: 0; left: 0;
       .pop-bg { background: ${bg}; width: 100%; height: 100%; display: block; }
       .pop-box { 
         width: 100%; height: 100%; display: block; max-width: ${w}px; max-height: ${h}px; 
@@ -166,6 +166,18 @@ const cs = {
         }
         .body { ${cs.h.calc('100% - 60px')} ${cs.font.sm} }
       }
+      @media screen and (max-width : 1024px) { }
+  
+      @media screen and (max-width : 800px) { 
+        .pop-box { ${cs.align.unset} ${cs.align.top} ${cs.left(0)} ${cs.h.full} ${cs.max.h('none')} 
+          .head { ${cs.p.h10} }
+          .body { ${cs.p.a10} ${cs.h.full} ${cs.over.hidden} ${cs.over.yauto} ${cs.scrollbar.t2} 
+            ${cs.p.bottom(100)} ${cs.p.top(30)}
+          }
+        }
+      }
+    
+      @media screen and (max-width : 480px) { }
     `,
     flex: (v) => `flex: ${v};`,
     get: (v) => `display: ${v};`,

@@ -11,9 +11,13 @@ const StyledObject = styled.span`{
     ${cs.size.full} ${cs.pos.relative} ${cs.disp.block} ${cs.bg.frame} ${cs.box.light}
     ${cs.min.w(300)} ${cs.min.h(460)} ${cs.scrollbar.t1}
 
-    .cancel { ${cs.z.menu} ${cs.bottom(5)} ${cs.right(5)} }
+    .cancel { ${cs.z.menu} ${cs.bottom(5)} ${cs.right(20)} }
 
     & > div > div { ${cs.disp.block} position: absolute !important; }
+
+    @media screen and (max-width : 600px) { 
+
+    }
   }
 }`;
 
@@ -28,13 +32,14 @@ const Postcode = (props) => {
     overflow: "hidden"
   }
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setShow(true);
 
     setTimeout(() => setShow(false), 200);
-    setTimeout(() => setShow(true), 1000);
+    setTimeout(() => { setShow(true); setLoaded(true); }, 1000);
     return () => {
     }
   }, []);
@@ -66,7 +71,7 @@ const Postcode = (props) => {
       {show ? <DaumPostCode onComplete={handleComplete} autoClose width={'100%'} height={'100%'}
         style={modalStyle} /> : <Loading />
       }
-      <Button className={'gd-gray right bottom cancel'} title={ST.CANCEL} onClick={onCancel}/>
+      {loaded && <Button className={'dark sm right bottom cancel'} title={ST.CLOSE} onClick={onCancel}/>}
     </StyledObject>
   );
 }

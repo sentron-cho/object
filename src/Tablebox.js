@@ -12,7 +12,7 @@ const StyledObject = styled.div`{
   &.table-box { 
     ${cs.pos.relative} ${cs.font.dark} ${cs.noliststyle} 
 
-    .search-frame { ${cs.z.header} }
+    .search-frame { ${cs.z.header} ${cs.p.b10} }
 
     .tb-line { ${cs.w.full} ${cs.h.fit} ${cs.disp.block}
       ${cs.pos.relative} ${cs.font.md} ${cs.noselect}
@@ -294,13 +294,13 @@ const Tablebox = (props) => {
   }, [props.list]);
 
   const onSelect = (e) => {
-    const rowid = e.currentTarget.getAttribute("rowid");
-    props.onSelect && props.onSelect(rowid, e);
+    const rid = e.currentTarget.getAttribute("rowid");
+    props.onSelect && props.onSelect(rid, e);
   }
 
-  const onClickDelete = (rowid, e) => {
+  const onClickDelete = (rid, e) => {
     e.stopPropagation();
-    props.onClickDelete && props.onClickDelete(rowid, e);
+    props.onClickDelete && props.onClickDelete(rid, e);
   }
 
   const onClickPage = (page, e) => {
@@ -312,10 +312,10 @@ const Tablebox = (props) => {
     props.onClickHead && props.onClickHead(eid, e);
   }
 
-  const renderColumnElem = (item, head, pos) => {
+  const renderColumnElem = (item, header, pos) => {
     return item.map((col, index) => {
       const { value } = col;
-      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, color = null, format = null, formatter = null } = head[index];
+      const { type, tablet = 'show', mobile = 'show', align, flex, getcolor = null, color = null, format = null, formatter = null } = header[index];
       let data = value;
 
       switch (type) {
@@ -376,9 +376,9 @@ const Tablebox = (props) => {
     }
   }
 
-  const makeTableItem = (list = null, tags = []) => {
-    if (list && tags) {
-      return list.map(item => {
+  const makeTableItem = (slist = null, tags = []) => {
+    if (slist && tags) {
+      return slist.map(item => {
         let temps = [];
         tags.map(key => temps = [...temps, { key: key, value: item[key] }]);
         return temps;
@@ -421,8 +421,7 @@ const Tablebox = (props) => {
             {props.onDragDrop && <Svg className="i-btn btn-head sm" name={""} />}
             {head.map((item, index) => {
               const { tablet = 'show', mobile = 'show', flex, unit = '' } = item;
-              const styled = { flex: flex, };
-              return <div key={index} style={styled} onClick={onClickHead} eid={item.id}
+              return <div key={index} style={{ flex: flex }} onClick={onClickHead} eid={item.id}
                 className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
                   tablet === 'hide' && 'tablet')} >{item.title}
                 {unit && <span className="tb-u">{`[${unit}]`}</span>}
@@ -438,21 +437,21 @@ const Tablebox = (props) => {
           {tlist && <ul className="tb-line tb-body">
             {/* row */}
             {tlist.map((item, index) => {
-              const rowid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
+              const rid = props.rowid != null ? list[index][props.rowid] : list[index]['rowid'];
               const active = Number(props.sel) === Number(index);
               const color = props.activeColor ? props.activeColor : '';
 
               return (
-                <Dragable key={rowid} id={rowid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
+                <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
                   <li className={cx("tb-row green", color, { selection }, { active }, props.onClickDelete && 'delete')}
-                    rowid={rowid} onClick={onSelect} eid={EID.SELECT}>
+                    rowid={rid} onClick={onSelect} eid={EID.SELECT}>
                     {/* col */}
                     {props.onDragDrop &&
-                      <Svg className="i-btn btn-move sm" eid={rowid} name={"move"} />
+                      <Svg className="i-btn btn-move sm" eid={rid} name={"move"} />
                     }
                     {renderColumnElem(item, head, index)}
                     {props.onClickDelete &&
-                      <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rowid} name={"delete"} />
+                      <Svg className="i-btn btn-del sm" onClick={onClickDelete} eid={rid} name={"delete"} />
                     }
                   </li>
                 </Dragable>)

@@ -489,7 +489,7 @@ export const Util = {
   },
 
   isEngNum(asValue) {
-    const regExp = /[0-9][a-z][A-Z]/gi;
+    const regExp = /^[0-9a-zA-Z]*$/gi;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
   },
 

@@ -180,7 +180,7 @@ export const AUTH = {
 
   ST: {
     SYSTEM: '시스템관리자',
-    SUPER: '슈퍼관리자',
+    SUPER: '관리자',
     USER: '사용자',
   }
 }

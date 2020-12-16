@@ -61,12 +61,12 @@ const StyledObject = styled.div`
     .svg-path { ${cs.fill.dark} }
   } 
   &.dark { .cf-head, .cf-frame { ${cs.bg.dark} ${cs.font.white} 
-    .cf-head { ${cs.border.darkgray} }
+    .cf-head { ${cs.border.darkgray} .cf-title { ${cs.font.white} } }
     .cf-foot .button { ${cs.bg.dark} ${cs.box.line} ${cs.border.semiblack} } } 
     .svg-path { ${cs.fill.white} }
   }
   &.black { .cf-head, .cf-frame { ${cs.bg.black} ${cs.font.white} 
-    .cf-head { ${cs.border.dark} }
+    .cf-head { ${cs.border.dark} .cf-title { ${cs.font.white} } }
     .cf-foot .button { ${cs.bg.black} ${cs.box.line} ${cs.border.dark} } } 
     .svg-path { ${cs.fill.white} }
   } 

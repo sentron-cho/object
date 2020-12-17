@@ -36,7 +36,7 @@ const StyledObject = styled.div`{
         }
         .nav-title { 
           ${cs.font.t1} ${cs.h.full} ${cs.opac.show} ${cs.p.l20} ${cs.font.spacing(3)} ${cs.pos.relative} ${cs.mouse.pointer}
-          ${cs.font.white} ${cs.font.payton}
+          ${cs.font.white} ${cs.font.payton} 
         }
     }
 
@@ -57,17 +57,6 @@ const StyledObject = styled.div`{
         .btn-menu { ${cs.m.l10} }
       }
     }
-
-    // @keyframes slide-in {
-    //   from { opacity: 0.5; transform: translate3d(-300px, 0, 0); }
-    //   to { opacity: 1; display: block; transform: translate3d(0px, 0, 0); } 
-    // }
-
-    // @keyframes slide-out {
-    //   from { opacity: 1; transform: translate3d(0px, 0, 0); }
-    //   to { opacity: 0.5; display: none; transform: translate3d(-300px, 0, 0); } 
-    // }
-  }
 }`;
 
 class Sidebar extends React.PureComponent {
@@ -158,7 +147,7 @@ class Sidebar extends React.PureComponent {
       <StyledObject className={cx("nav-side", istopbar)} fade={fade} width={sidebarW} top={topbarH}>
         <div className={cx("top-bar")}>
           <span className="nav-title" onClick={() => window.location.href = root}>{title}</span>
-          <Svg className="btn-menu md" name={"menu"} onClick={this.onClicked} eid={EID.MENU} color={this.props.color} />
+          {title && <Svg className="btn-menu md" name={"menu"} onClick={this.onClicked} eid={EID.MENU} color={this.props.color} />}
           {alarms && alarms.length > 0 && <Alarms list={alarms} />}
         </div>
         <div className={cx("side-bar", anim === '' ? show : anim)} onAnimationStart={this.onAnimStart} onAnimationEnd={this.onAnimEnd}>

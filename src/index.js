@@ -76,3 +76,4 @@ export { ChartTooltip } from "./Chartbox";
 export { default as TabButton } from "./TabButton";
 export { default as Postcode } from "./Postcode";
 export { default as Kakaomap } from "./Kakaomap";
+export { default as Error } from "./Error";

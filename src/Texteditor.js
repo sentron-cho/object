@@ -200,7 +200,6 @@ export default class Texteditor extends React.PureComponent {
     const title = this.title.getValue();
     const value = editorState.getCurrentContent();
     const text = this.parseData(value);
-    // console.dir(text);
     const item = { 'title': title, 'rowid': rowid, 'txt': text };
     const state = rowid ? STAT.U : STAT.I;
 

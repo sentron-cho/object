@@ -63,10 +63,8 @@ class Layout extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    // this.props.layout = {};
     // 메뉴 표시/미표시 버튼 클릭후 메인 하면이 표시될때 좌우 깜박임 발생 방지
     if (this.props.layout != null) { this.props.layout.anim = false; this.props.layout.time = 0; }
-    // console.dir(this.props.layout);
   }
 
   render() {

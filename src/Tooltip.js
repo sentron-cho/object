@@ -33,7 +33,7 @@ const StyledObject = styled.div`{
 
 var isTooltipOver = false;
 
-export default class Tooltip extends React.PureComponent { 
+export default class Tooltip extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { show: false };
@@ -49,7 +49,6 @@ export default class Tooltip extends React.PureComponent {
 
   onMouseEnter = (e) => {
     isTooltipOver = true;
-    console.log(isTooltipOver);
   }
 
   onMouseLeave = (e) => {
@@ -102,18 +101,12 @@ export const makeTooltip = (framecls = "pop-view", callback) => {
           default: value = ST.IN_VALUE; break;
         }
 
-        console.log("over -----------> ");
-
         const obj = document.getElementsByClassName("tool-tip");
         (obj && obj[0]) && obj[0].classList.add("show");
 
         const data = {
           msg: value, target: item, framecls: framecls, show: true, eid: eid,
-          onClick: (obj, e) => {
-            console.log(obj, e);
-            // obj.show(false);
-            // this.showEditor(obj.getEid(), '', obj.getTarget());
-          },
+          onClick: (obj, e) => { },
         }
         callback && callback('over', data);
         // this.setState({ tooltip: data });

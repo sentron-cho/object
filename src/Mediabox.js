@@ -135,7 +135,6 @@ export default class Mediabox extends React.PureComponent {
         default: rate = "4:3"; break;
       }
     }
-    // console.log(this.box.offsetHeight, this.box.offsetWidth);
 
     const temps = rate.split(":");
     const x = temps[0];

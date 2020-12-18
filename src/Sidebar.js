@@ -285,9 +285,7 @@ class Alarms extends React.PureComponent {
     const index = e.currentTarget.getAttribute("eid");
     const item = this.props.list[Number(index)];
     this.setState({ show: false });
-    // item && delete item['onClick'];
     item.onClick && item.onClick(item);
-    // console.dir(item);
   }
 
   render() {

@@ -129,8 +129,6 @@ export class Dragbox extends React.PureComponent {
         const { onDrag } = this.props;
 
         const value = { 'oid': Number(this.state.rowid), 'tid': Number(over.id), 'left': over.left };
-        // console.log("onDragEnd = ", value);
-
         // 아래서부터는 초기화...
         this.setState(this.initValue());
         onInitState();
@@ -141,7 +139,6 @@ export class Dragbox extends React.PureComponent {
     }
 
     window.onkeyup = (e) => {
-      console.log(e.keyCode);
       if (e.keyCode === 27) {
         this.setState(this.initValue());
         onInitState();
@@ -187,17 +184,13 @@ export class Dragbox extends React.PureComponent {
 
     over = { id: item.getAttribute("rowid"), left: moveleft }; //pos.x < center && pos.x > 0 };
 
-    // object.after(node);
-    // console.log("onDragOver = ", over, pos, clientX, clientY, pageX, pageY, top);
     if (moveleft) {
-      // item.before(node);
       startx = e.pageX;
       parent.insertBefore(node, object);
     } else {
       startx = e.pageX;
       object.after(node);
     }
-    // this.setState({ 'active': true });
   }
 
   render() {

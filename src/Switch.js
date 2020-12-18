@@ -153,7 +153,6 @@ export default class Switch extends React.PureComponent {
     const disable = props.disable || props.disabled || null;
     const { text, label, border } = props.options || { text: null, label: null, border: null };
 
-    console.dir(border);
     return (
       <StyledObject {...props} eid={props.eid} className={cx('switch', props.className, { disable }, { symbol }, theme && `theme-${theme}`)} 
         onClick={disable ? () => null : this.onClicked} text={text} label={label} border={border} >

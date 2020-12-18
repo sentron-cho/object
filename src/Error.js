@@ -22,7 +22,6 @@ const StyledObject = styled.div`{
 
 const Error = (props) => {
   const {title = null, className = '' } = props;
-  // console.log(match.params.title);
   return <StyledObject className={cx('err-page', className)}>
     <p className={'ep-title'}>{title || '404 - PAGE NOT FOUND'}</p>
   </StyledObject>

@@ -78,7 +78,6 @@ const Progress = (props) => {
   let rate = props.rate;
   if (max > 0 && value > 0) {
     rate = Math.floor(value / (max - min) * 100);
-    // console.dir(rate);
   }
 
   let bar_style = 'norm';
@@ -88,7 +87,7 @@ const Progress = (props) => {
     } else if (rate >= limit) {
       bar_style = 'warn';
     } else if (rate > 50) {
-      bar_style = 'norm';
+      // bar_style = 'norm';
     }
   }
 

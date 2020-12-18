@@ -195,7 +195,6 @@ export const Util = {
   getWeek(date) {
     var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     var weekName = week[date.getDay()];
-    //console.log("%s요일 입니다.", weekName);
     return weekName;
   },
 

@@ -98,7 +98,6 @@ export default class Imagebox extends React.PureComponent {
         default: rate = "4:3"; break;
       }
     }
-    // console.log(this.box.offsetHeight, this.box.offsetWidth);
 
     const temps = rate.split(":");
     const x = temps[0];

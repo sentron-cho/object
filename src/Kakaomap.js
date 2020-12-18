@@ -52,8 +52,6 @@ const Kakaomap = (props) => {
         const tmap = new kakao.maps.Map(container, options);
         setMap(tmap);
 
-        // var geocoder = new kakao.maps.services.Geocoder();
-        // console.dir(geocoder);
         new kakao.maps.Marker({ map: tmap, position: new kakao.maps.LatLng(Number(position[0]), Number(position[1])) });
       } else {
         map.panTo(new kakao.maps.LatLng(Number(position[0]), Number(position[1])));
@@ -66,30 +64,9 @@ const Kakaomap = (props) => {
       creatMapbox();
     })
 
-    // let object = document.getElementsByClassName('kakaomap-script');
-    // let script = null;
-    // if (object && object.length <= 0) {
-    //   script = document.createElement("script");
-    //   script.async = true;
-    //   script.className = 'kakaomap-script';
-    //   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaokey}&autoload=false&libraries=services`;
-    //   document.head.appendChild(script);
-
-    //   script.onload = () => {
-    //     kakao.maps.load(() => {
-    //       creatMapbox();
-    //     });
-    //   };
-    // } else {
-    //   creatMapbox();
-    // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elemid, props.kakaokey, props.position]);
 
-  // if (!props.rowid) {
-  //   return <StyledObject className={cx('kakao-map nodata', props.className)} >
-  //   </StyledObject>
-  // }
   return <StyledObject id={elemid} className={cx('kakao-map', props.className)}>
     {(!props.rowid || !props.position) && <div className={'nodata'}><span>NO DATA</span></div>}
   </StyledObject>
@@ -116,7 +93,4 @@ export const creatKakaomapScript = (kakaokey = '', callback = null) => {
       callback && callback();
     });
   };
-  // } else {
-  //   callback && callback();
-  // }
 }

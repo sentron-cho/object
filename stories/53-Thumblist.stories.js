@@ -77,11 +77,7 @@ export const object = () => {
   }
 
   const onDragDrop = (eid, array) => {
-    // console.dir(eid);
-    // if (eid === 'drop') {
-    // console.dir(eid);
     setList(array);
-    // }
   }
 
   return (
@@ -189,10 +185,10 @@ export const size = () => {
       <Linebox title={"middle"} className={""} sample={samplecode("", "")} box={false}>
         <Thumblist className={'border radius'} uuid={'2'} size={'md'} list={list} head={tags} rowid={"uuid"} />
       </Linebox>
-      
+
       <Linebox title={"large"} className={""} sample={samplecode("", "")} box={false}>
         <Thumblist className={'border radius'} uuid={'3'} size={'lg'} list={list} head={tags} rowid={"uuid"} />
-      </Linebox>      
+      </Linebox>
     </StyledObject>
   );
 };
@@ -202,7 +198,6 @@ export const animation = () => {
   const list = jsonlist(10);
 
   const onAnimation = (eid, e) => {
-    console.log(eid);
   }
 
   return (
@@ -255,7 +250,7 @@ export const dragdrop = () => {
       <Linebox title={"callopse"} className={"nomargin"} desc={"Knobs 옵션을 통해 미리보기가 가능합니다."} box={false}
         sample={samplecode("", 'list={list}')}>
         <Thumblist className={cx('')} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
       </Linebox>
 
       <div className={"res-view"}>
@@ -283,15 +278,15 @@ export const theme = () => {
     <StyledObject className={"t-main"} id={"f0001"}>
       <Linebox title={"theme"} sample={samplecode("theme={'sky'}", "sky")}>
         <Thumblist className={"primary"} theme={'sky'} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
         <Thumblist className={"primary"} theme={'primary'} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
         <Thumblist className={"primary"} theme={'gray'} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
         <Thumblist className={"primary"} theme={'dark'} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
         <Thumblist className={"primary"} theme={'black'} list={list} head={tags} rowid={"uuid"} size={'sm'}
-          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }}/>
+          onDragDrop={onDragDrop} onDraging={onDraging} onClickNew={() => { }} />
       </Linebox>
     </StyledObject>
   );

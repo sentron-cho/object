@@ -299,7 +299,6 @@ export const dragdrop = () => {
     setResult(`onDragDrop() eid = ${eid}, [array]`);
     array.map((item, i) => item.no = i + 1);
     setList(array);
-    console.dir(array);
   }
 
   const onDraging = (eid, array) => {

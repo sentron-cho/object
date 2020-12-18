@@ -516,6 +516,11 @@ export const Util = {
     const is = regExp.test(asValue); // 형식에 맞는 경우 true 리턴
     return is;
   },
+
+  isSystemAdmin() {
+    const user = Storage.getLocalItem(Storage.key.userinfo);
+    return user && user.auth === 'system';
+  }
 };
 
 export const Storage = {

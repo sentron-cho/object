@@ -240,7 +240,7 @@ class Header extends React.PureComponent {
             {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
             {/* 타이틀 */}
-            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick && props.onClick}>{title ? title.toUpperCase() : "NO TITLE"}</p>
+            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : "NO TITLE"}</p>
 
             {/* 네비 메뉴 */}
             {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>

@@ -31,8 +31,6 @@ const StyledObject = styled.div`{
   }
 }`;
 
-var isTooltipOver = false;
-
 export default class Tooltip extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -47,13 +45,13 @@ export default class Tooltip extends React.PureComponent {
     this.props.onClick && this.props.onClick(this, e);
   }
 
-  onMouseEnter = (e) => {
-    isTooltipOver = true;
-  }
+  // onMouseEnter = (e) => {
+  //   isTooltipOver = true;
+  // }
 
-  onMouseLeave = (e) => {
-    isTooltipOver = false;
-  }
+  // onMouseLeave = (e) => {
+  //   isTooltipOver = false;
+  // }
 
   render() {
     const { props, state } = this;

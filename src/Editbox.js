@@ -214,8 +214,10 @@ class Editbox extends React.PureComponent {
   };
 
   isValidateJson = (noti = ST.NOT_JSON) => {
+    const { validate } = this.props;
     const { value, validationMessage } = this.input;
-    if (!value) return this.showNoti(noti);
+    if (validate && !value) return this.showNoti(validationMessage);
+
     if (value.indexOf('"') >= 0) return this.showNoti(noti);
     if (value.indexOf('\\') >= 0) return this.showNoti(noti);
     if (validationMessage) { return this.showNoti(validationMessage); };

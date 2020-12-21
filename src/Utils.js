@@ -520,7 +520,11 @@ export const Util = {
   isSystemAdmin() {
     const user = Storage.getLocalItem(Storage.key.userinfo);
     return user && user.auth === 'system';
-  }
+  },
+
+  logout() {
+    Storage.logout();
+  },
 };
 
 export const Storage = {

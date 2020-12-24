@@ -11,7 +11,7 @@ const StyledObject = styled.header`{
     ${({ height }) => cs.h.get(height)} ${cs.noliststyle} ${cs.noselect}
 
     .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner}
-      ${({ height }) => cs.h.get(height)}
+      ${({ height }) => cs.h.get(height)} ${cs.anim.showin('500ms')}
       
       &.float { ${cs.pos.fixed} ${cs.anim.show} ${cs.border.gray} }
 
@@ -240,7 +240,7 @@ class Header extends React.PureComponent {
             {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
             {/* 타이틀 */}
-            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : "NO TITLE"}</p>
+            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
 
             {/* 네비 메뉴 */}
             {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>

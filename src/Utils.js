@@ -524,11 +524,7 @@ export const Util = {
 
   logout() {
     Storage.logout();
-<<<<<<< HEAD
   }
-=======
-  },
->>>>>>> 0b266d722b573659a9acf909ecac495acca87a3f
 };
 
 export const Storage = {

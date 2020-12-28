@@ -94,33 +94,32 @@ const StyledObject = styled.div`{
   }
 }`;
 
-
-function uploadImageCallBack(file) {
-  return new Promise(
-    (resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://api.imgur.com/3/image');
-      xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
-      const data = new FormData();
-      data.append('image', file);
-      xhr.send(data);
-      xhr.addEventListener('load', () => {
-        const response = JSON.parse(xhr.responseText);
-        resolve(response);
-      });
-      xhr.addEventListener('error', () => {
-        const error = JSON.parse(xhr.responseText);
-        reject(error);
-      });
-    }
-  );
-}
+// function uploadImageCallBack(file) {
+//   return new Promise(
+//     (resolve, reject) => {
+//       const xhr = new XMLHttpRequest();
+//       xhr.open('POST', 'https://api.imgur.com/3/image');
+//       xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
+//       const data = new FormData();
+//       data.append('image', file);
+//       xhr.send(data);
+//       xhr.addEventListener('load', () => {
+//         const response = JSON.parse(xhr.responseText);
+//         resolve(response);
+//       });
+//       xhr.addEventListener('error', () => {
+//         const error = JSON.parse(xhr.responseText);
+//         reject(error);
+//       });
+//     }
+//   );
+// }
 
 export default class Texteditor extends React.PureComponent {
   constructor(props) {
     super(props);
     this.api = props.api || '';
-    this.state = { type: SCREEN.ST.PC, rowid: props.rowid, editorState: EditorState.createEmpty(), loaded: false, modified: false };
+    this.state = { type: SCREEN.ST.PC, rowid: props.rowid, editorState: EditorState.createEmpty(), loaded: false, modified: false, uploadedImages: [] };
     this.doReload(props.rowid);
   }
 
@@ -160,17 +159,42 @@ export default class Texteditor extends React.PureComponent {
   };
 
   componentDidMount() {
-    // this.doReload();
     window.addEventListener('resize', this.checkScreen);
     this.title && this.title.focus();
   }
 
-  // componentWillMount() {
-  //   this.checkScreen();
-  // }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.checkScreen);
+  }
+
+  uploadImageCallBack = (file) => {
+    // long story short, every time we upload an image, we
+    // need to save it to the state so we can get it's data
+    // later when we decide what to do with it.
+
+    // Make sure you have a uploadImages: [] as your default state
+    let uploadedImages = this.state.uploadedImages;
+    const imageObject = { file: file, localSrc: URL.createObjectURL(file) }
+    uploadedImages.push(imageObject);
+    this.setState({ uploadedImages: uploadedImages })
+
+    // We need to return a promise with the image src
+    // the img src we will use here will be what's needed
+    // to preview it in the browser. This will be different than what
+    // we will see in the index.md file we generate.
+    return new Promise(
+      (resolve, reject) => {
+        const data = new FormData();
+        data.append('image', file);
+        actions.doInsert(`${this.api}/upload` || '/uploader', data).then(({ code, result }) => {
+          // alert('success');
+          resolve({ data: { link: result.url } });
+        }).catch(err => {
+          reject({ err: 'error' });
+          // alert('fail');
+        });
+      }
+    );
   }
 
   checkScreen = () => {
@@ -223,7 +247,16 @@ export default class Texteditor extends React.PureComponent {
   }
 
   onDelete = () => {
-    actions.doDelete(this.api, { rowid: this.state.rowid }).then(({ code, result }) => {
+    console.dir(this.state);
+    const { txt } = this.state;
+    const json = JSON.parse(txt);
+    console.dir(json);
+    const { entityMap } = json;
+
+    let images = [];
+    Object.keys(entityMap).map(a => images.push(entityMap[a].data.src));
+
+    actions.doDelete(this.api, { rowid: this.state.rowid, images }).then(({ code, result }) => {
       this.props.onClick && this.props.onClick(EID.DELETE);
     });
   }
@@ -243,7 +276,11 @@ export default class Texteditor extends React.PureComponent {
       // list: { inDropdown: true },
       // textAlign: { inDropdown: true },
       // history: { inDropdown: false },
-      image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
+      image: {
+        uploadCallback: this.uploadImageCallBack,
+        previewImage: true, alt: { present: true, mandatory: false },
+        inputAccept: 'image/gif,image/jpeg,image/jpg,image/png',
+      },
     };
 
     if (!loaded) return <StyledObject className={cx("editor-loading")}><Loading className={''} /></StyledObject>
@@ -257,7 +294,7 @@ export default class Texteditor extends React.PureComponent {
         </div>
         <div className="ed-head">
           {readonly && <p className="ed-title">{title}</p>}
-          {!readonly && <Editbox ref={(ref) => { this.title = ref }} name="title" className="" type="text" onChange={() => this.setState({ modified: true })}
+          {!readonly && <Editbox ref={(ref) => { this.title = ref }} name="title" className="" type="text" onChange={(v) => this.setState({ title: v, modified: true })}
             label={''} value={title} guide={ST.NO_INPUT_VALUE} maxLength="100" validate="true" readonly={readonly} />}
         </div>
         <div className="ed-body" onClick={this.onFocusEditor}>

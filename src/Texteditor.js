@@ -27,7 +27,7 @@ const StyledObject = styled.div`{
       .rdw-editor-wrapper {
         .rdw-editor-toolbar {
           .rdw-option-wrapper {
-            ${cs.border.lightgray} ${cs.h.get(28)} ${cs.w.get(34)}
+            ${cs.border.lightgray} ${cs.h.get(28)} ${cs.w.get(34)} 
             &:hover {
               ${cs.border.green} ${cs.bg.green} box-shadow: none;
             }
@@ -45,14 +45,14 @@ const StyledObject = styled.div`{
           }
 
           .rdw-dropdown-optionwrapper {
-            &:hover { ${cs.border.green} box-shadow: none; min-width: 28px; }
+            &:hover { ${cs.border.green} ${cs.min.w(20)} box-shadow: none; }
           };
 
           .rdw-dropdown-selectedtext { ${cs.font.black} }
 
           .rdw-colorpicker-modal {
             ${cs.w.get(300)} ${cs.h.get(200)}
-            .rdw-colorpicker-modal-options { overflow: auto; }
+            .rdw-colorpicker-modal-options { ${cs.over.auto} ${cs.scrollbar.t1} }
             .rdw-colorpicker-option { box-shadow: none; }
           }
 
@@ -74,7 +74,11 @@ const StyledObject = styled.div`{
         }
 
         .rdw-editor-main {
-          max-height: 1000px; padding: 10px;
+          ${cs.max.h(1000)} ${cs.p.a10} ${cs.scrollbar.t1}
+        }
+
+        .rdw-image-imagewrapper {
+          & > img { ${cs.max.w('100%')} }
         }
       }
     }

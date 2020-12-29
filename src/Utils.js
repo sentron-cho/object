@@ -424,6 +424,9 @@ export const Util = {
     }
   },
 
+  toText(value) { return this.toJson(value) },
+  fromText(value) { return this.fromJson(value) },
+
   makeComboList(func, list, option = { name: 'title', id: "rowid", selected: 0 }) {
     // 리스트를 생성하고
     const temps = list.map(item => ({ name: item[option.name], id: item[option.id], check: item.check ? item.check : false }));

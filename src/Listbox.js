@@ -39,8 +39,8 @@ const StyledObject = styled.div`{
         }
 
         .lbx-cnt {
-          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.h5}
-          ${cs.bg.sky} ${cs.box.round} ${cs.align.ycenter} ${cs.pos.relative}
+          ${cs.m.l10} ${cs.min.width(8)} ${cs.font.xs} ${cs.p.h5} ${cs.font.white}
+          ${cs.bg.darkgray} ${cs.box.round} ${cs.align.ycenter} ${cs.pos.relative}
         }
 
         .lbx-icon {

@@ -10,7 +10,6 @@ const StyledObject = styled.div`{
     .side-bar {
       ${cs.pos.fixed} ${cs.min.height('100vh')} ${cs.h.full} ${cs.z.sidebar} ${props => cs.top(props.top)} 
       ${props => cs.w.get(props.width)} ${cs.font.left} ${cs.border.right} ${cs.bg.lightblack} ${cs.noselect}
-      // height: calc(100vh - ${props => props.top});
       
       &.slidein { ${props => cs.anim.slidein(`${props.fade.time}s`, '-120%', '0', 'side-bar-in')} };
       &.slideout { ${props => cs.anim.slideout(`${props.fade.time}s`, '0', '-120%', 'side-bar-out')} };

@@ -200,14 +200,6 @@ const Listbox = (props) => {
     setList(props.list);
   }, [props.list])
 
-  let styled = {};
-  if (divider != null) {
-    styled.borderBottom = divider;
-    if (divider.indexOf(" ") <= 1) {
-      styled.borderBottom += ' solid #ccc';
-    }
-  }
-
   const onSelect = (e, item) => {
     if (disable) return;
     const rid = e.currentTarget.getAttribute('rowid');
@@ -262,9 +254,18 @@ const Listbox = (props) => {
     }
   }, [list, props]);
 
+  
+  let style = {};
+  if (divider != null) {
+    style.borderBottom = divider;
+    if (divider.indexOf(" ") <= 1) {
+      style.borderBottom += ' solid #ccc';
+    }
+  }
+
   return (
     <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)}
-      eid="select" style={styled} height={height}
+      eid="select" style={style} height={height}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
 
       <SearchFrame searchs={props.searchs} searchkey={props.searchkey}
@@ -277,7 +278,8 @@ const Listbox = (props) => {
       {/* no data view */}
       {(!list || list.length < 1) && <div className="frame"><Nodata /></div>}
 
-      {children && children}
+      {children}
+      {/* {children && children} */}
 
       <DndProvider backend={Backend}>
         {list && <ul className={"lbx-body"}>
@@ -291,14 +293,7 @@ const Listbox = (props) => {
                   {props.onDragDrop &&
                     <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
                   }
-
                   {formatter ? formatter(item) : <Line titlealign={titlealign} countalign={countalign} datealign={datealign} item={item} />}
-                  {/* <p className={cx('lbx-tl', titlealign)}>{stitle}
-                      {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
-                    </p>
-                    {sdate && <p className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</p>}
-                  </div> */}
-
                   {props.onClickDelete &&
                     <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
                   }
@@ -311,9 +306,7 @@ const Listbox = (props) => {
 
       {total > 0 && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
 
-      {/* page navi */}
       <Pagenavi className={cx(props.theme, props.naviClass)} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
-      {/* {props.onClickPage && <Pagenavi className={props.className} pos={props.pos} max={props.max} onItemClick={onClickPage} />} */}
     </StyledObject >
   );
 };

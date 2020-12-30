@@ -40,27 +40,27 @@ const StyledObject = styled.div`{
         &.active { ${cs.bg.white} ${cs.font.black} } &:hover { ${cs.border.lightgray} } .svg-icon { .svg-path { ${cs.fill.lightgray} } } 
       } 
     }
-    &.green {
-      .pg-no { &.active { ${cs.bg.green} } &:hover { ${cs.border.green} } .svg-icon { .svg-path { ${cs.fill.green} } } } 
+    &.green { 
+      .pg-no { ${cs.font.darkgray} &.active { ${cs.bg.green} ${cs.font.white} } &:hover { ${cs.border.green} } .svg-icon { .svg-path { ${cs.fill.green} } } } 
     }
     &.orange {
-      .pg-no { &.active { ${cs.bg.orange} } &:hover { ${cs.border.orange} } .svg-icon { .svg-path { ${cs.fill.orange} } } } 
+      .pg-no { ${cs.font.gray} &.active { ${cs.bg.orange} ${cs.font.white} } &:hover { ${cs.border.orange} } .svg-icon { .svg-path { ${cs.fill.orange} } } } 
     }
     &.red {
-      .pg-no { &.active { ${cs.bg.red} } &:hover { ${cs.border.red} } .svg-icon { .svg-path { ${cs.fill.red} } } } 
+      .pg-no { ${cs.font.gray} &.active { ${cs.bg.red} ${cs.font.white} } &:hover { ${cs.border.red} } .svg-icon { .svg-path { ${cs.fill.red} } } } 
     }
     &.primary {
-      .pg-no { &.active { ${cs.bg.primary} } &:hover { ${cs.border.primary} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
+      .pg-no { ${cs.font.gray} &.active { ${cs.bg.primary} ${cs.font.white} } &:hover { ${cs.border.primary} } .svg-icon { .svg-path { ${cs.fill.primary} } } } 
     }
     &.gray {
-      .pg-no { &.active { ${cs.bg.gray} } &:hover { ${cs.border.darkgray} } .svg-icon { .svg-path { ${cs.fill.gray} } } } 
+      .pg-no { ${cs.font.gray} &.active { ${cs.bg.gray} ${cs.font.black} } &:hover { ${cs.border.darkgray} } .svg-icon { .svg-path { ${cs.fill.gray} } } } 
     }
     &.dark {
-      .pg-no { &.active { ${cs.bg.dark} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
+      .pg-no { ${cs.font.gray} &.active { ${cs.bg.dark} ${cs.font.white} } &:hover { ${cs.border.dark} } .svg-icon { .svg-path { ${cs.fill.dark} } } } 
     }
     &.black {
       ${cs.font.darkgray} 
-      .pg-no { &.active { ${cs.bg.black} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
+      .pg-no { &.active { ${cs.bg.black} ${cs.font.white} } &:hover { ${cs.border.black} } .svg-icon { .svg-path { ${cs.fill.black} } } } 
     }
 
     &.theme-sky {

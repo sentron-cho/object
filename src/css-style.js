@@ -304,6 +304,7 @@ const cs = {
     front: 'z-index: 1;',
     icon: 'z-index: 9;',
     over: 'z-index: 99;',
+    thead: 'z-index: 19999;',
     menu: 'z-index: 99999;',
     sidebar: 'z-index: 199998;',
     header: 'z-index: 199999;',

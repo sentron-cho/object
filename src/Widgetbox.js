@@ -180,9 +180,12 @@ const StyledObject = styled.div`{
     }
 
     @media screen and (max-width : 860px) {
-      .t-label {
-        .icon { width: 20px; height: 16px; }
-        .cont-body { .st-label { font-size: 12px; padding: 0; text-align: center; } .st-txt { font-size: 24px; } }
+      .t-label { ${cs.min.h(160)}
+        .icon { ${cs.w.get(20)} ${cs.h.get(16)} }
+        .cont-body { 
+          .st-label { ${cs.font.sm} ${cs.p.a0} ${cs.font.center} } 
+          .st-txt { ${cs.font.t0} } 
+        }
       }
     }
   }

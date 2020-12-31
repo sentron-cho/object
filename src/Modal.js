@@ -82,22 +82,16 @@ export const StyledObject = styled.div`{
       .bg { ${cs.disp.none} }
       &.xl, &.lg, &.md, &.sm {
         .md-frame {
-          ${cs.size.full} ${cs.m.a0} ${cs.min.width(240)}
+          ${cs.size.full} ${cs.m.a0} ${cs.min.width(240)} 
     
           .md-head { 
             ${cs.border.radius(0)} ${cs.border.bottom} ${cs.h.get(60)} 
             ${cs.p.t20} ${cs.font.white}
           };
-          .md-body { ${cs.h.calc("100% - 140px")} };
+          .md-body { ${cs.h.calc("100% - 140px")} ${cs.max.h('calc(100% - 100px) !important')} };
           .md-foot { ${cs.border.radius(0)} ${cs.border.none} ${cs.h.get(80)} }
         }
       }
-
-      // &.xl { .md-frame { ${cs.w.full} } }
-      // &.lg { .md-frame { ${cs.w.full} } }
-      // &.md { .md-frame { ${cs.w.full} } }
-      // &.sm { .md-frame { ${cs.w.full} } }
-      // &.xs { .md-frame { ${cs.w.full} } }
     }
   }
 }`;

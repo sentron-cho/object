@@ -95,10 +95,20 @@ class Confirm extends React.PureComponent {
     isShow ? object.style.overflow = "auto" : object.style.overflow = "hidden";
   }
 
+  // onClicked = (eid) => {
+  //   this.setState({ show: false });
+  //   const { onClicked } = this.props.confirm;
+  //   onClicked && onClicked(eid === EID.OK ? true : false);
+  // }
+
   onClicked = (eid) => {
-    this.setState({ show: false });
+    var isok = true;
     const { onClicked } = this.props.confirm;
-    onClicked && onClicked(eid === EID.OK ? true : false);
+    isok = onClicked && onClicked(eid === EID.OK ? true : false);
+
+    if (eid === 'cancel') return this.setState({ show: false });
+
+    if (isok !== false) return this.setState({ show: false });
   }
 
   onKeyPressed = (e) => (e.key === KEY.ENTER) && this.onClicked(EID.OK);

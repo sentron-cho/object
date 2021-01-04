@@ -78,7 +78,7 @@ export const StyledObject = styled.div`{
     }
 
 
-    @media screen and (max-width : 600px) {
+    @media screen and (max-width : 800px) {
       .bg { ${cs.disp.none} }
       &.xl, &.lg, &.md, &.sm, & {
         .md-frame {

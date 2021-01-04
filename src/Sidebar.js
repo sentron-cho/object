@@ -14,7 +14,7 @@ const StyledObject = styled.div`{
       &.slidein { ${props => cs.anim.slidein(`${props.fade.time}s`, '-120%', '0', 'side-bar-in')} };
       &.slideout { ${props => cs.anim.slideout(`${props.fade.time}s`, '0', '-120%', 'side-bar-out')} };
 
-      .nav-frame { ${cs.pos.relative} ${cs.w.full} ${props => cs.h.get(props.width)}
+      .nav-frame { ${cs.pos.relative} ${cs.w.full} ${props => cs.h.get(props.height || 'calc(100% - 60px)')} ${cs.over.hidden} ${cs.over.yauto}
         .nav-li { ${cs.w.full} ${cs.h.fit} ${cs.disp.inblock} ${cs.mouse.pointer}
           &.nav-link {
             ${cs.p.l20} ${cs.w.full} ${cs.font.line(50)} ${cs.disp.inblock} ${cs.font.xl} ${cs.opac.show} ${cs.font.white}

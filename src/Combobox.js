@@ -39,7 +39,7 @@ const StyledObject = styled.div` {
       }  
     }
 
-    &.show { ${cs.z.over} }
+    &.show { ${cs.z.menu} }
 
     .cb-label { ${cs.disp.block} ${cs.p.a0} ${cs.font.sm}
       ${cs.font.left} ${cs.border.none} ${cs.font.weight(500)} 

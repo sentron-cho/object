@@ -271,7 +271,8 @@ const Cardlist = (props) => {
   return (
     <StyledObject className={cx('card-list', props.className, theme && `theme-${theme}`)} {...style}
       border={props.border} font={props.font} bgcolor={props.bgcolor} >
-      <SearchFrame list={props.searchs} searchkey={props.searchkey}
+
+      <SearchFrame searchs={props.searchs} searchkey={props.searchkey}
         onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
         onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
 
@@ -296,7 +297,7 @@ const Cardlist = (props) => {
       </ul>}
 
       {/* page navi */}
-      {props.onClickPage && <Pagenavi className={props.theme} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />}
+      {props.onClickPage && <Pagenavi className={cx(props.theme, props.naviClass)} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />}
     </StyledObject>
   );
 }

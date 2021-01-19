@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { Editbox, Svg, cs, Combobox, Button } from './index';
@@ -62,55 +62,102 @@ const StyledObject = styled.div` {
   }
 }`;
 
-export default class Search extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    const key = props.searchkey ? props.searchkey : props.list ? props.list[0].id : '';
-    this.state = { value: props.value || '', list: props.list || null, key: key };
+// export default class Search extends React.PureComponent {
+//   constructor(props) {
+//     super(props);
+//     const key = props.searchkey ? props.searchkey : props.list ? props.list[0].id : '';
+//     this.state = { value: props.value || '', list: props.list || null, key: key };
+//   }
+
+//   onClicked = (e) => {
+//     this.props.onClick && this.props.onClick(this.state.value, this.state.key, e);
+//   }
+
+//   onEnter = (e) => {
+//     this.props.onClick && this.props.onClick(this.state.value, this.state.key, e);
+//   }
+
+//   onChange = (value, e) => {
+//     this.setState({ value: value });
+//     this.props.onChange && this.props.onChange(this.state.value, this.state.key, e);
+//   }
+
+//   onClickCombo = (eid, e, value) => {
+//     // const { props } = this;
+//     // props.onChange && props.onChange();
+//     this.setState({ key: value.id });
+//   }
+
+//   render() {
+//     const { state, props } = this;
+//     const { frameid = 'body', className, theme, color } = props;
+//     const { list } = state;
+//     // const combo = 120;
+//     // const edit = list ? `calc(100% - ${combo + 25}px)` : 'calc(100% - 35px)';
+//     const pos = list ? list.findIndex(item => item.id === state.key) : 0;
+//     // const innercs = className.replace('border', '');
+
+//     return (
+//       <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
+//         {list && <Combobox className={cx("sc-combo sky md", color)}
+//           pos={pos} frameid={frameid} theme={theme}
+//           list={list} onClick={this.onClickCombo} inline={true} />
+//         }
+//         <Editbox type="text" className={cx("sc-in", color, list && 'combo')}
+//           guide={props.guide} value={state.value} theme={theme}
+//           onEnter={this.onEnter} onChange={this.onChange} onClear={this.props.onClear} />
+//         <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
+//       </StyledObject>
+//     )
+//   }
+// }
+
+
+const Search = (props) => {
+  const [value, setValue] = useState(props.value || '');
+  // const [list, setList] = useState(props.list || null);
+  const [key, setKey] = useState(props.searchkey ? props.searchkey : props.list ? props.list[0].id : '');
+
+  useEffect(() => {
+    setKey(props.searchkey);
+    return () => { }
+  }, [props.searchkey]);
+
+  const onClicked = (e) => {
+    props.onClick && props.onClick(value, key, e);
   }
 
-  onClicked = (e) => {
-    this.props.onClick && this.props.onClick(this.state.value, this.state.key, e);
+  const onEnter = (e) => {
+    props.onClick && props.onClick(value, key, e);
   }
 
-  onEnter = (e) => {
-    this.props.onClick && this.props.onClick(this.state.value, this.state.key, e);
+  const onChange = (v, e) => {
+    setValue(v);
+    props.onChange && props.onChange(v, key, e);
   }
 
-  onChange = (value, e) => {
-    this.setState({ value: value });
-    this.props.onChange && this.props.onChange(this.state.value, this.state.key, e);
+  const onClickCombo = (eid, e, v) => {
+    setKey(v.id);
   }
 
-  onClickCombo = (eid, e, value) => {
-    // const { props } = this;
-    // props.onChange && props.onChange();
-    this.setState({ key: value.id });
-  }
+  const { frameid = 'body', className, theme, color } = props;
+  const pos = props.list ? props.list.findIndex(item => item.id === key) : 0;
 
-  render() {
-    const { state, props } = this;
-    const { frameid = 'body', className, theme, color } = props;
-    const { list } = state;
-    // const combo = 120;
-    // const edit = list ? `calc(100% - ${combo + 25}px)` : 'calc(100% - 35px)';
-    const pos = list ? list.findIndex(item => item.id === state.key) : 0;
-    // const innercs = className.replace('border', '');
-
-    return (
-      <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
-        {list && <Combobox className={cx("sc-combo sky md", color)}
-          pos={pos} frameid={frameid} theme={theme}
-          list={list} onClick={this.onClickCombo} inline={true} />
-        }
-        <Editbox type="text" className={cx("sc-in", color, list && 'combo')}
-          guide={props.guide} value={state.value} theme={theme}
-          onEnter={this.onEnter} onChange={this.onChange} onClear={this.props.onClear} />
-        <Svg className={cx("sc-btn", color)} color={'black'} onClick={this.onClicked} icon={'find'} />
-      </StyledObject>
-    )
-  }
+  return (
+    <StyledObject className={cx("search-box md", className, color, theme && `theme-${theme}`)} >
+      {props.list && <Combobox className={cx("sc-combo sky md", color)}
+        pos={pos} frameid={frameid} theme={theme}
+        list={props.list} onClick={onClickCombo} inline={true} />
+      }
+      <Editbox type="text" className={cx("sc-in", color, props.list && 'combo')}
+        guide={props.guide} value={value} theme={theme}
+        onEnter={onEnter} onChange={onChange} onClear={props.onClear} />
+      <Svg className={cx("sc-btn", color)} color={'black'} onClick={onClicked} icon={'find'} />
+    </StyledObject>
+  )
 }
+
+export default Search;
 
 const StyledFrame = styled.div`{
   &.search-frame { ${cs.min.height(30)}

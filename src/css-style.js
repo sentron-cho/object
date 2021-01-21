@@ -158,7 +158,7 @@ const cs = {
     popup: (v = 999999, bg = 'transparent', w = 800, h = 600) => `z-index: ${v}; width: 100%; 
       height: 100%; display: block; position: fixed; bottom: unset; top: 0; left: 0;
       .pop-bg { background: ${bg}; width: 100%; height: 100%; display: block; }
-      .pop-box { 
+      .pop-box { z-index: ${v};
         width: 100%; height: 100%; display: block; max-width: ${w}px; max-height: ${h}px; 
         ${cs.box.line} ${cs.radius.all(2)} ${cs.align.center} ${cs.bg.white} ${cs.over.hidden} 
         .head {
@@ -653,12 +653,12 @@ const cs = {
     leftcolor: (v) => `border-left-color: ${v};`,
     rightcolor: (v) => `border-right-color: ${v};`,
 
-    shadow: (v) => v ? `box-shadow: ${v};` : 'box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);',
-    color: (v) => `border-color: ${v};`,
-    width: (v) => Number.isInteger(v) ? `border-width: ${v}px;` : `border-width: ${v};`,
+    shadow: (v = null) => v ? `box-shadow: ${v};` : 'box-shadow: 0 1px 3px 0 rgba(0,0,0,0.6), 0 4px 8px 3px rgba(0,0,0,0.3);',
+    color: (v = cs.color.lightgray) => `border-color: ${v};`,
+    width: (v = 1) => Number.isInteger(v) ? `border-width: ${v}px;` : `border-width: ${v};`,
     get: (v) => `border: ${v};`,
-    radius: (v) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
-    outline: (v) => `outline: ${v};`,
+    radius: (v = 5) => Number.isInteger(v) ? `border-radius: ${v}px;` : `border-radius: ${v};`,
+    outline: (v = 1) => `outline: ${v};`,
     set: (v) => `${v};`,
   },
 

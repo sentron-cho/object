@@ -10,7 +10,7 @@ const StyledObject = styled.div`{
   &.side-menu {
     ${cs.h.full} ${cs.pos.fixed} ${cs.disp.block} ${cs.top(0)} ${cs.z.top} 
     ${({ width }) => cs.w.get(width || '240px')} ${cs.anim.show} ${cs.bg.white} ${cs.font.dark}
-    ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect}
+    ${cs.border.lightwhite} ${cs.noliststyle} ${cs.noselect} ${cs.scrollbar.t1}
 
     .sm-head {
       ${ cs.h.get(59)} ${cs.pos.relative}

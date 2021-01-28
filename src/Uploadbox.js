@@ -194,15 +194,16 @@ const isMedia = (type) => { return type === CONT_TYPE.VIDEO || type === CONT_TYP
 // const isYoutube = (type) => {return type === 'youtube' ? true : false},
 // const isImage = (type) => {return type === 'image' ? true : false},
 
+var ftimer = null;
+var ntimer = null;
+
 class Uploadbox extends React.PureComponent {
   constructor(props) {
     super(props);
-
     const { files, bufs, type, link = '' } = this.createData(props);
 
     // base64경우 용량이 크면 딜레이가 발생하므로 화면 표시 이후에 로딩하자..
     // const load = bufs && bufs[0].indexOf('base64') > 0 ? false : true;
-
     this.state = {
       maxSize: 100 * MAGA,   //100M
       imageExt: '.jpg, .jpeg, .png, .gif', videoExt: '.mp3, .mp4, .mov, .avi', pdfExt: '.pdf',
@@ -234,6 +235,11 @@ class Uploadbox extends React.PureComponent {
     // }
   }
 
+  componentWillUnmount() {
+    ntimer && clearTimeout(ntimer);
+    ftimer && clearTimeout(ftimer);
+  }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       const { files, bufs, type } = this.createData(nextProps);
@@ -262,17 +268,11 @@ class Uploadbox extends React.PureComponent {
     } else {
       this.setState({ noti: this.props.noti });
     }
-    setTimeout(() => this.refInput != null && this.refInput.focus(), 300);
-
-    setTimeout(() => {
-      if (this.state.noti) {
-        this.setState({ noti: null });
-      }
-    }, 5000);
+    
+    ftimer = setTimeout(() => this.refInput != null && this.refInput.focus(), 300);
+    ntimer = setTimeout(() => (this.state.noti) && this.setState({ noti: null }), 5000);
 
     return false;
-
-    // this.setState({ 'noti': `${value}` });
   }
 
   isModified = () => (this.state.modified);

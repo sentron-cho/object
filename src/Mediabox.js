@@ -24,13 +24,12 @@ const StyledObject = styled.div`{
 
     .cont-frame {
       ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
-      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative} 
-      //${cs.max.h(562)} 
+      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative}
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; }
     }
 
-    .loading-img { ${cs.pos.absolute} ${cs.pos.ltop} ${cs.h.get(562)} ${cs.w.full} }
+    .loading-img { ${cs.pos.absolute} ${cs.align.center} ${cs.h.get(400)} ${cs.w.full} }
 
     .btn-down { ${cs.align.rbottom} }
     .btn-media-edit {
@@ -44,9 +43,9 @@ const StyledObject = styled.div`{
 
     .pointer { ${cs.mouse.pointer} };
 
-    &.lg { .image { ${cs.max.h(675)} } }
-    &.md { .image { ${cs.max.h(562)} } }
-    &.sm { .image { ${cs.max.h(450)} } }
+    &.lg { .image { ${({ height }) => cs.h.get(height || 680)}; } }
+    &.md { .image { ${({ height }) => cs.h.get(height || 580)}; } }
+    &.sm { .image { ${({ height }) => cs.h.get(height || 460)}; } }
 
     .noimage { ${cs.box.border} ${cs.border.lightgray} }
 
@@ -154,7 +153,7 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '562px' } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '' } = props;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const src = props.src || props.url;
     const { border } = props.options || { border: null };
@@ -178,7 +177,8 @@ export default class Mediabox extends React.PureComponent {
       }
     }
 
-    const height = (type === CONT_TYPE.IMAGE) ? "fit-content" : this.state.height;
+    // const height = (type === CONT_TYPE.IMAGE) ? "fit-content" : this.state.height;
+    const height = this.state.height;
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("media-box", props.className)}

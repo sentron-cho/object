@@ -98,6 +98,11 @@ export default class Mediabox extends React.PureComponent {
     window.removeEventListener('resize', this.onResize);
   }
 
+  
+  onResize = (e) => {
+    this.setState({ height: this.getHeight() });
+  }
+
   onLoad = (e) => {
     this.setState({ loaded: true });
     this.props.onLoad && this.props.onLoad();

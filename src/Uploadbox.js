@@ -17,8 +17,7 @@ const StyledObject = styled.div`{
       .upf-value { 
         ${cs.h.get(65)} ${cs.w.full} ${cs.bg.lightgray} ${cs.p.get('5px 10px')} ${cs.resize.none}
         ${cs.font.lightwhite} ${cs.p.r10} ${cs.border.none}
-
-        &.upv-noti { ${cs.font.red} ${cs.bg.alphablack} ${cs.box.radius} ${cs.p.h10} }
+        
         &:focus, &:active { ${cs.bg.lightgray} ${cs.border.outline('none')} ${cs.border.shadow('none')} }
         &:hover { ${cs.bg.lightgray} }
       }
@@ -53,6 +52,12 @@ const StyledObject = styled.div`{
           &.hide { ${cs.disp.none} }
         }
         .noimage { ${cs.object.contain} ${cs.opac.visible} }
+        .upv-noti { ${cs.font.red} ${cs.box.radius} ${cs.bottom(10)} ${cs.bg.alphablack}
+          ${cs.p.h10} ${cs.z.over} ${cs.h.get(30)} ${cs.font.line(30)} ${cs.align.xcenter}
+        }
+        .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(10)}
+          ${cs.p.h10} ${cs.z.over} ${cs.h.get(30)} ${cs.font.line(30)} ${cs.align.xcenter}
+        }
       }
 
       &:hover {
@@ -268,7 +273,7 @@ class Uploadbox extends React.PureComponent {
     } else {
       this.setState({ noti: this.props.noti });
     }
-    
+
     ftimer = setTimeout(() => this.refInput != null && this.refInput.focus(), 300);
     ntimer = setTimeout(() => (this.state.noti) && this.setState({ noti: null }), 5000);
 
@@ -351,19 +356,22 @@ class Uploadbox extends React.PureComponent {
     (this.props.onSelectedMedia != null) && this.props.onSelectedMedia(eid, e)
   }
 
-  onLoadImage = () => {
+  onLoadImage = (e) => {
     const { props, state } = this;
 
-    if (state.modified) {
-      const { naturalWidth, naturalHeight } = this.refImage;
+    if (state.modified && e && e.currentTarget) {
+      const { naturalWidth, naturalHeight } = e.currentTarget;
 
-      if (props.image_check) {
-        const { width, height } = props.image_check;
-        if (naturalWidth > width || naturalHeight > height) {
-          const text = `[${width}px X ${height}px]`
-          this.onClickClear();
-          this.showNoti(`${text}${ST.ADVERT.SIZE_CHECK}`)
-          // this.setState({ 'noti': `${text}${ST.ADVERT.SIZE_CHECK}` });
+      const maxImage = props.maxImage || props.image_check;
+      if (maxImage) {
+        const { width, height } = maxImage;
+        const w = String(width).replace('px', '');
+        const h = String(height).replace('px', '');
+
+        if (Number(naturalWidth) > Number(w) || Number(naturalHeight) > Number(h)) {
+          const text = `${width}px X ${height}px`
+          setTimeout(() => this.onClickClear(), 1000);
+          this.showNoti(`${ST.NOTI.SIZE_CHECK(text)}`)
         }
       }
     }
@@ -442,12 +450,13 @@ class Uploadbox extends React.PureComponent {
             <Svg className={cx("upv-clear sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.CLEAR} color={'dark'} />
             <Svg className={cx("upv-delete sm", !props.onDelete ? 'hide' : '')} name={"delete"} eid={EID.DELETE} color={'dark'}
               onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
-            <Mediabox className={cx("upv-img", type)} ref={ref => { this.refImage = ref }} fit={fit}
+            <Mediabox className={cx("upv-img", type)} fit={fit}
               link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
               onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
-            {noti && <span className={'upv-noti'}></span>}
+            {props.helpSize && <span className={'upv-help'}>{props.helpSize}</span>}
+            {noti && <span className={'upv-noti'}>{noti}</span>}
             {this.renderTabs(isMultiMidia)}
             {this.renderInfos()}
           </div>

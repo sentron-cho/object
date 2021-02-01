@@ -101,20 +101,7 @@ const KOR = {
     TITLE: "배너 광고 모집중",
     IMAGE: "이미지명",
     LINK: "LINK URL",
-    MENU: "메뉴(화면)",
-    SIZE_CHECK: "의 이미지 사이즈로 맞춰야 합니다."
-  },
-
-  INVEST: {
-    ALL: "전체",
-    PRICE: "시가총액",
-    VALUE: "주당가치",
-    BEDANG: "배당금",
-    VA: "1조이상",
-    VB: "5조이상",
-    VC: "10조이상",
-    VALCUR: "올해가치",
-    VALYEAR: "1년전기준",
+    MENU: "메뉴(화면)",    
   },
 
   CONTENT: {
@@ -143,6 +130,7 @@ const KOR = {
     SELECT_IMAGE: "이미지를 등록하세요",
     ISDELETE: "정말로 삭제하시겠습니까?",
     NOT_SAVE: "변경된 내용을 저장후 이용하세요.",
+    SIZE_CHECK: (v) => `이미지 최대 크기는 [${v}] 입니다.`,
   },
 
   APPUP: {

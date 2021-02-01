@@ -105,12 +105,12 @@ export default class Mediabox extends React.PureComponent {
 
   onLoad = (e) => {
     this.setState({ loaded: true });
-    this.props.onLoad && this.props.onLoad();
+    this.props.onLoad && this.props.onLoad(e);
   }
 
   onError = (e) => {
     this.setState({ error: true, loaded: true });
-    this.props.onError && this.props.onError();
+    this.props.onError && this.props.onError(e);
     setTimeout(() => this.state.error = false, 100);
   }
 

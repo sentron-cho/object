@@ -295,6 +295,7 @@ class Uploadbox extends React.PureComponent {
     this.setState({ 'files': files, 'bufs': bufs, 'type': this.state.type, 'modified': false, refresh: true });
 
     setTimeout(() => this.setState({ refresh: false }), 200);
+    props.onChange && props.onChange(bufs[0], e, this.state.type);
   }
 
   onClicked = (eid, e) => {
@@ -320,7 +321,7 @@ class Uploadbox extends React.PureComponent {
     const target = e.currentTarget;
 
     this.setState({ 'files': [{ name: result }], 'bufs': [result], 'modified': true });
-    (props.onChange != null) && props.onChange(result, target, result, this.state.type);
+    props.onChange && props.onChange(result, target, result, this.state.type);
   }
 
   onChange = (e) => {
@@ -370,7 +371,7 @@ class Uploadbox extends React.PureComponent {
 
         if (Number(naturalWidth) > Number(w) || Number(naturalHeight) > Number(h)) {
           const text = `${width}px X ${height}px`
-          setTimeout(() => this.onClickClear(), 1000);
+          setTimeout(() => this.onClickClear(e), 1000);
           this.showNoti(`${ST.NOTI.SIZE_CHECK(text)}`)
         }
       }

@@ -57,17 +57,17 @@ const StyledObject = styled.div`{
     }
   
     @media screen and (max-width : 1024px) {
-      .ib-frame.no-image { font-size: 30px; line-height: 40px; }
+      .ib-frame.no-image { ${cs.font.get(30)} ${cs.font.line(40)} }
     }
   
     @media screen and (max-width : 860px) {
-      .ib-frame.no-image { font-size: 20px; line-height: 30px; width: calc(100% - 10px); }
-      .guide-size { width: calc(100% - 10px); }
+      .ib-frame.no-image { ${cs.font.get(20)} ${cs.font.line(30)} ${cs.w.calc('100% - 10px')} }
+      .guide-size { ${cs.w.calc('100% - 10px')} }
     }
 
     @media screen and (max-width : 600px) {
-      .ib-frame.no-image { font-size: 16px; line-height: 20px; }
-      .guide-size { font-size: 10px; line-height: 16px; bottom: 5px; padding: 5px; }
+      .ib-frame.no-image { ${cs.font.get(16)} ${cs.font.line(20)}  }
+      .guide-size { ${cs.font.get(10)} ${cs.font.line(16)} ${cs.bottom(5)} ${cs.p.a5} }
     }
   }
 };`;
@@ -87,11 +87,11 @@ export default class Imagebox extends React.PureComponent {
   }
 
   getWidth = () => {
-    let { rate = "4:3", size, maxheight = null } = this.props;
+    let { rate = "", size, maxheight = null } = this.props;
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
-        case 'normal': rate = "4:3"; break;
+        // case 'normal': rate = "4:3"; break;
         case 'wide': rate = "16:9"; break;
         case 'xwide': rate = "21:9"; break;
         case 'fwide': rate = "28:9"; break;
@@ -152,7 +152,7 @@ export default class Imagebox extends React.PureComponent {
 
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const { width } = state;
-    const styled = { ...props.style, width, fit };
+    const style = { ...props.style, width, fit };
     const sizeguide = props.sizeguide || `[100 X 100]`;
     const src = props.src || props.url;
     const noimage = !src || error;
@@ -161,11 +161,11 @@ export default class Imagebox extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer)}
-        {...styled} eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked}>
+        {...style} eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked}>
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
         {noimage ? <span className={cx("ib-frame", 'no-image')} >{"No Image"}</span>
           : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} onLoad={this.onLoad} onError={this.onError} />}
-        {props.children && props.children}
+        {props.children}
         {props.onDelete && <Svg className="ib-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}
         {!loaded && <Loading type="ring" />}
       </StyledObject>

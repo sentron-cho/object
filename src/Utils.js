@@ -350,11 +350,9 @@ export const Util = {
     }
   },
 
-  getImage(url, path, type = null) {
-    if (url.indexOf("http") === 0) {
-      return url;
-    }
-
+  getImage(url, path, type = 'image') {
+    if (!url || url.length < 1) return '';
+    if (url.indexOf("http") === 0) return url;
     return (type === "youtube" || type === "link") ? url : (url.indexOf("data:") === 0 ? url : url ? path + url : '');
   },
 

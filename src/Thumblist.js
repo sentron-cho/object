@@ -8,7 +8,7 @@ import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
 
 const StyledObject = styled.div`{
   &.thumb-list { 
-    ${cs.pos.relative} ${cs.m.t5}
+    ${cs.pos.relative} ${cs.m.t5} ${cs.min.h(100)}
     ${cs.noselect} ${cs.noliststyle} ${cs.w.full} ${cs.box.inner} ${cs.over.hidden}
 
     .thb-new { ${cs.align.rtop} ${cs.opac.get(0.3)} ${cs.top(2)} ${cs.left(2)} ${cs.float.right} }

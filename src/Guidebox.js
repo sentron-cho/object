@@ -9,7 +9,7 @@ const StyledBox = styled.div`{
       ${cs.font.sm} ${cs.font.red} ${cs.pos.absolute} ${cs.pos.ltop}
       ${cs.size.full} ${cs.z.over}
       
-      .gb-bg { ${cs.bg.get("#ffde3c87")} ${cs.size.full} }
+      .gb-bg { ${cs.bg.get("#00000020")} ${cs.size.full} }
       .gb-txt, .gb-desc { 
         ${cs.pos.absolute} ${cs.pos.ltop} ${cs.p.a2}
         ${cs.font.color("#ff3636")} ${cs.font.preline}

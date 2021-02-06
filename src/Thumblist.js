@@ -5,17 +5,24 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
+import Button from './Button';
 
 const StyledObject = styled.div`{
   &.thumb-list { 
-    ${cs.pos.relative} ${cs.m.t5} ${cs.min.h(100)}
+    ${cs.pos.relative} ${cs.m.t5} ${cs.min.h(60)} ${cs.bg.get("#00000020")}
     ${cs.noselect} ${cs.noliststyle} ${cs.w.full} ${cs.box.inner} ${cs.over.hidden}
 
-    .thb-new { ${cs.align.rtop} ${cs.opac.get(0.3)} ${cs.top(2)} ${cs.left(2)} ${cs.float.right} }
+    .thb-new { 
+      ${cs.box.line} ${cs.box.dashed} ${cs.opac.get(0.3)} ${cs.w.get(60)} 
+      ${cs.h.get(30)} ${cs.border.radius(5)} ${cs.pos.relative} ${cs.align.rbottom}
+      .svg-icon {
+        ${cs.size.get(26)} ${cs.align.center} 
+      }
+    }
 
     .v-line { ${cs.over.xauto} ${cs.scrollbar.t1} ${cs.disp.get("flex")} ${cs.w.full}
       .v-item { 
-        ${cs.disp.inblock} ${cs.p.a5} ${cs.pos.relative} ${cs.opac.show}
+        ${cs.disp.inblock} ${cs.m.a2} ${cs.pos.relative} ${cs.opac.show}
 
         .thb-delete { ${cs.align.rbottom} ${cs.opac.get(0.2)} ${cs.bottom(13)} ${cs.right(8)} }
 
@@ -30,7 +37,9 @@ const StyledObject = styled.div`{
       }
     }
 
-    &:hover { .thb-new { ${cs.opac.show} } }
+    .no-data { ${cs.h.get(100)} ${cs.w.fit} ${cs.align.center} .nodata-box { ${cs.min.h(20)} } }
+
+    .thb-new:hover { ${cs.opac.show} ${cs.bg.alphablack} ${cs.mouse.pointer} }
 
     &.sky { ${cs.box.line} ${cs.box.radius} ${cs.bg.sky} }
     &.primary { ${cs.box.line} ${cs.box.radius} ${cs.bg.primary} }
@@ -48,9 +57,9 @@ const StyledObject = styled.div`{
     &.border { ${cs.box.line} }
     &.radius { ${cs.box.radius} }
 
-    &.sm { .thb-new { ${cs.size.get(20)} } }
+    &.sm { .thb-new { .svg-icon { ${cs.size.get(20)} } } }
     &.md { }
-    &.lg { .thb-new { ${cs.size.get(28)} } .v-line { ${cs.scrollbar.t4} } }
+    &.lg { .thb-new { .svg-icon { ${cs.size.get(28)} } } .v-line { ${cs.scrollbar.t4} } }
 
     ${({ border }) => border && `${cs.box.line}`}
     ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
@@ -117,6 +126,8 @@ const Thumblist = (props) => {
         + "ex. const head = [{ key: 'no', title: 'utime', type: 'date', align: 'left', flex: '1 1 40px' }, {...}\n"
         + "key and title is required. Rest is optional.\n"
         + "type is text or date or datetime";
+      console.error(guide);
+      return;
     }
 
     if (props.onDrag) {
@@ -170,7 +181,7 @@ const Thumblist = (props) => {
     <StyledObject className={cx('thumb-list', props.className, (anim && "anim"), size, theme && `theme-${theme}`)} cursor={cursor}
       border={props.border} bgcolor={props.bgcolor} anim={anim}
       onAnimationEnd={onAnimEnd} onAnimationStart={onAnimStart}>
-      {props.onClickNew && <Svg className="thb-new md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />}
+      {/* {props.onClickNew && <Svg className="thb-new md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />} */}
 
       {/* error guid */}
       {renderGuide()}
@@ -189,8 +200,7 @@ const Thumblist = (props) => {
 
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel}
-                  onClick={(e) => onSelect(rid, e, item)} >
+                <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel} onClick={(e) => onSelect(rid, e, item)} >
                   <Thumbbox className={cx(props.itemClassName, size)} {...config.child} odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
                     <Svg className="thb-delete delete sm" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
@@ -201,6 +211,9 @@ const Thumblist = (props) => {
           })}
         </div>}
       </DndProvider>
+      {props.onClickNew && <span className={'thb-new'} onClick={(e) => onClickNew('new', e)}>
+        <Svg className="md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />
+      </span>}
     </StyledObject >
   );
 }

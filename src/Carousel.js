@@ -94,7 +94,7 @@ const StyledObject = styled.div`{
 
       .cap-title {
         ${({ title }) => title && title.size ? cs.font.size(title.size) : ''}
-        ${({ title }) => title && title.align ?  cs.font.align(title.align) : ''}
+        ${({ title }) => title && title.align ? cs.font.align(title.align) : ''}
         ${({ title }) => title && title.color ? cs.font.color(title.color) : ''}
         ${({ title }) => title && title.outline ? cs.font.outline('1px', title.outline) : ''}
       }
@@ -255,6 +255,9 @@ export default class Carousel extends React.PureComponent {
   onAnimStart = (e) => { }
 
   onAnimEnd = () => {
+    const { list } = this.state;
+    if (!list || list.length < 1) return;
+
     this.changeSlide(EID.NEXT, false);
     (this.state.isanim) && setTimeout(() => {
       this.setState({ anim: true });
@@ -333,6 +336,8 @@ export default class Carousel extends React.PureComponent {
           + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', url: '', path: '', utime: '20200101' }, {...}\n"
           + "url is required. Rest is optional.\n"
           + "path is root path to display before url.";
+        console.error(guide);
+        return;
       }
 
       if (list && list[0]) {

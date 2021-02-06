@@ -31,7 +31,6 @@ const StyledObject = styled.div`{
       ${cs.h.full} ${cs.w.calc('100% / 2')} ${cs.object.cover} ${cs.object.center}
 
       &.loaded { 
-        // transition: opacity 150ms ease-in 0s; 
         ${cs.anim.in()} ${cs.opac.visible}
         .cau-image { ${cs.bg.trans} }
       }
@@ -132,20 +131,25 @@ export default class Carousel extends React.PureComponent {
   constructor(props) {
     super(props);
     const { type } = Util.getScreenType();
-    const list = props.list ? props.list.map((item, index) => {
-      item.active = index === 0 ? true : false;
-      item.index = index;
-      item.error = false;
-      item.loaded = false;
-      return item;
-    }) : [];
-    const isanim = this.props.anim ? true : false;
+
+    const list = this.makelist(this.props.list);
+    const isanim = Boolean(this.props.anim);
     this.state = {
       type: type, loaded: false, height: "auto", anim: isanim, isanim: isanim,
       list: list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null
     };
 
     this.animation = null;
+  }
+
+  makelist = (list) => {
+    return list ? list.map((item, index) => {
+      item.active = index === 0;
+      item.index = index;
+      item.error = false;
+      item.loaded = false;
+      return item;
+    }) : [];
   }
 
   onResize = () => {
@@ -193,6 +197,11 @@ export default class Carousel extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.list !== this.props.list) {
+      const list = this.makelist(nextProps.list );
+      this.setState({ list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null });
+    }
+
     if (nextProps.anim != null) {
       // this.state.isanim = this.state.anim = nextProps.anim;
       this.setState({ isanim: nextProps.anim, anim: nextProps.anim });
@@ -298,21 +307,22 @@ export default class Carousel extends React.PureComponent {
       const urldata = item.url.indexOf("data:") === 0 ? item.url : (item.path || '') + item.url;
 
       // 카우셀에서 첫번째 이미지만 loading 처리하자..
-      let image;
-      if (!item.loaded) {
-        image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} onError={this.onError} onLoad={this.onLoad} />
-      } else if (item.error) {
-        image = <div className={cx("cau-image noimage")} index={item.index} />
-      } else {
-        image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
-      }
+      // let image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
+      // if (!item.loaded) {
+      //   image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} onError={this.onError} onLoad={this.onLoad} />
+      // } else if (item.error) {
+      //   image = <div className={cx("cau-image noimage")} index={item.index} />
+      // } else {
+      //   image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
+      // }
 
       const { active, color = "" } = item;
       const styled = { color };
       // 카우셀 이미지 및 캡션 프레임...
-      return <li key={index} className={cx("cau-li", { active }, item.loaded && 'loaded')} onClick={(e) => onSelect(e, item, index)}>
-        {image}
-        {!item.loaded && <Loading type="ring" />}
+      return <li key={index} className={cx("cau-li", { active }, 'loaded')} onClick={(e) => onSelect(e, item, index)}>
+        <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
+        {/* {image} */}
+        {/* {!item.loaded && <Loading type="ring" />} */}
         <div className="cau-caption">
           {item.title && <p className={"cap-title"} style={styled}>{item.title}</p>}
           {item.text && <p className={"cap-text"} style={styled}>{item.text}</p>}

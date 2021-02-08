@@ -55,8 +55,8 @@ const StyledObject = styled.div`{
         .upv-noti { ${cs.font.red} ${cs.box.radius} ${cs.bottom(10)} ${cs.bg.alphablack}
           ${cs.p.h10} ${cs.z.over} ${cs.h.get(30)} ${cs.font.line(30)} ${cs.align.xcenter}
         }
-        .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(10)}
-          ${cs.p.h10} ${cs.z.over} ${cs.h.get(30)} ${cs.font.line(30)} ${cs.align.xcenter}
+        .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(5)} ${cs.w.fit} ${cs.p.h10} ${cs.p.v3}
+          ${cs.z.over} ${cs.align.xcenter} ${cs.bg.alphablack} ${cs.border.radius(3)} ${cs.font.sm}
         }
       }
 

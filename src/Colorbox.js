@@ -192,8 +192,8 @@ export default class Colorbox extends React.PureComponent {
   onClear = (eid, e) => {
     const { props } = this;
     const color = { r: 0, g: 0, b: 0, a: 0 };
-    const value = "";
-    props.onChange && props.onChange(color, value, e);
+    const value = "#00000000";
+    props.onChange && props.onChange(value, color, e);
     this.setState({ modified: true, color: color, value: value });
   }
 

@@ -29,8 +29,8 @@ const StyledObject = styled.div`{
       }
     }
     
-    &.slidein { ${ ({ time }) => cs.anim.slidein(time, '100%', '0')}; .ob-box { display: block; } };
-    &.slideout { ${ ({ time }) => cs.anim.slideout(time, '0', '100%')}; };
+    &.slidein { ${({ time }) => cs.anim.slidein(time, '100%', '0')}; .ob-box { display: block; } };
+    &.slideout { ${({ time }) => cs.anim.slideout(time, '0', '100%')}; };
     
     &.md { .ob-box { ${cs.w.get(600)} } }
     &.lg { .ob-box { ${cs.w.get(800)} } }
@@ -80,6 +80,9 @@ export default class Optionbar extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     // this.setState({modefied : false});
+    if (this.props.show !== nextProps.show) {
+      this.setState({ show: nextProps.show });
+    }
   }
 
   onClicked = (eid, e) => {

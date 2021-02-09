@@ -10,10 +10,10 @@ const StyledObject = styled.div` {
       ${cs.disp.inblock} ${cs.w.auto}
 
       .chk-itm { 
-        ${cs.max.width('100%')} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5}
+        ${cs.max.width('100%')} ${cs.p.v5} ${cs.disp.inblock} ${cs.m.r5} ${cs.mouse.pointer}
         .chk-icon { ${cs.float.left} ${cs.m.r5} svg { ${cs.p.a0} ${cs.m.top(-2)} } }
 
-        &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
+        // &:hover { ${cs.mouse.pointer} ${cs.opac.get(0.8)} }
       }
 
     }

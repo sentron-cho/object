@@ -139,15 +139,15 @@ const StyledObject = styled.div` {
     }
 
     .label {
-      ${({title}) => title && title.align && cs.font.align(title.align)}
-      ${({title}) => title && title.color && cs.font.color(title.color)}
+      ${({ title }) => title && title.align && cs.font.align(title.align)}
+      ${({ title }) => title && title.color && cs.font.color(title.color)}
     }
 
     & > div > div:first-child {
-      ${({border}) => border && cs.box.line}
-      ${({border}) => border && border.color && cs.border.color(border.color)}
-      ${({border}) => border && border.radius && cs.border.radius(`${border.radius} !important`)}
-      ${({border}) => border && border.width && cs.border.width(border.width)}
+      ${({ border }) => border && cs.box.line}
+      ${({ border }) => border && border.color && cs.border.color(border.color)}
+      ${({ border }) => border && border.radius && cs.border.radius(`${border.radius} !important`)}
+      ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
 
     @media screen and (max-width : 860px) {
@@ -159,6 +159,12 @@ export default class Colorbox extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { list: props.list, noti: false, noti_value: '', modified: false, value: props.value ? props.value : "", color: {} };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   isValidate = () => {
@@ -210,10 +216,10 @@ export default class Colorbox extends React.PureComponent {
     const { props, state } = this;
     const type = props.type ? props.type : 'compact';
     const { theme, clear, label, className } = props;
-    const { border, title } = props.options || {border: null, title: null};
+    const { border, title } = props.options || { border: null, title: null };
 
     return (
-      <StyledObject className={cx('color-box', className, { theme }, {label}, theme && `theme-${theme}`)} border={border} title={title} >
+      <StyledObject className={cx('color-box', className, { theme }, { label }, theme && `theme-${theme}`)} border={border} title={title} >
         {label && <label className="label">{label}</label>}
         {type === "compact" && <CompactPicker className={"picker-box"} onChange={this.onChanged} color={state.value} />}
         {clear && <Svg className="btn-clear xs" onClick={this.onClear} eid={"clear"} icon={'clear'} />}

@@ -19,7 +19,7 @@ const StyledObject = styled.div`{
 
     &.active {
       .cls-frame {
-        animation: callopse-in ease-out 1 forwards ${ ({ time }) => time};
+        animation: callopse-in ease-out 1 forwards ${({ time }) => time};
       }
     }
 
@@ -51,10 +51,10 @@ const StyledObject = styled.div`{
     &.theme-dark { ${cs.bg.dark} ${cs.font.white} .cls-title:hover { ${cs.bg.black} } .cls-frame { ${cs.border.gray} } }
     &.theme-black { ${cs.bg.black} ${cs.font.white} .cls-title:hover { ${cs.bg.dark} } .cls-frame { ${cs.border.darkgray} } }
 
-    ${({border}) => border && cs.box.line}
-    ${({border}) => border && border.color && cs.border.color(border.color)}
-    ${({border}) => border && border.radius && cs.border.radius(border.radius)}
-    ${({border}) => border && border.width && cs.border.width(border.width)}
+    ${({ border }) => border && cs.box.line}
+    ${({ border }) => border && border.color && cs.border.color(border.color)}
+    ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
+    ${({ border }) => border && border.width && cs.border.width(border.width)}
 
     @media screen and (max-width : 1280px) {}
     @media screen and (max-width : 1024px) {}
@@ -69,11 +69,15 @@ const StyledObject = styled.div`{
 }`;
 
 const Callopsebox = (props) => {
-  const interval = '200ms';
   const [active, setActive] = useState(props.active || false);
-  const { label = "notitle", align = "left", minHeight = "100px", eid = null, rowid = null, border = null, theme } = props;
+  const {
+    label = "notitle", align = "left", minHeight = "100px", eid = null,
+    rowid = null, border = null, theme, interval = '200ms'
+  } = props;
 
-  useEffect(() => setActive(props.active), [props.active]);
+  useEffect(() => {
+    setActive(props.active)
+  }, [props.active]);
 
   const onClick = (e) => {
     // const rowid = e.currentTarget.getAttribute("rowid");
@@ -83,7 +87,7 @@ const Callopsebox = (props) => {
 
   return (
     <StyledObject className={cx('callopse-box', props.className, { active }, theme && `theme-${theme}`)}
-      align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor} 
+      align={align} minHeight={minHeight} time={interval} bgcolor={props.bgcolor}
       border={border} >
       <div className="cls-title" onClick={onClick}>{label}</div>
       <div className="cls-frame">{props.children}</div>

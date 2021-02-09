@@ -2,7 +2,7 @@
 import React from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
-import { Util, Loading, Svg, Guidebox, cs } from './index';
+import { Util, Svg, Guidebox, cs } from './index';
 import { EID } from './Config';
 import { IMG } from './Icons';
 

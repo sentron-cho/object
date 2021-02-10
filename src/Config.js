@@ -174,10 +174,12 @@ export const AUTH = {
 }
 
 export const SCREEN = {
-  //MOBILE : 767,
-  MOBILE: 860,
+  MOBILE: 800,
   TABLET: 1024,
   PC: 1280,
+  // MOBILE: 600,
+  // TABLET: 800,
+  // PC: 1024,
 
   ST: {
     MOBILE: "s-mobile",

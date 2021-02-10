@@ -82,9 +82,6 @@ const StyledObject = styled.div` {
       ${({ font }) => font && font.align && cs.font.align(font.align)}
       ${({ font }) => font && font.size && cs.font.size(font.size)}
 
-      // ${({ font }) => font && font.align && font.align === "left" && `padding-left: 10px !important;`}
-      // ${({ font }) => font && font.align && font.align === "right" && `padding-right: 10px !important;`}
-
       ${({ border }) => border && cs.box.line}
       ${({ border }) => border && border.color && cs.border.color(border.color)}
       ${({ border }) => border && border.radius && cs.border.radius(border.radius)}
@@ -165,7 +162,7 @@ export default class Menu extends React.PureComponent {
     if (eid === "none") {
       console.dir("none");
     } else {
-      const index = this.state.list.findIndex(item => item.check = item.id.toString() === eid);
+      const index = this.state.list.findIndex(a => a.check = a.id.toString() === eid);
       const item = this.getSelected(index);
       this.props.onClick && this.props.onClick(item ? item.id : EID.SELECT, e, item);
       this.props.onChange && this.props.onChange(item ? item.id : EID.SELECT, e, item);
@@ -189,7 +186,7 @@ export default class Menu extends React.PureComponent {
             {!list && <span className={cx("mb-li", title === 'noitem' && 'noitem')}>{title}</span>}
             {list && list.map((item, index) => {
               const active = index === pos;
-              return <li key={index} className={cx('mb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name && item.name}</li>
+              return <li key={index} className={cx('mb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name}</li>
             })
             }
           </ul>

@@ -17,14 +17,8 @@ export const Util = {
   getScreenType() {
     let type = 's-pc';
     const screen = window.innerWidth;
-    if (screen <= SCREEN.TABLET) {
-      type = "s-tablet";
-    }
-
-    if (screen <= SCREEN.MOBILE) {
-      type = "s-mobile";
-    }
-
+    (screen <= SCREEN.TABLET) && (type = "s-tablet");
+    (screen <= SCREEN.MOBILE) && (type = "s-mobile");
     return { 'type': type, 'width': screen };
   },
 

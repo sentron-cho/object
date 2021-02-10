@@ -282,7 +282,7 @@ const Slidebar = (props) => {
 
     return () => {
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value]);
 
   const onChange = (v) => {
@@ -293,7 +293,7 @@ const Slidebar = (props) => {
   return (
     <StyledObject className={cx('slide-bar', className)}>
       {label && <div className={'sb-label'}>{label}</div>}
-      <Slider value={value} onChange={onChange} />
+      <Slider value={value} onChange={onChange} min={min} max={max} />
       <div className={'sb-guide'}>
         {min !== null && <span className={'sb-min'}>{min}</span>}
         <span className={'sb-val'}>{value}</span>

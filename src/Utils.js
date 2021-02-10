@@ -44,7 +44,7 @@ export const Util = {
 
   replaceSymbol(value) { return value.replace(/-/gi, ''); },
 
-  replaceAll(value, tag, target = '') { return value ? value.split(tag).join(target) : ''; },
+  replaceAll(value, tag, target = '') { return value ? String(value).split(tag).join(target) : ''; },
 
   addSymbol(value, symbol) {
     if (value == null || value.length < 6) {

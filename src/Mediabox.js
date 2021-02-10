@@ -25,6 +25,7 @@ const StyledObject = styled.div`{
     .cont-frame {
       ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
       ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative}
+      // &:hover{ ${cs.p.get('0px !important;')} }
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; }
     }
@@ -98,7 +99,7 @@ export default class Mediabox extends React.PureComponent {
     window.removeEventListener('resize', this.onResize);
   }
 
-  
+
   onResize = (e) => {
     this.setState({ height: this.getHeight() });
   }
@@ -158,25 +159,25 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '' } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '', imagestyle = '' } = props;
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const src = props.src || props.url;
     const { border } = props.options || { border: null };
 
     const renderContents = () => {
       if (error || !src) {
-        return <img alt="img" className={cx('cont-frame', type, 'noimage')} src={IMG.NoimageBig} onLoad={this.onLoad} />
+        return <img alt="img" className={cx('cont-frame', type, 'noimage')} src={IMG.NoimageBig} onLoad={this.onLoad} style={{ ...imagestyle }} />
       } else {
         return (
           <React.Fragment>
             {type === CONT_TYPE.IMAGE && <img alt="img" className={cx("cont-frame", type, pointer)}
-              src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit, maxHeight }} />}
-            {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)}
+              src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit, maxHeight, ...imagestyle }} />}
+            {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)} style={{...imagestyle}}
               style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
-            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)}
+            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)} style={{...imagestyle}}
               style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
-            {type === CONT_TYPE.LINK && <img alt="link" className={cx("cont-frame", type, pointer)}
-              src={src} onLoad={this.onLoad} onError={this.onError} />}
+            {type === CONT_TYPE.LINK && <img alt="link" className={cx("cont-frame", type, pointer)} 
+              src={src} onLoad={this.onLoad} onError={this.onError} style={{...imagestyle}} />}
           </React.Fragment>
         )
       }

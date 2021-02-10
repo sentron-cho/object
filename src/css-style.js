@@ -428,7 +428,8 @@ const cs = {
     slideout: (v = '150ms', s = '0', e = '-100%', name = 'slideout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateX(${s});  opacity: 0.3; } to { transform: translateX(${e});  opacity: 1; } };`,
     slidedown: (v = '150ms', s = '-100%', e = '0', name = 'slidedown') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s}); opacity: 0.3; } to { transform: translateY(${e}); opacity: 1; } };`,
     slideup: (v = '150ms', s = '0', e = '-100%', name = 'slideup') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
-    sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizeup') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
+    sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizing') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
+    zoomin: (v = '300ms', s = '1.0', e = '1.2', opac = 1.0, name = 'zoomin') => `animation: ${name} ease-out 1 forwards ${v}; @keyframes ${name} { from { transform: scale(${s}); } to { transform: scale(${e}); opacity: ${opac}; } };`,
     flicking: (v = '150ms', s = '1', e = '0', r = 1, name = 'filking') => `animation: ${name} linear ${r} forwards ${v}; @keyframes ${name} { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
   },
 

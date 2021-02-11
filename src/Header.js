@@ -7,46 +7,27 @@ import * as actions from './actor/Action';
 
 const StyledObject = styled.header`{
   &.header {
-    ${cs.pos.relative} ${cs.w.full} ${cs.over.hidden} ${cs.z.header}
+    ${cs.w.full} ${cs.over.hidden} ${cs.z.header} ${cs.pos.relative}
     ${({ height }) => cs.h.get(height)} ${cs.noliststyle} ${cs.noselect}
 
     .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner}
-      ${({ height }) => cs.h.get(height)} ${cs.anim.showin('500ms')}
+      ${({ height }) => cs.h.get(height)} //${cs.anim.showin('500ms')}
       
-      &.float { ${cs.pos.fixed} ${cs.anim.show} ${cs.border.gray} }
+      &.float { ${cs.pos.fixed} ${cs.border.gray} }
 
       .nav-layer { ${cs.size.full} ${cs.disp.block} ${cs.p.l10} ${props => cs.max.width(props.maxwidth)}
         .li-title { ${cs.align.ycenter} ${cs.pos.relative} ${cs.font.t1} ${cs.font.weight(700)} ${cs.h.auto} ${cs.disp.inblock}
-          ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} letter-spacing: 3px; 
+          ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} ${cs.p.r20} ${cs.font.spacing(3)} //${cs.anim.slideup('200ms', '150%', '-50%')}
         }
 
-        .ul-navi { ${cs.opac.show} ${cs.disp.block} ${cs.size.wfit} 
-          ${cs.mouse.pointer} ${cs.z.header} ${cs.disp.inblock} ${cs.h.auto}
+        .ul-navi { ${cs.opac.show} ${cs.disp.block} ${cs.size.wfit} ${cs.align.ycenter} ${cs.p.r10}
+          ${cs.mouse.pointer} ${cs.z.header} ${cs.disp.inblock} ${cs.h.auto} 
           .li-nav { ${cs.disp.inblock} ${cs.size.fit} ${cs.m.h10} ${cs.font.center} ${cs.font.thickbold} 
-            ${cs.z.front} ${cs.font.md}
+            ${cs.z.front} ${cs.font.md} ${cs.anim.showin('200ms')} //${cs.anim.slideup('300ms', '150%', '0')}
 
-            &:hover, &.active { ${cs.font.primary} }
+            &.active { ${cs.font.primary} }
+            &:hover { ${cs.anim.zoomin()} }
           }
-
-          &.s-tablet, &.s-pc {
-            .li-nav { ${cs.pos.relative} }
-          }
-        }
-
-        &.s-tablet, &.s-pc { ${cs.align.center} 
-          .li-title { ${cs.p.r20} }
-          .ul-navi { ${cs.align.ycenter} ${cs.p.r10} }
-        }
-
-        &.s-mobile { ${cs.pos.relative} ${cs.size.full} 
-          .li-title { ${cs.align.center} }
-          .ul-navi { ${cs.bg.dark} ${cs.opac.show} ${cs.box.radius} ${cs.box.shadow} ${cs.font.white}
-            ${cs.w.get(240)} ${cs.pos.fixed} ${cs.p.a10} ${cs.h.auto} ${cs.right(30)} ${cs.top(40)}
-            .li-nav { ${cs.w.full} ${cs.disp.block} ${cs.m.a0} ${cs.font.line(34)} 
-              &:hover { ${cs.bg.black} ${cs.anim.show} } 
-            }
-          }
-          .btn-menu { ${cs.align.ycenter} ${cs.float.r} ${cs.pos.relative} ${cs.right(10)} }
         }
 
         &.right { &.s-tablet, &.s-pc { .ul-navi {  ${cs.right(0)} } } }
@@ -64,14 +45,14 @@ const StyledObject = styled.header`{
       .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
       .nav-layer .ul-navi .li-nav {
         ${cs.font.sky}
-        &:hover, &.active { ${cs.font.dark} }
+        &.active { ${cs.font.dark} }
       }
     }
     &.gray {
       .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
         .nav-layer .ul-navi .li-nav {
           ${cs.font.dark}
-          &:hover, &.active { ${cs.font.primary} }
+          &.active { ${cs.font.primary} }
         }
       }
     }
@@ -83,14 +64,14 @@ const StyledObject = styled.header`{
       .nav-frame { ${cs.bg.primary} ${cs.font.white} } 
       .nav-layer .ul-navi .li-nav {
         ${cs.font.sky}
-        &:hover, &.active { ${cs.font.dark} }
+        &.active { ${cs.font.dark} }
       }
     }
     &.theme-gray {
       .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
         .nav-layer .ul-navi .li-nav {
           ${cs.font.dark}
-          &:hover, &.active { ${cs.font.primary} }
+          &.active { ${cs.font.primary} }
         }
       }
     }
@@ -106,7 +87,6 @@ const StyledObject = styled.header`{
       .nav-layer .ul-navi .li-nav {
         ${({ font }) => font && font.color && cs.font.color(font.color)}
         ${({ font }) => font && font.size && cs.font.size(font.size)}
-        // ${({ font }) => font && font.type && cs.font.family(font.type)}
 
         &:hover, &.active { 
           ${({ font }) => font && font.hover && cs.font.color(font.hover)}
@@ -118,21 +98,38 @@ const StyledObject = styled.header`{
       ${({ border }) => border && border.width && cs.border.width(border.width)}
     }
 
-    @media screen and (max-width : 1280px) { }
+    @media screen and (max-width : 1280px) { 
+      .nav-frame .nav-layer { 
+        .li-title { ${cs.p.r20} }
+        .ul-navi { ${cs.align.ycenter} ${cs.p.r10} }
+      }
+    }
 
     @media screen and (max-width : 1024px) {
       .nav-frame .nav-layer { 
-        .li-title { ${cs.font.xxl} }
-        .ul-navi {
+        .li-title { ${cs.font.xxl} ${cs.align.unset} ${cs.align.ctop} ${cs.top(5)} }
+        .ul-navi { ${cs.align.unset} ${cs.pos.absolute} ${cs.bottom(5)} ${cs.w.full} ${cs.font.center}
           .li-nav { ${cs.font.sm} }
         }
       }
     }
   
-    @media screen and (max-width : 860px) {
+    @media screen and (max-width : 800px) {
+      ${cs.align.unset} ${cs.pos.sticky}
       .nav-frame .nav-layer { 
+        // ${cs.pos.relative} ${cs.size.full} 
         .li-title { ${cs.align.center} }
+        .ul-navi { ${cs.align.unset} ${cs.p.r10} ${cs.bg.dark} ${cs.opac.show} ${cs.box.radius} ${cs.box.shadow} ${cs.font.white}
+          ${cs.w.get(240)} ${cs.pos.fixed} ${cs.p.a10} ${cs.h.auto} ${cs.right(30)} ${cs.top(40)}
+          .li-nav { ${cs.w.full} ${cs.disp.block} ${cs.m.a0} ${cs.font.line(34)} 
+            &:hover { ${cs.bg.black} ${cs.anim.show} } 
+          }
+        }
+        .btn-menu { ${cs.align.ycenter} ${cs.float.r} ${cs.pos.relative} ${cs.right(10)} }
       }
+    }
+
+    @media screen and (max-width : 600px) {
     }
   }
 }`;
@@ -147,6 +144,11 @@ class Header extends React.PureComponent {
 
   onClickMenu = (e, item) => {
     const { url, param = {} } = item;
+    if (this.props.onClickMenu) {
+      this.props.onClickMenu(e, item);
+      return;
+    }
+
     if (this.props.preview) {
       window.open(url);
     } else {
@@ -203,7 +205,7 @@ class Header extends React.PureComponent {
   render() {
     const { props, state } = this;
     // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
-    const { list, location, title, height = "60px", maxwidth = "1024px", theme, className } = props;
+    const { list, location, title, height = "60px", maxwidth = "1024px", theme, className, pos = -1 } = props;
     const { menus, type } = state;
 
     // const isroot = location === root;
@@ -245,12 +247,13 @@ class Header extends React.PureComponent {
             {/* 네비 메뉴 */}
             {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
               {array.map((item, index) => {
-                const active = location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
+                const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
+                const title = item.name || item.title;
                 if (item.hide) {
                   return null;
                 } else {
                   return <li key={index} className={cx("li-nav", { active })}
-                    onClick={(e) => this.onClickMenu(e, item)}>{item.name && item.name.toUpperCase()}
+                    onClick={(e) => this.onClickMenu(e, item)}>{title && title.toUpperCase()}
                   </li>
                 }
               })}

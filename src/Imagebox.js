@@ -148,11 +148,11 @@ export default class Imagebox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { loaded, error } = state;
-    const { fit = "contain", className, maxheight, edited } = props;
+    const { fit = "contain", className, maxheight, edited, imagestyle = '' } = props;
 
     const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const { width } = state;
-    const style = { ...props.style, width, fit };
+    // const style = { ...props.style, width, fit };
     const sizeguide = props.sizeguide || `[100 X 100]`;
     const src = props.src || props.url;
     const noimage = !src || error;
@@ -160,11 +160,12 @@ export default class Imagebox extends React.PureComponent {
     const { border } = props.options || { border: null };
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer)}
-        {...style} eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked}>
+      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer)} width={width} fit={fit}
+        eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked} style={{...props.style}}>
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
         {noimage ? <span className={cx("ib-frame", 'no-image')} >{"No Image"}</span>
-          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} onLoad={this.onLoad} onError={this.onError} />}
+          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} style={{ objectFit: fit, ...imagestyle }} 
+            onLoad={this.onLoad} onError={this.onError} />}
         {props.children}
         {props.onDelete && <Svg className="ib-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}
         {!loaded && <Loading type="ring" />}

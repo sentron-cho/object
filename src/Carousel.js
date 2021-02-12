@@ -8,7 +8,7 @@ import { IMG } from './Icons';
 
 const StyledObject = styled.div`{
   &.carousel-box { 
-    ${cs.noselect} ${cs.noliststyle} ${cs.h.full} ${cs.min.height(240)} 
+    ${cs.noselect} ${cs.noliststyle} ${cs.h.full} ${cs.min.height(240)}
     ${cs.pos.relative} ${cs.over.hidden} ${cs.w.get(1000)} ${cs.box.inner}
 
     ${({ width }) => cs.w.get(width)};
@@ -27,7 +27,7 @@ const StyledObject = styled.div`{
     }
 
     .cau-li { 
-      ${cs.pos.relative} ${cs.opac.invisible} ${cs.disp.inblock}
+      ${cs.pos.relative} ${cs.opac.invisible} ${cs.disp.inblock} 
       ${cs.h.full} ${cs.w.calc('100% / 2')} ${cs.object.cover} ${cs.object.center}
 
       &.loaded { 
@@ -36,7 +36,7 @@ const StyledObject = styled.div`{
       }
 
       .cau-image { 
-        ${cs.size.full} ${cs.bg.get(`url(${IMG.NoimageBig})`)}
+        ${cs.size.full} ${cs.bg.get(`url(${IMG.NoimageBig})`)} 
         ${cs.bg.size("contain")} ${cs.bg.repeat("no-repeat")} ${cs.disp.block} ${cs.bg.pos("center")}
         
         &.noimage { ${cs.box.line} }
@@ -198,7 +198,7 @@ export default class Carousel extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.list !== this.props.list) {
-      const list = this.makelist(nextProps.list );
+      const list = this.makelist(nextProps.list);
       this.setState({ list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null });
     }
 
@@ -365,7 +365,7 @@ export default class Carousel extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className, this.props.onSelect && 'mouse')}
-        {...styled} length={list.length} text={text} title={title} border={border} time={time}>
+        {...styled} length={list.length} text={text} title={title} border={border} time={time} style={{ ...this.props.style }}>
         {/* error guid */}
         {renderGuide()}
 

@@ -145,7 +145,7 @@ const StyledObject = styled.div`{
       }
     }
 
-    &.full { ${cs.w.full}
+    &.full { ${cs.size.full}
       &.xs { ${cs.h.get(240)} }
       &.sm { ${cs.h.get(320)} }
       &.md { ${cs.h.get(480)} }
@@ -425,7 +425,7 @@ class Uploadbox extends React.PureComponent {
   render() {
     const { props } = this;
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
-    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null } = props;
+    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '' } = props;
 
     const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
@@ -437,7 +437,7 @@ class Uploadbox extends React.PureComponent {
     // const itype = type === CT.YOUTUBE ? 'text' : "file";
 
     return (
-      <StyledObject className={cx("uploader", className, { oneline }, { thumb }, theme && `theme-${theme}`)}
+      <StyledObject className={cx("uploader", className, { oneline }, { thumb }, theme && `theme-${theme}`, size)}
         name={name} height={height} border={border}>
         {!thumb && <span className="up-title">{label}</span>}
 

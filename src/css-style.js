@@ -82,6 +82,8 @@ const cs = {
     + `&:hover { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-color: transparent; };`,
 
   max: {
+    full: 'max-width: 100%;',
+    none: 'max-width: none;',
     wxl: 'max-width: 1280px;',
     wlg: 'max-width: 1024px;',
     wmd: 'max-width: 800px;',

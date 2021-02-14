@@ -11,22 +11,22 @@ const StyledObject = styled.header`{
     ${({ height }) => cs.h.get(height)} ${cs.noliststyle} ${cs.noselect}
 
     .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner}
-      ${({ height }) => cs.h.get(height)} //${cs.anim.showin('500ms')}
+      ${({ height }) => cs.h.get(height)}
       
       &.float { ${cs.pos.fixed} ${cs.border.gray} }
 
       .nav-layer { ${cs.size.full} ${cs.disp.block} ${cs.p.l10} ${props => cs.max.width(props.maxwidth)}
         .li-title { ${cs.align.ycenter} ${cs.pos.relative} ${cs.font.t1} ${cs.font.weight(700)} ${cs.h.auto} ${cs.disp.inblock}
-          ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} ${cs.p.r20} ${cs.font.spacing(3)} //${cs.anim.slideup('200ms', '150%', '-50%')}
+          ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} ${cs.p.r20} ${cs.font.spacing(3)}
         }
 
         .ul-navi { ${cs.opac.show} ${cs.disp.block} ${cs.size.wfit} ${cs.align.ycenter} ${cs.p.r10}
           ${cs.mouse.pointer} ${cs.z.header} ${cs.disp.inblock} ${cs.h.auto} 
           .li-nav { ${cs.disp.inblock} ${cs.size.fit} ${cs.m.h10} ${cs.font.center} ${cs.font.thickbold} 
-            ${cs.z.front} ${cs.font.md} ${cs.anim.showin('200ms')} //${cs.anim.slideup('300ms', '150%', '0')}
+            ${cs.z.front} ${cs.font.md} ${cs.anim.showin('200ms')}
 
             &.active { ${cs.font.primary} }
-            &:hover { ${cs.anim.zoomin()} }
+            // &:hover { ${cs.anim.zoomin()} }
           }
         }
 
@@ -96,6 +96,10 @@ const StyledObject = styled.header`{
       ${({ border }) => border && cs.border.bottom}
       ${({ border }) => border && border.color && cs.border.color(border.color)}
       ${({ border }) => border && border.width && cs.border.width(border.width)}
+    }
+
+    @media screen and (min-width : 801px) { 
+      .nav-frame .nav-layer .ul-navi .li-nav:hover { ${cs.anim.zoomin()} }
     }
 
     @media screen and (max-width : 1280px) { 
@@ -253,7 +257,7 @@ class Header extends React.PureComponent {
                   return null;
                 } else {
                   return <li key={index} className={cx("li-nav", { active })}
-                    onClick={(e) => this.onClickMenu(e, item)}>{title && title.toUpperCase()}
+                    onClick={(e) => this.onClickMenu(e, item)}><span>{title && title.toUpperCase()}</span>
                   </li>
                 }
               })}

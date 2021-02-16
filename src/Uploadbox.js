@@ -53,7 +53,8 @@ const StyledObject = styled.div`{
         }
         .noimage { ${cs.object.contain} ${cs.opac.visible} }
         .upv-noti { ${cs.font.red} ${cs.box.radius} ${cs.bottom(10)} ${cs.bg.alphablack}
-          ${cs.p.h10} ${cs.z.over} ${cs.h.get(30)} ${cs.font.line(30)} ${cs.align.xcenter}
+          ${cs.z.over} ${cs.align.xcenter} ${cs.min.w('fit-content')} ${cs.max.w('calc(100% - 10px)')} 
+          ${cs.font.sm} ${cs.font.line(14)} ${cs.p.h10} ${cs.p.v5} ${cs.h.fit} ${cs.font.center}
         }
         .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(5)} ${cs.w.fit} ${cs.p.h10} ${cs.p.v3}
           ${cs.z.over} ${cs.align.xcenter} ${cs.bg.alphablack} ${cs.border.radius(3)} ${cs.font.sm}
@@ -97,15 +98,6 @@ const StyledObject = styled.div`{
       }
       .up-title, .upf-value, upf-image { display: none }
     }
-    
-    // .info-box {
-    //   position: absolute; bottom: 0; left: 0; width: 100%; padding: 5px 10px; font-size: 12px; text-align: left; 
-    //   color: #d6d6d6; line-height: 14px; ${cs.opac.hide} ${cs.anim.show} ${cs.bg.alphablack}
-
-    //   // &:hover { ${cs.opac.show} ${cs.anim.show} }
-
-    //   p { overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    // }
 
     &:not(.full) {
       &.xs { 
@@ -221,13 +213,13 @@ class Uploadbox extends React.PureComponent {
 
   createData = (props) => {
     const { value, path } = props;
-    const data = value && value.indexOf('base64') > 0 ? "base64 raw data!!" : value;
+    const data = value && value.indexOf('base64') >= 0 ? "base64 raw data!!" : value;
     const files = !value ? [{ 'name': NONE }] : [{ 'name': `${data}` }];
     const type = Util.isEmpty(props.type) ? 'image' : props.type;
     let bufs = !value ? [] : [`${path ? path : ""}${value}`];
 
     //http로 시작하거나 base64 데이터면 그냥 데이터를 넣자...
-    if (value && (value.indexOf("http") === 0 || value.indexOf('base64') > 0)) {
+    if (value && (value.indexOf("http") === 0 || value.indexOf('base64') >= 0)) {
       bufs = [value];
     }
 
@@ -238,6 +230,7 @@ class Uploadbox extends React.PureComponent {
     // if (!this.state.load) {
     //   setTimeout(() => this.setState({load: true}), 100);
     // }
+    // this.setState({ noti: `${ST.NOTI.SIZE_CHECK('100 * 100')}` });
   }
 
   componentWillUnmount() {
@@ -257,7 +250,7 @@ class Uploadbox extends React.PureComponent {
       return null;
     } else {
       const buf = this.state.bufs[0];
-      return buf.indexOf('base64') > 0 ? this.state.bufs[0] : this.state.files[0].name;
+      return buf.indexOf('base64') >= 0 ? this.state.bufs[0] : this.state.files[0].name;
     }
   }
 

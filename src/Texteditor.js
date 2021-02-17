@@ -190,12 +190,11 @@ export default class Texteditor extends React.PureComponent {
       (resolve, reject) => {
         const data = new FormData();
         data.append('image', file);
-        actions.doInsert(`${this.api}/upload` || '/uploader', data).then(({ code, result }) => {
-          // alert('success');
+        actions.doInsert(`${this.api}/upload`, data).then(({ code, result }) => {
           resolve({ data: { link: result.url } });
         }).catch(err => {
+          console.error(err);
           reject({ err: 'error' });
-          // alert('fail');
         });
       }
     );

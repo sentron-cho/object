@@ -172,12 +172,12 @@ export default class Mediabox extends React.PureComponent {
           <React.Fragment>
             {type === CONT_TYPE.IMAGE && <img alt="img" className={cx("cont-frame", type, pointer)}
               src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit, maxHeight, ...imagestyle }} />}
-            {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)} style={{...imagestyle}}
-              style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
-            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)} style={{...imagestyle}}
-              style={{ width: "100%", height: "100%" }} url={src} playing={playing} controls={controls} playsinline loop />}
-            {type === CONT_TYPE.LINK && <img alt="link" className={cx("cont-frame", type, pointer)} 
-              src={src} onLoad={this.onLoad} onError={this.onError} style={{...imagestyle}} />}
+            {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)} style={{ width: "100%", height: "100%", ...imagestyle }}
+              url={src} playing={playing} controls={controls} playsinline loop />}
+            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)} style={{ width: "100%", height: "100%", ...imagestyle }}
+              url={src} playing={playing} controls={controls} playsinline loop />}
+            {type === CONT_TYPE.LINK && <img alt="link" className={cx("cont-frame", type, pointer)}
+              src={src} onLoad={this.onLoad} onError={this.onError} style={{ ...imagestyle }} />}
           </React.Fragment>
         )
       }

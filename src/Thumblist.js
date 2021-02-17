@@ -5,7 +5,6 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { Nodata, Svg, Thumbbox, Guidebox, Dragable, cs } from './index';
-import Button from './Button';
 
 const StyledObject = styled.div`{
   &.thumb-list { 

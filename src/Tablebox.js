@@ -27,15 +27,13 @@ const StyledObject = styled.div`{
           ${cs.font.center} ${cs.disp.inblock} ${cs.p.v4} ${cs.h.full}
           ${cs.over.hidden} ${cs.font.ellipsis}
           ${({ flex }) => flex && cs.disp.flex(flex)};
-          ${cs.border.right} ${cs.border.white} ${cs.p.h10}
+          ${cs.border.left} ${cs.border.white} ${cs.p.h10}
           ${({ height }) => cs.font.line(height)};
           ${({ height }) => cs.h.get(height)};
 
           p { ${cs.font.ellipsis} ${({ align }) => cs.font.align(align)}; ${cs.pos.relative} }
 
           .tb-u { ${cs.font.xs} ${cs.m.l1} ${cs.opac.get(0.7)} }
-
-          &:last-child { ${cs.border.none} }
         }
 
         .btn-head { ${cs.disp.hidden} }
@@ -72,9 +70,9 @@ const StyledObject = styled.div`{
 
       .selection {
         &:hover { ${cs.bg.hover} }
-      }
+      }      
     }
-    
+
     .total-txt { ${cs.font.right} ${cs.p.a3} ${cs.font.sm} ${cs.opac.get(0.7)} }
     .page-navi { ${cs.p.t5} ${cs.align.xcenter} ${cs.pos.relative} }
     
@@ -177,7 +175,7 @@ const StyledObject = styled.div`{
       }
       .total-txt { ${cs.font.white} }
       .selection:hover { ${cs.bg.darkhover} }
-      .btn-new { ${cs.bg.black} ${cs.font.white} }
+      .btn-new { ${cs.bg.black} ${cs.font.white} } 
     }
     &.black {
       .tb-body { ${cs.bg.black} ${cs.font.white} 
@@ -190,7 +188,6 @@ const StyledObject = styled.div`{
       .selection:hover { ${cs.bg.darkhover} }
       .btn-new { ${cs.bg.dark} ${cs.font.white} }
     }
-
     
     &.theme-sky {
       .tb-body { ${cs.bg.sky} ${cs.font.dark} 
@@ -257,6 +254,8 @@ const StyledObject = styled.div`{
     
     ${({ bgcolor }) => bgcolor && `.tb-body { ${cs.bg.color(bgcolor)} }`}
 
+    .tb-line .tb-row .tb-col.first { ${cs.border.none} }
+
     @media screen and (max-width : 1280px) {}
   
     @media screen and (max-width : 1024px) {
@@ -264,19 +263,19 @@ const StyledObject = styled.div`{
         .tb-col.tablet { ${cs.disp.none} }
       }
 
-      .tb-col {font-size: 13px;}
+      .tb-col { ${cs.font.sm} }
     }
   
     @media screen and (max-width : 860px) {
-      padding: 0; font-size: 12px; padding-bottom: 30px; padding-top: 10px;
+      ${cs.p.a0} ${cs.font.sm} ${cs.p.b30} ${cs.p.t10}
       .tb-line .tb-row {
-        .tb-col.mobile { display: none; }
-        .i-btn { opacity: 0.8; }
+        .tb-col.mobile { ${cs.disp.none} }
+        .i-btn { ${cs.opac.get(0.8)} }
       } 
       
-      .tb-col {font-size: 12px;}
-      .search { width: calc(100% - 100px); }
-      .btn-new { top: 10px; }
+      .tb-col { ${cs.font.sm} }
+      .search { ${cs.w.calc('100% - 100px')} }
+      .btn-new { ${cs.top(10)} }
     }
   }
 }`;
@@ -341,8 +340,10 @@ const Tablebox = (props) => {
       }
 
       const vcolor = getcolor && getcolor(value);
+      const first = index === 0;
 
-      return <div key={String(index)} style={{ flex: flex }} className={cx("tb-col", col.key, (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
+      return <div key={String(index)} style={{ flex: flex }} className={cx("tb-col", col.key, { first },
+        (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>
         {formatter ? <div style={styled} className={cx('tb-p', vcolor)}>{data}</div> : <p style={styled} className={cx('tb-p', vcolor)}>{data}</p>}
       </div>
     })
@@ -421,9 +422,10 @@ const Tablebox = (props) => {
             {props.onDragDrop && <Svg className="i-btn btn-head sm" name={""} />}
             {head.map((item, index) => {
               const { tablet = 'show', mobile = 'show', flex, unit = '' } = item;
+              const first = index === 0;
               return <div key={index} style={{ flex: flex }} onClick={onClickHead} eid={item.id}
-                className={cx("tb-col", item.id, item.key, (mobile === 'hide' || tablet === 'hide') && 'mobile',
-                  tablet === 'hide' && 'tablet')} >{item.title}
+                className={cx("tb-col", item.id, item.key, { first },
+                  (mobile === 'hide' || tablet === 'hide') && 'mobile', tablet === 'hide' && 'tablet')}>{item.title}
                 {unit && <span className="tb-u">{`[${unit}]`}</span>}
               </div>
             })}

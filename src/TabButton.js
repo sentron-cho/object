@@ -31,7 +31,7 @@ const TabButton = (props) => {
       setSelect(props.select);
       return () => {
       }
-    }, [props.select])
+    }, [props.select, props.list])
 
     const onClicked = (eid, e) => {
       const item = list.find(a => a.id === eid);

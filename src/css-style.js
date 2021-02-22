@@ -515,7 +515,8 @@ const cs = {
     size: (v) => `background-size: ${v};`,
     repeat: (v) => `background-repeat: ${v};`,
     pos: (v) => `background-position: ${v};`,
-    image: (v) => `background-image: url(${v});`
+    image: (v) => `background-image: url(${v});`,
+    attach: (v) => `background-attachment: ${v};`
   },
 
   icon: {

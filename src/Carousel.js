@@ -13,6 +13,7 @@ const StyledObject = styled.div`{
 
     ${({ width }) => cs.w.get(width)};
     ${({ height }) => cs.h.get(height)};
+    ${cs.max.h(520)}
 
     .cau-ul {
       ${cs.h.full} ${cs.w.calc('100% * 2')}
@@ -62,8 +63,6 @@ const StyledObject = styled.div`{
       } 
     }
 
-    // .btn-edit { position: absolute; right: 20px; top: 20px; z-index: 100; }
-
     .slide-navi { 
       ${cs.pos.absolute} ${cs.top(0)} ${cs.z.front} ${cs.h.full} ${cs.mouse.pointer}
       ${cs.bg.vgradint} ${cs.opac.get(0.3)} //background: rgba(0,0,0,0.1);
@@ -71,11 +70,6 @@ const StyledObject = styled.div`{
       &.next { ${cs.right(0)} }
       .icon { ${cs.align.ycenter} ${cs.pos.relative} ${cs.w.get(40)} .svg-path { ${cs.fill.dark} } }
     }
-
-    // &.show-loading { .loading-box { opacity: 1; } }
-    // .loading-box { top: 0; opacity: 0; }
-    // .pointer { cursor: pointer; };
-    // .border { border: 2px solid rgba(255, 255, 255, 0); border-radius: 5px; }
 
     &:hover { 
       .cau-li .cau-caption { ${cs.opac.show} ${cs.anim.in()} }
@@ -203,9 +197,13 @@ export default class Carousel extends React.PureComponent {
     }
 
     if (nextProps.anim != null) {
-      // this.state.isanim = this.state.anim = nextProps.anim;
       this.setState({ isanim: nextProps.anim, anim: nextProps.anim });
     }
+
+    if(nextProps.resize) {
+      this.onResize();
+    }
+
     this.animation != null && clearTimeout(this.animation);
   }
 

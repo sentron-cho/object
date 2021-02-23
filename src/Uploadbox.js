@@ -292,7 +292,7 @@ class Uploadbox extends React.PureComponent {
 
     this.setState({ 'files': files, 'bufs': bufs, 'type': this.state.type, 'modified': false, refresh: true });
     setTimeout(() => this.setState({ refresh: false }), 200);
-    props.onChange && props.onChange(bufs && bufs[0] || '', e, this.state.type);
+    props.onChange && props.onChange((bufs && bufs[0]) || '', e, this.state.type);
   }
 
   onClicked = (eid, e) => {
@@ -424,7 +424,7 @@ class Uploadbox extends React.PureComponent {
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
     const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '', imagestyle } = props;
 
-    const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
+    const { noti, type, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
     const fileExt = isMedia(type) ? videoExt : imageExt; //isPdf(type) ? pdfExt : imageExt;
     const isMultiMidia = props.onSelectedMedia ? true : false;

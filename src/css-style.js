@@ -105,6 +105,7 @@ const cs = {
   noselect: 'user-select: none;',
   noliststyle: 'ul, li, ol, p {list-style: none; margin: 0; padding: 0;}',
   nolist: 'list-style: none; margin: 0; padding: 0;',
+  zoom: (v = 1) => `zoom: ${v};`,
 
   content: {
     none: 'content: "";',
@@ -467,6 +468,7 @@ const cs = {
     translateY: (v) => `transform: translateY(${v});`,
     translate: (v) => `transform: translate(${v});`,
     rotate: (v) => `transform: rotate(${v});`,
+    get: (v) => `transform: ${v};`,
   },
 
   bg: {

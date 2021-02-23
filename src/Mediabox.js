@@ -122,14 +122,14 @@ export default class Mediabox extends React.PureComponent {
   onClickEdit = (e) => {
     const { props } = this;
     if (props.edited) {
-      props.onClick && props.onClick(e, props.eid)
+      props.onClick && props.onClick(props.eid, e)
     }
   }
 
   onClicked = (e) => {
     const { props } = this;
     if (props.onClick) {
-      props.onClick('link');
+      props.onClick('link', e);
     } else {
       !Util.isEmpty(props.link) && window.open(props.link)
     }
@@ -174,7 +174,8 @@ export default class Mediabox extends React.PureComponent {
 
     const renderContents = () => {
       if (error || !src) {
-        return <img alt="img" className={cx('cont-frame', type, 'noimage')} src={IMG.NoimageBig} onLoad={this.onLoad} style={{ ...imagestyle }} />
+        return <img alt="img" className={cx('cont-frame', type, 'noimage')} src={IMG.NoimageBig}
+          onClick={this.onClicked} onLoad={this.onLoad} style={{ ...imagestyle }} />
       } else {
         return (
           <React.Fragment>

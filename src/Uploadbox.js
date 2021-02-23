@@ -296,6 +296,7 @@ class Uploadbox extends React.PureComponent {
   }
 
   onClicked = (eid, e) => {
+    e && e.stopPropagation();
     const { type } = this.state;
 
     switch (type) {
@@ -409,7 +410,7 @@ class Uploadbox extends React.PureComponent {
           size = '';
         }
 
-        return <div className={"upf-info"} onClick={this.onClicked}>
+        return <div className={"upf-info"} onClick={(e) => this.onClicked('click', e)}>
           <p className={"upi-name"}>{`${name}${size}`}</p>
           {/* <p className={"i-type"}>{`${type}${size}`}</p> */}
         </div>
@@ -451,7 +452,7 @@ class Uploadbox extends React.PureComponent {
               onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
             <Mediabox className={cx("upv-img", type)} fit={fit}
               link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
-              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} imagestyle={imagestyle} />
+              onClick={onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} imagestyle={imagestyle} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
             {props.helpSize && <span className={'upv-help'}>{props.helpSize}</span>}

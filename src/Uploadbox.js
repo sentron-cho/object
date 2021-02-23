@@ -282,13 +282,17 @@ class Uploadbox extends React.PureComponent {
   onClickClear = (e) => {
     const { props } = this;
 
-    const files = props.value === NONE || Util.isEmpty(props.value) ? [{ 'name': NONE }] : [{ 'name': `${props.value}` }];
-    const bufs = props.value === NONE || Util.isEmpty(props.value) ? [] : [`${props.value}`];
+    // const files = props.value === NONE || Util.isEmpty(props.value) ? [{ 'name': NONE }] : [{ 'name': `${props.value}` }];
+    // const bufs = props.value === NONE || Util.isEmpty(props.value) ? [] : [`${props.value}`];
+
+    const files = props.value === this.state.bufs[0] || !this.state.bufs[0] ? [{ 'name': NONE }] : [{ 'name': `${props.value}` }];
+    const bufs = props.value === this.state.bufs[0] || !this.state.bufs[0] ? [] : [`${props.value}`];
+
+    // if(props.value !== this.state.bufs[0])
 
     this.setState({ 'files': files, 'bufs': bufs, 'type': this.state.type, 'modified': false, refresh: true });
-
     setTimeout(() => this.setState({ refresh: false }), 200);
-    props.onChange && props.onChange(bufs[0], e, this.state.type);
+    props.onChange && props.onChange(bufs && bufs[0] || '', e, this.state.type);
   }
 
   onClicked = (eid, e) => {
@@ -418,7 +422,7 @@ class Uploadbox extends React.PureComponent {
   render() {
     const { props } = this;
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
-    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '' } = props;
+    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '', imagestyle } = props;
 
     const { noti, type, modified, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
@@ -441,12 +445,13 @@ class Uploadbox extends React.PureComponent {
 
           {/* 미리보기(썸네일) 화면*/}
           <div className={cx("upf-preview")}>
-            <Svg className={cx("upv-clear sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.CLEAR} color={'dark'} />
+            {/* <Svg className={cx("upv-clear sm", !modified ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.CLEAR} color={'dark'} /> */}
+            <Svg className={cx("upv-clear md border box radius", !buf ? 'hide' : '')} onClick={onClickClear} name={"cancel"} eid={EID.CLEAR} color={'white'} />
             <Svg className={cx("upv-delete sm", !props.onDelete ? 'hide' : '')} name={"delete"} eid={EID.DELETE} color={'dark'}
               onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
             <Mediabox className={cx("upv-img", type)} fit={fit}
               link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
-              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} />
+              onClick={this.onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} imagestyle={imagestyle} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
             {props.helpSize && <span className={'upv-help'}>{props.helpSize}</span>}

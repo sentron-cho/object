@@ -87,7 +87,7 @@ export default class Mediabox extends React.PureComponent {
     super(props);
     const loaded = props.type === CONT_TYPE.IMAGE ? false : true;
     (loaded && this.props.onLoad) && this.props.onLoad();
-    this.state = { loaded: loaded, error: false, refresh: false };
+    this.state = { loaded: loaded, error: false };
   }
 
   componentDidMount() {
@@ -99,6 +99,10 @@ export default class Mediabox extends React.PureComponent {
     window.removeEventListener('resize', this.onResize);
   }
 
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    (nextProps.resize) && this.onResize();
+  }
 
   onResize = (e) => {
     this.setState({ height: this.getHeight() });
@@ -128,11 +132,11 @@ export default class Mediabox extends React.PureComponent {
   }
 
   getHeight = () => {
-    let { rate = "4:3", size, maxwidth } = this.props;
+    let { rate = "", size, maxwidth } = this.props;
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
-        case 'normal': rate = "4:3"; break;
+        // case 'normal': rate = "4:3"; break;
         case 'wide': rate = "16:9"; break;
         case 'xwide': rate = "21:9"; break;
         case 'fwide': rate = "28:9"; break;

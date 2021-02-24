@@ -59,6 +59,11 @@ const StyledObject = styled.div`{
         .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(5)} ${cs.w.fit} ${cs.p.h10} ${cs.p.v3}
           ${cs.z.over} ${cs.align.xcenter} ${cs.bg.alphablack} ${cs.border.radius(3)} ${cs.font.sm}
         }
+
+        .ibtn { ${cs.align.rbottom} ${cs.bottom(15)} ${cs.right(10)} 
+          ${cs.bg.alphagray} ${cs.border.alphablack}
+          .svg { ${cs.p.a0} } 
+        }
       }
 
       &:hover {
@@ -459,6 +464,8 @@ class Uploadbox extends React.PureComponent {
             {noti && <span className={'upv-noti'}>{noti}</span>}
             {this.renderTabs(isMultiMidia)}
             {this.renderInfos()}
+            
+            {props.onClickLinked && <Svg className={cx('ibtn border box radius', 'white', 'lg')} icon={'link'} onClick={props.onClickLinked} />}
           </div>
 
           {/* url link용 태그 */}
@@ -467,7 +474,6 @@ class Uploadbox extends React.PureComponent {
               guide={""} validate={false} multi={true} />
             <Button className="upl-btn primary sm" title={ST.OK} onClick={onClickLinkOk} eid={EID.OK} />
           </div>}
-
         </div>
       </StyledObject>
     )

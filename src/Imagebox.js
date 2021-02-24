@@ -16,13 +16,20 @@ const StyledObject = styled.div`{
       ${({ fit }) => cs.object.fit(fit || 'contain')}
 
       &.loaded { ${cs.anim.show} ${cs.opac.visible} }
+    }
 
-      &.no-image { 
-        ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
+    // .no-image { 
+    //   ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
+    //   ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
+    // }
+
+    &.noimage { ${cs.box.line} ${cs.box.dashed} ${cs.border.alphagray} 
+      .ib-frame {
+        ${cs.font.gray} ${cs.align.center} ${cs.font.size("1.5em")} ${cs.opac.show}
         ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
       }
     }
-    
+
     .ib-del { ${cs.align.rtop} ${cs.top(10)} ${cs.right(10)} }
     
     .loading-box { ${cs.top(0)} ${cs.opac.invisible} }
@@ -113,6 +120,8 @@ export default class Imagebox extends React.PureComponent {
   componentDidMount() {
     this.setState({ width: this.getWidth() });
     window.addEventListener('resize', this.onResize);
+    const { src, url } = this.props;
+    if (!(src || url)) this.props.onLoad && this.props.onLoad();
   }
 
   componentWillUnmount() {
@@ -132,12 +141,17 @@ export default class Imagebox extends React.PureComponent {
 
   onClicked = (e) => {
     const { props } = this;
-    if (props.edited) {
-      // props.onClick && props.onClick(e, props.eid)
-      props.onClick && props.onClick(e, EID.EDIT, this.props.rowid);
+    if (props.onClick) {
+      props.onClick('link', e);
     } else {
-      !Util.isEmpty(props.link) && window.open(props.link)
+      props.link && window.open(props.link)
     }
+
+    // if (props.edited) {
+    //   props.onClick && props.onClick(e, EID.EDIT, this.props.rowid);
+    // } else {
+    //   !Util.isEmpty(props.link) && window.open(props.link)
+    // }
   }
 
   onDelete = (eid, e) => {
@@ -150,21 +164,20 @@ export default class Imagebox extends React.PureComponent {
     const { loaded, error } = state;
     const { fit = "contain", className, maxheight, edited, imagestyle = '' } = props;
 
-    const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
     const { width } = state;
-    // const style = { ...props.style, width, fit };
     const sizeguide = props.sizeguide || `[100 X 100]`;
     const src = props.src || props.url;
     const noimage = !src || error;
     const isguide = (edited && noimage);
     const { border } = props.options || { border: null };
+    const pointer = props.link || props.onClick ? 'pointer' : '';
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer)} width={width} fit={fit}
-        eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked} style={{...props.style}}>
+      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer, { noimage })} width={width} fit={fit}
+        eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked} style={{ ...props.style }}>
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
         {noimage ? <span className={cx("ib-frame", 'no-image')} >{"No Image"}</span>
-          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} style={{ objectFit: fit, ...imagestyle }} 
+          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} style={{ objectFit: fit, ...imagestyle }}
             onLoad={this.onLoad} onError={this.onError} />}
         {props.children}
         {props.onDelete && <Svg className="ib-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}

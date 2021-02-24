@@ -168,7 +168,7 @@ export default class Mediabox extends React.PureComponent {
     const { props, state } = this;
     const { error } = state;
     const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '', imagestyle = '' } = props;
-    const pointer = !Util.isEmpty(props.link) ? 'pointer' : '';
+    const pointer = props.link || props.onClick ? 'pointer' : '';
     const src = props.src || props.url;
     const { border } = props.options || { border: null };
 
@@ -199,7 +199,7 @@ export default class Mediabox extends React.PureComponent {
       <StyledObject ref={ref => { this.box = ref }} className={cx("media-box", props.className)}
         style={props.style} onClick={this.onClickEdit} height={height} border={border}>
         {renderContents()}
-        {pointer && <Svg className="btn-down xxl box radius" onClick={this.onClicked} eid={EID.DOWM} name={"down"} color={'black'} />}
+        {/* {pointer && <Svg className="btn-down xxl box radius" onClick={this.onClicked} eid={EID.DOWM} name={"down"} color={'black'} />} */}
         {props.edited &&
           // <Button className="btn-media-edit primary md" title={ST.EDIT} onClick={() => this.box.click()} eid={EID.EDIT} />
           <Svg className="btn-media-edit xxl box radius" onClick={() => this.box.click()} eid={EID.EDIT} name={"media"} />

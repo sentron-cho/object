@@ -36,6 +36,8 @@ const StyledObject = styled.div`{
         .cau-image { ${cs.bg.trans} }
       }
 
+      &.link { ${cs.mouse.pointer} }
+
       .cau-image { 
         ${cs.size.full} ${cs.bg.get(`url(${IMG.NoimageBig})`)} 
         ${cs.bg.size("contain")} ${cs.bg.repeat("no-repeat")} ${cs.disp.block} ${cs.bg.pos("center")}
@@ -50,8 +52,15 @@ const StyledObject = styled.div`{
         .cap-title { ${cs.font.size("3.0rem")} ${cs.font.thickbold} }
       }
 
+      .ibtn { ${cs.align.rbottom} ${cs.bottom(15)} ${cs.right(15)} 
+        ${cs.bg.alphagray} ${cs.border.alphablack} ${cs.z.over}
+        .svg { ${cs.p.a0} } 
+      }
+
       &.active { }
     }
+    
+    .link-icon { ${cs.align.rbottom} ${cs.right(10)} ${cs.bottom(10)} }
 
     .cau-navi { 
       ${cs.align.cbottom} ${cs.bottom(10)} ${cs.z.front} ${cs.disp.get("flex")}
@@ -126,7 +135,7 @@ export default class Carousel extends React.PureComponent {
     super(props);
     const { type } = Util.getScreenType();
 
-    const list = this.makelist(this.props.list);
+    const list = this.makelist(this.props.list ? JSON.parse(JSON.stringify(this.props.list)) : null);
     const isanim = Boolean(this.props.anim);
     this.state = {
       type: type, loaded: false, height: "auto", anim: isanim, isanim: isanim,
@@ -192,7 +201,7 @@ export default class Carousel extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.list !== this.props.list) {
-      const list = this.makelist(nextProps.list);
+      const list = this.makelist(this.props.list ? JSON.parse(JSON.stringify(this.props.list)) : null);
       this.setState({ list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null });
     }
 
@@ -200,7 +209,7 @@ export default class Carousel extends React.PureComponent {
       this.setState({ isanim: nextProps.anim, anim: nextProps.anim });
     }
 
-    if(nextProps.resize) {
+    if (nextProps.resize) {
       this.onResize();
     }
 
@@ -297,6 +306,11 @@ export default class Carousel extends React.PureComponent {
       this.props.onSelect && this.props.onSelect(e, item, index);
     }
 
+    const onClickLinked = (e, item, index) => {
+      e && e.stopPropagation();
+      this.props.onClickLinked && this.props.onClickLinked(item, index, e)
+    }
+
     return list.map((item, index) => {
       if (item == null) {
         return <li key={index} className={cx("cau-li")}><div className={cx("cau-image noimage")} index={index} /></li>;
@@ -314,17 +328,20 @@ export default class Carousel extends React.PureComponent {
       //   image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
       // }
 
-      const { active, color = "" } = item;
-      const styled = { color };
+      const { active, color = "", link = null } = item;
       // 카우셀 이미지 및 캡션 프레임...
-      return <li key={index} className={cx("cau-li", { active }, 'loaded')} onClick={(e) => onSelect(e, item, index)}>
+      // const link = 
+      return <li key={index} className={cx("cau-li", { active }, 'loaded', {link})} onClick={(e) => onSelect(e, item, index)}>
         <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
         {/* {image} */}
         {/* {!item.loaded && <Loading type="ring" />} */}
         <div className="cau-caption">
-          {item.title && <p className={"cap-title"} style={styled}>{item.title}</p>}
-          {item.text && <p className={"cap-text"} style={styled}>{item.text}</p>}
+          {item.title && <p className={"cap-title"} style={{ color }}>{item.title}</p>}
+          {item.text && <p className={"cap-text"} style={{ color }}>{item.text}</p>}
         </div>
+        {/* {link && <Svg className={'dark lg link-icon'} icon={'link'} />} */}
+        {this.props.onClickLinked && <Svg className={cx('ibtn border box radius', 'white', 'xl')} icon={'link'}
+          onClick={(e) => onClickLinked(e, item, index)} />}
       </li>
     });
   }
@@ -362,7 +379,7 @@ export default class Carousel extends React.PureComponent {
     }
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className, this.props.onSelect && 'mouse')}
+      <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)}
         {...styled} length={list.length} text={text} title={title} border={border} time={time} style={{ ...this.props.style }}>
         {/* error guid */}
         {renderGuide()}

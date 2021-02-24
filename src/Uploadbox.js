@@ -59,6 +59,11 @@ const StyledObject = styled.div`{
         .upv-help { ${cs.font.orange} ${cs.box.radius} ${cs.top(5)} ${cs.w.fit} ${cs.p.h10} ${cs.p.v3}
           ${cs.z.over} ${cs.align.xcenter} ${cs.bg.alphablack} ${cs.border.radius(3)} ${cs.font.sm}
         }
+
+        .ibtn { ${cs.align.rbottom} ${cs.bottom(15)} ${cs.right(10)} 
+          ${cs.bg.alphagray} ${cs.border.alphablack}
+          .svg { ${cs.p.a0} } 
+        }
       }
 
       &:hover {
@@ -183,13 +188,9 @@ const getBase64 = (file, cb) => {
 }
 
 const NONE = '';
-const MAGA = 1000000; //1MB
+const MAGA = 1 * 1000 * 1000; //1MB
 
 const isMedia = (type) => { return type === CONT_TYPE.VIDEO || type === CONT_TYPE.YOUTUBE };
-// const isLink = (type) => { return type === CONT_TYPE.LINK };
-// const isPdf = (type) => { return type === CONT_TYPE.PDF };
-// const isYoutube = (type) => {return type === 'youtube' ? true : false},
-// const isImage = (type) => {return type === 'image' ? true : false},
 
 var ftimer = null;
 var ntimer = null;
@@ -203,8 +204,8 @@ class Uploadbox extends React.PureComponent {
     // const load = bufs && bufs[0].indexOf('base64') > 0 ? false : true;
     this.state = {
       maxSize: 100 * MAGA,   //100M
-      imageExt: '.jpg, .jpeg, .png, .gif', videoExt: '.mp3, .mp4, .mov, .avi', pdfExt: '.pdf',
-      files: files, bufs: bufs, type: type, noti: '', modified: false, //load: load,
+      imageExt: '.jpg, .jpeg, .png, .gif', videoExt: '.mp3, .mp4, .mov, .avi',
+      files: files, bufs: bufs, type: type, noti: '', modified: false,
       textbox: false, link: link, refresh: false,
     };
 
@@ -426,8 +427,8 @@ class Uploadbox extends React.PureComponent {
     const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '', imagestyle } = props;
 
     const { noti, type, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
-    const buf = bufs ? bufs[0] : ''; //isMedia(type) ? IMG.Media : isPdf(type) ? IMG.Pdf : bufs[0];
-    const fileExt = isMedia(type) ? videoExt : imageExt; //isPdf(type) ? pdfExt : imageExt;
+    const buf = bufs ? bufs[0] : '';
+    const fileExt = isMedia(type) ? videoExt : imageExt;
     const isMultiMidia = props.onSelectedMedia ? true : false;
     const oneline = inline;
     const thumb = thumbnail;
@@ -459,6 +460,8 @@ class Uploadbox extends React.PureComponent {
             {noti && <span className={'upv-noti'}>{noti}</span>}
             {this.renderTabs(isMultiMidia)}
             {this.renderInfos()}
+            
+            {props.onClickLinked && <Svg className={cx('ibtn border box radius', 'white', 'lg')} icon={'link'} onClick={props.onClickLinked} />}
           </div>
 
           {/* url link용 태그 */}
@@ -467,7 +470,6 @@ class Uploadbox extends React.PureComponent {
               guide={""} validate={false} multi={true} />
             <Button className="upl-btn primary sm" title={ST.OK} onClick={onClickLinkOk} eid={EID.OK} />
           </div>}
-
         </div>
       </StyledObject>
     )

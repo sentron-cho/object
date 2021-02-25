@@ -201,7 +201,7 @@ export default class Carousel extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.list !== this.props.list) {
-      const list = this.makelist(this.props.list ? JSON.parse(JSON.stringify(this.props.list)) : null);
+      const list = this.makelist(nextProps.list ? JSON.parse(JSON.stringify(nextProps.list)) : null);
       this.setState({ list, pos: 0, current: list[0] || null, next: list[1] ? list[1] : list[0] || null });
     }
 
@@ -316,30 +316,17 @@ export default class Carousel extends React.PureComponent {
         return <li key={index} className={cx("cau-li")}><div className={cx("cau-image noimage")} index={index} /></li>;
       }
 
-      const urldata = item.url.indexOf("data:") === 0 ? item.url : (item.path || '') + item.url;
-
-      // 카우셀에서 첫번째 이미지만 loading 처리하자..
-      // let image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
-      // if (!item.loaded) {
-      //   image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} onError={this.onError} onLoad={this.onLoad} />
-      // } else if (item.error) {
-      //   image = <div className={cx("cau-image noimage")} index={item.index} />
-      // } else {
-      //   image = <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
-      // }
-
+      const path = this.props.path || item.path;
+      const urldata = item.url.indexOf("data:") === 0 ? item.url : (path || '') + item.url;
       const { active, color = "", link = null } = item;
+
       // 카우셀 이미지 및 캡션 프레임...
-      // const link = 
       return <li key={index} className={cx("cau-li", { active }, 'loaded', {link})} onClick={(e) => onSelect(e, item, index)}>
         <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
-        {/* {image} */}
-        {/* {!item.loaded && <Loading type="ring" />} */}
         <div className="cau-caption">
           {item.title && <p className={"cap-title"} style={{ color }}>{item.title}</p>}
           {item.text && <p className={"cap-text"} style={{ color }}>{item.text}</p>}
         </div>
-        {/* {link && <Svg className={'dark lg link-icon'} icon={'link'} />} */}
         {this.props.onClickLinked && <Svg className={cx('ibtn border box radius', 'white', 'xl')} icon={'link'}
           onClick={(e) => onClickLinked(e, item, index)} />}
       </li>
@@ -351,7 +338,7 @@ export default class Carousel extends React.PureComponent {
     const { list, anim, current, next, height } = state;
     const { text = null, title = null, border = null } = props.options || { text: null, title: null, border: null };
     const { time = "3s" } = props;
-    const styled = { ...props.style, width: props.width, height, anitime: props.anitime ? props.anitime : time };
+    const cssstyle = { ...props.style, width: props.width, height, anitime: props.anitime ? props.anitime : time };
     const animlist = [current, next];
 
     const renderGuide = () => {
@@ -380,7 +367,7 @@ export default class Carousel extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("carousel-box", props.className)}
-        {...styled} length={list.length} text={text} title={title} border={border} time={time} style={{ ...this.props.style }}>
+        {...cssstyle} length={list.length} text={text} title={title} border={border} time={time} style={{ ...this.props.style }}>
         {/* error guid */}
         {renderGuide()}
 

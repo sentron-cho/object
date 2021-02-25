@@ -23,7 +23,10 @@ const StyledObject = styled.div`{
       .v-item { 
         ${cs.disp.inblock} ${cs.m.a2} ${cs.pos.relative} ${cs.opac.show}
 
-        .thb-delete { ${cs.align.rbottom} ${cs.opac.get(0.2)} ${cs.bottom(13)} ${cs.right(8)} }
+        .thb-delete { ${cs.align.rbottom} ${cs.opac.get(0.5)} ${cs.bottom(5)} ${cs.right(3)} 
+          ${cs.bg.alphablack} ${cs.border.dark}
+          // .svg-icon { ${cs.bg.alphablack} } 
+        }
 
         &:hover {
           .thb-delete { ${cs.opac.show} } 
@@ -75,12 +78,12 @@ const StyledObject = styled.div`{
     @media screen and (max-width : 1280px) {}
 
     @media screen and (max-width : 860px) {
-      .v-cont .v-line .v-item .thb-delete { display: block; }
+      .v-cont .v-line .v-item .thb-delete { ${cs.disp.block} }
     }
 
     @media screen and (max-width : 600px) {
       .v-cont .v-line {
-        justify-content: center; 
+        ${cs.align.justify('center')}
       }
     }
   }
@@ -99,12 +102,12 @@ const Thumblist = (props) => {
   }, [props.anim, props.list]);
 
   const onSelect = (rid, e, item) => {
-    (props.onSelect != null) && props.onSelect(rowid, e, item);
+    (props.onSelect != null) && props.onSelect(rid, e, item);
   }
 
-  const onClickDelete = (rowid, e) => {
+  const onClickDelete = (rid, e) => {
     e.stopPropagation();
-    (props.onClickDelete != null) && props.onClickDelete(rowid, e);
+    (props.onClickDelete != null) && props.onClickDelete(rid, e);
   }
 
   const onClickNew = (eid, e) => {
@@ -148,11 +151,11 @@ const Thumblist = (props) => {
   }
 
   // tags 배열에 나열된 아이템들만 추출
-  const makeItems = (list = null, head = null) => {
-    if (list && head) {
-      return list.map(item => {
+  const makeItems = (array = null, lhead = null) => {
+    if (array && head) {
+      return array.map(item => {
         let temps = [];
-        head.map(key => temps = [...temps, { key: key, value: item[key] }]);
+        lhead.map(key => temps = [...temps, { key: key, value: item[key] }]);
         return temps;
       })
     } else {
@@ -169,10 +172,14 @@ const Thumblist = (props) => {
     const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
     setList(array);
 
+    const temps = array && array.map(a => {
+      delete a['index'];
+      return a;
+    });
     if (eid === 'drag') {
-      props.onDraging && props.onDraging(eid, array);
+      props.onDraging && props.onDraging(eid, temps);
     } else if (eid === 'drop') {
-      props.onDragDrop && props.onDragDrop(eid, array);
+      props.onDragDrop && props.onDragDrop(eid, temps);
     }
   }, [list, props]);
 
@@ -200,9 +207,10 @@ const Thumblist = (props) => {
             return (
               <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
                 <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel} onClick={(e) => onSelect(rid, e, item)} >
-                  <Thumbbox className={cx(props.itemClassName, size)} {...config.child} odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
+                  <Thumbbox className={cx(props.itemClassName, size)} {...config.child}
+                    odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
-                    <Svg className="thb-delete delete sm" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
+                    <Svg className="thb-delete delete md box radius white" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
                   }
                 </span>
               </Dragable>

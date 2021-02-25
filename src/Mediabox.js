@@ -13,7 +13,6 @@ export const CONT_TYPE = {
   VIDEO: "video",
   YOUTUBE: "youtube",
   TEXT: "text",
-  PDF: "pdf",
   LINK: "link",
 };
 
@@ -24,8 +23,7 @@ const StyledObject = styled.div`{
 
     .cont-frame {
       ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
-      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative}
-      // &:hover{ ${cs.p.get('0px !important;')} }
+      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative} ${cs.over.hidden}
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; }
     }

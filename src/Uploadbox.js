@@ -213,11 +213,11 @@ class Uploadbox extends React.PureComponent {
   }
 
   createData = (props) => {
-    const { value, path } = props;
+    const { value } = props;
     const data = value && value.indexOf('base64') >= 0 ? "base64 raw data!!" : value;
     const files = !value ? [{ 'name': NONE }] : [{ 'name': `${data}` }];
     const type = Util.isEmpty(props.type) ? 'image' : props.type;
-    let bufs = !value ? [] : [`${path ? path : ""}${value}`];
+    let bufs = !value ? [] : [`${value}`];
 
     //http로 시작하거나 base64 데이터면 그냥 데이터를 넣자...
     if (value && (value.indexOf("http") === 0 || value.indexOf('base64') >= 0)) {
@@ -424,7 +424,7 @@ class Uploadbox extends React.PureComponent {
   render() {
     const { props } = this;
     const { onClickClear, onClicked, onChange, onClickLinkOk } = this;
-    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '', imagestyle } = props;
+    const { height = 180, theme, className, name, label, inline = false, thumbnail = true, border = null, size = '', imagestyle, path } = props;
 
     const { noti, type, bufs, imageExt, videoExt, textbox, link, refresh } = this.state;
     const buf = bufs ? bufs[0] : '';
@@ -452,7 +452,7 @@ class Uploadbox extends React.PureComponent {
             <Svg className={cx("upv-delete sm", !props.onDelete ? 'hide' : '')} name={"delete"} eid={EID.DELETE} color={'dark'}
               onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
             <Mediabox className={cx("upv-img", type)} fit={fit}
-              link={link} type={type} url={buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
+              link={link} type={type} url={path && buf && buf.indexOf('base64') < 0 ? `${path}${buf}` : buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
               onClick={onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} imagestyle={imagestyle} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 
@@ -460,7 +460,7 @@ class Uploadbox extends React.PureComponent {
             {noti && <span className={'upv-noti'}>{noti}</span>}
             {this.renderTabs(isMultiMidia)}
             {this.renderInfos()}
-            
+
             {props.onClickLinked && <Svg className={cx('ibtn border box radius', 'white', 'lg')} icon={'link'} onClick={props.onClickLinked} />}
           </div>
 

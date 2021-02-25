@@ -506,6 +506,17 @@ export const Util = {
     return exp.test(value); // 형식에 맞는 경우 true 리턴
   },
 
+  moveToScroll(id = null, margin = 0, smooth = true) {
+    const node = id ? document.getElementById(id) : null;
+    if (node) {
+      if (smooth) {
+        window.scrollTo({ top: node.offsetTop - margin, behavior: 'smooth' });
+      } else {
+        window.scrollTo(0, node.offsetTop - margin);
+      }
+    }
+  },
+
   isPassword(asValue, min = 8, max = 12) {
     if (asValue.length < min || asValue.length > max) return false;
 

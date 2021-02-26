@@ -10,6 +10,7 @@ const ST = {
   // eslint-disable-next-line no-useless-escape
   NOT_TEXT: `특수문자( \\ ' \" ) 세개는 입력할 수 없습니다.`,
   NOT_JSON: `특수문자(" \\) 는 입력할 수 없습니다.`,
+  MAX_LEN: (v = 100) => `최대 [${v}]글자까지 입력할 수 없습니다.`,
 };
 
 const StyledObject = styled.div` {
@@ -221,7 +222,7 @@ class Editbox extends React.PureComponent {
     if (value.indexOf('"') >= 0) return this.showNoti(noti);
     if (value.indexOf('\\') >= 0) return this.showNoti(noti);
     if (validationMessage) { return this.showNoti(validationMessage); };
-    
+
     return true;
   }
 
@@ -299,7 +300,13 @@ class Editbox extends React.PureComponent {
 
   onChange = (e) => {
     this.state.modified = true;
-    this.setState({ value: e.target.value, noti: false });
+    const { value } = e.target;
+    this.setState({ value: value, noti: false });
+
+    const { maxLength } = this.state;
+    if (!maxLength && value && value.length >= maxLength) {
+      this.setState({ noti: ST.MAX_LEN(maxLength) });
+    }
 
     this.props.onChange && this.props.onChange(e.target.value, e, this.props.label);
   }

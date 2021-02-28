@@ -13,7 +13,7 @@ const StyledObject = styled.div`{
 
     ${({ width }) => cs.w.get(width)};
     ${({ height }) => cs.h.get(height)};
-    ${cs.max.h(520)}
+    ${cs.max.h(640)}
 
     .cau-ul {
       ${cs.h.full} ${cs.w.calc('100% * 2')}

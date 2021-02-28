@@ -317,11 +317,11 @@ export default class Carousel extends React.PureComponent {
       }
 
       const path = this.props.path || item.path;
-      const urldata = item.url.indexOf("data:") === 0 ? item.url : (path || '') + item.url;
+      const urldata = item.url.indexOf("data:") === 0 || item.url.indexOf('http') === 0 ? item.url : (path || '') + item.url;
       const { active, color = "", link = null } = item;
 
       // 카우셀 이미지 및 캡션 프레임...
-      return <li key={index} className={cx("cau-li", { active }, 'loaded', {link})} onClick={(e) => onSelect(e, item, index)}>
+      return <li key={index} className={cx("cau-li", { active }, 'loaded', { link })} onClick={(e) => onSelect(e, item, index)}>
         <img alt="img" className={cx("cau-image")} index={item.index} src={urldata} />
         <div className="cau-caption">
           {item.title && <p className={"cap-title"} style={{ color }}>{item.title}</p>}

@@ -25,7 +25,9 @@ const StyledObject = styled.div`{
       ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
       ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative} ${cs.over.hidden}
       
-      &.youtube, &.video { width: 100% !important; height: 100% !important; }
+      &.youtube, &.video { width: 100% !important; height: 100% !important; 
+        & > video { ${({ fit }) => fit && cs.object.fit(fit)} }
+      }
     }
 
     .loading-img { ${cs.pos.absolute} ${cs.align.center} ${cs.h.get(400)} ${cs.w.full} }
@@ -165,7 +167,7 @@ export default class Mediabox extends React.PureComponent {
   render() {
     const { props, state } = this;
     const { error } = state;
-    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '', imagestyle = '' } = props;
+    const { type = "image", playing = true, controls = true, fit = "cover", maxHeight = '', imagestyle = '', muted = true } = props;
     const pointer = props.link || props.onClick ? 'pointer' : '';
     const src = props.src || props.url;
     const { border } = props.options || { border: null };
@@ -181,8 +183,9 @@ export default class Mediabox extends React.PureComponent {
               src={src} onLoad={this.onLoad} onError={this.onError} style={{ objectFit: fit, maxHeight, ...imagestyle }} />}
             {type === CONT_TYPE.YOUTUBE && <YouTube className={cx("cont-frame", type)} style={{ width: "100%", height: "100%", ...imagestyle }}
               url={src} playing={playing} controls={controls} playsinline loop />}
-            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)} style={{ width: "100%", height: "100%", ...imagestyle }}
-              url={src} playing={playing} controls={controls} playsinline loop />}
+            {type === CONT_TYPE.VIDEO && <ReactPlayer className={cx("cont-frame", type)}
+              style={{ width: "100%", height: "100%", ...imagestyle }}
+              url={src} playing={playing} controls={controls} playsinline loop muted={muted} />}
             {type === CONT_TYPE.LINK && <img alt="link" className={cx("cont-frame", type, pointer)} onClick={this.onClicked}
               src={src} onLoad={this.onLoad} onError={this.onError} style={{ ...imagestyle }} />}
           </React.Fragment>
@@ -195,7 +198,7 @@ export default class Mediabox extends React.PureComponent {
 
     return (
       <StyledObject ref={ref => { this.box = ref }} className={cx("media-box", props.className)}
-        style={props.style} onClick={this.onClickEdit} height={height} border={border}>
+        style={props.style} onClick={this.onClickEdit} height={height} border={border} fit={fit}>
         {renderContents()}
         {/* {pointer && <Svg className="btn-down xxl box radius" onClick={this.onClicked} eid={EID.DOWM} name={"down"} color={'black'} />} */}
         {props.edited &&

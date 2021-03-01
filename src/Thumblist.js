@@ -200,7 +200,7 @@ const Thumblist = (props) => {
           {/* items */}
           {list.map((item, index) => {
             item.index = index;
-            const url = path ? path + item.url : item.url;
+            const url = item.url.indexOf('http') === 0 ? item.url : path ? path + item.url : item.url;
             const rid = item[rowid] || index;
             const odr = item.odr || item.no || index + 1;
 

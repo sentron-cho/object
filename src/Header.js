@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { Svg, Util, cs } from './index';
@@ -7,7 +7,7 @@ import * as actions from './actor/Action';
 
 const StyledObject = styled.header`{
   &.header {
-    ${cs.w.full} ${cs.over.hidden} ${cs.z.header} ${cs.pos.relative}
+    ${cs.w.full} ${cs.over.hidden} ${cs.z.header} ${cs.pos.relative} 
     ${({ height }) => cs.h.get(height)} ${cs.noliststyle} ${cs.noselect}
 
     .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner}
@@ -15,7 +15,7 @@ const StyledObject = styled.header`{
       
       &.float { ${cs.pos.fixed} ${cs.border.gray} }
 
-      .nav-layer { ${cs.size.full} ${cs.disp.block} ${cs.p.l10} ${props => cs.max.width(props.maxwidth)}
+      .nav-layer { ${cs.size.full} ${cs.disp.block} ${cs.p.l10} ${cs.m.center(0)} ${cs.pos.relative}
         .li-title { ${cs.align.ycenter} ${cs.pos.relative} ${cs.font.t1} ${cs.font.weight(700)} ${cs.h.auto} ${cs.disp.inblock}
           ${cs.float.l} ${cs.left(10)} ${cs.top("50%")} ${cs.p.r20} ${cs.font.spacing(3)}
         }
@@ -26,7 +26,6 @@ const StyledObject = styled.header`{
             ${cs.z.front} ${cs.font.md} ${cs.anim.showin('200ms')}
 
             &.active { ${cs.font.primary} }
-            // &:hover { ${cs.anim.zoomin()} }
           }
         }
 
@@ -138,27 +137,43 @@ const StyledObject = styled.header`{
   }
 }`;
 
-class Header extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    const { type } = Util.getScreenType();
-    const { frameid = "body" } = props;
-    this.state = { type: type, menus: EID.HIDE, float: false, frameid: frameid };
-  }
 
-  onClickMenu = (e, item) => {
+const Header = (props) => {
+  const [type, setType] = useState('');
+  const [menus, setMenus] = useState(EID.HIDE);
+  const [float, setFloat] = useState(false);
+  // const [frameid, setFrameid] = useState(props.frameid || 'body');
+
+  useEffect(() => {
+    const { type } = Util.getScreenType();
+    setType(type);
+
+    window.addEventListener('resize', onResize);
+    window.addEventListener("scroll", onScroll);
+    // const body = document.getElementById(frameid);
+    // body && body.addEventListener('mouseup', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener("scroll", onScroll);
+      // const body = document.getElementById(frameid);
+      // body && body.removeEventListener('mouseup', onResize);
+    }
+  }, []);
+
+  const onClickMenu = (e, item) => {
     const { url, param = {} } = item;
-    if (this.props.onClickMenu) {
-      this.props.onClickMenu(e, item);
+    if (props.onClickMenu) {
+      props.onClickMenu(e, item);
       return;
     }
 
-    if (this.props.preview) {
+    if (props.preview) {
       window.open(url);
     } else {
-      const { history } = this.props;
+      const { history } = props;
       if (history && history.location && history.location.state) {
-        this.props.history.push(url);
+        props.history.push(url);
       } else {
         if (url && url.indexOf("http") === 0) {
           window.open(url);
@@ -170,109 +185,220 @@ class Header extends React.PureComponent {
     }
   }
 
-  onResize = (e) => {
+  const onResize = (e) => {
     const { type } = Util.getScreenType();
     const a = Util.isSelfClick(e, (item) => {
       return item.indexOf("btn-menu") >= 0 || item.indexOf("li-nav") >= 0;
     });
     if (a) return;
 
-    this.setState({ 'type': type, menus: EID.HIDE });
+    setType(type);
+    setMenus(EID.HIDE)
   }
 
-  onScroll = (e) => {
-    if (window.scrollY > 2) {
-      this.setState({ float: true });
+  const onScroll = (e) => {
+    setFloat(window.scrollY > 2)
+  }
+
+  // const hide = () => {
+  //   setMenus(EID.HIDE);
+  // }
+
+  // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
+  const { list, location, title, height = "60px", maxWidth = "1024px", theme, className, pos = -1 } = props;
+  const { align = 'right' } = props;
+  const array = list || [];
+
+  let show = menus === EID.SHOW;
+  if (type !== SCREEN.ST.MOBILE) show = true;
+  const logouttitle = props.logouttitle || 'Logout';
+  const logintitle = props.logouttitle || 'Login';
+
+  const renderMobile = () => {
+    if (show === EID.SHOW) {
+      return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => { }} color={cs.color.dark} />
     } else {
-      this.setState({ float: false });
+      return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => {
+        e.stopPropagation();
+        setMenus(show ? EID.HIDE : EID.SHOW)
+      }} color={cs.color.dark} />
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.onResize);
-    window.addEventListener("scroll", this.onScroll);
-    const body = document.getElementById(this.state.frameid);
-    body && body.addEventListener('mouseup', this.onResize);
-  }
+  const { font, border } = props.options || { border: null, font: null };
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-    window.removeEventListener("scroll", this.onScroll);
-    const body = document.getElementById(this.state.frameid);
-    body && body.removeEventListener('mouseup', this.onResize);
-  }
+  return (
+    <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} border={border} font={font}>
+      <div className={cx('nav-frame', { float })}>
+        <div className={cx('nav-layer', align, type)} style={{ maxWidth: maxWidth }}>
+          {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
-  hide = () => {
-    this.setState({ menus: EID.HIDE });
-  }
+          {/* 타이틀 */}
+          <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
 
-  render() {
-    const { props, state } = this;
-    // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
-    const { list, location, title, height = "60px", maxwidth = "1024px", theme, className, pos = -1 } = props;
-    const { menus, type } = state;
+          {/* 네비 메뉴 */}
+          {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
+            {array.map((item, index) => {
+              const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
+              const title = item.name || item.title;
+              if (item.hide) {
+                return null;
+              } else {
+                return <li key={index} className={cx("li-nav", { active })}
+                  onClick={(e) => onClickMenu(e, item)}><span>{title && title.toUpperCase()}</span>
+                </li>
+              }
+            })}
+            {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
+            {props.onLogin && <li className={cx("li-nav")} onClick={(e) => props.onLogin(e)}>{logintitle}</li>}
+            {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}</li>}
+          </ul>}
 
-    // const isroot = location === root;
-    const align = props.align ? props.align : 'right';
-    const array = list || []; //align === 'right' ? list.reverse() : list;
-    // const width = 100 / list.length;
-    // const style = { width: `${width}%` }
-
-    let show = menus === EID.SHOW;
-    if (type !== SCREEN.ST.MOBILE) show = true;
-
-    const { float } = this.state;
-    const logouttitle = props.logouttitle || 'Logout';
-    const logintitle = props.logouttitle || 'Login';
-
-    const renderMobile = () => {
-      if (show === EID.SHOW) {
-        return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => { }} color={cs.color.dark} />
-      } else {
-        return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => {
-          e.stopPropagation();
-          this.setState({ menus: show ? EID.HIDE : EID.SHOW });
-        }} color={cs.color.dark} />
-      }
-    }
-
-    const { font, border } = props.options || { border: null, font: null };
-
-    return (
-      <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} maxwidth={maxwidth}
-        border={border} font={font}>
-        <div className={cx('nav-frame', { float })}>
-          <div className={cx('nav-layer', align, type)}>
-            {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
-
-            {/* 타이틀 */}
-            <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
-
-            {/* 네비 메뉴 */}
-            {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
-              {array.map((item, index) => {
-                const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
-                const title = item.name || item.title;
-                if (item.hide) {
-                  return null;
-                } else {
-                  return <li key={index} className={cx("li-nav", { active })}
-                    onClick={(e) => this.onClickMenu(e, item)}><span>{title && title.toUpperCase()}</span>
-                  </li>
-                }
-              })}
-              {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
-              {props.onLogin && <li className={cx("li-nav")} onClick={(e) => props.onLogin(e)}>{logintitle}</li>}
-              {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}</li>}
-            </ul>}
-
-            {/* 모바일에서의 아이콘 */}
-            {array.length > 0 && type === SCREEN.ST.MOBILE && renderMobile()}
-          </div>
+          {/* 모바일에서의 아이콘 */}
+          {array.length > 0 && type === SCREEN.ST.MOBILE && renderMobile()}
         </div>
-      </StyledObject>
-    )
-  }
+      </div>
+    </StyledObject>
+  )
 }
 
 export default Header;
+
+// class Header extends React.PureComponent {
+//   constructor(props) {
+//     super(props);
+//     const { type } = Util.getScreenType();
+//     const { frameid = "body" } = props;
+//     this.state = { type: type, menus: EID.HIDE, float: false, frameid: frameid };
+//   }
+
+//   onClickMenu = (e, item) => {
+//     const { url, param = {} } = item;
+//     if (this.props.onClickMenu) {
+//       this.props.onClickMenu(e, item);
+//       return;
+//     }
+
+//     if (this.props.preview) {
+//       window.open(url);
+//     } else {
+//       const { history } = this.props;
+//       if (history && history.location && history.location.state) {
+//         this.props.history.push(url);
+//       } else {
+//         if (url && url.indexOf("http") === 0) {
+//           window.open(url);
+//         } else {
+//           actions.go(url, param)
+//           // window.location.href = url;
+//         }
+//       }
+//     }
+//   }
+
+//   onResize = (e) => {
+//     const { type } = Util.getScreenType();
+//     const a = Util.isSelfClick(e, (item) => {
+//       return item.indexOf("btn-menu") >= 0 || item.indexOf("li-nav") >= 0;
+//     });
+//     if (a) return;
+
+//     this.setState({ 'type': type, menus: EID.HIDE });
+//   }
+
+//   onScroll = (e) => {
+//     if (window.scrollY > 2) {
+//       this.setState({ float: true });
+//     } else {
+//       this.setState({ float: false });
+//     }
+//   }
+
+//   componentDidMount() {
+//     window.addEventListener('resize', this.onResize);
+//     window.addEventListener("scroll", this.onScroll);
+//     const body = document.getElementById(this.state.frameid);
+//     body && body.addEventListener('mouseup', this.onResize);
+//   }
+
+//   componentWillUnmount() {
+//     window.removeEventListener('resize', this.onResize);
+//     window.removeEventListener("scroll", this.onScroll);
+//     const body = document.getElementById(this.state.frameid);
+//     body && body.removeEventListener('mouseup', this.onResize);
+//   }
+
+//   hide = () => {
+//     this.setState({ menus: EID.HIDE });
+//   }
+
+//   render() {
+//     const { props, state } = this;
+//     // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
+//     const { list, location, title, height = "60px", maxwidth = "1024px", theme, className, pos = -1 } = props;
+//     const { menus, type } = state;
+
+//     // const isroot = location === root;
+//     const align = props.align ? props.align : 'right';
+//     const array = list || []; //align === 'right' ? list.reverse() : list;
+//     // const width = 100 / list.length;
+//     // const style = { width: `${width}%` }
+
+//     let show = menus === EID.SHOW;
+//     if (type !== SCREEN.ST.MOBILE) show = true;
+
+//     const { float } = this.state;
+//     const logouttitle = props.logouttitle || 'Logout';
+//     const logintitle = props.logouttitle || 'Login';
+
+//     const renderMobile = () => {
+//       if (show === EID.SHOW) {
+//         return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => { }} color={cs.color.dark} />
+//       } else {
+//         return <Svg className="btn-menu md" name={"menu"} onClick={(eid, e) => {
+//           e.stopPropagation();
+//           this.setState({ menus: show ? EID.HIDE : EID.SHOW });
+//         }} color={cs.color.dark} />
+//       }
+//     }
+
+//     const { font, border } = props.options || { border: null, font: null };
+
+//     return (
+//       <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} maxwidth={maxwidth}
+//         border={border} font={font}>
+//         <div className={cx('nav-frame', { float })}>
+//           <div className={cx('nav-layer', align, type)}>
+//             {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
+
+//             {/* 타이틀 */}
+//             <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
+
+//             {/* 네비 메뉴 */}
+//             {show && <ul className={cx("ul-navi", align, type, array.length < 1 && 'nomenu')}>
+//               {array.map((item, index) => {
+//                 const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
+//                 const title = item.name || item.title;
+//                 if (item.hide) {
+//                   return null;
+//                 } else {
+//                   return <li key={index} className={cx("li-nav", { active })}
+//                     onClick={(e) => this.onClickMenu(e, item)}><span>{title && title.toUpperCase()}</span>
+//                   </li>
+//                 }
+//               })}
+//               {/* {array.length < 1 && <li className={"li-nav"}>NO MENU</li>} */}
+//               {props.onLogin && <li className={cx("li-nav")} onClick={(e) => props.onLogin(e)}>{logintitle}</li>}
+//               {props.onLogout && <li className={cx("li-nav")} onClick={(e) => props.onLogout(e)}>{logouttitle}</li>}
+//             </ul>}
+
+//             {/* 모바일에서의 아이콘 */}
+//             {array.length > 0 && type === SCREEN.ST.MOBILE && renderMobile()}
+//           </div>
+//         </div>
+//       </StyledObject>
+//     )
+//   }
+// }
+
+// export default Header;

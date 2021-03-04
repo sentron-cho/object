@@ -136,7 +136,7 @@ export default class Mediabox extends React.PureComponent {
   }
 
   getHeight = () => {
-    let { rate = "", size, maxwidth } = this.props;
+    let { rate = "", size, maxwidth, width = 0 } = this.props;
     if (size != null) {
       switch (size) {
         case 'full': return "100%";
@@ -152,7 +152,8 @@ export default class Mediabox extends React.PureComponent {
     const temps = rate.split(":");
     const x = temps[0];
     const y = temps[1];
-    let width = this.box.offsetWidth;
+    width = String(width).replace(/[^0-9]/g, '');
+    width = width || this.box.offsetWidth;
     if (maxwidth && parseInt(width) > parseInt(maxwidth)) {
       width = parseInt(maxwidth);
     }

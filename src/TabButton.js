@@ -11,7 +11,7 @@ const StyledObject = styled.span`{
       .tab-btn { ${cs.min.w(60)} ${cs.w.fit}  }
     }
     
-    
+    &.full { ${cs.w.full} .tab-frame { ${cs.w.full} } }
     &.xs { .tab-btn { ${cs.w.get(40)} } }
     &.sm { .tab-btn { ${cs.w.get(60)} } }
     &.lg { .tab-btn { ${cs.w.get(80)} } }
@@ -39,6 +39,8 @@ const TabButton = (props) => {
       setSelect(item.id);
     }
 
+    const temps = className && className.split(' ');
+    const isfull = temps && temps.includes("full");
     return <StyledObject className={cx("tab-button", className, theme)}>
       <span className={"tab-frame"}>
         {list.map((a, i) => {
@@ -50,7 +52,8 @@ const TabButton = (props) => {
               eid={a.id} name={a.icon} color={color} />
           else
             return <Button key={i} className={cx("tab-btn", btncolor, size)} theme={theme}
-              onClick={onClicked} title={a.title} eid={a.id} disabled={disabled} />
+              onClick={onClicked} title={a.title} eid={a.id} disabled={disabled}
+              style={isfull ? { width: `${Number(100 / list.length).toFixed(5)}%` } : {}} />
         })}
       </span>
     </StyledObject>

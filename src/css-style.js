@@ -434,6 +434,7 @@ const cs = {
     sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizing') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
     zoomin: (v = '300ms', s = '1.0', e = '1.2', opac = 1.0, name = 'zoomin') => `animation: ${name} ease-out 1 forwards ${v}; @keyframes ${name} { from { transform: scale(${s}); } to { transform: scale(${e}); opacity: ${opac}; } };`,
     flicking: (v = '150ms', s = '1', e = '0', r = 1, name = 'filking') => `animation: ${name} linear ${r} forwards ${v}; @keyframes ${name} { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
+    slide: (v = '150ms', s = '0', e = '-100%', name = 'slideup', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  } to { transform: translateY(${e}); } };`,
   },
 
   align: {

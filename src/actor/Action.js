@@ -94,8 +94,15 @@ export function doSelect(url, value = null) {
   })
 }
 
-export function doInsert(url, value = null, list = null) {
+export function doInsert(url, value = null, list = null, onEvent = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
+  axios.defaults.headers.common['maxContentLength'] = 100 * 1024 * 1024; //100M
+  axios.defaults.headers.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
+  console.dir(axios.defaults.headers);
+
+  const onProgress = (e) => {
+    onEvent && onEvent('progress', e);
+  }
 
   return new Promise((resolve, reject) => {
     if (!url) { alert('is not url'); reject(); return; };
@@ -120,12 +127,42 @@ export function doInsert(url, value = null, list = null) {
   })
 };
 
-export function doUpdate(url, value = null, list) {
+export function doUpdate(url, value = null, list = null, onEvent = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
+  // axios.defaults.headers.common['maxContentLength'] = 100 * 1024 * 1024; //100M
+  // axios.defaults.headers.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
+  // const maxContentLength = 100 * 1024 * 1024;
+  // const maxBodyLength = 100 * 1024 * 1024;
+  // console.dir(axios.defaults.headers);
+
+  // axios.defaults.put.common['maxContentLength'] = 100 * 1024 * 1024; //100M
+  // axios.defaults.put.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
+  // axios.defaults.put.common['Accept'] = 'application/json'; //100M
+  // axios.defaults.put.common['Content-Type'] = 'application/json'; //100M
+
+  // const options = {
+  //   headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+  //   maxBodyLength: 100 * 1024 * 1024,
+  //   maxContentLength: 100 * 1024 * 1024,
+  //   onUploadProgress: (e) => onEvent && onEvent('progress', e),
+  // }
+
+  // console.dir(axios.defaults.headers);
 
   return new Promise((resolve, reject) => {
     if (!url) { alert('is not url'); reject(); return; };
-    axios.put(url, value).then((res) => {
+    // axios.put(url, value, options)
+    axios({
+      method: 'put',
+      url: url,
+      // headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      data: value,
+      maxBodyLength: 100 * 1024 * 1024,
+      maxContentLength: 100 * 1024 * 1024,
+      onUploadProgress: (e) => onEvent && onEvent('progress', e),
+    }).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
@@ -146,7 +183,7 @@ export function doUpdate(url, value = null, list) {
   })
 };
 
-export function doDelete(url, value = null, list) {
+export function doDelete(url, value, list) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
 
   return new Promise((resolve, reject) => {

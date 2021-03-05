@@ -423,7 +423,7 @@ const cs = {
 
     name: (v = '150ms') => `animation-name: ${v};`,
     time: (v = '150ms') => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
-    showin: (v = '150ms', s = '0', e = '1', name = 'showin') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
+    showin: (v = '150ms', s = '0', e = '1', name = 'showin', type = 'forwards') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
     showout: (v = '150ms', s = '1', e = '0', name = 'showout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s};  } to { opacity: ${e}; } };`,
     fadein: (v = '150ms', s = '0', e = '1', name = 'fadein') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
     fadeout: (v = '150ms', s = '1', e = '0', name = 'fadeout') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from { opacity: ${s}; } to { opacity: ${e}; } };`,
@@ -433,7 +433,7 @@ const cs = {
     slideup: (v = '150ms', s = '0', e = '-100%', name = 'slideup') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
     sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizing') => `animation: ${name} linear 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
     zoomin: (v = '300ms', s = '1.0', e = '1.2', opac = 1.0, name = 'zoomin') => `animation: ${name} ease-out 1 forwards ${v}; @keyframes ${name} { from { transform: scale(${s}); } to { transform: scale(${e}); opacity: ${opac}; } };`,
-    flicking: (v = '150ms', s = '1', e = '0', r = 1, name = 'filking') => `animation: ${name} linear ${r} forwards ${v}; @keyframes ${name} { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
+    flicking: (v = '150ms', s = '1', e = '0', r = 1, name = 'filking', type = 'forwards') => `animation: ${name} ${type} ${r} forwards ${v}; @keyframes ${name} { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
     slide: (v = '150ms', s = '0', e = '-100%', name = 'slideup', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  } to { transform: translateY(${e}); } };`,
   },
 

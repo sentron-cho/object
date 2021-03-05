@@ -129,40 +129,11 @@ export function doInsert(url, value = null, list = null, onEvent = null) {
 
 export function doUpdate(url, value = null, list = null, onEvent = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
-  // axios.defaults.headers.common['maxContentLength'] = 100 * 1024 * 1024; //100M
-  // axios.defaults.headers.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
-  // const maxContentLength = 100 * 1024 * 1024;
-  // const maxBodyLength = 100 * 1024 * 1024;
-  // console.dir(axios.defaults.headers);
-
-  // axios.defaults.put.common['maxContentLength'] = 100 * 1024 * 1024; //100M
-  // axios.defaults.put.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
-  // axios.defaults.put.common['Accept'] = 'application/json'; //100M
-  // axios.defaults.put.common['Content-Type'] = 'application/json'; //100M
-
-  // const options = {
-  //   headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-  //   maxBodyLength: 100 * 1024 * 1024,
-  //   maxContentLength: 100 * 1024 * 1024,
-  //   onUploadProgress: (e) => onEvent && onEvent('progress', e),
-  // }
-
-  // console.dir(axios.defaults.headers);
+  const options = { onUploadProgress: (e) => onEvent && onEvent('progress', e) };
 
   return new Promise((resolve, reject) => {
     if (!url) { alert('is not url'); reject(); return; };
-    // axios.put(url, value, options)
-    axios({
-      method: 'put',
-      url: url,
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      data: value,
-      maxBodyLength: 100 * 1024 * 1024,
-      maxContentLength: 100 * 1024 * 1024,
-      onUploadProgress: (e) => onEvent && onEvent('progress', e),
-    }).then((res) => {
+    axios.put(url, value, options).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;
@@ -193,6 +164,40 @@ export function doDelete(url, value, list) {
       if (data.code === CODE.LOGINERR || status === 500) {
         const result = list == null ? data.value : list.filter(item => item.rowid !== data.value);
         resolve({ 'code': data.code, 'result': result, ...data });
+      } else {
+        resolve({ 'code': data.code, 'err': data.value });
+      }
+    }).catch(error => {
+      const { status = -1, data } = error ? error.response : { status: -1, data: null };
+      if (status === 500) {
+        window.location.href = data.value ? data.value : LOGIN;
+      } else {
+        console.log(error)
+      }
+    });
+  })
+};
+
+
+export function doUpload(url, value = null, onEvent = null) {
+  axios.defaults.headers.common['Authorization'] = Storage.getToken();
+
+  return new Promise((resolve, reject) => {
+    if (!url) { alert('is not url'); reject(); return; };
+    axios({
+      method: 'put',
+      url: url,
+      headers: { "Content-Type": "multipart/form-data" },
+      data: value,
+      maxBodyLength: 100 * 1024 * 1024,
+      maxContentLength: 100 * 1024 * 1024,
+      onUploadProgress: (e) => onEvent && onEvent('progress', e),
+    }).then((res) => {
+      const { status, data } = res;
+      if (data.code === CODE.LOGINERR || status === 500) {
+        window.location.href = data.value ? data.value : LOGIN;
+      } else if (data.code === CODE.SUCCESS) {
+        resolve({ 'code': data.code, 'result': data.value, 'item': data.item ? data.item : '', ...data });
       } else {
         resolve({ 'code': data.code, 'err': data.value });
       }

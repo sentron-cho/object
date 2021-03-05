@@ -146,12 +146,6 @@ export default class Imagebox extends React.PureComponent {
     } else {
       props.link && window.open(props.link)
     }
-
-    // if (props.edited) {
-    //   props.onClick && props.onClick(e, EID.EDIT, this.props.rowid);
-    // } else {
-    //   !Util.isEmpty(props.link) && window.open(props.link)
-    // }
   }
 
   onDelete = (eid, e) => {

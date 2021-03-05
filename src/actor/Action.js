@@ -155,7 +155,7 @@ export function doUpdate(url, value = null, list = null, onEvent = null) {
     axios({
       method: 'put',
       url: url,
-      // headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       data: value,

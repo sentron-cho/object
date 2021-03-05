@@ -890,7 +890,7 @@ const cs = {
     t1: `
     ::-webkit-scrollbar { width: 10px; height: 10px; background-color: ${color.dark}; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: ${color.gray}; }
-    ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: rgba(68, 68, 68, 1); }
+    ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: rgba(68, 68, 68, 1); }
     `,
     t2: `
     ::-webkit-scrollbar { width: 6px; height: 6px; background-color: ${color.dark}; }
@@ -912,6 +912,12 @@ const cs = {
     ::-webkit-scrollbar { width: 10px; height: 10px; background-color: ${v}; }
     ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 0; background-color: ${v}; }
     ::-webkit-scrollbar-thumb { border-radius: 0; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: ${bar}; }
+    `,
+
+    hide: `
+    ::-webkit-scrollbar { background-color: transparent; }
+    ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 0 transparent; background-color: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: transparent; -webkit-box-shadow: inset 0 0 0 transparent; }
     `,
   },
 };

@@ -115,8 +115,12 @@ const StyledObject = styled.div` {
 export default class Combobox extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { list, pos = 0, frameid = "body" } = props;
-    this.state = { list: list, pos: pos, modified: false, show: false, frameid: frameid };
+    const { list, pos = 0, frameid = "body", select = null } = props;
+    let index = pos;
+    if (list && list.length > 0 && select) {
+      index = list.findIndex(a => String(a.id) === String(select));
+    }
+    this.state = { list: list, pos: index, modified: false, show: false, frameid: frameid };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -125,6 +129,13 @@ export default class Combobox extends React.PureComponent {
     }
     if (this.state.pos !== nextProps.pos) {
       this.setState({ pos: nextProps.pos });
+    }
+
+    if (this.state.select !== nextProps.select) {
+      if (this.state.list && this.state.list.length > 0 && nextProps.select) {
+        const index = this.state.list.findIndex(a => String(a.id) === String(nextProps.select));
+        this.setState({ pos: index });
+      }
     }
   }
 

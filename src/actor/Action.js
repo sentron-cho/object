@@ -96,17 +96,11 @@ export function doSelect(url, value = null) {
 
 export function doInsert(url, value = null, list = null, onEvent = null) {
   axios.defaults.headers.common['Authorization'] = Storage.getToken();
-  axios.defaults.headers.common['maxContentLength'] = 100 * 1024 * 1024; //100M
-  axios.defaults.headers.common['maxBodyLength'] = 100 * 1024 * 1024; //100M
-  console.dir(axios.defaults.headers);
-
-  const onProgress = (e) => {
-    onEvent && onEvent('progress', e);
-  }
+  const options = { onUploadProgress: (e) => onEvent && onEvent('progress', e) };
 
   return new Promise((resolve, reject) => {
     if (!url) { alert('is not url'); reject(); return; };
-    axios.post(url, value).then((res) => {
+    axios.post(url, value, options).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
         window.location.href = data.value ? data.value : LOGIN;

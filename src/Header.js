@@ -23,7 +23,8 @@ const StyledObject = styled.header`{
         .ul-navi { ${cs.opac.show} ${cs.disp.block} ${cs.size.wfit} ${cs.align.ycenter} ${cs.p.r10}
           ${cs.mouse.pointer} ${cs.z.header} ${cs.disp.inblock} ${cs.h.auto} 
           .li-nav { ${cs.disp.inblock} ${cs.size.fit} ${cs.m.h10} ${cs.font.center} ${cs.font.thickbold} 
-            ${cs.z.front} ${cs.font.md} ${cs.anim.showin('200ms')}
+            ${cs.z.front} ${cs.font.md} 
+            // ${cs.anim.showin('200ms')}
 
             &.active { ${cs.font.primary} }
           }
@@ -98,7 +99,10 @@ const StyledObject = styled.header`{
     }
 
     @media screen and (min-width : 801px) { 
-      .nav-frame .nav-layer .ul-navi .li-nav:hover { ${cs.anim.zoomin()} }
+      .nav-frame .nav-layer .ul-navi .li-nav:hover { 
+        // ${cs.anim.slide('0.2s', '0', '-5px', 'h-up', 'ease-out')} 
+        ${cs.font.underline}
+      }
     }
 
     @media screen and (max-width : 1280px) { 

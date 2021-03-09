@@ -452,7 +452,8 @@ class Uploadbox extends React.PureComponent {
             <Svg className={cx("upv-delete sm", !props.onDelete ? 'hide' : '')} name={"delete"} eid={EID.DELETE} color={'dark'}
               onClick={(e) => props.onDelete && props.onDelete('delete', e)} />
             <Mediabox className={cx("upv-img", type)} fit={fit}
-              link={link} type={type} url={path && buf && buf.indexOf('base64') < 0 ? `${path}${buf}` : buf} size={"full"} maxHeight={"auto"} controls={false} edited={true}
+              link={link} type={type} url={path && buf && buf.indexOf('base64') < 0 ? `${path}${buf}` : buf} size={"full"} 
+              maxHeight={"auto"} controls={false} edited={true}
               onClick={onClicked} onLoad={this.onLoadImage} onError={this.onError} eid={"url"} imagestyle={imagestyle} />
             <Svg className={cx("upv-file xxl")} onClick={onClicked} name={"click"} eid={EID.OK} color={'white'} />
 

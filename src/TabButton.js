@@ -5,22 +5,24 @@ import styled from 'styled-components';
 import { cs, Svg, Button } from './index';
 
 const StyledObject = styled.span`{
-  &.tab-button { ${cs.anim.hide} ${cs.z.front} ${cs.pos.relative} ${cs.disp.inblock}
+  &.tab-button { ${cs.z.front} ${cs.pos.relative} ${cs.disp.inblock}
+  // ${cs.anim.hide}
 
+    .tab-label { ${cs.font.md} ${cs.p.b5} }
     .tab-frame { ${cs.disp.inblock} ${cs.group(2)}  ${cs.w.fit}
       .tab-btn { ${cs.min.w(60)} ${cs.w.fit}  }
     }
     
     &.full { ${cs.w.full} .tab-frame { ${cs.w.full} } }
-    &.xs { .tab-btn { ${cs.w.get(40)} } }
-    &.sm { .tab-btn { ${cs.w.get(60)} } }
-    &.lg { .tab-btn { ${cs.w.get(80)} } }
-    &.xl { .tab-btn { ${cs.w.get(100)} } }
+    &.xs { .tab-btn { ${cs.w.get(40)} } .tab-label { ${cs.font.xs} } }
+    &.sm { .tab-btn { ${cs.w.get(60)} } .tab-label { ${cs.font.sm} } }
+    &.lg { .tab-btn { ${cs.w.get(80)} } .tab-label { ${cs.font.lg} } }
+    &.xl { .tab-btn { ${cs.w.get(100)} } .tab-label { ${cs.font.xl} } }
   }
 }`;
 
 const TabButton = (props) => {
-  const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green', disabled = false } = props;
+  const { list, icon = null, theme, color = 'primary', size = 'md', className = '', activeColor = 'green', disabled = false, label = '' } = props;
 
   if (!list || list.length < 1) {
     return <div style={{ color: `${cs.color.gray}` }}>no tab items</div>
@@ -36,12 +38,14 @@ const TabButton = (props) => {
     const onClicked = (eid, e) => {
       const item = list.find(a => a.id === eid);
       props.onClick && props.onClick(eid, item, e);
+      props.onChange && props.onChange(eid, item, e);
       setSelect(item.id);
     }
 
     const temps = className && className.split(' ');
     const isfull = temps && temps.includes("full");
     return <StyledObject className={cx("tab-button", className, theme)}>
+      {label && <p className={"tab-label"}>{label}</p>}
       <span className={"tab-frame"}>
         {list.map((a, i) => {
           const active = a.id === select;

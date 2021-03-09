@@ -23,7 +23,8 @@ const StyledObject = styled.div`{
 
     .cont-frame {
       ${cs.size.full} ${cs.object.fit('cover')} ${cs.object.center}
-      ${cs.anim.in(500)} ${cs.align.ycenter} ${cs.pos.relative} ${cs.over.hidden}
+      ${cs.anim.in(500)} ${cs.pos.relative} ${cs.over.hidden}
+      // ${cs.align.ycenter}
       
       &.youtube, &.video { width: 100% !important; height: 100% !important; 
         & > video { ${({ fit }) => fit && cs.object.fit(fit)} }

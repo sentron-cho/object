@@ -14,7 +14,6 @@ const StyledObject = styled.div` {
     ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
     .cb-sel { ${cs.pos.relative} ${cs.size.full} ${cs.mouse.pointer} ${cs.min.width(120)}
       ${cs.box.line} ${cs.border.lightwhite} ${cs.w.max} ${cs.box.inner} ${cs.w.full}
-      // ${cs.p.h30} 
 
       .cb-txt { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock} ${cs.max.width("calc(100% - 30px)")}
         ${cs.font.ellipsis} ${cs.w.full} ${cs.font.center} ${cs.align.center}
@@ -87,7 +86,6 @@ const StyledObject = styled.div` {
       &.dark, &.black, &.primary { .cb-sel { ${cs.font.lightgray} } }
     }
 
-    // &.right.disable { .cb-li { ${cs.font.line(34)} ${cs.font.right} ${cs.p.r10} } }
     &.radius { .cb-sel { ${cs.box.radius} } }
 
     .cb-label {

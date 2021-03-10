@@ -139,6 +139,7 @@ const cs = {
     cross: 'cursor: crosshair;',
     move: 'cursor: move;',
     text: 'cursor: text;',
+    alias: 'cursor: alias;',
 
     get: (v) => `cursor: ${v};`,
   },

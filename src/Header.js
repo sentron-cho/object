@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { Svg, Util, cs } from './index';
-import { EID, SCREEN } from './Config';
 import * as actions from './actor/Action';
 
 const StyledObject = styled.header`{
@@ -109,7 +108,6 @@ const StyledObject = styled.header`{
 
 
 const Header = (props) => {
-  const [menus, setMenus] = useState(EID.HIDE);
   const [refresh, setRefresh] = useState(null);
 
   useEffect(() => {
@@ -160,8 +158,6 @@ const Header = (props) => {
 
   // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
   const { outerWidth } = window;
-  console.dir(outerWidth);
-
   const { height = "60px", theme, className } = props;
   const logouttitle = props.logouttitle || 'Logout';
   const logintitle = props.logouttitle || 'Login';
@@ -172,7 +168,7 @@ const Header = (props) => {
 
   return (
     <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} border={border} font={font} style={{ height }}>
-      <div className={cx('nav-frame')}>
+      <div className={cx('nav-frame')} refresh={refresh}>
         {ismobile
           ? <Mobile {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} />
           : <Desktop {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} />}

@@ -104,7 +104,6 @@ export default class Popbox extends React.PureComponent {
           return <Editbox className="textarea sizefix" value={value} name={name} onChange={onChange} validate={false}
             type="text" label={ST.DESC} guide={guide} multi={true}
             minheight={"100px"} height={`${height <= 100 ? 100 : height}px`} maxheight={`100%`} />
-        // height={`${height <= 100 ? 100 : height}px`} maxheight={`${rect.mh - 100}px`} />
         case 'color':
           return;
         case 'upload':

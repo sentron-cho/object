@@ -11,7 +11,27 @@ const StyledObject = styled.header`{
 
     .nav-frame { ${cs.w.full} ${cs.bg.white} ${cs.border.bottom} ${cs.border.lightgray} ${cs.box.inner} ${cs.h.full} }
 
-    &.trans { .nav-frame { ${cs.bg.white} ${cs.font.black} } }
+    &.trans {
+      .nav-frame { ${cs.bg.white} ${cs.font.black} ${cs.border.trans} }
+    }
+    &.alpha {
+      .nav-frame { ${cs.bg.color('#ffffffff')}
+        ${cs.anim.out('1.0s')} ${cs.bg.color('#ffffff00')} ${cs.font.dark} ${cs.border.trans} ${cs.opac.get(0.7)}
+        text-shadow: 1px 1px 1px #ffffffff;
+        &:hover { ${cs.anim.in('0.5s')} ${cs.bg.white} ${cs.border.lightgray} ${cs.opac.get(1.0)} text-shadow: 1px 1px 1px #ffffff00; }
+        &.show { ${cs.opac.get(1.0)} text-shadow: 1px 1px 1px #ffffff00; }
+      }
+
+      // .nav-frame { 
+      //   ${cs.font.dark} animation: alpha-fade ease-out 1 forwards 2.0s;
+      //   &:hover { ${cs.anim.in('0.5s')} ${cs.bg.white} ${cs.border.lightgray} ${cs.opac.get(1.0)} }
+      // }
+
+      // @keyframes alpha-fade {
+      //   from { ${cs.bg.white} ${cs.opac.get(1.0)} ${cs.border.lightgray} }
+      //   to { ${cs.bg.trans} ${cs.opac.get(0.7)} ${cs.border.trans} }
+      // };
+    }
     &.gray {
       .nav-frame { ${cs.bg.lightgray} ${cs.font.black} 
         .nav-layer .ul-navi .li-nav {
@@ -109,6 +129,7 @@ const StyledObject = styled.header`{
 
 const Header = (props) => {
   const [refresh, setRefresh] = useState(null);
+  const [show, setShow] = useState('');
 
   useEffect(() => {
     window.addEventListener('resize', onResize);
@@ -161,15 +182,19 @@ const Header = (props) => {
   const logouttitle = props.logouttitle || 'Logout';
   const logintitle = props.logouttitle || 'Login';
   const { font, border } = props.options || { border: null, font: null };
-  
+
   const { outerWidth } = window;
   const ismobile = outerWidth < 800;
 
+  const onClickShow = (s) => {
+    setShow(s);
+  }
+
   return (
     <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} border={border} font={font} style={{ height }}>
-      <div className={cx('nav-frame')} refresh={refresh}>
+      <div className={cx('nav-frame', show)} refresh={refresh}>
         {ismobile
-          ? <Mobile {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} />
+          ? <Mobile {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} onShow={onClickShow} />
           : <Desktop {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} />}
       </div>
     </StyledObject>
@@ -191,12 +216,12 @@ const Desktop = (props) => {
     <ul className={cx("ul-navi", align, list.length < 1 && 'nomenu')}>
       {list.map((item, index) => {
         const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
-        const title = item.name || item.title;
+        const name = item.name || item.title;
         if (item.hide) {
           return null;
         } else {
           return <li key={index} className={cx("li-nav", { active })}
-            onClick={(e) => props.onClick(e, item)}><span>{title && title.toUpperCase()}</span>
+            onClick={(e) => props.onClick(e, item)}><span>{name && name.toUpperCase()}</span>
           </li>
         }
       })}
@@ -208,9 +233,8 @@ const Desktop = (props) => {
 }
 
 const Mobile = (props) => {
-  const [show, setShow] = useState(false);
-
   const { align = 'right', list, location, title, maxWidth = "1024px", logouttitle, logintitle, pos = -1 } = props;
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const onRefresh = (e) => {
@@ -218,21 +242,24 @@ const Mobile = (props) => {
         return item.indexOf("li-nav") >= 0;
       });
       if (a) return;
+
       setShow(false);
+      props.onShow && props.onShow('hide');
     }
     const body = document.getElementById('body');
     body && body.addEventListener('mouseup', onRefresh);
     return () => {
       body && body.removeEventListener('mouseup', onRefresh);
     }
-  })
+  }, [])
 
   const onClickShow = (eid, e) => {
     e.stopPropagation();
-    setShow(!show);
+    setShow(true);
+    props.onShow && props.onShow('show');
   }
 
-  return <StyledObject className={cx('nav-layer nav-mobile', align)} style={{ maxWidth: maxWidth }}>
+  return <StyledObject className={cx('nav-layer nav-mobile', align, { show })} style={{ maxWidth: maxWidth }}>
     {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
     {/* 타이틀 */}

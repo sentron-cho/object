@@ -136,6 +136,7 @@ const Header = (props) => {
     return () => {
       window.removeEventListener('resize', onResize);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onClickMenu = (e, item) => {
@@ -183,8 +184,8 @@ const Header = (props) => {
   const logintitle = props.logouttitle || 'Login';
   const { font, border } = props.options || { border: null, font: null };
 
-  const { outerWidth } = window;
-  const ismobile = outerWidth < 800;
+  const { innerWidth } = window;
+  const ismobile = innerWidth < 800;
 
   const onClickShow = (s) => {
     setShow(s);
@@ -251,7 +252,8 @@ const Mobile = (props) => {
     return () => {
       body && body.removeEventListener('mouseup', onRefresh);
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onClickShow = (eid, e) => {
     e.stopPropagation();

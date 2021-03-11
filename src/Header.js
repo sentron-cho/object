@@ -157,13 +157,12 @@ const Header = (props) => {
   // }
 
   // url이 root와 같을 경우 첫번째 메뉴를 active 하기 위한 로직
-  const { outerWidth } = window;
   const { height = "60px", theme, className } = props;
   const logouttitle = props.logouttitle || 'Logout';
   const logintitle = props.logouttitle || 'Login';
-
   const { font, border } = props.options || { border: null, font: null };
-
+  
+  const { outerWidth } = window;
   const ismobile = outerWidth < 800;
 
   return (

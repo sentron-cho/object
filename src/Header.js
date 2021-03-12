@@ -192,7 +192,8 @@ const Header = (props) => {
   }
 
   return (
-    <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height} border={border} font={font} style={{ height }}>
+    <StyledObject className={cx("header", className, theme && `theme-${theme}`)} height={height}
+      border={border} font={font} style={{ height: ismobile ? '40px' : height }}>
       <div className={cx('nav-frame', show)} refresh={refresh}>
         {ismobile
           ? <Mobile {...props} {...{ logouttitle, logintitle }} onClick={onClickMenu} onShow={onClickShow} />

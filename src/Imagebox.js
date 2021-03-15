@@ -7,21 +7,14 @@ import { ST, EID } from './Config';
 
 const StyledObject = styled.div`{
   &.image-box { 
-    ${cs.noliststyle} ${cs.noselect} ${cs.h.full} ${cs.pos.relative} ${cs.over.hidden}
-    ${({ width }) => cs.w.get(width)} ${cs.box.inner} ${({ maxheight }) => cs.max.height(maxheight)}
+    ${cs.noliststyle} ${cs.noselect} ${cs.h.full} ${cs.pos.relative} ${cs.over.hidden} ${cs.box.inner}
 
     .ib-frame {
       ${cs.pos.relative} ${cs.opac.hide} ${cs.size.full} 
       ${cs.object.position('center center')}
-      ${({ fit }) => cs.object.fit(fit || 'contain')}
 
       &.loaded { ${cs.anim.show} ${cs.opac.visible} }
     }
-
-    // .no-image { 
-    //   ${cs.font.lightgray} ${cs.align.center} ${cs.font.size("1em")} ${cs.opac.show}
-    //   ${cs.max.height("80%")} ${cs.max.width("80%")} ${cs.size.get("fit-content")}
-    // }
 
     &.noimage { ${cs.box.line} ${cs.box.dashed} ${cs.border.alphagray} 
       .ib-frame {
@@ -90,15 +83,14 @@ export default class Imagebox extends React.PureComponent {
 
   onResize = () => {
     const { type } = Util.getScreenType();
-    this.setState({ 'type': type, width: this.getWidth() });
+    this.setState({ 'type': type, height: this.getHeight() });
   }
 
-  getWidth = () => {
-    let { rate = "", size, maxheight = null } = this.props;
-    if (size != null) {
+  getHeight = () => {
+    let { rate = "", size = 'null', maxWidth = null, width = null } = this.props;
+    if (size !== null) {
       switch (size) {
         case 'full': return "100%";
-        // case 'normal': rate = "4:3"; break;
         case 'wide': rate = "16:9"; break;
         case 'xwide': rate = "21:9"; break;
         case 'fwide': rate = "28:9"; break;
@@ -109,16 +101,39 @@ export default class Imagebox extends React.PureComponent {
     const temps = rate.split(":");
     const x = temps[0];
     const y = temps[1];
-    let height = this.box.offsetHeight;
-    if (maxheight && parseInt(height) > parseInt(maxheight)) {
-      height = parseInt(maxheight);
-    }
-    const width = Math.floor(height / y * x);
-    return `${width}px`;
+    width = width && String(width).replace(/[^0-9]/g, '');
+    !width && (width = this.box.offsetWidth);
+    (maxWidth && parseInt(width) > parseInt(maxWidth)) && (width = parseInt(maxWidth));
+    const height = Math.floor(width * (y / x));
+    return `${height}px`;
   }
 
+  // getWidth = () => {
+  //   let { rate = "", size, maxheight = null } = this.props;
+  //   if (size != null) {
+  //     switch (size) {
+  //       case 'full': return "100%";
+  //       // case 'normal': rate = "4:3"; break;
+  //       case 'wide': rate = "16:9"; break;
+  //       case 'xwide': rate = "21:9"; break;
+  //       case 'fwide': rate = "28:9"; break;
+  //       default: rate = "4:3"; break;
+  //     }
+  //   }
+
+  //   const temps = rate.split(":");
+  //   const x = temps[0];
+  //   const y = temps[1];
+  //   let height = this.box.offsetHeight;
+  //   if (maxheight && parseInt(height) > parseInt(maxheight)) {
+  //     height = parseInt(maxheight);
+  //   }
+  //   const width = Math.floor(height / y * x);
+  //   return `${width}px`;
+  // }
+
   componentDidMount() {
-    this.setState({ width: this.getWidth() });
+    this.setState({ height: this.getHeight() });
     window.addEventListener('resize', this.onResize);
     const { src, url } = this.props;
     if (!(src || url)) this.props.onLoad && this.props.onLoad();
@@ -158,7 +173,7 @@ export default class Imagebox extends React.PureComponent {
     const { loaded, error } = state;
     const { fit = "contain", className, maxheight, edited, imagestyle = '' } = props;
 
-    const { width } = state;
+    const { height } = state;
     const sizeguide = props.sizeguide || `[100 X 100]`;
     const src = props.src || props.url;
     const noimage = !src || error;
@@ -167,11 +182,13 @@ export default class Imagebox extends React.PureComponent {
     const pointer = props.link || props.onClick ? 'pointer' : '';
 
     return (
-      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer, { noimage })} width={width} fit={fit}
-        eid={props.eid} maxheight={maxheight} border={border} onClick={this.onClicked} style={{ ...props.style }}>
+      <StyledObject ref={ref => { this.box = ref }} className={cx("image-box", className, pointer, { noimage })}
+        eid={props.eid} border={border} onClick={this.onClicked}
+        style={{ maxHeight: maxheight, height, ...props.style }}>
         {isguide && <span className={"guide-size"} >{`${ST.IMAGESIZE}\n${sizeguide}`}</span>}
         {noimage ? <span className={cx("ib-frame", 'no-image')} >{"No Image"}</span>
-          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src} style={{ objectFit: fit, ...imagestyle }}
+          : <img alt="img" className={cx("ib-frame", { loaded }, props.opsbox)} src={src}
+            style={{ width: "100%", height: "100%", objectFit: fit || 'contain', ...imagestyle }}
             onLoad={this.onLoad} onError={this.onError} />}
         {props.children}
         {props.onDelete && <Svg className="ib-del lg box radius" onClick={this.onDelete} eid={EID.DELETE} icon={'delete'} />}

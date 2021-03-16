@@ -877,7 +877,7 @@ const cs = {
     r50: 'padding-right: 50px;',
 
     left: (v) => Number.isInteger(v) ? `padding-left: ${v}px;` : `padding-left: ${v};`,
-    right: (v) => Number.isInteger(v) ? `padding-right: ${v}px;` : `padding:-right ${v};`,
+    right: (v) => Number.isInteger(v) ? `padding-right: ${v}px;` : `padding-right ${v};`,
     top: (v) => Number.isInteger(v) ? `padding-top: ${v}px;` : `padding-top: ${v};`,
     bottom: (v) => Number.isInteger(v) ? `padding-bottom: ${v}px;` : `padding-bottom: ${v};`,
     get: (v) => Number.isInteger(v) ? `padding: ${v}px;` : `padding: ${v};`,

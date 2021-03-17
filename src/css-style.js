@@ -435,8 +435,23 @@ const cs = {
     slideup: (v = '150ms', s = '0', e = '-100%', name = 'slideup', type = 'linear') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  opacity: 0.3; } to { transform: translateY(${e});  opacity: 1; } };`,
     sizing: (v = '150ms', s = '40px', e = '100px', name = 'sizing', type = 'linear') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { height: ${s}; opacity: 0.3; } to { height: ${e};  opacity: 1; } };`,
     zoomin: (v = '300ms', s = '1.0', e = '1.2', opac = 1.0, name = 'zoomin', type = 'ease-out') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from { transform: scale(${s}); } to { transform: scale(${e}); opacity: ${opac}; } };`,
+    zoomout: (v = '150ms', s = '1.0', e = '0.8', name = 'zoomout', type = 'ease-in') => {
+      return `animation: ${name} ${type} 1 forwards ${v}; 
+      @keyframes ${name} { 
+        0% { transform: scale(${s}); opacity: 1; }
+        50% { transform: scale(${e}); opacity: 0.8; }
+        100% { transform: scale(${s}); opacity: 1;  }
+    };`},
     flicking: (v = '150ms', s = '1', e = '0', r = 1, name = 'filking', type = 'linear') => `animation: ${name} ${type} ${r} forwards ${v}; @keyframes ${name} { 0% { opacity: ${s}; } 50% { opacity: ${e}; } 100% { opacity: ${s}; } };`,
-    slide: (v = '150ms', s = '0', e = '-100%', name = 'slideup', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  } to { transform: translateY(${e}); } };`,
+    slide: (v = '150ms', s = '0', e = '-100%', name = 'slide', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  } to { transform: translateY(${e}); } };`,
+    rotate: (v = '150ms', s = '0', e = '360deg', name = 'rotate', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { 0% { transform: rotate(${s}) } 100% { transform: rotate(${e}) } };`,
+    rotatezoom: (v = '150ms', s = '0', e = '360deg', name = 'rotatezoom', type = 'ease-in') => {
+      return `animation: ${name} ${type} 1 forwards ${v}; 
+      @keyframes ${name} { 
+        0% { transform: rotate(${s}) scale(0.2); opacity: 0.1; }
+        90% { transform: rotate(${e}) scale(1.1); opacity: 0.9; }
+        100% { transform: rotate(${e}) scale(1.0); opacity: 1;  }
+    };`},
   },
 
   align: {

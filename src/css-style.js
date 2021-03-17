@@ -420,9 +420,10 @@ const cs = {
     in: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-in;` : `transition: all ${v} ease-in;`,
     out: (v = '150ms') => Number.isInteger(v) ? `transition: all ${v}ms ease-out;` : `transition: all ${v} ease-out;`,
     get: (v) => `transition: ${v};`,
-    iteration: (v) => `animation-iteration-count: ${v}`,
-    timing: (v) => `animation-timing-function: ${v}`,
-    delay: (v = '300ms') => `animation-delay: ${v}`,
+    iteration: (v) => `animation-iteration-count: ${v};`,
+    timing: (v) => `animation-timing-function: ${v};`,
+    delay: (v = '300ms') => `animation-delay: ${v};`,
+    origin: (v = 'center') => `transform-origin: ${v};`,
 
     name: (v = '150ms') => `animation-name: ${v};`,
     time: (v = '150ms') => Number.isInteger(v) ? `animation-duration: ${v}ms;` : `animation-duration: ${v};`,
@@ -447,16 +448,16 @@ const cs = {
     slide: (v = '150ms', s = '0', e = '-100%', name = 'slide', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { from  { transform: translateY(${s});  } to { transform: translateY(${e}); } };`,
     rotate: (v = '150ms', s = '0', e = '360deg', name = 'rotate', type = 'ease-in') => `animation: ${name} ${type} 1 forwards ${v}; @keyframes ${name} { 0% { transform: rotate(${s}) } 100% { transform: rotate(${e}) } };`,
     foldin: (v = '150ms', s = '0', e = '100%', name = 'foldin', type = 'ease-in') => {
-      return `animation: ${name} ${type} 1 forwards ${v};
+      return `animation: ${name} ${type} 1 forwards ${v}; overflow: hidden;
       @keyframes ${name} { 
-        0% { width: ${s}; opacity: 0.1; }
+        0% { width: ${s}; opacity: 1; }
         100% { width: ${e}; opacity: 1; }
       };`
     },
     foldup: (v = '150ms', s = '0', e = '100%', name = 'foldin', type = 'ease-in') => {
-      return `animation: ${name} ${type} 1 forwards ${v};
+      return `animation: ${name} ${type} 1 forwards ${v}; overflow: hidden;
       @keyframes ${name} { 
-        0% { height: ${s};opacity: 0.1; }
+        0% { height: ${s}; opacity: 1; }
         100% { height: ${e}; opacity: 1; }
       };`
     },
@@ -464,7 +465,7 @@ const cs = {
       return `animation: ${name} ${type} 1 forwards ${v}; transform-origin: center;
       @keyframes ${name} { 
         0% { transform: rotate(${s}) scale(0.2); opacity: 0.1; }
-        90% { transform: rotate(${e}) scale(1.1); opacity: 0.9; }
+        70% { transform: rotate(${e}) scale(1.0); opacity: 0.5; transform-origin: center; }
         100% { transform: rotate(${e}) scale(1.0); opacity: 1; }
       };`
     },

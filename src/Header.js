@@ -212,7 +212,7 @@ const Desktop = (props) => {
     {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
     {/* 타이틀 */}
-    <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
+    <p className={cx("li-title", !title && 'notitle')} onClick={(e) => actions.go('/', null)}>{title ? title.toUpperCase() : ""}</p>
 
     {/* 네비 메뉴 */}
     <ul className={cx("ul-navi", align, list.length < 1 && 'nomenu')}>
@@ -266,7 +266,7 @@ const Mobile = (props) => {
     {props.onMenu && <Svg className="btn-side md" name={"list"} onClick={(eid, e) => props.onMenu()} color={cs.color.dark} />}
 
     {/* 타이틀 */}
-    <p className={cx("li-title", !title && 'notitle')} onClick={props.onClick}>{title ? title.toUpperCase() : ""}</p>
+    <p className={cx("li-title", !title && 'notitle')} onClick={(e) => actions.go('/', null)}>{title ? title.toUpperCase() : ""}</p>
 
     {/* 네비 메뉴 */}
     {show && <ul className={cx("ul-navi", align, list.length < 1 && 'nomenu')}>

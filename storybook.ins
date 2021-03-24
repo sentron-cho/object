@@ -11,9 +11,15 @@ if [ -n "$1" ]; then
    docker pull sentron/storybook:$1
    docker rm -f storybook
 
+   echo "storybook:$1 docker network create...."
+   docker network create -d bridge nurionet
+
    echo "storybook:$1 docker image run...."
-   docker run -itd -p 33000:33000 --name storybook sentron/storybook:$1
-   docker restart storybook
+
+   pwd=$0
+   path=${pwd//storybook.ins/docker-compose.yml}
+   echo $path  
 else
    echo "input version tag"
 fi
+

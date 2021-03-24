@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  storybook:
+    image: sentron/storybook
+    container_name: storybook
+    restart: always
+    ports:
+      - "33000:33000"
+    volumes:
+      - /home/nurio/storybook/public:/nurio/storybook/public:rw
+      - /home/nurio/storybook/log:/nurio/storybook/log:rw
+      - /home/nurio/storybook/webset:/nurio/storybook/webset:rw
+      - /home/proxy:/nurio/proxy
+    environment:
+      - VIRTUAL_HOST=story.nurioweb.co.kr
+      - VIRTUAL_PORT=33000
+      - LETSENCRYPT_HOST=story.nurioweb.co.kr
+      - LETSCRYPT_EMAIL=nurioweb@gmail.com
+
+networks:
+  default:
+    external:
+      name: nurionet

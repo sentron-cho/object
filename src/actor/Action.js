@@ -205,3 +205,15 @@ export function doUpload(url, value = null, onEvent = null) {
     });
   })
 };
+
+export function doRun(url, value = null) {
+  return new Promise((resolve, reject) => {
+    axios.post(url, value).then(({ data }) => {
+      if (data.code === CODE.SUCCESS) {
+        resolve({ 'code': data.code, 'result': data.value });
+      } else {
+        resolve({ 'code': data.code, 'err': data.value });
+      }
+    })
+  })
+}

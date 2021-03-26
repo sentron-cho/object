@@ -193,7 +193,7 @@ export function doUpload(url, value = null, onEvent = null) {
       } else if (data.code === CODE.SUCCESS) {
         resolve({ 'code': data.code, 'result': data.value, 'item': data.item ? data.item : '', ...data });
       } else {
-        resolve({ 'code': data.code, 'err': data.value });
+        resolve({ 'code': data.code, 'result': data.value, 'err': data.value });
       }
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };

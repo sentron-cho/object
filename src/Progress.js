@@ -8,21 +8,21 @@ const StyledObject = styled.div`{
     ${({ width }) => cs.w.get(width)} ${({ height }) => cs.h.get(height)}
     ${cs.disp.block} ${cs.bg.sky} ${cs.over.hidden}
     ${cs.m.a0} ${cs.box.line} ${cs.box.inner} ${cs.border.trans}
-    ${cs.pos.relative} ${cs.font.gray}
+    ${cs.pos.relative} ${cs.font.dark}
 
     .pb-label { ${cs.pos.absolute} ${cs.z.front} ${cs.font.dark} ${cs.font.xs} ${cs.bottom(0)} ${cs.left(3)} }
     .pb-txt {
-      ${cs.pos.absolute} ${cs.font.xs} ${cs.font.right} ${cs.align.rbottom} ${cs.bottom(0)}
+      ${cs.pos.absolute} ${cs.font.xs} ${cs.font.right} ${cs.align.rbottom} ${cs.bottom(0)} ${cs.z.front}
     }
 
     .pb-bar { 
       ${cs.h.calc("100%")} ${cs.w.get(0)} ${cs.bg.green} ${cs.disp.inblock} ${cs.max.w('100%')}
       ${cs.float.left} ${cs.border.right} ${cs.border.primary} ${cs.pos.relative}
 
-      &.norm { ${cs.bg.lightprimary} }
-      &.warn { ${cs.bg.get("#ff8d17c0")} }
-      &.err { ${cs.bg.get("#ff5413c0")} }
-      &.full { border-radius: 4px; }
+      &.norm { ${cs.bg.primary} }
+      &.warn { ${cs.bg.get("#ff8d17e0")} }
+      &.err { ${cs.bg.get("#ff5413e0")} }
+      &.full { ${cs.border.radius(3)} }
     }
 
     .pb-icon { 
@@ -75,7 +75,7 @@ const Progress = (props) => {
     width = '100%', height = '16px', label = null,
     border, theme, islevel = false
   } = props;
-  let rate = props.rate;
+  let rate = props.rate || 0;
   if (max > 0 && value > 0) {
     rate = Math.floor(value / (max - min) * 100);
   }

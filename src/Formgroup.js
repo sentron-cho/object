@@ -11,12 +11,16 @@ const StyledObject = styled.div`{
       .fg-col { 
         ${cs.w.auto} ${cs.disp.flex("1 1 200px; flex-direction: column;")}
         ${cs.m.r10} ${cs.min.width(0)} //${cs.m.v5}
-        ${({ width }) => width && cs.w.get(width)} 
-        ${({ height }) => height && cs.h.get(height)} 
-        ${({ minWidth }) => minWidth && cs.min.width(minWidth)}
+        // ${({ width }) => width && cs.w.get(width)} 
+        // ${({ height }) => height && cs.h.get(height)} 
+        // ${({ minWidth }) => minWidth && cs.min.width(minWidth)}
       }
       .fg-col:last-child { ${cs.m.r0} }
       ${(props) => props.justify && `justify-content: ${props.justify}`};
+    }
+
+    &.inherit {
+      ${cs.over.inherit}
     }
 
     &.inline { 
@@ -205,10 +209,14 @@ export default class Formgroup extends React.PureComponent {
       }
     }
 
+    // ${({ width }) => width && cs.w.get(width)} 
+    // ${({ height }) => height && cs.h.get(height)} 
+    // ${ ({ minWidth }) => minWidth && cs.min.width(minWidth) }
+    
     const Child = child;
     return (
       <StyledObject className={cx('form-grp', props.className, { inline }, { flexwrap }, (anim && "anim"), { disable }, theme && `theme-${theme}`)}
-        {...props.options} {...props.style} border={props.border} bgcolor={props.bgcolor}
+        {...props.options} border={props.border} bgcolor={props.bgcolor}
         anim={state.anim} onAnimationEnd={this.onAnimEnd}>
 
         {renderGuide()}
@@ -217,7 +225,7 @@ export default class Formgroup extends React.PureComponent {
           {children && renderChildren()}
 
           {child && props.list && list.map((item, index) =>
-            <div className={cx("fg-col", `col-${index}`)} key={index}>
+            <div className={cx("fg-col", `col-${index}`)} key={index} style={{...props.style}}>
               <Child {...item} {...config.child} active={item.id === selected} full={true} disable={disable}
                 onClicked={this.props.onSelected ? this.onSelected : null} />
             </div>)

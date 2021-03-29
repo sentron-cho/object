@@ -212,6 +212,7 @@ const cs = {
     xvisible: 'overflow: hidden; overflow-x: scroll;',
     yvisible: 'overflow: hidden; overflow-y: scroll;',
     unset: 'overflow: unset;',
+    inherit: 'overflow: inherit;',
 
     get: (v) => `overflow: ${v};`,
   },

@@ -8,7 +8,7 @@ const StyledObject = styled.div`{
     ${({ width }) => cs.w.get(width)} ${({ height }) => cs.h.get(height)}
     ${cs.disp.block} ${cs.bg.sky} ${cs.over.hidden}
     ${cs.m.a0} ${cs.box.line} ${cs.box.inner} ${cs.border.trans}
-    ${cs.pos.relative} ${cs.font.dark}
+    ${cs.pos.relative} ${cs.font.dark} ${cs.over.inherit}
 
     .pb-label { ${cs.pos.absolute} ${cs.z.front} ${cs.font.dark} ${cs.font.xs} ${cs.bottom(0)} ${cs.left(3)} }
     .pb-txt {
@@ -26,8 +26,8 @@ const StyledObject = styled.div`{
     }
 
     .pb-icon { 
-      ${cs.icon.get(12)} ${cs.z.icon} ${cs.opac.show} ${cs.pos.relative}
-      ${cs.left(-7)} ${cs.top(-4)}
+      ${cs.icon.get(12)} ${cs.z.icon} ${cs.opac.show} ${cs.align.ycenter}
+      ${cs.left(0)}
     }
 
     &.notext { .pb-txt { ${cs.disp.none} } }

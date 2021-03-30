@@ -468,6 +468,12 @@ export const Util = {
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
   },
 
+  isIp(asValue) {
+    // eslint-disable-next-line no-useless-escape
+    let regExp = /^(1|2)?\d?\d([.](1|2)?\d?\d){3}$/;
+    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+  },
+
   isNumber(asValue) {
     const regExp = /^[0-9]*$/;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴

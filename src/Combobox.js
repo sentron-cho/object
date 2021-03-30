@@ -9,7 +9,10 @@ import { Util } from './Utils';
 const StyledObject = styled.div` {
   &.combo-box {
     ${cs.noselect} ${cs.pos.relative} ${cs.disp.inblock} ${cs.font.md} ${cs.noliststyle}
-    ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} ${cs.float.left}
+    ${cs.w.auto} ${cs.h.auto} ${cs.z.front} ${cs.box.inner} ${cs.top(0)} 
+    ${cs.float.left}
+
+    &.nofloat { ${cs.float.none} }
 
     ul, li { list-style: none; ${cs.m.a0} ${cs.p.a0} }
     .cb-sel { ${cs.pos.relative} ${cs.size.full} ${cs.mouse.pointer} ${cs.min.width(120)}
@@ -206,7 +209,7 @@ export default class Combobox extends React.PureComponent {
     const { list = null, noti, show, pos } = state;
     const { disable, theme, className, inline = false } = props;
     const selected = list ? pos < list.length ? list[pos] : list[0] : null;
-    const title = selected && selected.name ? selected.name.toString() : 'noitem';
+    const title = selected ? (selected.name || selected.title) : 'noitem';
     const { text, label } = props.options || { text: null, label: null };
 
     return (
@@ -219,7 +222,8 @@ export default class Combobox extends React.PureComponent {
             <ul className="cb-ul" name="selector">
               {list.map((item, index) => {
                 const active = index === pos;
-                return <li key={index} className={cx('cb-li', (noti), { active })} name={item.id} eid={item.id.toString()} onClick={this.onChanged}>{item.name || 'noname'}</li>
+                return <li key={index} className={cx('cb-li', (noti), { active })} name={item.id} eid={item.id.toString()}
+                  onClick={this.onChanged}>{item.name || item.title || 'noname'}</li>
               })
               }
             </ul>

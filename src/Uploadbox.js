@@ -307,7 +307,7 @@ class Uploadbox extends React.PureComponent {
         setTimeout(() => (this.refLink.focus()), 300)
         break;
       default:
-        this.refInput.click();
+        this.refInput && this.refInput.click();
         break;
     }
   }

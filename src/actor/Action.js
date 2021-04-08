@@ -8,8 +8,10 @@ import { Storage } from '../Utils';
 const LOGIN = "/signin";
 
 export function go(url, value = {}) {
+  // console.dir(global.hist.length);
   Storage.setLocalItem(url, value);
-  window.location.href = url;
+  // window.location.href = url;
+  global.hist ? global.hist.push(url, { ...value }) : (window.location.href = url);
 }
 
 export function open(url, value) {
@@ -18,15 +20,28 @@ export function open(url, value) {
 }
 
 export function getParam(url = null) {
-  const path = url || window.location.pathname;
-  return Storage.getLocalItem(path);
+  if (window && window.history) {
+    const param = window.history.state;
+    // console.dir(param);
+    return param ? param.state : null;
+  } else {
+    const path = url || window.location.pathname;
+    return Storage.getLocalItem(path);
+  }
 }
 
 export function popParam(url = null) {
+  // if(window && window.history) {
+  //   const param = window.history.state;
+  //   console.dir(param);
+  //   // window.history.state = null;
+  //   return param;
+  // } else {
   const path = url || window.location.pathname;
   const param = Storage.getLocalItem(path);
   Storage.removeLocalItem(path);
   return param;
+  // }
 }
 
 export function doList(url, value = null) {

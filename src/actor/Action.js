@@ -21,9 +21,12 @@ export function open(url, value) {
 
 export function getParam(url = null) {
   if (window && window.history) {
+    const path = url || window.location.pathname;
+    const sparam = Storage.getLocalItem(path);
+
     const param = window.history.state;
     // console.dir(param);
-    return param ? param.state : null;
+    return param ? param.state : (sparam || null);
   } else {
     const path = url || window.location.pathname;
     return Storage.getLocalItem(path);

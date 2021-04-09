@@ -218,7 +218,7 @@ const Listbox = (props) => {
   }
 
   const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props;
-  const selection = (props.onSelect !== null);
+  const selection = (props.onSelect);
 
   const renderGuide = () => {
     let guide = null;

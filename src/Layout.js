@@ -70,7 +70,7 @@ class Layout extends React.PureComponent {
   render() {
     const { props } = this;
     const { layout, leftPadding = "235px", topPadding = "6px" } = props;
-    const { act, time } = layout;
+    const { time } = layout;
     const fade = { time: time == null ? 0 : time };
     const show = Storage.getSessionItem('sidemenu');
     const menubar = (!show || show === EID.SHOW) ? 'menuin' : 'menuout'; //act && act === EID.SHOW ? 'menuin' : 'menuout';

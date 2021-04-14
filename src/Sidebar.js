@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames/bind';
 import { Svg, Util, cs } from './index';
-import { EID, SCREEN } from './Config';
+import { EID, SCREEN, } from './Config';
+import { Storage } from './Utils';
 import * as actions from './actor/Action';
 
 const StyledObject = styled.div`{
@@ -65,7 +66,9 @@ class Sidebar extends React.PureComponent {
     super(props);
     const { type } = Util.getScreenType();
     this.api = props.api || '';
-    const menus = type !== SCREEN.ST.MOBILE ? EID.SHOW : EID.HIDE;
+
+    const show = Storage.getSessionItem('sidemenu');
+    const menus = type !== SCREEN.ST.MOBILE ? (show || EID.SHOW) : EID.HIDE;
     this.state = { type: type, menus: menus, anim: '' }
     this.interval = 0.2;
   }
@@ -92,7 +95,11 @@ class Sidebar extends React.PureComponent {
 
   onResize = () => {
     const { type } = Util.getScreenType();
+    // const menus = type !== SCREEN.ST.MOBILE ? EID.SHOW : EID.HIDE;
+    // const show = Storage.getSessionItem('sidemenu');
+    // const menus = type !== SCREEN.ST.MOBILE ? (show || EID.SHOW) : EID.HIDE;
     const menus = type !== SCREEN.ST.MOBILE ? EID.SHOW : EID.HIDE;
+    Storage.setSessionItem('sidemenu', menus);
     this.setState({ 'type': type, 'menus': menus, anim: '' });
     this.onLayoutEvent(0, false);
   }
@@ -118,6 +125,7 @@ class Sidebar extends React.PureComponent {
   onClicked = (eid, e) => {
     const { menus } = this.state;
     const sw = menus === EID.HIDE ? EID.SHOW : EID.HIDE;
+    Storage.setSessionItem('sidemenu', sw);
     this.setState({ menus: sw, anim: menus === EID.SHOW ? "slideout" : 'slidein' });
   }
 

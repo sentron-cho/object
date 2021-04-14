@@ -4,7 +4,7 @@ import cx from 'classnames/bind';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { EID, SCREEN } from './Config';
-import { Util } from './Utils';
+import { Util, Storage } from './Utils';
 import cs from './css-style';
 
 const StyledObject = styled.div`{
@@ -72,7 +72,8 @@ class Layout extends React.PureComponent {
     const { layout, leftPadding = "235px", topPadding = "6px" } = props;
     const { act, time } = layout;
     const fade = { time: time == null ? 0 : time };
-    const menubar = act == null ? '' : act === EID.SHOW ? 'menuin' : 'menuout';
+    const show = Storage.getSessionItem('sidemenu');
+    const menubar = (!show || show === EID.SHOW) ? 'menuin' : 'menuout'; //act && act === EID.SHOW ? 'menuin' : 'menuout';
     const anim = this.state.type !== SCREEN.ST.MOBILE ? true : false;
 
     return (
@@ -83,4 +84,4 @@ class Layout extends React.PureComponent {
   }
 }
 
-export default connect((state) => ({ layout: state.layout }), null)(Layout); 
+export default connect((state) => ({ layout: state.layout }), null)(Layout);

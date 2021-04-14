@@ -5,7 +5,11 @@ import { Storage } from '../Utils';
 // 태스크의 데이터를 가져오는 방식은 일반적인 통신 방식으로 수행
 // 이벤트 및 데이터 그리고 성능 문제로 인해 데이터를 가져오는건 일반적인 통신으로 하자.
 
-const LOGIN = "/signin";
+const LOGIN = () => {
+  const url = global.loginurl || "/signin";
+  console.dir(url);
+  return url;
+};
 
 export function go(url, value = {}) {
   // console.dir(global.hist.length);
@@ -55,7 +59,7 @@ export function doList(url, value = null) {
     axios.patch(url, { params: { ...value } }).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else if (data.code === CODE.SUCCESS) {
         const isPage = data.page != null && data.max_page != null ? true : false;
         let result = { data: data.value, total: data.total, page: 1, max: 1 };
@@ -79,7 +83,7 @@ export function doList(url, value = null) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }
@@ -95,7 +99,7 @@ export function doSelect(url, value = null) {
     axios.get(url, { params: { ...value } }).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else if (data.code === CODE.SUCCESS) {
         resolve({ 'code': data.code, 'result': data.value, ...data });
       } else {
@@ -104,7 +108,7 @@ export function doSelect(url, value = null) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }
@@ -121,7 +125,7 @@ export function doInsert(url, value = null, list = null, onEvent = null) {
     axios.post(url, value, options).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else if (data.code === CODE.SUCCESS) {
         const result = list == null ? data.value : [...list, data.value];
         resolve({ 'code': data.code, 'result': result, ...data });
@@ -131,7 +135,7 @@ export function doInsert(url, value = null, list = null, onEvent = null) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }
@@ -148,7 +152,7 @@ export function doUpdate(url, value = null, list = null, onEvent = null) {
     axios.put(url, value, options).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else if (data.code === CODE.SUCCESS) {
         const result = list == null ? data.value : list.map(item => { if (item.rowid === data.value.rowid) item = data.value; return item; });
         resolve({ 'code': data.code, 'result': result, 'item': data.item ? data.item : '', ...data });
@@ -158,7 +162,7 @@ export function doUpdate(url, value = null, list = null, onEvent = null) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }
@@ -182,7 +186,7 @@ export function doDelete(url, value, list) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }
@@ -207,7 +211,7 @@ export function doUpload(url, value = null, onEvent = null) {
     }).then((res) => {
       const { status, data } = res;
       if (data.code === CODE.LOGINERR || status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else if (data.code === CODE.SUCCESS) {
         resolve({ 'code': data.code, 'result': data.value, 'item': data.item ? data.item : '', ...data });
       } else {
@@ -216,7 +220,7 @@ export function doUpload(url, value = null, onEvent = null) {
     }).catch(error => {
       const { status = -1, data } = error ? error.response : { status: -1, data: null };
       if (status === 500) {
-        window.location.href = data.value ? data.value : LOGIN;
+        window.location.href = data.value ? data.value : LOGIN();
       } else {
         console.log(error)
       }

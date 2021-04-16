@@ -113,7 +113,6 @@ const Thumblist = (props) => {
     const fr = document.getElementById(`s-frame${uuid || ''}`);
     const child = fr && fr.children[props.pos];
     if (child) {
-      const { scrollLeft, offsetWidth } = fr;
       const start = fr.scrollLeft;
       const end = fr.offsetWidth + fr.scrollLeft;
       const left = child.offsetLeft;
@@ -122,8 +121,7 @@ const Thumblist = (props) => {
         fr.scrollTo({ top: 0, left: left, behaviour: 'smooth' })
       }
     }
-    // const index = fr.scrollLeft + e.deltaY / 2;
-    // fr.scrollTo({ top: 0, left: index, behaviour: 'smooth' })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.pos]);
 
   const onSelect = (rid, e, item) => {
@@ -203,7 +201,7 @@ const Thumblist = (props) => {
         {tlist && <div className={cx("v-line", { dragdrop })} id={`s-frame${uuid || ''}`}>
           {/* items */}
           {list.map((item, index) => {
-            if (!item) return;
+            if (!item) return null;
 
             item.index = index;
             const url = item.url && item.url.indexOf('http') === 0 ? item.url : path ? path + item.url : item.url;

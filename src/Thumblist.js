@@ -121,7 +121,7 @@ const Thumblist = (props) => {
         fr.scrollTo({ top: 0, left: left, behaviour: 'smooth' })
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.pos]);
 
   const onSelect = (rid, e, item) => {

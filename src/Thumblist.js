@@ -34,9 +34,17 @@ const StyledObject = styled.div`{
 
         &:first-child { ${cs.p.left(0)} }
         &:last-child { ${cs.p.right(0)} }
-        
+
+        .thumb-box { ${cs.box.line} ${cs.box.inner} ${cs.border.trans} 
+          &.active { ${cs.box.orange} ${cs.opac.get(0.8)} }
+        }
+
         ${({ cursor }) => cursor && cs.mouse.get(cursor)};
       }
+    }
+
+    .t-label { ${cs.align.right} ${cs.top(3)} ${cs.right(3)} ${cs.bg.alphablack} ${cs.p.h10} ${cs.border.radius(3)} 
+      ${cs.font.lightgray} ${cs.font.sm} ${cs.disp.inblock} ${cs.p.v2}
     }
 
     .no-data { ${cs.h.get(100)} ${cs.w.fit} ${cs.align.center} .nodata-box { ${cs.min.h(20)} } }
@@ -91,7 +99,7 @@ const StyledObject = styled.div`{
 
 const Thumblist = (props) => {
   const cursor = props.onSelect && "pointer";
-  const { head, path = null, rowid = 'rowid', uuid = null, size = null, theme } = props;
+  const { path = null, rowid = 'rowid', uuid = null, size = null, theme, pos = -1, total = 0 } = props;
   const { config = { child: null } } = props;
   const [anim, setAnim] = useState(props.anim);
   const [list, setList] = useState(props.list);
@@ -100,6 +108,23 @@ const Thumblist = (props) => {
     setAnim(props.anim);
     setList(props.list);
   }, [props.anim, props.list]);
+
+  useEffect(() => {
+    const fr = document.getElementById(`s-frame${uuid || ''}`);
+    const child = fr && fr.children[props.pos];
+    if (child) {
+      const { scrollLeft, offsetWidth } = fr;
+      const start = fr.scrollLeft;
+      const end = fr.offsetWidth + fr.scrollLeft;
+      const left = child.offsetLeft;
+
+      if (left > end || left < start) {
+        fr.scrollTo({ top: 0, left: left, behaviour: 'smooth' })
+      }
+    }
+    // const index = fr.scrollLeft + e.deltaY / 2;
+    // fr.scrollTo({ top: 0, left: index, behaviour: 'smooth' })
+  }, [props.pos]);
 
   const onSelect = (rid, e, item) => {
     (props.onSelect != null) && props.onSelect(rid, e, item);
@@ -117,20 +142,12 @@ const Thumblist = (props) => {
   const onWheel = (e) => {
     e.preventDefault();
     const fr = document.getElementById(`s-frame${uuid || ''}`);
-    const pos = fr.scrollLeft + e.deltaY / 2;
-    fr.scrollTo({ top: 0, left: pos, behaviour: 'smooth' })
+    const index = fr.scrollLeft + e.deltaY / 2;
+    fr.scrollTo({ top: 0, left: index, behaviour: 'smooth' })
   }
 
   const renderGuide = () => {
     let guide = null;
-    if (!head) {
-      guide = "You must set head props.\n"
-        + "ex. const head = [{ key: 'no', title: 'utime', type: 'date', align: 'left', flex: '1 1 40px' }, {...}\n"
-        + "key and title is required. Rest is optional.\n"
-        + "type is text or date or datetime";
-      console.error(guide);
-      return;
-    }
 
     if (props.onDrag) {
       guide = "Use onDragDrop() instead of onDrag()";
@@ -150,21 +167,8 @@ const Thumblist = (props) => {
     setAnim({ anim: '' });
   }
 
-  // tags 배열에 나열된 아이템들만 추출
-  const makeItems = (array = null, lhead = null) => {
-    if (array && head) {
-      return array.map(item => {
-        let temps = [];
-        lhead.map(key => temps = [...temps, { key: key, value: item[key] }]);
-        return temps;
-      })
-    } else {
-      return null;
-    }
-  }
-
   // 테이블 아이템중에 head에 설정된 col만 추출하자.
-  const tlist = makeItems(list, head && head.map(item => item.key));
+  const tlist = list && list.map(a => { return { ...a, rowid: a[rowid], url: a.url } });
 
   const dragdrop = props.onDragDrop ? true : false;
   const onDragDrop = useCallback((eid, dragIndex, hoverIndex) => {
@@ -199,15 +203,18 @@ const Thumblist = (props) => {
         {tlist && <div className={cx("v-line", { dragdrop })} id={`s-frame${uuid || ''}`}>
           {/* items */}
           {list.map((item, index) => {
+            if (!item) return;
+
             item.index = index;
-            const url = item.url.indexOf('http') === 0 ? item.url : path ? path + item.url : item.url;
+            const url = item.url && item.url.indexOf('http') === 0 ? item.url : path ? path + item.url : item.url;
             const rid = item[rowid] || index;
             const odr = item.odr || item.no || index + 1;
+            const active = pos >= 0 && index === pos;
 
             return (
-              <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
+              <Dragable key={`${rid}-${index}`} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
                 <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel} onClick={(e) => onSelect(rid, e, item)} >
-                  <Thumbbox className={cx(props.itemClassName, size)} {...config.child}
+                  <Thumbbox className={cx(props.itemClassName, size, { active })} {...config.child}
                     odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
                     <Svg className="thb-delete delete md box radius white" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />
@@ -218,6 +225,10 @@ const Thumblist = (props) => {
           })}
         </div>}
       </DndProvider>
+      <span className={'t-label'}>
+        {pos > -1 && <span>{pos + 1}</span>}
+        {total > 0 && <span>{`/${total}`}</span>}
+      </span>
       {props.onClickNew && <span className={'thb-new'} onClick={(e) => onClickNew('new', e)}>
         <Svg className="md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />
       </span>}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import cs from './css-style';
 import cx from 'classnames/bind';
-import { URL } from 'svc/Enum';
 
 const StyledObject = styled.div`{
   &.err-page {
@@ -23,7 +22,7 @@ const StyledObject = styled.div`{
 
 const Error = (props) => {
   useEffect(() => {
-    setTimeout(() => window.location.href = URL.ROOT, 5000);
+    setTimeout(() => window.location.href = '/', 5000);
     return () => {
     }
   }, []);

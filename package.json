@@ -49,7 +49,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "draft-js": "^0.11.4",
-    "echarts": "^5.0.2",
+    "echarts": "^5.1.0",
     "immutability-helper": "^3.0.1",
     "moment": "^2.29.1",
     "rc-slider": "^9.7.1",

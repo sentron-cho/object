@@ -223,10 +223,10 @@ const Thumblist = (props) => {
           })}
         </div>}
       </DndProvider>
-      <span className={'t-label'}>
+      {total > 0 && pos > -1 && <span className={'t-label'}>
         {pos > -1 && <span>{pos + 1}</span>}
         {total > 0 && <span>{`/${total}`}</span>}
-      </span>
+      </span>}
       {props.onClickNew && <span className={'thb-new'} onClick={(e) => onClickNew('new', e)}>
         <Svg className="md" onClick={onClickNew} icon={'add'} color={cs.color.lightwhite} />
       </span>}

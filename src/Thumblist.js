@@ -138,7 +138,8 @@ const Thumblist = (props) => {
   }
 
   const onWheel = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    e.stopPropagation();
     const fr = document.getElementById(`s-frame${uuid || ''}`);
     const index = fr.scrollLeft + e.deltaY / 2;
     fr.scrollTo({ top: 0, left: index, behaviour: 'smooth' })

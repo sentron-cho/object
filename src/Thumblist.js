@@ -24,9 +24,10 @@ const StyledObject = styled.div`{
         ${cs.disp.inblock} ${cs.m.a2} ${cs.pos.relative} ${cs.opac.show}
 
         .thb-delete { ${cs.align.rbottom} ${cs.opac.get(0.5)} ${cs.bottom(5)} ${cs.right(3)} 
-          ${cs.bg.alphablack} ${cs.border.dark}
-          // .svg-icon { ${cs.bg.alphablack} } 
+          ${cs.bg.alphablack} ${cs.border.dark} ${cs.z.over}
         }
+
+        .thb-fg { ${cs.size.full} ${cs.z.front} ${cs.bg.get('#000000c0')} ${cs.align.top} ${cs.left(0)} }
 
         &:hover {
           .thb-delete { ${cs.opac.show} } 
@@ -36,10 +37,12 @@ const StyledObject = styled.div`{
         &:last-child { ${cs.p.right(0)} }
 
         .thumb-box { ${cs.box.line} ${cs.box.inner} ${cs.border.trans} 
-          &.active { ${cs.box.orange} ${cs.opac.get(0.8)} }
+          //${cs.align.ycenter} ${cs.pos.relative}
         }
 
         ${({ cursor }) => cursor && cs.mouse.get(cursor)};
+
+        &.active { .thb-fg { ${cs.box.orange} ${cs.bg.trans} } }
       }
     }
 
@@ -67,9 +70,9 @@ const StyledObject = styled.div`{
     &.border { ${cs.box.line} }
     &.radius { ${cs.box.radius} }
 
-    &.sm { .thb-new { .svg-icon { ${cs.size.get(20)} } } }
-    &.md { }
-    &.lg { .thb-new { .svg-icon { ${cs.size.get(28)} } } .v-line { ${cs.scrollbar.t4} } }
+    &.md { .v-line .v-item { ${cs.h.get(80)} ${cs.w.get(100)} } }
+    &.sm { .v-line .v-item { ${cs.h.get(60)} ${cs.w.get(75)} } .thb-new { .svg-icon { ${cs.size.get(20)} } } }
+    &.lg { .v-line .v-item { ${cs.h.get(120)} ${cs.w.get(150)} } .thb-new { .svg-icon { ${cs.size.get(28)} } } .v-line { ${cs.scrollbar.t4} } }
 
     ${({ border }) => border && `${cs.box.line}`}
     ${({ border }) => border && border.color && `${cs.border.color(border.color)}`}
@@ -99,7 +102,7 @@ const StyledObject = styled.div`{
 
 const Thumblist = (props) => {
   const cursor = props.onSelect && "pointer";
-  const { path = null, rowid = 'rowid', uuid = null, size = null, theme, pos = -1, total = 0 } = props;
+  const { path = null, rowid = 'rowid', uuid = null, size = 'md', theme, pos = -1, total = 0 } = props;
   const { config = { child: null } } = props;
   const [anim, setAnim] = useState(props.anim);
   const [list, setList] = useState(props.list);
@@ -212,8 +215,9 @@ const Thumblist = (props) => {
 
             return (
               <Dragable key={`${rid}-${index}`} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <span className={cx("v-item drag-li")} rowid={rid} onWheel={onWheel} onClick={(e) => onSelect(rid, e, item)} >
-                  <Thumbbox className={cx(props.itemClassName, size, { active })} {...config.child}
+                <span className={cx("v-item drag-li", { active })} rowid={rid} onWheel={onWheel} onClick={(e) => onSelect(rid, e, item)} >
+                  <div className={cx('thb-fg')} />
+                  <Thumbbox className={cx(props.itemClassName, size)} {...config.child}
                     odr={props.showno ? odr : null} thumb={url} anim={true} delay={index * 50} />
                   {props.onClickDelete &&
                     <Svg className="thb-delete delete md box radius white" onClick={onClickDelete} eid={rid} icon={'delete'} color={cs.color.lightgray} />

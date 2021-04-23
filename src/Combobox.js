@@ -125,11 +125,17 @@ export default class Combobox extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.list) {
-      this.setState({ list: nextProps.list });
-    }
     if (this.state.pos !== nextProps.pos) {
       this.setState({ pos: nextProps.pos });
+    }
+
+    if (nextProps.list) {
+      if (nextProps.select) {
+        const index = nextProps.list.findIndex(a => String(a.id) === String(nextProps.select));
+        this.setState({ list: nextProps.list, pos: index });
+      } else {
+        this.setState({ list: nextProps.list });
+      }
     }
 
     if (this.state.select !== nextProps.select) {

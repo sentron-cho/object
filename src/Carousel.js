@@ -169,8 +169,8 @@ export default class Carousel extends React.PureComponent {
   }
 
   getHeight = () => {
-    let { rate, size = 'wide' } = this.props;
-    if (size != null) {
+    let { rate = null, size = 'wide' } = this.props;
+    if (!rate && size) {
       switch (size) {
         case 'full': return "100%";
         case 'normal': rate = "4:3"; break;

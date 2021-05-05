@@ -182,6 +182,10 @@ const cs = {
       }
     
       @media screen and (max-width : 480px) { }
+
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        .pop-bg { ${cs.bg.dark} ${cs.opac.get(0.5)} }
+      }
     `,
     flex: (v) => `flex: ${v};`,
     get: (v) => `display: ${v};`,

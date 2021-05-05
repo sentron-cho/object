@@ -73,6 +73,10 @@ const StyledObject = styled.div`
   &.white { .cf-head, .cf-frame { ${cs.bg.white} ${cs.font.dark} } 
     .cf-foot .button { ${cs.bg.lightwhite} ${cs.font.dark} ${cs.box.line} ${cs.border.darkwhite} } } 
   }
+
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .bg { ${cs.bg.dark} ${cs.opac.get(0.5)} }
+  }
 }`;
 
 class Confirm extends React.PureComponent {

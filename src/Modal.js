@@ -93,6 +93,10 @@ export const StyledObject = styled.div`{
         }
       }
     }
+
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      .bg { ${cs.bg.dark} ${cs.opac.get(0.5)} }
+    }
   }
 }`;
 

@@ -194,8 +194,8 @@ const Desktop = (props) => {
     <p className={cx("li-title", !title && 'notitle')} onClick={(e) => actions.go('/', null)}>{title ? title.toUpperCase() : ""}</p>
 
     {/* 네비 메뉴 */}
-    <ul className={cx("ul-navi", align, list.length < 1 && 'nomenu')}>
-      {list.map((item, index) => {
+    <ul className={cx("ul-navi", align, (!list || list.length < 1) && 'nomenu')}>
+      {list && list.map((item, index) => {
         const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
         const name = item.name || item.title;
         if (item.hide) {
@@ -248,8 +248,8 @@ const Mobile = (props) => {
     <p className={cx("li-title", !title && 'notitle')} onClick={(e) => actions.go('/', null)}>{title ? title.toUpperCase() : ""}</p>
 
     {/* 네비 메뉴 */}
-    {show && <ul className={cx("ul-navi", align, list.length < 1 && 'nomenu')}>
-      {list.map((item, index) => {
+    {show && <ul className={cx("ul-navi", align, (!list || list.length < 1) && 'nomenu')}>
+      {list && list.map((item, index) => {
         const active = pos ? index === pos : location ? location.toLowerCase() === item.url.toLowerCase() : (index === 0);
         const title = item.name || item.title;
         if (item.hide) {

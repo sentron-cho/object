@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
-import cx from 'classnames/bind';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
-import update from 'immutability-helper';
-import { SearchFrame, Pagenavi, Nodata, Util, Svg, cs, Guidebox, Dragable } from './index';
-import { ST } from './Config';
+import React, { useState, useCallback, useEffect } from 'react'
+import styled from 'styled-components'
+import cx from 'classnames/bind'
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
+import update from 'immutability-helper'
+import { SearchFrame, Pagenavi, Nodata, Util, Svg, cs, Guidebox, Dragable } from './index'
+import { ST } from './Config'
 
 const StyledObject = styled.div`{
   &.list-box {
@@ -19,10 +19,10 @@ const StyledObject = styled.div`{
 
       .lbx-li { ${cs.pos.relative} ${cs.h.auto} ${cs.border.bottom} ${cs.border.gray}
         ${({ height }) => cs.h.get(height)};
-        ${cs.p.get("4px 10px")}
+        ${cs.p.get('4px 10px')}
         
         .lbx-tl { ${cs.align.ycenter} ${cs.pos.relative} ${cs.disp.inblock}
-          ${cs.font.ellipsis} ${cs.max.w("calc(100% - 80px)")}
+          ${cs.font.ellipsis} ${cs.max.w('calc(100% - 80px)')}
           &.left { ${cs.font.left} };
           &.center { ${cs.font.center} };
           &.right { ${cs.font.right} };
@@ -88,7 +88,7 @@ const StyledObject = styled.div`{
 
     &.sky {
       .lbx-body { ${cs.bg.sky} ${cs.font.black}
-        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
+        .lbx-cnt { ${cs.bg.get('#a4e2ff')} ${cs.font.primary} }
         .lbx-date { ${cs.bg.primary} ${cs.font.white} }
         .lbx-li.selection:hover, &.lbx-li.selection.active { ${cs.bg.lightgray} }
         .lbx-icon { .svg-path { ${cs.fill.dark} } } 
@@ -97,7 +97,7 @@ const StyledObject = styled.div`{
     }
     &.primary {
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
-        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
+        .lbx-cnt { ${cs.bg.get('#a4e2ff')} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
         .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
@@ -130,7 +130,7 @@ const StyledObject = styled.div`{
 
     &.theme-sky {
       .lbx-body { ${cs.bg.sky} ${cs.font.black}
-        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.primary} }
+        .lbx-cnt { ${cs.bg.get('#a4e2ff')} ${cs.font.primary} }
         .lbx-date { ${cs.bg.primary} ${cs.font.white} }
         .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.lightgray} }
         .lbx-icon { .svg-path { ${cs.fill.dark} } } 
@@ -139,7 +139,7 @@ const StyledObject = styled.div`{
     }
     &.theme-primary {
       .lbx-body { ${cs.bg.primary} ${cs.font.white}
-        .lbx-cnt { ${cs.bg.get("#a4e2ff")} ${cs.font.blue} }
+        .lbx-cnt { ${cs.bg.get('#a4e2ff')} ${cs.font.blue} }
         .lbx-date { ${cs.bg.blue} ${cs.font.white} }
         .lbx-li.selection:hover, .lbx-li.selection.active { ${cs.bg.primaryhover} }
         .lbx-icon { .svg-path { ${cs.fill.white} } } 
@@ -171,11 +171,11 @@ const StyledObject = styled.div`{
     }
 
     ${({ border }) => border && `.lbx-body { ${cs.box.line} .lbx-li:last-child { ${cs.border.trans} } }`}
-    ${({ border }) => border && border.color && `.lbx-body { ${cs.border.color(border.color + " !important")} }`}
-    ${({ border }) => border && border.radius && `.lbx-body { ${cs.border.radius(border.radius + " !important")} }`}
-    ${({ border }) => border && border.width && `.lbx-body { ${cs.border.width(border.width + " !important")} }`}
+    ${({ border }) => border && border.color && `.lbx-body { ${cs.border.color(border.color + ' !important')} }`}
+    ${({ border }) => border && border.radius && `.lbx-body { ${cs.border.radius(border.radius + ' !important')} }`}
+    ${({ border }) => border && border.width && `.lbx-body { ${cs.border.width(border.width + ' !important')} }`}
     
-    ${({ font }) => font && font.size && `.lbx-body { ${cs.font.size(font.size + " !important")} }`}
+    ${({ font }) => font && font.size && `.lbx-body { ${cs.font.size(font.size + ' !important')} }`}
     ${({ font }) => font && font.color && `.lbx-body { ${cs.font.color(font.color)} }`}
     ${({ font }) => font && font.align && `.lbx-body { ${cs.font.align(font.align)} }`}
     
@@ -183,57 +183,55 @@ const StyledObject = styled.div`{
 
     @media screen and (max-width : 860px) { 
       ${cs.p.a0} ${cs.font.sm} ${cs.p.b30} ${cs.p.t10}
-      .search { ${cs.w.calc("100% - 100px")} }
+      .search { ${cs.w.calc('100% - 100px')} }
       .btn-new { ${cs.top(10)} }
     }
   }
 }`
 
 const Listbox = (props) => {
-  const {
-    divider, children = null, total = 0, theme, rowid, selpos = -1,
-    disable = false, height = 30, formatter = null,
-  } = props;
-  const [list, setList] = useState(props.list);
+  const { divider, children = null, total = 0, theme, rowid, selpos = -1, disable = false, height = 30, formatter = null } = props
+  const [list, setList] = useState(props.list)
 
   useEffect(() => {
-    setList(props.list);
+    setList(props.list)
   }, [props.list])
 
   const onSelect = (e, item) => {
-    if (disable) return;
-    const rid = e.currentTarget.getAttribute('rowid');
-    props.onSelect && props.onSelect(rid, e, item);
+    if (disable) return
+    const rid = e.currentTarget.getAttribute('rowid')
+    props.onSelect && props.onSelect(rid, e, item)
   }
 
   const onClickPage = (page, e) => {
-    props.onClickPage && props.onClickPage(page, e);
+    props.onClickPage && props.onClickPage(page, e)
   }
 
   const onClickDelete = (eid, e) => {
-    e.stopPropagation();
+    e.stopPropagation()
     // const rowid = e.currentTarget.getAttribute('rowid');
-    const rid = eid;
-    props.onClickDelete && props.onClickDelete(rid, e);
+    const rid = eid
+    props.onClickDelete && props.onClickDelete(rid, e)
   }
 
-  const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props;
-  const selection = (props.onSelect);
+  const { titlealign = 'left', datealign = 'right', countalign = 'right' } = props
+  const selection = props.onSelect
 
   const renderGuide = () => {
-    let guide = null;
+    let guide = null
     if (list && list[0]) {
-      const item = list[0];
+      const item = list[0]
       if (item[rowid] == null || item[rowid] === undefined) {
-        guide = "'rowid' is required in the list.\n"
-          + "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n"
-          + "rowid and text is required. Rest is optional.\n"
-          + "rowid is used to show or hide text(contents)";
+        guide =
+          "'rowid' is required in the list.\n" +
+          "ex. const list = [{ rowid: 'a12345', title: 'title', text: 'text', utime: '20200101' }, {...}\n" +
+          'rowid and text is required. Rest is optional.\n' +
+          'rowid is used to show or hide text(contents)'
       }
     }
 
     if (props.onClickMove) {
-      guide = "Use onDragDrop() instead of onClickMove()";
+      guide = 'Use onDragDrop() instead of onClickMove()'
     }
 
     if (guide) {
@@ -241,90 +239,117 @@ const Listbox = (props) => {
     }
   }
 
-  const dragdrop = props.onDragDrop ? true : false;
-  const onDragDrop = useCallback((eid, dragIndex, hoverIndex) => {
-    const dragitem = list[dragIndex];
-    const array = update(list, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragitem]] });
-    setList(array);
+  const dragdrop = props.onDragDrop ? true : false
+  const onDragDrop = useCallback(
+    (eid, dragIndex, hoverIndex) => {
+      const dragitem = list[dragIndex]
+      const array = update(list, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragitem]
+        ]
+      })
+      setList(array)
 
-    if (eid === 'drag') {
-      props.onDraging && props.onDraging(eid, array);
-    } else if (eid === 'drop') {
-      props.onDragDrop && props.onDragDrop(eid, array);
-    }
-  }, [list, props]);
+      if (eid === 'drag') {
+        props.onDraging && props.onDraging(eid, array)
+      } else if (eid === 'drop') {
+        props.onDragDrop && props.onDragDrop(eid, array)
+      }
+    },
+    [list, props]
+  )
 
-  
-  let style = {};
+  let style = {}
   if (divider != null) {
-    style.borderBottom = divider;
-    if (divider.indexOf(" ") <= 1) {
-      style.borderBottom += ' solid #ccc';
+    style.borderBottom = divider
+    if (divider.indexOf(' ') <= 1) {
+      style.borderBottom += ' solid #ccc'
     }
   }
+  const { title = 'title', date = 'date', count = 'count' } = props
 
   return (
-    <StyledObject className={cx("list-box", props.className, { disable }, theme && `theme-${theme}`)}
-      eid="select" style={style} height={height}
-      border={props.border} font={props.font} bgcolor={props.bgcolor} >
-
-      <SearchFrame searchs={props.searchs} searchkey={props.searchkey}
+    <StyledObject
+      className={cx('list-box', props.className, { disable }, theme && `theme-${theme}`)}
+      eid='select'
+      style={style}
+      height={height}
+      border={props.border}
+      font={props.font}
+      bgcolor={props.bgcolor}
+    >
+      <SearchFrame
+        searchs={props.searchs}
+        searchkey={props.searchkey}
         onClickSearch={props.onClickSearch && ((value, key, e) => props.onClickSearch(value, key, e))}
-        onClickNew={props.onClickNew && ((e) => props.onClickNew(e))} />
+        onClickNew={props.onClickNew && ((e) => props.onClickNew(e))}
+      />
 
       {/* error guid */}
       {renderGuide()}
 
       {/* no data view */}
-      {(!list || list.length < 1) && <div className="frame"><Nodata /></div>}
+      {(!list || list.length < 1) && (
+        <div className='frame'>
+          <Nodata />
+        </div>
+      )}
 
       {children}
       {/* {children && children} */}
 
       <DndProvider backend={Backend}>
-        {list && <ul className={"lbx-body"}>
-          {list.map((item, index) => {
-            const rid = rowid != null ? list[index][rowid] : list[index]['rowid'];
-            const active = selpos === index;
+        {list && (
+          <ul className={'lbx-body'}>
+            {list.map((item, index) => {
+              const rid = rowid != null ? list[index][rowid] : list[index]['rowid']
+              const active = selpos === index
 
-            return (
-              <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop} >
-                <li key={index} className={cx("lbx-li", { selection }, { active })} rowid={item[rowid]} onClick={(e) => onSelect(e, item)}>
-                  {props.onDragDrop &&
-                    <Svg className="i-btn btn-move xs" eid={rid} name={"move"} />
-                  }
-                  {formatter ? formatter(item) : <Line titlealign={titlealign} countalign={countalign} datealign={datealign} item={item} />}
-                  {props.onClickDelete &&
-                    <Svg className="lbx-icon sm" name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
-                  }
-                </li>
-              </Dragable>
-            )
-          })}
-        </ul>}
+              return (
+                <Dragable key={rid} id={rid} index={index} onDragDrop={dragdrop ? onDragDrop : null} disable={!dragdrop}>
+                  <li key={index} className={cx('lbx-li', { selection }, { active })} rowid={item[rowid]} onClick={(e) => onSelect(e, item)}>
+                    {props.onDragDrop && <Svg className='i-btn btn-move xs' eid={rid} name={'move'} />}
+                    {formatter ? (
+                      formatter(item)
+                    ) : (
+                      <Line titlealign={titlealign} countalign={countalign} datealign={datealign} item={item} keys={{ title, date, count }} />
+                    )}
+                    {props.onClickDelete && (
+                      <Svg className='lbx-icon sm' name={'delete'} color={cs.color.darkgray} onClick={onClickDelete} eid={item[rowid]} />
+                    )}
+                  </li>
+                </Dragable>
+              )
+            })}
+          </ul>
+        )}
       </DndProvider>
 
-      {total > 0 && <div className="total-txt">{`${ST.TOTAL} : ${total}`}</div>}
+      {total > 0 && <div className='total-txt'>{`${ST.TOTAL} : ${total}`}</div>}
 
       <Pagenavi className={cx(props.theme, props.naviClass)} pos={props.pos || 1} max={props.max || 1} onItemClick={onClickPage} />
-    </StyledObject >
-  );
-};
-
-const Line = (props) => {
-  const { titlealign, countalign, datealign, item } = props;
-  const { title, date, count } = props.keys || { title: 'title', date: 'date', count: 'count' };
-
-  const stitle = item[title] || '';
-  const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : '';
-  const scount = item[count] >= 0 ? item[count] : -1;
-
-  return <span>
-    <span className={cx('lbx-tl', titlealign)}>{stitle}
-      {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
-    </span>
-    {sdate && <span className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</span>}
-  </span>
+    </StyledObject>
+  )
 }
 
-export default Listbox;
+const Line = (props) => {
+  const { titlealign, countalign, datealign, item } = props
+  const { title, date, count } = props.keys || { title: 'title', date: 'date', count: 'count' }
+
+  const stitle = item[title] || ''
+  const sdate = item[date] ? Util.toStringSymbol(item[date].substr(0, 8)) : ''
+  const scount = item[count] >= 0 ? item[count] : -1
+
+  return (
+    <span>
+      <span className={cx('lbx-tl', titlealign)}>
+        {stitle}
+        {scount >= 0 && <span className={cx('lbx-cnt', countalign)}>{scount}</span>}
+      </span>
+      {sdate && <span className={cx('lbx-date', datealign, props.onClickDelete && 'delete')}>{sdate}</span>}
+    </span>
+  )
+}
+
+export default Listbox

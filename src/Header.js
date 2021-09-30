@@ -107,7 +107,7 @@ const StyledObject = styled.header`{
       }
     }
     .btn-menu { ${cs.align.ycenter} ${cs.float.r} ${cs.pos.relative} ${cs.right(10)} }
-    .btn-side { ${cs.align.ycenter} ${cs.pos.relative} }
+    .btn-side { ${cs.align.ycenter} ${cs.pos.relative} ${cs.float.l} ${cs.left(10)} }
     
     .notitle, .nomenu { ${cs.font.lightgray} .li-nav:hover { ${cs.font.color(`${cs.color.gray} !important`)} } }
 

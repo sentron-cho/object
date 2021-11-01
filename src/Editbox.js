@@ -250,9 +250,10 @@ class Editbox extends React.PureComponent {
 
   onKeyPressed = (e) => {
     if (e.key === 'Enter') {
-      if (this.props.onEnter != null)
-        this.props.onEnter('ok', e, this.input.value);
+      this.props.onEnter && this.props.onEnter('ok', e, this.input.value);
     }
+
+    this.props.onKeyPress && this.props.onKeyPress(e, this.input.value);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
